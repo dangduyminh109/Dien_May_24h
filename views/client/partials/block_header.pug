@@ -1,2 +1,39 @@
-header 
-    h1 header
+header(class="header")
+        div(class="wrapper row")
+            div(class="logo col-lg-2 ")
+                a(class="logo__link" href="/") 
+                    img(class="logo__img",src="https://bizweb.dktcdn.net/100/488/001/themes/910675/assets/logo.png?1735792319782", alt="logo") 
+
+            div(class="middle-block col-lg-6")
+                button(class="store-system-btn")
+                    small(class="store-system-btn__title") Hệ thống cửa hàng
+                    b(class="store-system-btn__desc") (8 chi nhánh)
+                div(class="search-box")
+                    div(class="search-box__icon")  
+                        i(class="fa-solid fa-magnifying-glass")
+                    input(class="search-box__input",type="text", placeholder="Bạn muốn tìm gì?")
+            
+            div(class="right-block col-lg-4")
+                div(class="hotline")
+                    div(class="hotline__icon")
+                        i(class="fa-solid fa-phone-volume")
+                    div(class="hotline__desc")
+                        p(class="hotline__title") Hotline
+                        a(class="hotline__number", href="/") 1900 2345
+                a(href="/",class="favorite-products")
+                    div(class="favorite-products__icon")
+                        i(class="fa-regular fa-heart")
+                    div(class="favorite-products__desc")
+                        p(class="favorite-products__title") Yêu thích
+                        p(class="favorite-products__detail") 
+                            span(class="favorite-products__quantity") 0 
+                            | sản phẩm
+
+                a(href="/", class="user")
+                    i(class="fa-regular fa-user")
+
+                a(href="/",class="cart")
+                    span(class="cart__quantity") 0
+                    i(class="fa-solid fa-cart-shopping")
+
+            
