@@ -1,0 +1,35 @@
+/* PC */
+@media (max-width: 1199.98px) {
+    .hotline__title, .favorite-products__title {
+        font-size: 1rem;
+    }
+    .hotline__number ,.favorite-products__detail {
+        font-size: 1rem;
+    }
+}
+
+/* ipad and mobile */
+@media (max-width: 991.98px) {
+    .favorite-products__icon {
+        margin: 0;
+    }
+    .middle-block{
+        order: 3;
+    }
+}
+
+/* ipad */
+@media (max-width: 767.98px) {
+}
+
+/* mobile */
+@media (max-width: 575.98px) {
+    .user, .cart {
+        min-width: 30px;
+        height: 30px;
+    }
+    .favorite-products__icon{
+        height: 30px;
+        width: 30px;
+    }
+}

@@ -30,12 +30,14 @@ a {
 a:hover {
     text-decoration: none;
     color: inherit;
-    background-color: transparent;
+}
+
+ul {
+    padding: 0 0 0 15px;
 }
 
 /* ======================================= header ======================================= */
 .header .wrapper {
-    height: 70px;
     padding: 5px 0;
     display: flex;
     justify-content: space-between;
@@ -43,7 +45,6 @@ a:hover {
 }
 
 /* ============ logo header =========== */
-
 .logo__img {
     height: 100%;
     width: 100%;
@@ -53,9 +54,15 @@ a:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 10px;
 }
 
 /* ============ store system btn =========== */
+.btn-navbar {
+    margin-right: 10px;
+    padding: 10px 15px;
+}
+
 .store-system-btn {
     height: 40px;
     width: 130px;
@@ -85,9 +92,9 @@ a:hover {
 /* ============ search box =========== */
 .search-box {
     display: flex;
+    flex: 1;
     border: solid var(--primary) 1px;
     border-radius: 50px;
-    width: 500px;
     height: 40px;
 }
 
@@ -108,12 +115,13 @@ a:hover {
     border-width: 0px 0px 0px 0px;
     border-radius: 0 50px 50px 0;
     overflow: hidden;
+    width: 100%;
 }
 
 /* ======================== right block ======================= */
 .right-block {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
 }
 
@@ -130,6 +138,7 @@ a:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-right: 10px;
 }
 
 .hotline__icon {
@@ -223,7 +232,7 @@ a:hover {
 .user,
 .cart {
     height: 40px;
-    width: 40px;
+    min-width: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -240,7 +249,7 @@ a:hover {
     border: solid var(--color-hover) 1px;
 }
 
-.cart__quantity{
+.cart__quantity {
     position: absolute;
     top: -3px;
     right: -3px;
@@ -255,6 +264,92 @@ a:hover {
     color: var(--text-color);
     border-radius: 50px;
 }
+
+/* ======================================= footer ======================================= */
+.footer {
+    background-color: var(--primary);
+    color: var(--color);
+    font-size: 1.2rem;
+}
+
+.footer .wrapper {
+    padding: 30px 0;
+}
+
+.general,
+.policy,
+.support,
+.social {
+    margin-bottom: 20px;
+}
+
+.social__box {
+    display: flex;
+    align-items: center;
+}
+
+.general__title,
+.policy__title,
+.support__title,
+.social__title {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+}
+
+.general__desc,
+.policy__item,
+.support__item {
+    line-height: 2;
+}
+
+.support__label,
+.general__label {
+    font-weight: 600;
+}
+
+.social__item {
+    height: 40px;
+    width: 40px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    color: var(--color);
+}
+
+.social__facebook {
+    background-color: #1877f2;
+}
+
+.social__youtube {
+    background-color: #ff0000;
+}
+
+.social__instagram {
+    background-color: #1da1f2;
+}
+
+.social__twitter {
+    background: linear-gradient(
+        45deg,
+        #f09433,
+        #e6683c,
+        #dc2743,
+        #cc2366,
+        #bc1888
+    );
+}
+
+/* ======================================= navbar ======================================= */
+.navbar {
+    background-color: var(--primary);
+    border-radius: 5px;
+    padding: 3px 0;
+    margin-right: 10px;
+}
+
+/* ============ end box =========== */
 
 /* ============ end box =========== */
 /* ======================================= end ======================================= */

@@ -1,11 +1,29 @@
 header(class="header")
+    div(class="container-xl")
         div(class="wrapper row")
-            div(class="logo col-lg-2 ")
+            div(class="left-block col-lg-2 col-md-3 col-sm-4 col-5")
                 a(class="logo__link" href="/") 
                     img(class="logo__img",src="https://bizweb.dktcdn.net/100/488/001/themes/910675/assets/logo.png?1735792319782", alt="logo") 
 
-            div(class="middle-block col-lg-6")
-                button(class="store-system-btn")
+            div(class="middle-block col-lg-6 col-md-12")
+                button(class="btn btn-primary btn-navbar d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample")
+                    i(class="fa-solid fa-bars")
+                div(class="offcanvas offcanvas-start", tabindex="-1", id="offcanvasExample", aria-labelledby="offcanvasExampleLabel")
+                    div(class="offcanvas-header")
+                        h5(class="offcanvas-title", id="offcanvasExampleLabel") Offcanvas
+                        button(class="btn-close text-reset", type="button", data-bs-dismiss="offcanvas", aria-label="Close")
+                    div(class="offcanvas-body")
+                        div Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
+                        div(class="dropdown mt-3")
+                            button(class="btn btn-secondary dropdown-toggle", type="button", id="dropdownMenuButton", data-bs-toggle="dropdown") Dropdown button
+                            ul(class="dropdown-menu", aria-labelledby="dropdownMenuButton")
+                                li
+                                    a(class="dropdown-item", href="#") Action
+                                li
+                                    a(class="dropdown-item", href="#") Another action
+                                li
+                                    a(class="dropdown-item", href="#") Something else here
+                button(class="store-system-btn d-lg-block d-none")
                     small(class="store-system-btn__title") Hệ thống cửa hàng
                     b(class="store-system-btn__desc") (8 chi nhánh)
                 div(class="search-box")
@@ -13,8 +31,8 @@ header(class="header")
                         i(class="fa-solid fa-magnifying-glass")
                     input(class="search-box__input",type="text", placeholder="Bạn muốn tìm gì?")
             
-            div(class="right-block col-lg-4")
-                div(class="hotline")
+            div(class="right-block col-lg-4 col-md-3 col-sm-8 col-7")
+                div(class="hotline d-none d-lg-flex")
                     div(class="hotline__icon")
                         i(class="fa-solid fa-phone-volume")
                     div(class="hotline__desc")
@@ -23,7 +41,7 @@ header(class="header")
                 a(href="/",class="favorite-products")
                     div(class="favorite-products__icon")
                         i(class="fa-regular fa-heart")
-                    div(class="favorite-products__desc")
+                    div(class="favorite-products__desc d-none d-lg-block")
                         p(class="favorite-products__title") Yêu thích
                         p(class="favorite-products__detail") 
                             span(class="favorite-products__quantity") 0 
@@ -36,4 +54,4 @@ header(class="header")
                     span(class="cart__quantity") 0
                     i(class="fa-solid fa-cart-shopping")
 
-            
+    
