@@ -162,7 +162,7 @@
         justify-content: center;
         align-items: center;
         height: 15px;
-        width: 15px;
+        min-width: 15px;
         font-size: 0.9rem;
         font-weight: 200;
         background-color: $color-hover;
