@@ -1,0 +1,69 @@
+/* ======================================= footer ======================================= */
+.footer {
+    background-color: $primary;
+    color: $text-color;
+    font-size: 1.2rem;
+    .wrapper {
+        padding: 30px 0;
+    }
+}
+.general,
+.policy,
+.support,
+.social {
+    margin-bottom: 20px;
+}
+.social__box {
+    display: flex;
+    align-items: center;
+}
+.general__title,
+.policy__title,
+.support__title,
+.social__title {
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+}
+.policy__item,
+.support__item {
+    list-style: circle;
+}
+.general__desc,
+.policy__item,
+.support__item {
+    line-height: 2;
+}
+.support__label,
+.general__label {
+    font-weight: 600;
+}
+.social__item {
+    height: 40px;
+    min-width: 40px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    color: $text-color;
+}
+.social__facebook {
+    background-color: #1877f2;
+}
+.social__youtube {
+    background-color: #ff0000;
+}
+.social__instagram {
+    background-color: #1da1f2;
+}
+.social__twitter {
+    background: linear-gradient(
+        45deg,
+        #f09433,
+        #e6683c,
+        #dc2743,
+        #cc2366,
+        #bc1888
+    );
+}
+/* ======================================= end footer ======================================= */

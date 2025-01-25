@@ -1,9 +1,11 @@
 /* PC */
 @media (max-width: 1199.98px) {
-    .hotline__title, .favorite-products__title {
+    .hotline__title,
+    .favorite-products__title {
         font-size: 1rem;
     }
-    .hotline__number ,.favorite-products__detail {
+    .hotline__number,
+    .favorite-products__detail {
         font-size: 1rem;
     }
 }
@@ -13,8 +15,14 @@
     .favorite-products__icon {
         margin: 0;
     }
-    .middle-block{
+
+    .middle-box {
         order: 3;
+        margin-top: 5px;
+    }
+
+    .favorite-products__icon{
+        margin: 0;
     }
 }
 
@@ -24,12 +32,14 @@
 
 /* mobile */
 @media (max-width: 575.98px) {
-    .user, .cart {
-        min-width: 30px;
+    .favorite-products {
+        width: 30px;
         height: 30px;
     }
-    .favorite-products__icon{
+    .user,
+    .cart,
+    .favorite-products__icon {
+        min-width: 30px;
         height: 30px;
-        width: 30px;
     }
 }

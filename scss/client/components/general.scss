@@ -1,0 +1,30 @@
+/* ======================================= general ======================================= */
+* {
+    box-sizing: border-box;
+}
+html {
+    font-size: 62.5%;
+}
+body {
+    font-size: 1.6rem;
+    font-family: "sora", sans-serif;
+}
+
+input {
+    &:focus {
+        outline: none;
+    }
+}
+a,
+a:hover {
+    text-decoration: none;
+    color: currentColor;
+}
+ul {
+    padding: 0 0 0 15px;
+}
+
+li {
+    list-style: none;
+}
+/* ======================================= end general ======================================= */
