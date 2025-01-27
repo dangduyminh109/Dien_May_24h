@@ -3,8 +3,8 @@ extends ../../layout/default.pug
 block main 
     main(class="home")
         div(class="container-xl")
-            div(class="row")
-                div(class="carousel slide col-9", id="slide",data-bs-ride="carousel")
+            div(class="row slide-banner")
+                div(class="carousel slide col-md-9 col-12", id="slide",data-bs-ride="carousel")
                     div(class="carousel-indicators")
                         button(type="button", data-bs-target="#slide", data-bs-slide-to="0", class="active", aria-current="true", aria-label="Slide 1")
                         button(type="button", data-bs-target="#slide", data-bs-slide-to="1", aria-label="Slide 2")
@@ -22,7 +22,7 @@ block main
                     button(class="carousel-control-next", type="button", data-bs-target="#slide", data-bs-slide="next")
                         span(class="carousel-control-next-icon", aria-hidden="true")
                         span(class="visually-hidden") Next
-                div(class="banner col-3")
+                div(class="banner col-md-3 col-12")
                     a(class="banner__link",href="")
                         img(class="banner__img", src="../../../client/images/slider_1.jpg", alt="") 
                     a(class="banner__link",href="")
@@ -32,34 +32,93 @@ block main
 
             div(class="block-brand")
                 a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="https://bizweb.dktcdn.net/100/488/001/themes/910675/assets/thuonghieu_1.jpg?1735792319782", alt="")
+                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
                 a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="https://bizweb.dktcdn.net/100/488/001/themes/910675/assets/thuonghieu_1.jpg?1735792319782", alt="")
+                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
                 a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="https://bizweb.dktcdn.net/100/488/001/themes/910675/assets/thuonghieu_1.jpg?1735792319782", alt="")
+                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
                 a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="https://bizweb.dktcdn.net/100/488/001/themes/910675/assets/thuonghieu_1.jpg?1735792319782", alt="")
+                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
                 a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="https://bizweb.dktcdn.net/100/488/001/themes/910675/assets/thuonghieu_1.jpg?1735792319782", alt="")
+                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
                 a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="https://bizweb.dktcdn.net/100/488/001/themes/910675/assets/thuonghieu_1.jpg?1735792319782", alt="")
+                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
                 a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="https://bizweb.dktcdn.net/100/488/001/themes/910675/assets/thuonghieu_1.jpg?1735792319782", alt="")
+                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
                 a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="https://bizweb.dktcdn.net/100/488/001/themes/910675/assets/thuonghieu_1.jpg?1735792319782", alt="")
+                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
                 a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="https://bizweb.dktcdn.net/100/488/001/themes/910675/assets/thuonghieu_1.jpg?1735792319782", alt="")
+                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
                 a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="https://bizweb.dktcdn.net/100/488/001/themes/910675/assets/thuonghieu_1.jpg?1735792319782", alt="")
+                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
                 a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="https://bizweb.dktcdn.net/100/488/001/themes/910675/assets/thuonghieu_1.jpg?1735792319782", alt="")
+                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
                 a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="https://bizweb.dktcdn.net/100/488/001/themes/910675/assets/thuonghieu_1.jpg?1735792319782", alt="")
+                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
                 a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="https://bizweb.dktcdn.net/100/488/001/themes/910675/assets/thuonghieu_1.jpg?1735792319782", alt="")
+                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
                 a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="https://bizweb.dktcdn.net/100/488/001/themes/910675/assets/thuonghieu_1.jpg?1735792319782", alt="")
+                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
                 a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="https://bizweb.dktcdn.net/100/488/001/themes/910675/assets/thuonghieu_1.jpg?1735792319782", alt="")
+                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
                 a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="https://bizweb.dktcdn.net/100/488/001/themes/910675/assets/thuonghieu_1.jpg?1735792319782", alt="")
+                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
+
+            section(class="product")
+                div(class="product-header")
+                    div(class="product-title")
+                        a(class="product-title__link",href="") MÁY LẠNH
+
+                    div(class="product-category")
+                        button(class="product-category__btn") máy lạnh âm trần
+                        button(class="product-category__btn") máy lạnh treo tường
+                        button(class="product-category__btn") máy lạnh tủ đứng
+
+                div(class="product-banner")
+                    a(class="product-banner__link",href="")
+                        img(class="product-banner__img",src="../../../client/images/men_product_img.webp", alt="")
+
+                div(class="product-list row")
+                   each i in [1,2,3]
+                        div(class="product-item col-xl-3 col-lg-4 col-md-6 col-12")
+                            img(class="product-item__brand", src="../../../client/images/thuonghieu_1.jpg", alt="")
+                            a(class="product-item__link",href="")
+                                img(class="product-item__img", src="../../../client/images/maylanhdaikininverter1hp.webp", alt="") 
+                            div(class="product-item__desc") 
+                                a(href="product-item__link") 
+                                    h3(class="product-item__title") Máy lạnh Daikin Inverter 1.0 HP (1 Ngựa) FTKB25XVMV 
+                                p(class="product-item__price-discounted") 8.900.000₫
+                                span(class="product-item__price-original") 11.440.000₫ 
+                                span(class="product-item__price-discount-percent")  (-22%)   
+                        div(class="product-item col-xl-3 col-lg-4 col-md-6 col-12")
+                            img(class="product-item__brand", src="../../../client/images/thuonghieu_1.jpg", alt="")
+                            a(class="product-item__link",href="")
+                                img(class="product-item__img", src="../../../client/images/maylanhdaikininverter1hp.webp", alt="") 
+                            div(class="product-item__desc") 
+                                a(href="product-item__link") 
+                                    h3(class="product-item__title") Máy lạnh Daikin Inverter 1.0 HP (1 Ngựa) FTKB25XVMV 
+                                p(class="product-item__price-discounted") 8.900.000₫
+                                span(class="product-item__price-original") 11.440.000₫ 
+                                span(class="product-item__price-discount-percent")  (-22%)   
+                        div(class="product-item col-xl-3 col-lg-4 col-md-6 col-12")
+                            img(class="product-item__brand", src="../../../client/images/thuonghieu_1.jpg", alt="")
+                            a(class="product-item__link",href="")
+                                img(class="product-item__img", src="../../../client/images/maylanhdaikininverter1hp.webp", alt="") 
+                            div(class="product-item__desc") 
+                                a(href="product-item__link") 
+                                    h3(class="product-item__title") Máy lạnh Daikin Inverter 1.0 HP (1 Ngựa) FTKB25XVMV 
+                                p(class="product-item__price-discounted") 8.900.000₫
+                                span(class="product-item__price-original") 11.440.000₫ 
+                                span(class="product-item__price-discount-percent")  (-22%)   
+                        div(class="product-item col-xl-3 col-lg-4 col-md-6 col-12")
+                            img(class="product-item__brand", src="../../../client/images/thuonghieu_1.jpg", alt="")
+                            a(class="product-item__link",href="")
+                                img(class="product-item__img", src="../../../client/images/maylanhdaikininverter1hp.webp", alt="") 
+                            div(class="product-item__desc") 
+                                a(href="product-item__link") 
+                                    h3(class="product-item__title") Máy lạnh Daikin Inverter 1.0 HP (1 Ngựa) FTKB25XVMV 
+                                p(class="product-item__price-discounted") 8.900.000₫                     
+                                span(class="product-item__price-original") 11.440.000₫ 
+                                span(class="product-item__price-discount-percent") (-6%)   
+
+                                

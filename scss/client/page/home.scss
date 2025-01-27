@@ -1,34 +1,41 @@
 .home {
-    .row {
+    /* ======================================= block slide-banner ======================================= */
+    .slide-banner {
         padding: 20px 0 0;
-    }
-
-    .slide {
-        height: 400px;
         overflow: hidden;
     }
 
+    .slide {
+        overflow: hidden;
+    }
     .carousel-item__img {
         height: 400px;
         object-fit: cover;
     }
+
     .banner {
         display: flex;
         justify-content: space-between;
         flex-direction: column;
     }
-    .banner__link{
-        height: 30%;
+    .banner__link {
+        overflow: hidden;
+        &:hover {
+            .banner__img {
+                transform: scale(1.1);
+            }
+        }
     }
     .banner__img {
         width: 100%;
-        height: 120px;
+        height: 130px;
+        transition: transform 0.3s ease;
         object-fit: cover;
     }
-
+    /* ======================================= block brand ======================================= */
     .block-brand {
         margin: 0;
-        padding: 20px 0 0;
+        padding: 50px 0 0;
         display: grid;
         align-items: center;
         justify-content: center;
@@ -49,4 +56,130 @@
         height: 100%;
         transition: 1s;
     }
+    /* ======================================= block product ======================================= */
+    .product {
+        padding: 50px 0;
+    }
+    /* ============ product header =========== */
+    .product-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .product-title {
+        background-color: $primary;
+        border-radius: 0 20px 20px 0;
+        padding: 5px 25px 5px 10px;
+        &:hover {
+            .product-title__link {
+                color: $color-hover;
+            }
+        }
+    }
+
+    .product-category {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0;
+    }
+
+    .product-category__btn {
+        height: 100%;
+        padding: 10px;
+        font-size: 1.2rem;
+        color: $primary;
+        background-color: #fff;
+        border-radius: 50px;
+        border: 1px solid $primary;
+        transition: 0.5s;
+        &:hover {
+            color: $text-color;
+            background-color: $primary;
+        }
+    }
+
+    /* ============ product banner =========== */
+    .product-banner {
+        padding: 20px 0 0;
+        height: 300px;
+    }
+
+    .product-banner__img {
+        width: 100%;
+        object-fit: cover;
+        height: 100%;
+    }
+    /* ============ list-product =========== */
+    .product-list {
+        justify-content: space-between;
+        align-items: center;
+        margin: 0;
+        gap: 10px;
+        padding: 10px 0;
+    }
+
+    .product-item {
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 4px 0px,
+            rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+        max-width: 24%;
+        height: 100%;
+        position: relative;
+        border-radius: 5px;
+        overflow: hidden;
+        padding: 0;
+    }
+
+    .product-item__brand {
+        position: absolute;
+        width: 40%;
+        top: 0;
+        left: 0;
+        z-index: 1;
+    }
+
+    .product-item__link {
+        display: block;
+        overflow: hidden;
+        text-align: center;
+    }
+    .product-item__img {
+        width: 90%;
+        transition: transform 0.3s ease;
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+    .product-item__desc {
+        padding: 0 15px;
+        color: $primary;
+    }
+    .product-item__title {
+        color: $text-color-2;
+        font-size: 1.4rem;
+        &:hover{
+            color: $color-hover;
+        }
+    }
+    .product-item__price-discounted {
+        margin: 0;
+    }
+    .product-item__price-original {
+        font-size: 1.2rem;
+        text-decoration: line-through;
+        color: #ccc;
+    }
+
+    .product-item__price-discount-percent {
+        color: red;
+        font-size: 1.2rem;
+        text-decoration: none;
+        margin-left: 5px;
+    }
 }
+
+/* ============ box =========== */
+/* ======================================= block ======================================= */

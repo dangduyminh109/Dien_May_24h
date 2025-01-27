@@ -33,6 +33,7 @@
         border: none;
         cursor: pointer;
         margin-right: 15px;
+        transition: 0.2s;
         &:hover {
             background-color: $color-hover;
         }
@@ -101,6 +102,7 @@
             font-size: 2.8rem;
             margin-right: 8px;
             color: $primary;
+            transition: 0.2s;
         }
     }
     .hotline__title {
@@ -114,6 +116,7 @@
         font-size: 1.4rem;
         line-height: 1;
         font-weight: 600;
+        transition: 0.2s;
     }
     .favorite-products {
         display: flex;
@@ -141,12 +144,14 @@
         color: $primary;
         margin-right: 5px;
         min-width: 40px;
+        transition: 0.2s;
     }
 
     .favorite-products__title {
         font-size: 1.2rem;
         color: $color-hover;
         margin-bottom: 5px;
+        transition: 0.2s;
     }
     .favorite-products__detail {
         display: flex;
@@ -156,6 +161,7 @@
         line-height: 1;
         font-weight: 600;
         margin: 0;
+        transition: 0.2s;
     }
     .favorite-products__quantity {
         display: inline-flex;
@@ -181,6 +187,7 @@
         border: solid $primary 1px;
         color: $primary;
         position: relative;
+        transition: 0.2s;
     }
     .user:hover,
     .cart:hover {
