@@ -1,0 +1,149 @@
+/* ======================================= header ======================================= */
+.header-admin {
+    background-color: #fff;
+    box-shadow: 0 2px 4px 0 rgba(43, 43, 43, 0.2);
+
+    .wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 80px;
+    }
+    /* ===================== left box ==================== */
+
+    .left-box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 80px;
+        gap: 20px;
+    }
+
+    .logo {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: $primary;
+        height: 100%;
+        width: 250px;
+        align-self: flex-start;
+        overflow: hidden;
+        padding: 20px;
+    }
+
+    .logo__img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: bottom;
+    }
+
+    .form-check-input {
+        cursor: pointer;
+
+        &:checked {
+            background-color: $primary;
+        }
+    }
+
+    .search {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .search-box {
+        display: flex;
+        align-items: center;
+    }
+
+    .search-box.active {
+        .search-box__input {
+            width: 200px;
+            padding: 6px 15px;
+        }
+
+        .search-box__close-icon {
+            display: inline-block;
+        }
+    }
+
+    .search-box__close-icon {
+        display: none;
+    }
+
+    .search-box__close-icon,
+    .search__icon,
+    .screen__icon {
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    .search-box__input {
+        color: $primary;
+        width: 0;
+        font-size: 1.2rem;
+        padding: 0;
+        border: 0;
+        transition: 0.3s;
+    }
+
+    .screen__icon {
+        display: none;
+    }
+
+    .screen .active {
+        display: inline-block;
+    }
+    /* ===================== right box ==================== */
+    .right-box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 30px;
+        padding: 0 20px;
+    }
+
+    .notification,
+    .message {
+        position: relative;
+        cursor: pointer;
+    }
+    .notification__quantity,
+    .message__quantity {
+        position: absolute;
+        top: -5px;
+        right: -10px;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        height: 17px;
+        width: 17px;
+        font-size: 0.9rem;
+        font-weight: 200;
+        background-color: $color-hover;
+        color: #000;
+        border-radius: 50px;
+    }
+ 
+    .admin {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+    }
+    .admin__img {
+        height: 40px;
+        width: 40px;
+        border-radius: 50px;
+    }
+    .admin__name {
+        font-size: 1.6rem;
+        margin: 0;
+    }
+    .admin__icon {
+    }
+}
+
+/* ======================================= end header ======================================= */

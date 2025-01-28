@@ -3,6 +3,7 @@ const path = require("path");
 const express = require("express");
 
 const routeClient = require("./routes/client/index.route");
+const routeAdmin = require("./routes/admin/index.route");
 const database = require("./config/database.config");
 database.connect();
 
@@ -16,6 +17,7 @@ app.set("views", path.join(__dirname, "views"));
 
 // routes
 routeClient.index(app);
+routeAdmin.index(app);
 
 // Use static folder
 app.use(express.static(path.join(__dirname, "public")));
