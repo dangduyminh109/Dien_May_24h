@@ -5,6 +5,8 @@ const screenIconExpand = document.getElementById("screen__icon--expand");
 const screenIconCompress = document.getElementById("screen__icon--compress");
 const toggleNav = document.getElementById("toggle__nav");
 const navbar = document.getElementById("navbar");
+const rightBoxBtnDropdown = document.getElementById("right-box__btn-dropdown");
+const rightBox = document.getElementById("right-box");
 
 /* ======================================= admin header ======================================= */
 /* ============ left box =========== */
@@ -30,8 +32,6 @@ screenIconCompress.onclick = () => {
     screenIconCompress.classList.remove("active");
 };
 
-console.log(toggleNav);
-
 toggleNav.onclick = () => {
     if (toggleNav.checked) {
         toggleNav.checked = true;
@@ -39,6 +39,16 @@ toggleNav.onclick = () => {
     } else {
         toggleNav.checked = false;
         navbar.style.transform = "translateX(-100%)";
+    }
+};
+
+rightBoxBtnDropdown.onclick = () => {
+    if (rightBoxBtnDropdown.classList.contains("active")) {
+        rightBoxBtnDropdown.classList.remove("active");
+        rightBox.style.top = "0";
+    } else {
+        rightBoxBtnDropdown.classList.add("active");
+        rightBox.style.top = "80px";
     }
 };
 /* ============ right box =========== */

@@ -26,7 +26,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background-color: $primary;
+        background-color: #1d2531;
         height: 95%;
         width: 250px;
         align-self: flex-start;
@@ -43,9 +43,9 @@
 
     .form-check-input {
         cursor: pointer;
-
+        border: 1px solid #263544;
         &:checked {
-            background-color: $primary;
+            background-color: #263544;
         }
     }
 
@@ -99,6 +99,14 @@
 
     .screen .active {
         display: inline-block;
+    }
+
+    .right-box__btn-dropdown {
+        color: $text-color;
+        padding: 10px;
+        display: none;
+        cursor: pointer;
+        line-height: 0;
     }
     /* ===================== right box ==================== */
     .right-box {
@@ -167,7 +175,6 @@
     .dropdown-menu {
         min-width: 300px;
         box-shadow: 0 2px 4px 0 rgba(43, 43, 43, 0.2);
-
         &::before {
             content: "";
             z-index: -1;

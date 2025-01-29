@@ -1,11 +1,46 @@
+@import "variables.scss";
+
 /* PC */
 @media (max-width: 1199.98px) {
-
 }
 
 /* ipad and mobile */
 @media (max-width: 991.98px) {
+    .header {
+        .logo {
+            order: 1;
+        }
 
+        .search,
+        .screen {
+            display: none;
+        }
+        .left-box {
+            flex: 1;
+            background-color: #1d2531;
+            padding: 0 20px;
+        }
+        .right-box {
+            position: absolute;
+            justify-content: end;
+            background-color: #fff;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            z-index: -1;
+            transition: 1s ease;
+            box-shadow: 0 2px 4px 0 rgba(43, 43, 43, 0.2);
+        }
+
+        .right-box__btn-dropdown {
+            display: block;
+            order: 2;
+        }
+    }
+
+    .navbar {
+        z-index: -1;
+    }
 }
 
 /* ipad */
@@ -14,5 +49,4 @@
 
 /* mobile */
 @media (max-width: 575.98px) {
-
 }
