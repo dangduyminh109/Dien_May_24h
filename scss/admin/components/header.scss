@@ -1,8 +1,11 @@
 /* ======================================= header ======================================= */
-.header-admin {
+.header {
     background-color: #fff;
     box-shadow: 0 2px 4px 0 rgba(43, 43, 43, 0.2);
-
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     .wrapper {
         display: flex;
         justify-content: space-between;
@@ -24,7 +27,7 @@
         justify-content: space-between;
         align-items: center;
         background-color: $primary;
-        height: 100%;
+        height: 95%;
         width: 250px;
         align-self: flex-start;
         overflow: hidden;
@@ -50,6 +53,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        color: $text-color-2;
     }
 
     .search-box {
@@ -85,11 +89,12 @@
         font-size: 1.2rem;
         padding: 0;
         border: 0;
-        transition: 0.3s;
+        transition: 0.5s ease;
     }
 
     .screen__icon {
         display: none;
+        color: $text-color-2;
     }
 
     .screen .active {
@@ -108,6 +113,7 @@
     .message {
         position: relative;
         cursor: pointer;
+        color: $text-color-2;
     }
     .notification__quantity,
     .message__quantity {
@@ -125,13 +131,20 @@
         color: #000;
         border-radius: 50px;
     }
- 
+
     .admin {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        gap: 10px;
+        position: relative;
+        background-color: transparent;
+        border: none;
         cursor: pointer;
+        gap: 10px;
+        color: $text-color-2;
+        &:focus {
+            box-shadow: 0 0 0 0 transparent;
+        }
     }
     .admin__img {
         height: 40px;
@@ -142,7 +155,46 @@
         font-size: 1.6rem;
         margin: 0;
     }
-    .admin__icon {
+
+    .dropdown-toggle::after {
+        display: none;
+    }
+
+    button:focus:not(:focus-visible) {
+        outline: none;
+    }
+
+    .dropdown-menu {
+        min-width: 300px;
+        box-shadow: 0 2px 4px 0 rgba(43, 43, 43, 0.2);
+
+        &::before {
+            content: "";
+            z-index: -1;
+            top: -9px;
+            right: 30px;
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            border-radius: 2px;
+            transform: rotate(45deg);
+            box-shadow: -2px -2px 2px rgba(43, 43, 43, 0.2);
+        }
+    }
+
+    .dropdown-item {
+        display: flex;
+        align-items: center;
+    }
+
+    .dropdown-item__title {
+        font-size: 1.4rem;
+        margin: 0 0 0 10px;
+    }
+
+    .dropdown-item__icon {
+        font-size: 1.6rem;
     }
 }
 

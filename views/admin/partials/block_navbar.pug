@@ -1,0 +1,37 @@
+nav(class="navbar", id="navbar")
+    div(class="navigation")
+        h2(class="navigation__title") Navigation 
+        ul(class="navigation__list")
+            li(class="navigation-item")
+                button(class="navigation-item__btn btn",id="navigation-item__btn",type="button",data-bs-toggle="collapse",data-bs-target="#navigation-item__collapse",aria-expanded="false",aria-controls="navigation-item__collapse") 
+                    span(class="navigation-item__btn-icon")
+                        i(class="fa-solid fa-house")
+                    | Dashboard
+                    span(class="navigation-item__btn-icon-down")
+                        i(class="fa-solid fa-caret-down")
+                div(class="navigation-item__collapse collapse", id="navigation-item__collapse")
+                    a(class="navigation-item__link",href="#") 
+                            span(class="navigation-item__icon")
+                                i(class="fa-solid fa-chevron-right")
+                            h3(class="navigation-item__title") Analysis
+                    a(class="navigation-item__link",href="#") 
+                            span(class="navigation-item__icon")
+                                i(class="fa-solid fa-chevron-right")
+                            h3(class="navigation-item__title") Ecommerce
+                    a(class="navigation-item__link",href="#") 
+                            span(class="navigation-item__icon")
+                                i(class="fa-solid fa-chevron-right")
+                            h3(class="navigation-item__title") Project
+                    a(class="navigation-item__link",href="#") 
+                            span(class="navigation-item__icon")
+                                i(class="fa-solid fa-chevron-right")
+                            h3(class="navigation-item__title") CRM
+                    a(class="navigation-item__link",href="#") 
+                            span(class="navigation-item__icon")
+                                i(class="fa-solid fa-chevron-right")
+                            h3(class="navigation-item__title") E-Wallet
+                a(class="navigation-item__btn",id="navigation-item__btn",href="#") 
+                    span(class="navigation-item__btn-icon")
+                        i(class="fa-solid fa-gear")
+                    | Setting
+</nav>
