@@ -1,7 +1,7 @@
 extends ../../layout/default.pug
 include ../../mixins/page_header.pug
 block main 
-    +page_header("Danh sách sản phẩm", ["Sản phẩm","Danh sách sản phẩm"])
+    +page_header("Danh sách sản phẩm", [{name: "Sản phẩm",href: "/admin/product"},{name: "Danh sách sản phẩm",href: "/admin/product"}])
     div(class="toolbar")
         div(class="toolbar__box")
             div(class="toolbar__left-box")
@@ -75,8 +75,10 @@ block main
                     input(type="checkbox" name="sort" id="select" value="1")
                 th(scope="col") Tên sản phẩm
                 th(scope="col") Mã sản phẩm
-                th(scope="col") Nhóm hàng
-                th(scope="col") Giá vốn
+                th(scope="col") Danh mục
+                th(scope="col") Giá gốc
+                th(scope="col") Giá bán
+                th(scope="col") giảm giá
                 th(scope="col") Tồn kho 
                 th(scope="col") Trạng thái 
                 th(scope="col")  
@@ -85,43 +87,46 @@ block main
                 each item in [1,2,3,4,5,2,2,2,2,2,2,2,2,2,2]
                     tr
                         td 
-                            input(type="checkbox" name="sort" id="select" value="1")
+                            input(type="checkbox" name="sort" value="1")
                         td  
                             div(class="product-item__name")
                                 img(class="product-item__img" src="../../../admin/images/coc.jpg", alt="")
-                                h4(class="product-item__title") sản phẩm 1
+                                h4(class="product-item__title") Sản phẩm 1
                         td 
                             p 
-                                span(class="product-item__icon", id="product-item__icon-tag")
-                                    i(class="fa-solid fa-tag")
-                                | SP2769
-                            p 
-                                span(class="product-item__icon", id="product-item__icon-barcode")
-                                    i(class="fa-solid fa-barcode")
+                                span(class="product-item__icon")
+                                    i(class="fa-solid fa-tag" style="transform: scaleX(-1)")
                                 | SP2769
                         td 
-                            p nhóm hàng 1
+                            p Nhóm hàng 1
                         
                         td 
                             p 
                                 |   100.000đ
-                                span(id="product-item__icon-pen-cost", class="product-item__icon product-item__icon-pen")
+                                span(class="product-item__icon product-item__icon-pen")
                                     i(class="fa-solid fa-pen")
-                        
+
                         td 
                             p 
                                 |   150.000đ
-                                span(id="product-item__icon-pen-inventory", class="product-item__icon product-item__icon-pen")
+                                span(class="product-item__icon product-item__icon-pen")
                                     i(class="fa-solid fa-pen")
-                        
-                        td 
-                            div(class="toggle-product-item")
-                                    div(class="form-check form-switch")
-                                        input(id="toggle-product-item", class="form-check-input", type="checkbox", role="switch",checked)
-                            p(id="product-item__status") hoạt động          
 
                         td 
-                            a(href="", class="btn-edit btn") sửa      
+                            p(class="product-item__discount") 25%
+
                         td 
-                            a(href="", class="btn-delete btn btn-danger ") xóa      
+                            p(class="product-item__inventory") 50
+                        
+                        td 
+                            div(class="btn-status")
+                                div(class="btn-status-toggle")
+                                        div(class="form-check form-switch")
+                                            input(class="form-check-input", type="checkbox", role="switch",checked)
+                                p(class="btn-status__desc") Hoạt động          
+
+                        td 
+                            a(href="", class="btn-edit btn") Sửa      
+                        td 
+                            a(href="", class="btn-delete btn btn-danger ") Xóa      
                                 

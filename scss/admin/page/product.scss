@@ -44,6 +44,7 @@
         margin-top: 5px;
         background-color: $primary;
         border: none;
+        color: #fff;
         &:hover {
             background-color: $color-hover;
         }
@@ -90,7 +91,8 @@
 
     .overview-item {
         background-color: #fff;
-        min-width: 220px;
+        width: 100%;
+        min-width: 170px;
         padding: 10px;
         text-align: center;
         border-radius: 5px;
@@ -156,6 +158,11 @@
         margin: 0 10px;
     }
 
+    .product-item__inventory,
+    .product-item__discount {
+        margin-left: 15px;
+    }
+
     tbody {
         tr {
             border-width: 2px 0 0 0;
@@ -166,7 +173,6 @@
             padding: 10px 0;
         }
     }
-
     .btn-edit {
         background-color: $primary;
         color: #fff;
@@ -179,7 +185,7 @@
     .form-check-input {
         cursor: pointer;
         transition: 0.2s;
-        
+        width: 35px;
         border: 1px solid #4caf50;
         box-shadow: 0 0 0 0.25rem rgba(#4caf50, 0.25);
         background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%234CAF50'/%3e%3c/svg%3e");
@@ -188,7 +194,6 @@
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23FFF'/%3e%3c/svg%3e");
             background-color: #4caf50;
             border: transparent;
-
             &:focus {
                 background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23FFF'/%3e%3c/svg%3e");
             }

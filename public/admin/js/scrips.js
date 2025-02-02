@@ -8,6 +8,8 @@ const navbar = document.getElementById("navbar");
 const rightBoxBtnDropdown = document.getElementById("right-box__btn-dropdown");
 const rightBox = document.getElementById("right-box");
 const main = document.getElementById("main");
+const filterBtn = document.getElementById("filter-btn");
+const toolbarFilterBox = document.getElementById("toolbar__filter-box");
 
 /* ======================================= admin header ======================================= */
 /* ============ left box =========== */
@@ -100,16 +102,15 @@ navigationItemBtn.onclick = () => {
 };
 
 /* ======================================= main ======================================= */
-const filterBtn = document.getElementById("filter-btn");
-const toolbarFilterBox = document.getElementById("toolbar__filter-box");
-filterBtn.onclick = () => {
-    if (toolbarFilterBox.style.height == "100%") {
-        toolbarFilterBox.style.height = "0";
-        return;
-    }
-    toolbarFilterBox.style.height = "100%";
-};
-
+if (filterBtn) {
+    filterBtn.onclick = () => {
+        if (toolbarFilterBox.style.height == "100%") {
+            toolbarFilterBox.style.height = "0";
+            return;
+        }
+        toolbarFilterBox.style.height = "100%";
+    };
+}
 /* ============ box =========== */
 /* ======================================= block ======================================= */
 if (window.matchMedia("(max-width: 575.98px)").matches) {

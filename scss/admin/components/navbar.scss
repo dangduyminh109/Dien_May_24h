@@ -8,9 +8,9 @@ $bg-color-navbar-hover: #1d2531;
     display: block;
     transition: transform .5s ease;
     position: fixed;
-    top: 83px;
+    top: 80px;
     left: 0;
-
+    z-index: 5;
     .navigation__title {
         padding: 10px;
         font-size: 1.2rem;

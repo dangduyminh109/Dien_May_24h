@@ -10,6 +10,11 @@ database.connect();
 const app = express();
 const port = process.env.PORT;
 
+app.use(
+    "/tinymce",
+    express.static(path.join(__dirname, "node_modules", "tinymce"))
+);
+
 // Middleware để parse dữ liệu từ form (urlencoded)
 app.use(express.urlencoded({ extended: true }));
 

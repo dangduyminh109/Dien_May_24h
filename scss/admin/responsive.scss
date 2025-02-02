@@ -75,13 +75,16 @@
         }
     }
 
-    .navbar {
-        z-index: 0;
-    }
 }
 
 /* ipad */
 @media (max-width: 767.98px) {
+    .create {
+        .brand{
+            display: block;
+        }
+    }
+
 }
 
 /* mobile */
