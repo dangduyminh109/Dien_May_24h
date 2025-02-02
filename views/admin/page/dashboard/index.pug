@@ -1,2 +1,4 @@
 extends ../../layout/default.pug
+include ../../mixins/page_header.pug
 block main 
+    +page_header("Dashboard", ["Dashboard"])

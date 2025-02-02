@@ -1,0 +1,127 @@
+extends ../../layout/default.pug
+include ../../mixins/page_header.pug
+block main 
+    +page_header("Danh sách sản phẩm", ["Sản phẩm","Danh sách sản phẩm"])
+    div(class="toolbar")
+        div(class="toolbar__box")
+            div(class="toolbar__left-box")
+                div(class="search")
+                    input(class="search__input", type="text", placeholder="Nhập từ khóa tìm kiếm", spellcheck="false")
+                    span(class="search__toolbar-icon")
+                        i(class="fa-solid fa-magnifying-glass")
+                button(id="filter-btn", class="filter-btn btn btn-primary", type="button")
+                    span(class="search__filter-icon")
+                        i(class="fa-solid fa-filter")
+                    | Lọc nâng cao
+                a(href="",id="trash-btn", class="trash-btn btn btn-primary")
+                    span(class="search__filter-icon")
+                        i(class="fa-solid fa-trash-can")
+                    | Thùng rác
+            div(class="toolbar__right-box")
+                a(href="/admin/product/create",class="create btn btn-primary")
+                    span(class="create__plus-icon")
+                        i(class="fa-solid fa-plus")
+                    | Thêm mới sản phẩm
+        div(id="toolbar__filter-box", class="toolbar__filter-box")
+            form(action="/admin/product/filter" method="POST") 
+                table(class="tables filter-box__tables")
+                    thead
+                        tr
+                        th(scope="col") Sắp Xếp
+                        th(scope="col") Last'
+                        th(scope="col") Handle
+                    tbody
+                        tr
+                            td 
+                                input(type="checkbox" name="sort" id="sort_1" value="A-Z")
+                                label(for="sort_1") A - Z
+                        tr
+                            td 
+                                input(type="checkbox" name="sort" id="sort_2" value="Z-A")
+                                label(for="sort_2") Z - A
+                        
+                        tr
+                            td(colspan="2") 
+                                input(type="checkbox" name="sort" id="sort_3" value="gia_cao")
+                                label(for="sort_3") Giá cao
+                        
+                        tr
+                            td(colspan="2") 
+                                input(type="checkbox" name="sort" id="sort_4" value="gia_thap")
+                                label(for="sort_4") Giá thấp
+                button(type="submit" class="btn btn-primary") submit
+    div(class="overview-block") 
+        div(class="overview-item total-products")
+            h3(class="overview-item__title total-products__title") Tổng số sản phẩm
+            p(class="overview-item__detail total-products__detail") 50
+        div(class="overview-item inventory")
+            h3(class="overview-item__title inventory__title") Tồn kho
+            p(class="overview-item__detail inventory__detail") 11111
+        div(class="overview-item out-of-stock")
+            h3(class="overview-item__title out-of-stock__title") Hết hàng
+            p(class="overview-item__detail out-of-stock__detail") 10
+        div(class="overview-item inventory-value")
+            h3(class="overview-item__title inventory-value__title") Giá trị hàng tồn
+            p(class="overview-item__detail inventory-value__detail") 5.231.465.435đ
+        div(class="overview-item total-inventory")
+            h3(class="overview-item__title total-inventory__title") Tổng vốn tồn
+            p(class="overview-item__detail total-inventory__detail") 2.334.323.232đ
+
+    div(class="list-products")
+         table(class="list-products__table")
+            thead
+                tr
+                th(scope="col") 
+                    input(type="checkbox" name="sort" id="select" value="1")
+                th(scope="col") Tên sản phẩm
+                th(scope="col") Mã sản phẩm
+                th(scope="col") Nhóm hàng
+                th(scope="col") Giá vốn
+                th(scope="col") Tồn kho 
+                th(scope="col") Trạng thái 
+                th(scope="col")  
+                th(scope="col")  
+            tbody
+                each item in [1,2,3,4,5,2,2,2,2,2,2,2,2,2,2]
+                    tr
+                        td 
+                            input(type="checkbox" name="sort" id="select" value="1")
+                        td  
+                            div(class="product-item__name")
+                                img(class="product-item__img" src="../../../admin/images/coc.jpg", alt="")
+                                h4(class="product-item__title") sản phẩm 1
+                        td 
+                            p 
+                                span(class="product-item__icon", id="product-item__icon-tag")
+                                    i(class="fa-solid fa-tag")
+                                | SP2769
+                            p 
+                                span(class="product-item__icon", id="product-item__icon-barcode")
+                                    i(class="fa-solid fa-barcode")
+                                | SP2769
+                        td 
+                            p nhóm hàng 1
+                        
+                        td 
+                            p 
+                                |   100.000đ
+                                span(id="product-item__icon-pen-cost", class="product-item__icon product-item__icon-pen")
+                                    i(class="fa-solid fa-pen")
+                        
+                        td 
+                            p 
+                                |   150.000đ
+                                span(id="product-item__icon-pen-inventory", class="product-item__icon product-item__icon-pen")
+                                    i(class="fa-solid fa-pen")
+                        
+                        td 
+                            div(class="toggle-product-item")
+                                    div(class="form-check form-switch")
+                                        input(id="toggle-product-item", class="form-check-input", type="checkbox", role="switch",checked)
+                            p(id="product-item__status") hoạt động          
+
+                        td 
+                            a(href="", class="btn-edit btn") sửa      
+                        td 
+                            a(href="", class="btn-delete btn btn-danger ") xóa      
+                                

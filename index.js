@@ -7,9 +7,14 @@ const routeAdmin = require("./routes/admin/index.route");
 const database = require("./config/database.config");
 database.connect();
 
-
 const app = express();
 const port = process.env.PORT;
+
+// Middleware để parse dữ liệu từ form (urlencoded)
+app.use(express.urlencoded({ extended: true }));
+
+// Middleware để parse dữ liệu JSON (nếu bạn sử dụng JSON)
+app.use(express.json());
 
 // set view engine
 app.set("view engine", "pug");

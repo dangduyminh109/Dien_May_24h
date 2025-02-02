@@ -1,0 +1,8 @@
+mixin page_header(title,breadcrumb)
+    div(class="page-header" id="page-header")
+        h1(class="page-header__title")= title 
+        nav(aria-label="breadcrumb")
+            ol(class="breadcrumb")
+                each item in breadcrumb
+                    li(class="breadcrumb-item")
+                        a(href="#")= item

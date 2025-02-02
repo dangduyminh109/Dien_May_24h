@@ -3,35 +3,45 @@ nav(class="navbar", id="navbar")
         h2(class="navigation__title") Navigation 
         ul(class="navigation__list")
             li(class="navigation-item")
-                button(class="navigation-item__btn btn",id="navigation-item__btn",type="button",data-bs-toggle="collapse",data-bs-target="#navigation-item__collapse",aria-expanded="false",aria-controls="navigation-item__collapse") 
+                button(class="navigation-item__btn btn",id="navigation-item__btn",type="button",data-bs-toggle="collapse",data-bs-target="#navigation-item__collapse-dashboard",aria-expanded="false",aria-controls="navigation-item__collapse-dashboard") 
                     span(class="navigation-item__btn-icon")
-                        i(class="fa-solid fa-house")
-                    | Dashboard
+                        i(class="fa-solid fa-gauge")
+                    | bảng điều khiển
                     span(class="navigation-item__btn-icon-down")
                         i(class="fa-solid fa-caret-down")
-                div(class="navigation-item__collapse collapse", id="navigation-item__collapse")
+                div(class="navigation-item__collapse-dashboard collapse", id="navigation-item__collapse-dashboard")
                     a(class="navigation-item__link",href="#") 
                         span(class="navigation-item__icon")
-                            i(class="fa-solid fa-chevron-right")
-                        h3(class="navigation-item__title") Analysis
+                            i(class="fa-solid fa-plus")
+                        h3(class="navigation-item__title") Phân tích
                     a(class="navigation-item__link",href="#") 
                         span(class="navigation-item__icon")
-                            i(class="fa-solid fa-chevron-right")
-                        h3(class="navigation-item__title") Ecommerce
+                            i(class="fa-solid fa-plus")
+                        h3(class="navigation-item__title") E-Commerce
                     a(class="navigation-item__link",href="#") 
                         span(class="navigation-item__icon")
-                            i(class="fa-solid fa-chevron-right")
-                        h3(class="navigation-item__title") Project
+                            i(class="fa-solid fa-plus")
+                        h3(class="navigation-item__title") Tài chính
                     a(class="navigation-item__link",href="#") 
                         span(class="navigation-item__icon")
-                            i(class="fa-solid fa-chevron-right")
-                        h3(class="navigation-item__title") CRM
-                    a(class="navigation-item__link",href="#") 
-                        span(class="navigation-item__icon")
-                            i(class="fa-solid fa-chevron-right")
-                        h3(class="navigation-item__title") E-Wallet
-                a(class="navigation-item__btn",id="navigation-item__btn",href="#") 
+                            i(class="fa-solid fa-plus")
+                        h3(class="navigation-item__title") Bán hàng
+
+
+            li(class="navigation-item")
+                button(class="navigation-item__btn btn",id="navigation-item__btn",type="button",data-bs-toggle="collapse",data-bs-target="#navigation-item__collapse-product",aria-expanded="false",aria-controls="navigation-item__collapse-product") 
                     span(class="navigation-item__btn-icon")
-                        i(class="fa-solid fa-gear")
-                    | Setting
+                        i(class="fa-brands fa-product-hunt")
+                    | sản phẩm
+                    span(class="navigation-item__btn-icon-down")
+                        i(class="fa-solid fa-caret-down")
+                div(class="navigation-item__collapse-product collapse", id="navigation-item__collapse-product")
+                    a(class="navigation-item__link",href="/admin/product") 
+                        span(class="navigation-item__icon")
+                            i(class="fa-solid fa-plus")
+                        h3(class="navigation-item__title") danh sách sản phẩm
+                    a(class="navigation-item__link",href="#") 
+                        span(class="navigation-item__icon")
+                            i(class="fa-solid fa-plus")
+                        h3(class="navigation-item__title") danh mục sản phẩm
 </nav>
