@@ -1,7 +1,10 @@
 extends ../../layout/default.pug
 include ../../mixins/page_header.pug
 block main 
-    +page_header("Danh sách sản phẩm", [{name: "Sản phẩm",href: "/admin/product"},{name: "Danh sách sản phẩm",href: "/admin/product"}])
+    +page_header("Danh sách sản phẩm", [
+        { name: "Sản phẩm", href: `${PATH_ADMIN}/product` },
+        { name: "Danh sách sản phẩm", href: `${PATH_ADMIN}/product` },
+    ])
     div(class="toolbar")
         div(class="toolbar__box")
             div(class="toolbar__left-box")
@@ -18,12 +21,12 @@ block main
                         i(class="fa-solid fa-trash-can")
                     | Thùng rác
             div(class="toolbar__right-box")
-                a(href="/admin/product/create",class="create btn btn-primary")
+                a(href=`${PATH_ADMIN}/product/create`,class="create btn btn-primary")
                     span(class="create__plus-icon")
                         i(class="fa-solid fa-plus")
                     | Thêm mới sản phẩm
         div(id="toolbar__filter-box", class="toolbar__filter-box")
-            form(action="/admin/product/filter" method="POST") 
+            form(action=`${PATH_ADMIN}/product/filter`,method="POST") 
                 table(class="tables filter-box__tables")
                     thead
                         tr

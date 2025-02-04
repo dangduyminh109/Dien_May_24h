@@ -49,19 +49,21 @@ screenIconExpand.forEach((element) => {
     };
 });
 
-screenIconCompress.forEach((element) => {
-    element.onclick = () => {
-        screenIconExpand.forEach((element) => {
-            element.classList.add("active");
-        });
-        screenIconCompress.forEach((element) => {
-            element.classList.remove("active");
-        });
-        if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen();
-        }
-    };
-});
+if (screenIconCompress) {
+    screenIconCompress.forEach((element) => {
+        element.onclick = () => {
+            screenIconExpand.forEach((element) => {
+                element.classList.add("active");
+            });
+            screenIconCompress.forEach((element) => {
+                element.classList.remove("active");
+            });
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            }
+        };
+    });
+}
 
 // toggle navbar
 toggleNav.onclick = () => {
@@ -111,6 +113,49 @@ if (filterBtn) {
         toolbarFilterBox.style.height = "100%";
     };
 }
+/* ============ upload file =========== */
+const imageGroup = document.getElementById("image-group");
+const uploadFile = document.querySelector("input[type='file']");
+const MAX_IMAGES = 10;
+if (uploadFile) {
+    uploadFile.onchange = (e) => {
+        var files = [...uploadFile.files];
+        if (files.length == 0) return;
+        if (files.length > MAX_IMAGES) {
+            alert(`Chỉ được chọn tối đa ${MAX_IMAGES} ảnh!`);
+            files = files.slice(0, MAX_IMAGES);
+        }
+        files.forEach((file) => {
+            var thumbnailPreview = document.createElement("div");
+            var imgPreview = document.createElement("img");
+            var closeIcon = document.createElement("span");
+            imgPreview.src = URL.createObjectURL(file);
+
+            closeIcon.classList.add("image__close-icon");
+
+            closeIcon.innerHTML += `<i
+                class="fa-solid fa-circle-xmark"
+                style="
+                    background-color: #fff;
+                    border-radius: 50%;
+                    display: block;
+                "
+            ></i>`;
+
+            thumbnailPreview.append(imgPreview, closeIcon);
+            thumbnailPreview.classList.add("image-group__preview");
+
+            // Giải phóng bộ nhớ sau khi ảnh load xong
+            imgPreview.onload = () => URL.revokeObjectURL(imgPreview.src);
+
+            imageGroup.prepend(thumbnailPreview);
+            closeIcon.onclick = (e) => {
+                e.target.closest(".image-group__preview").remove();
+            };
+        });
+    };
+}
+
 /* ============ box =========== */
 /* ======================================= block ======================================= */
 if (window.matchMedia("(max-width: 575.98px)").matches) {
