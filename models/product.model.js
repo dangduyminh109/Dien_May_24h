@@ -13,7 +13,7 @@ const productSchema = new mongoose.Schema(
         category: String,
         status: String,
         description: String,
-        thumbnail: Array,
+        thumbnails: Array,
     },
     {
         timestamps: true,

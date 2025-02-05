@@ -33,6 +33,7 @@ li {
     padding: 103px 30px 20px 280px;
     background-color: $page-bg-color;
     color: $text-color-2;
+    min-height: 100vh;
     transition: 0.5s ease-in-out;
 }
 
@@ -64,7 +65,7 @@ li {
 .btn-status {
     display: flex;
     gap: 5px;
-    .btn-status__desc{
+    .btn-status__desc {
         margin: 0;
     }
     .form-check-input {
@@ -91,7 +92,7 @@ li {
         }
     }
 }
-.important-item{
+.important-item {
     color: red;
 }
 /* ======================================= end general ======================================= */

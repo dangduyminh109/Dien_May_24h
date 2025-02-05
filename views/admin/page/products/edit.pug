@@ -1,0 +1,94 @@
+extends ../../layout/default.pug
+include ../../mixins/page_header.pug
+block main 
+    +page_header("Chỉnh sửa sản phẩm", [
+        { name: "Sản phẩm", href: `${PATH_ADMIN}/product` },
+        { name: "Danh sách sản phẩm", href: `${PATH_ADMIN}/product` },
+        { name: "Chỉnh sửa sản phẩm", href: `${PATH_ADMIN}/product/edit` },
+    ])
+    div(class="edit")
+        form(action=`${PATH_ADMIN}/product/edit/${product._id}`, method="post",enctype="multipart/form-data",id="form-edit")
+            h1(class="edit__title") Thông tin chung
+            div(class="general")
+                div(class="form-group")
+                    div(class="name form-item")
+                        label(for="name") 
+                            | Tên sản phẩm (
+                            span(class="important-item") *
+                            | )
+                        input(class="form-control",id="name",name="name",type="text",value=product.name,required)
+                    div(class="code form-item")
+                        label(for="code") 
+                            | mã sản phẩm (
+                            span(class="important-item") *
+                            | )
+                        input(class="form-control",id="code",name="code",type="text",value=product.code,required)    
+                div(class="form-group")
+                    div(class="original_price form-item")
+                        label(for="original_price") Giá gốc(VND)
+                        input(class="form-control",id="original_price",name="original_price",value=product.original_pice,type="number",placeholder="0",min="0")  
+                    div(class="price form-item")
+                        label(for="price") 
+                            | Giá bán(VND) (
+                            span(class="important-item") *
+                            | )
+                        input(class="form-control",id="price",name="price",value=product.price,type="number",placeholder="0",min="0",required) 
+                    div(class="discount form-item")
+                        label(for="discount") giảm giá(%)
+                        input(class="form-control",id="discount",name="discount",value=product.discount,type="number",placeholder="0",min="0")
+                    div(class="inventory form-item")
+                        label(for="inventory") tồn kho
+                        input(class="form-control",id="inventory",name="inventory",value=product.inventory,type="number",placeholder="0",min="0")           
+                div(class="form-group")
+                    div(class="supplier form-item")
+                        label(for="supplier") Nhà cung cấp
+                        input(type="text", id="supplier",name="supplier",value=product.supplier) 
+                    div(class="category form-item")
+                        label(for="category")  
+                            | Danh mục (
+                            span(class="important-item") *
+                            | )
+                        select(name="category", id="category" ,required) 
+                            option(value="" disabled) -- chọn danh mục -- 
+                            option(value="danh mục 1" selected= product.category == "danh mục 1" ? true:false) danh mục 1
+                            option(value="danh mục 2" selected= product.category == "danh mục 2" ? true:false) danh mục 2
+                            option(value="danh mục 3" selected= product.category == "danh mục 3" ? true:false) danh mục 3
+                            option(value="danh mục 4" selected= product.category == "danh mục 4" ? true:false) danh mục 4
+                            option(value="danh mục 5" selected= product.category == "danh mục 5" ? true:false) danh mục 5
+                            option(value="danh mục 6" selected= product.category == "danh mục 6" ? true:false) danh mục 6
+                    div(class="edit-category form-item")
+                        p(class="edit-category__title") Thêm danh mục 
+                        a(href="" class="btn edit-category__btn")
+                            i(class="fa-solid fa-plus") 
+                label(for="check") Trạng thái 
+                div(class="btn-status")
+                    div(class="btn-status-toggle")
+                            div(class="form-check form-switch")
+                                input(class="form-check-input btn-status-form",name="status",type="checkbox",id="check", role="switch",checked=product.status == "on" ? true:false)
+                    p(class="btn-status__desc") Hoạt động          
+                label(for="description") Mô tả sản phẩm
+                textarea(class="textarea-mce",name="description",id="description") 
+                    != product.description 
+            h1(class="create__title") 
+                | Hình ảnh (
+                span(class="important-item") *
+                | )
+            div(class="form-group")
+                div(class="image form-item")
+                    div(class="image-group", id="image-group")
+                        if product.thumbnails.length > 0
+                            each imgSrc in product.thumbnails 
+                                div(class="image-group__preview")
+                                    img(src=imgSrc)
+                                    span(class="image__close-icon" )
+                                        i(class="fa-solid fa-circle-xmark", style="background-color: #fff; border-radius: 50%; display: block;")
+                        label(class="image__upload" for="image") 
+                            span(class="image__upload-icon")
+                                i(class="fa-solid fa-upload")
+                            |   upload
+                            input(id="image",name="thumbnails",type="file",accept="image/*",multiple)
+            input(type="hidden",name="thumbnailDeleted",id="thumbnail-deleted")
+            button(type="submit" ,class="btn edit-btn" ) sửa Sản Phẩm 
+
+
+            

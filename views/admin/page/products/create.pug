@@ -3,8 +3,8 @@ include ../../mixins/page_header.pug
 block main 
     +page_header("Tạo mới sản phẩm", [
         { name: "Sản phẩm", href: `${PATH_ADMIN}/product` },
-        { name: "Danh sách sản phẩm", href: `${PATH_ADMIN}min/product` },
-        { name: "Tạo mới sản phẩm", href: `${PATH_ADMIN}min/product/create1` },
+        { name: "Danh sách sản phẩm", href: `${PATH_ADMIN}/product` },
+        { name: "Tạo mới sản phẩm", href: `${PATH_ADMIN}/product/create` },
     ])
     div(class="create")
         form(action=`${PATH_ADMIN}/product/create`, method="post",enctype="multipart/form-data")

@@ -131,18 +131,18 @@
     }
     .list-products__table {
         width: 100%;
-        min-width: 991px;
+        min-width: 1150px;
     }
 
     .product-item__name {
         display: flex;
         align-items: center;
         max-width: 170px;
+        height: 50px;
         overflow: hidden;
     }
 
     .product-item__img {
-        width: 50px;
         width: 50px;
     }
     .product-item__title {
@@ -161,6 +161,14 @@
 
     .product-item__icon {
         margin: 0 10px;
+    }
+
+    .product-item__input {
+        display: none;
+        border: 2px solid #b7c0cd;
+        width: 100px;
+        border-radius: 3px;
+        overflow: hidden;
     }
 
     .product-item__inventory,
