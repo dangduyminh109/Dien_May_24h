@@ -118,7 +118,7 @@
     }
 }
 
-.list-products {
+.list-product {
     padding-top: 30px;
     font-size: 1.2rem;
     overflow: auto;
@@ -134,9 +134,19 @@
         background-color: $color-hover;
         border-radius: 50px;
     }
-    .list-products__table {
+    .list-product__table {
         width: 100%;
         min-width: 1150px;
+    }
+
+    .list-product__sort-icon{
+        font-size: 1.2rem;
+        cursor: pointer;
+        color: $primary;
+        padding: 5px;
+        &:hover{
+            color: $color-hover;
+        }
     }
 
     .product-item__name {

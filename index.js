@@ -6,6 +6,9 @@ const methodOverride = require("method-override");
 const routeClient = require("./routes/client/index.route");
 const routeAdmin = require("./routes/admin/index.route");
 const database = require("./config/database.config");
+const sortMiddleware = require("./middlewares/sort.middleware");
+const pugHelperMiddleware = require("./middlewares/pugHelper.middleware");
+
 database.connect();
 
 const app = express();
@@ -24,6 +27,12 @@ app.use(express.urlencoded({ extended: true }));
 
 // Middleware để parse dữ liệu JSON (nếu bạn sử dụng JSON)
 app.use(express.json());
+
+// sort Middleware
+app.use(sortMiddleware);
+
+// pug Helper Middleware
+app.use(pugHelperMiddleware);
 
 // set view engine
 app.set("view engine", "pug");

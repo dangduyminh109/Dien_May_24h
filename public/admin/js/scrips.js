@@ -305,6 +305,20 @@ function handleEditForm() {
         });
     }
 }
+/* ============ handle sort product =========== */
+function handleSortProduct() {
+    
+    const listProductSortIcon = document.querySelectorAll(
+        ".list-product__sort-icon"
+    );
+
+    listProductSortIcon.forEach((item) => {
+        item.onclick = () => {
+            item.firstChild.classList = "fa-solid fa-arrow-down-short-wide";
+        }
+    })
+
+}
 
 /* ======================================= handle responsive ======================================= */
 function handleResponsiveNav() {
@@ -350,6 +364,7 @@ function init() {
     handleEditForm();
     handleResponsiveNav();
     handleDeleteProduct();
+    handleSortProduct();
 }
 
 document.addEventListener("DOMContentLoaded", init);

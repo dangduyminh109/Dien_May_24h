@@ -5,7 +5,15 @@ const slugify = require("slugify");
 class productController {
     // [GET] /admin/products
     async show(req, res) {
-        const listProduct = await Product.find();
+        var listProduct;
+        if (req.query.type == "default") {
+            listProduct = await Product.find();
+        } else {
+            const sortType = req.query.type === "asc" ? 1 : -1;
+            listProduct = await Product.find().sort({
+                [req.query.filed]: sortType,
+            });
+        }
         const general = {
             totalProduct: listProduct.length,
             inventory: listProduct.reduce(

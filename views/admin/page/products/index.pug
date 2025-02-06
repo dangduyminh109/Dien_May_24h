@@ -5,6 +5,8 @@ block main
         { name: "Sản phẩm", href: `${PATH_ADMIN}/product` },
         { name: "Danh sách sản phẩm", href: `${PATH_ADMIN}/product` },
     ])
+
+    
     div(class="toolbar")
         div(class="toolbar__box")
             div(class="toolbar__left-box")
@@ -31,9 +33,12 @@ block main
                     thead
                         tr
                         th(scope="col") Sắp Xếp
-                        th(scope="col") Last'
-                        th(scope="col") Handle
+                        th(scope="col") Bộ Lọc
+                        th(scope="col") Xử Lí
                     tbody
+                        tr
+                            td 
+                                h3 Tên sản phẩm
                         tr
                             td 
                                 input(type="checkbox" name="sort" id="sort_1" value="A-Z")
@@ -66,20 +71,32 @@ block main
         div(class="overview-item inventory-value")
             h3(class="overview-item__title inventory-value__title") Giá trị hàng tồn
             p(class="overview-item__detail inventory-value__detail") #{general.inventoryTotalValue.toLocaleString('vi-VN')}đ
-
-    div(class="list-products")
-         table(class="list-products__table")
+    
+    div(class="list-product")
+         table(class="list-product__table")
             thead
                 tr
                 th(scope="col") 
                     input(type="checkbox" name="sort" id="select" value="1")
-                th(scope="col") Tên sản phẩm
-                th(scope="col") Mã sản phẩm
+                th(scope="col") 
+                    |   Tên sản phẩm
+                    !=pugHepper.sort("name", _sort)
+                th(scope="col") 
+                    |   Mã sản phẩm
+                    !=pugHepper.sort("code", _sort)
                 th(scope="col") Danh mục
-                th(scope="col") Giá gốc
-                th(scope="col") Giá bán
-                th(scope="col") giảm giá
-                th(scope="col") Tồn kho 
+                th(scope="col") 
+                    |   Giá gốc
+                    !=pugHepper.sort("original_price", _sort)
+                th(scope="col") 
+                    |   Giá bán
+                    !=pugHepper.sort("price", _sort)
+                th(scope="col") 
+                    |   giảm giá
+                    !=pugHepper.sort("discount", _sort)
+                th(scope="col") 
+                    |   Tồn kho 
+                    !=pugHepper.sort("inventory", _sort)
                 th(scope="col") Trạng thái 
                 th(scope="col")  
                 th(scope="col")  
