@@ -8,6 +8,7 @@ const productController = require("../../controller/admin/Product.controller");
 
 router.get("/", productController.show);
 router.get("/create", productController.create);
+router.get("/products-trash", productController.productsTrash);
 router.get("/edit/:id", productController.edit);
 
 router.post(
@@ -15,11 +16,18 @@ router.post(
     upload.array("thumbnails", 12),
     productController.createPost
 );
-router.post(
+
+router.patch(
     "/edit/:id",
     upload.array("thumbnails", 12),
     productController.editPost
 );
-router.post("/update-price", productController.updatePricePost);
-router.post("/update-status", productController.updateStatusPost);
+
+router.patch("/update-price", productController.updatePricePatch);
+router.patch("/update-status", productController.updateStatusPatch);
+router.patch("/restore-product/:id", productController.restore);
+
+
+router.delete("/delete-product/:id", productController.delete);
+router.delete("/destroy-product/:id", productController.destroy);
 module.exports = router;

@@ -1,6 +1,7 @@
 require("dotenv").config();
 const path = require("path");
 const express = require("express");
+const methodOverride = require("method-override");
 
 const routeClient = require("./routes/client/index.route");
 const routeAdmin = require("./routes/admin/index.route");
@@ -14,6 +15,9 @@ app.use(
     "/tinymce",
     express.static(path.join(__dirname, "node_modules", "tinymce"))
 );
+
+// override with POST having ?_method=...
+app.use(methodOverride("_method"));
 
 // Middleware để parse dữ liệu từ form (urlencoded)
 app.use(express.urlencoded({ extended: true }));

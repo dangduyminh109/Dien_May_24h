@@ -95,4 +95,35 @@ li {
 .important-item {
     color: red;
 }
+
+// modal
+.modal-content {
+    background-color: $text-color-3;
+    border-radius: 5px;
+    color: #fff;
+    padding: 10px 20px;
+}
+
+.warning-delete-modal__close-btn {
+    background-color: $primary;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    &:hover {
+        background-color: $color-hover;
+    }
+}
+.close-button{
+    background-color: transparent;
+    font-size: 2rem;
+    color: #fff;
+    border: none;
+}
+.warning-text {
+    color: $color-hover;
+}
+.warning-delete-modal__delete-btn {
+    cursor: pointer;
+}
+
 /* ======================================= end general ======================================= */

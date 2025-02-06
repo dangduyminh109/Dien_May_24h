@@ -7,7 +7,7 @@ block main
         { name: "Chỉnh sửa sản phẩm", href: `${PATH_ADMIN}/product/edit` },
     ])
     div(class="edit")
-        form(action=`${PATH_ADMIN}/product/edit/${product._id}`, method="post",enctype="multipart/form-data",id="form-edit")
+        form(action=`${PATH_ADMIN}/product/edit/${product._id}?_method=PATCH`, method="post",enctype="multipart/form-data",id="form-edit")
             h1(class="edit__title") Thông tin chung
             div(class="general")
                 div(class="form-group")
@@ -88,7 +88,9 @@ block main
                             |   upload
                             input(id="image",name="thumbnails",type="file",accept="image/*",multiple)
             input(type="hidden",name="thumbnailDeleted",id="thumbnail-deleted")
-            button(type="submit" ,class="btn edit-btn" ) sửa Sản Phẩm 
+            div(class="form-group__btn")
+                a(href="/admin/product" class="btn back-btn") quay lại
+                button(type="submit" class="btn create-btn") Sửa Sản Phẩm 
 
 
             

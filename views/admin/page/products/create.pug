@@ -64,7 +64,7 @@ block main
                 div(class="btn-status")
                     div(class="btn-status-toggle")
                             div(class="form-check form-switch")
-                                input(class="form-check-input",name="status",type="checkbox",id="check", role="switch",checked)
+                                input(class="form-check-input btn-status-form",name="status",type="checkbox",id="check", role="switch",checked=true)
                     p(class="btn-status__desc") Hoạt động          
                 label(for="description") Mô tả sản phẩm
                 textarea(class="textarea-mce",name="description",id="description") 
@@ -80,9 +80,10 @@ block main
                             span(class="image__upload-icon")
                                 i(class="fa-solid fa-upload")
                             |   upload
-                            input(id="image",name="thumbnail",type="file",accept="image/*",required,multiple)
-
-            button(type="submit" class="btn create-btn") Tạo Sản Phẩm 
+                            input(id="image",name="thumbnails",type="file",accept="image/*",required,multiple)
+            div(class="form-group__btn")
+                a(href="/admin/product" class="btn back-btn") quay lại
+                button(type="submit" class="btn create-btn") Tạo Sản Phẩm 
 
 
             

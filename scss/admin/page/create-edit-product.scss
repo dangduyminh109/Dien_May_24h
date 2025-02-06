@@ -1,4 +1,5 @@
-.create,.edit {
+.create,
+.edit {
     color: $text-color-3;
 
     label {
@@ -15,7 +16,8 @@
         outline: none;
     }
 
-    .create__title,.edit__title {
+    .create__title,
+    .edit__title {
         margin: 0;
         font-size: 2rem;
         padding: 20px 0 5px 0;
@@ -51,13 +53,16 @@
         min-width: 150px;
     }
 
-    .edit-category {
+    .edit-category,
+    .create-category {
         align-self: flex-end;
     }
-    .edit-category__title {
+    .edit-category__title,
+    .create-category__title {
         margin: 10px 0 0 0;
     }
-    .edit-category__btn {
+    .edit-category__btn,
+    .create-category__btn {
         color: #fff;
         background-color: $primary;
         width: 25%;
@@ -71,14 +76,17 @@
             width: 45px;
         }
     }
-
+    .form-group__btn {
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .create-btn,.back-btn,
     .edit-btn {
         background-color: $primary;
         color: #fff;
         font-size: 1.4rem;
         margin-top: 20px;
-        display: block;
-        margin-left: auto;
         &:hover {
             background-color: $color-hover;
         }
@@ -104,8 +112,8 @@
             padding: 5px;
             border: 1px solid $text-color-3;
             position: relative;
-            
-            .image__close-icon{
+
+            .image__close-icon {
                 font-size: 1.6rem;
                 position: absolute;
                 top: -8px;
@@ -114,8 +122,8 @@
                 background-color: #fff;
                 cursor: pointer;
                 border-radius: 50%;
-                &:hover{
-                    color:red;
+                &:hover {
+                    color: red;
                 }
             }
 
@@ -143,7 +151,7 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        &:hover{
+        &:hover {
             color: $color-hover;
             border: 1px dashed $color-hover;
         }

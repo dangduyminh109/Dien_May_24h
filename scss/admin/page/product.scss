@@ -40,7 +40,10 @@
     /* ============  right-box =========== */
     .filter-btn,
     .trash-btn,
-    .create {
+    .back-btn,
+    .trash-btn,
+    .btn-restore,
+    .create-btn {
         margin-top: 5px;
         background-color: $primary;
         border: none;
@@ -49,10 +52,12 @@
             background-color: $color-hover;
         }
     }
-    .trash-btn {
+    .trash-btn,
+    .back-btn {
         margin-left: 5px;
     }
     .search__filter-icon,
+    .product__list-icon,
     .create__plus-icon {
         margin-right: 5px;
     }
@@ -186,10 +191,15 @@
             padding: 10px 0;
         }
     }
-    .btn-edit {
+    .btn-edit,
+    .btn-restore {
         background-color: $primary;
         color: #fff;
+        &:hover{
+            background-color: $color-hover;
+        }
     }
+
     .product-item__icon-pen {
         color: $primary;
         cursor: pointer;
@@ -215,6 +225,17 @@
             box-shadow: 0 0 0 0.25rem rgba(#4caf50, 0.25);
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%234CAF50'/%3e%3c/svg%3e");
         }
+    }
+
+    .noProducts {
+        display: inline-block;
+        font-size: 1.4rem;
+        margin-right: 3px;
+    }
+    .noProducts__link {
+        font-size: 1.4rem;
+        color: $color-hover;
+        text-decoration: underline solid;
     }
 }
 

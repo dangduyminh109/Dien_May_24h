@@ -1,9 +1,9 @@
 extends ../../layout/default.pug
 include ../../mixins/page_header.pug
 block main 
-    +page_header("Danh sách sản phẩm", [
+    +page_header("Danh sách sản phẩm đã xóa", [
         { name: "Sản phẩm", href: `${PATH_ADMIN}/product` },
-        { name: "Danh sách sản phẩm", href: `${PATH_ADMIN}/product` },
+        { name: "Thùng rác", href: `${PATH_ADMIN}/product/products-trash` },
     ])
     div(class="toolbar")
         div(class="toolbar__box")
@@ -16,15 +16,15 @@ block main
                     span(class="search__filter-icon")
                         i(class="fa-solid fa-filter")
                     | Lọc nâng cao
-                a(href=`${PATH_ADMIN}/product/products-trash`,id="trash-btn", class="trash-btn btn btn-primary")
+                a(href=`${PATH_ADMIN}/product`, class="back-btn btn btn-primary")
                     span(class="search__filter-icon")
-                        i(class="fa-solid fa-trash-can")
-                    | Thùng rác
+                        i(class="fa-solid fa-reply")
+                    | Quay lại
             div(class="toolbar__right-box")
-                a(href=`${PATH_ADMIN}/product/create`,class="create-btn btn btn-primary")
-                    span(class="create__plus-icon")
-                        i(class="fa-solid fa-plus")
-                    | Thêm mới sản phẩm
+                a(href=`${PATH_ADMIN}/product`,class="trash-btn btn btn-primary")
+                    span(class="product__list-icon")
+                        i(class="fa-regular fa-rectangle-list")
+                    | Danh sách sản phẩm
         div(id="toolbar__filter-box", class="toolbar__filter-box")
             form(action=`${PATH_ADMIN}/product/filter`,method="POST") 
                 table(class="tables filter-box__tables")
@@ -53,19 +53,19 @@ block main
                                 input(type="checkbox" name="sort" id="sort_4" value="gia_thap")
                                 label(for="sort_4") Giá thấp
                 button(type="submit" class="btn btn-primary") submit
-    div(class="overview-block") 
-        div(class="overview-item total-products")
-            h3(class="overview-item__title total-products__title") Tổng số sản phẩm
-            p(class="overview-item__detail total-products__detail") #{general.totalProduct}
-        div(class="overview-item inventory")
-            h3(class="overview-item__title inventory__title") Tồn kho
-            p(class="overview-item__detail inventory__detail") #{general.inventory}
-        div(class="overview-item out-of-stock")
-            h3(class="overview-item__title out-of-stock__title") Hết hàng
-            p(class="overview-item__detail out-of-stock__detail") #{general.outOfStock}
-        div(class="overview-item inventory-value")
-            h3(class="overview-item__title inventory-value__title") Giá trị hàng tồn
-            p(class="overview-item__detail inventory-value__detail") #{general.inventoryTotalValue.toLocaleString('vi-VN')}đ
+    //- div(class="overview-block") 
+    //-     div(class="overview-item total-products")
+    //-         h3(class="overview-item__title total-products__title") Tổng số sản phẩm
+    //-         p(class="overview-item__detail total-products__detail") #{general.totalProduct}
+    //-     div(class="overview-item inventory")
+    //-         h3(class="overview-item__title inventory__title") Tồn kho
+    //-         p(class="overview-item__detail inventory__detail") #{general.inventory}
+    //-     div(class="overview-item out-of-stock")
+    //-         h3(class="overview-item__title out-of-stock__title") Hết hàng
+    //-         p(class="overview-item__detail out-of-stock__detail") #{general.outOfStock}
+    //-     div(class="overview-item inventory-value")
+    //-         h3(class="overview-item__title inventory-value__title") Giá trị hàng tồn
+    //-         p(class="overview-item__detail inventory-value__detail") #{general.inventoryTotalValue.toLocaleString('vi-VN')}đ
 
     div(class="list-products")
          table(class="list-products__table")
@@ -84,8 +84,8 @@ block main
                 th(scope="col")  
                 th(scope="col")  
             tbody
-                if listProduct.length > 0
-                    each product in listProduct
+                if listDeletedProduct.length > 0
+                    each product in listDeletedProduct
                         tr
                             td 
                                 input(type="checkbox" name="sort" value="1")
@@ -133,14 +133,15 @@ block main
                                     p(class="btn-status__desc") Hoạt động          
 
                             td 
-                                a(href=`${PATH_ADMIN}/product/edit/${product._id}`, class="btn-edit btn") Sửa      
+                                form(method="POST", action=`${PATH_ADMIN}/product/restore-product/${product._id}?_method=PATCH`)
+                                    button(type="submit", class="btn-restore btn") Khôi phục  
                             td 
-                                button(type="button", class="btn-delete btn btn-danger", data-bs-id = product._id ,data-bs-toggle="modal", data-bs-target="#warningDeleteModal") Xóa 
+                                button(type="button", class="btn-destroy btn btn-danger",data-bs-toggle="modal",data-bs-id = product._id, data-bs-target="#warningDeleteModal") Xóa vĩnh viễn  
                 else  
                     tr 
                         td(colspan="9")
-                            p(class="noProducts") Không có sản phẩm nào!   
-                            a(class="noProducts__link", href=`${PATH_ADMIN}/product/create`) Tạo sản phẩm.
+                            p(class="noProducts") Không có sản phẩm nào đã xóa!   
+                            a(class="noProducts__link", href=`${PATH_ADMIN}/product`) Danh sách sản phẩm.
 
 
     form(method="POST", type="hidden",id="form-product-delete" ,action=``)
@@ -154,7 +155,11 @@ block main
                         span
                             i(class="fa-solid fa-xmark")
                 div(class="modal-body")
-                    | Bạn có chắc chắn muốn xóa sản phẩm này không?
+                    |   Bạn có chắc chắn muốn 
+                    b xóa vĩnh viễn
+                    |   sản phẩm này không?
+                    span(class="warning-text")  Hành động này không thể hoàn tác!!!
                 div(class="modal-footer")
                     button(type="button" class="warning-delete-modal__close-btn btn btn-secondary" data-bs-dismiss="modal") Đóng
                     button(type="button" id="warning-delete-modal__delete-btn", class="warning-delete-modal__delete-btn btn btn-danger") Xóa
+                               

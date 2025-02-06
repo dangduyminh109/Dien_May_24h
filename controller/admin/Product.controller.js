@@ -3,7 +3,7 @@ const Product = require("../../models/product.model.js");
 const slugify = require("slugify");
 
 class productController {
-    // [GET] /admin/products/create
+    // [GET] /admin/products
     async show(req, res) {
         const listProduct = await Product.find();
         const general = {
@@ -44,6 +44,18 @@ class productController {
             pageTitle: "edit Products",
             PATH_ADMIN: system.PATH_ADMIN,
             product,
+        });
+    }
+
+    // [GET] /admin/products/products-trash
+    async productsTrash(req, res) {
+        const listDeletedProduct = await Product.findWithDeleted({
+            deleted: true,
+        });
+        res.render("./admin/page/products/products-trash", {
+            pageTitle: "Create products",
+            PATH_ADMIN: system.PATH_ADMIN,
+            listDeletedProduct,
         });
     }
 
@@ -89,7 +101,7 @@ class productController {
         }
     }
 
-    // [POST] /admin/products/edit:id
+    // [PATCH] /admin/products/edit:id
     async editPost(req, res) {
         try {
             const formData = req.body;
@@ -150,22 +162,44 @@ class productController {
         }
     }
 
-    // [POST] /admin/products/update-price
-    async updatePricePost(req, res) {
+    // [PATCH] /admin/products/update-price
+    async updatePricePatch(req, res) {
         const priceUpdate = req.body;
         await Product.updateOne(
             { _id: priceUpdate._id },
             { [priceUpdate.field]: parseInt(priceUpdate.value) }
         );
+
+        res.json({ message: "Cập nhật thành công" });
     }
 
-    // [POST] /admin/products/update-status
-    async updateStatusPost(req, res) {
+    // [PATCH] /admin/products/update-status
+    async updateStatusPatch(req, res) {
         const priceUpdate = req.body;
         await Product.updateOne(
             { _id: priceUpdate._id },
             { status: priceUpdate.value }
         );
+
+        res.json({ message: "Cập nhật thành công" });
+    }
+
+    // [PATCH] /admin/products/restore-status
+    async restore(req, res) {
+        await Product.restore({ _id: req.params.id });
+        res.redirect("/admin/product/products-trash");
+    }
+
+    // [DELETE] /admin/products/delete-product/:id
+    async delete(req, res) {
+        await Product.delete({ _id: req.params.id });
+        res.redirect("/admin/product");
+    }
+
+    // [DELETE] /admin/products/destroy-product/:id
+    async destroy(req, res) {
+        await Product.deleteOne({ _id: req.params.id });
+        res.redirect("/admin/product/products-trash");
     }
 }
 

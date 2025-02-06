@@ -130,7 +130,7 @@ function handleFilterButton() {
 function handleFileUpload() {
     const imageGroup = document.getElementById("image-group");
     const uploadFile = document.querySelector("input[type='file']");
-    const MAX_IMAGES = 10;
+    const MAX_IMAGES = 12;
 
     if (uploadFile) {
         uploadFile.onchange = (e) => {
@@ -183,7 +183,7 @@ function handleProductItemChange() {
                     ).toLocaleString("vi-VN")}đ`;
                     parent.style.display = "block";
                     ProductItemInput.style.display = "none";
-                    fetch(`${PATH_ADMIN}/product/update-price`, {
+                    fetch(`${PATH_ADMIN}/product/update-price?_method=PATCH`, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
@@ -215,7 +215,7 @@ function handleStatusInput() {
                     element.value = "off";
                     btnStatusDesc.textContent = "Không hoạt động";
                 }
-                fetch(`${PATH_ADMIN}/product/update-status`, {
+                fetch(`${PATH_ADMIN}/product/update-status?_method=PATCH`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -224,9 +224,42 @@ function handleStatusInput() {
                         value: element.value,
                         _id: element.getAttribute("_id"),
                     }),
-                }).catch((error) => console.error("Lỗi cập nhật:", error));
+                })
+                    .then((data) => console.log(data))
+                    .catch((error) => console.error("Lỗi cập nhật:", error));
             }, 300);
         });
+    }
+}
+
+/* ============ handle delete product =========== */
+function handleDeleteProduct() {
+    const btnDelete = document.querySelectorAll(".btn-delete");
+    const btnDestroy = document.querySelectorAll(".btn-destroy");
+    const formProductDelete = document.getElementById("form-product-delete");
+    const warningDeleteModalDeleteBtn = document.getElementById(
+        "warning-delete-modal__delete-btn"
+    );
+    if (formProductDelete && warningDeleteModalDeleteBtn) {
+        if (btnDelete) {
+            btnDelete.forEach((btn) => {
+                btn.onclick = () => {
+                    const idProduct = btn.getAttribute("data-bs-id");
+                    formProductDelete.action = `${PATH_ADMIN}/product/delete-product/${idProduct}?_method=DELETE`;
+                };
+            });
+        }
+        if (btnDestroy) {
+            btnDestroy.forEach((btn) => {
+                btn.onclick = () => {
+                    const idProduct = btn.getAttribute("data-bs-id");
+                    formProductDelete.action = `${PATH_ADMIN}/product/destroy-product/${idProduct}?_method=DELETE`;
+                };
+            });
+        }
+        warningDeleteModalDeleteBtn.onclick = () => {
+            formProductDelete.submit();
+        };
     }
 }
 
@@ -316,6 +349,7 @@ function init() {
     handleStatusForm();
     handleEditForm();
     handleResponsiveNav();
+    handleDeleteProduct();
 }
 
 document.addEventListener("DOMContentLoaded", init);
