@@ -5,8 +5,7 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "nodemon --inspect index.js",
-        "watch:scss": "sass --watch scss/client/client.scss:public/client/css/style.css scss/admin/admin.scss:public/admin/css/style.css scss/client/responsive.scss:public/client/css/responsive.css scss/admin/responsive.scss:public/admin/css/responsive.css --no-source-map --style=compressed",
-        "watch1:scss": "sass scss/client.scss:public/assets/css/style.css scss/admin.scss:public/admin/css/style.css --no-source-map --style=compressed "
+        "watch:scss": "sass --watch scss/client/client.scss:public/client/css/style.css scss/admin/admin.scss:public/admin/css/style.css scss/client/responsive.scss:public/client/css/responsive.css scss/admin/responsive.scss:public/admin/css/responsive.css --no-source-map --style=compressed"
     },
     "author": "",
     "license": "ISC",

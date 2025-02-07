@@ -1,5 +1,6 @@
 extends ../../layout/default.pug
 include ../../mixins/page_header.pug
+include ../../mixins/toolbar_filter.pug
 block main 
     +page_header("Danh sách sản phẩm đã xóa", [
         { name: "Sản phẩm", href: `${PATH_ADMIN}/product` },
@@ -25,64 +26,50 @@ block main
                     span(class="product__list-icon")
                         i(class="fa-regular fa-rectangle-list")
                     | Danh sách sản phẩm
-        div(id="toolbar__filter-box", class="toolbar__filter-box")
-            form(action=`${PATH_ADMIN}/product/filter`,method="POST") 
-                table(class="tables filter-box__tables")
-                    thead
-                        tr
-                        th(scope="col") Sắp Xếp
-                        th(scope="col") Last'
-                        th(scope="col") Handle
-                    tbody
-                        tr
-                            td 
-                                input(type="checkbox" name="sort" id="sort_1" value="A-Z")
-                                label(for="sort_1") A - Z
-                        tr
-                            td 
-                                input(type="checkbox" name="sort" id="sort_2" value="Z-A")
-                                label(for="sort_2") Z - A
-                        
-                        tr
-                            td(colspan="2") 
-                                input(type="checkbox" name="sort" id="sort_3" value="gia_cao")
-                                label(for="sort_3") Giá cao
-                        
-                        tr
-                            td(colspan="2") 
-                                input(type="checkbox" name="sort" id="sort_4" value="gia_thap")
-                                label(for="sort_4") Giá thấp
-                button(type="submit" class="btn btn-primary") submit
-    //- div(class="overview-block") 
-    //-     div(class="overview-item total-products")
-    //-         h3(class="overview-item__title total-products__title") Tổng số sản phẩm
-    //-         p(class="overview-item__detail total-products__detail") #{general.totalProduct}
-    //-     div(class="overview-item inventory")
-    //-         h3(class="overview-item__title inventory__title") Tồn kho
-    //-         p(class="overview-item__detail inventory__detail") #{general.inventory}
-    //-     div(class="overview-item out-of-stock")
-    //-         h3(class="overview-item__title out-of-stock__title") Hết hàng
-    //-         p(class="overview-item__detail out-of-stock__detail") #{general.outOfStock}
-    //-     div(class="overview-item inventory-value")
-    //-         h3(class="overview-item__title inventory-value__title") Giá trị hàng tồn
-    //-         p(class="overview-item__detail inventory-value__detail") #{general.inventoryTotalValue.toLocaleString('vi-VN')}đ
+        +toolbarFilter(filter,"product/products-trash")
 
-    div(class="list-products")
-         table(class="list-products__table")
+    div(class="overview-block") 
+        div(class="overview-item total-products")
+            h3(class="overview-item__title total-products__title") Tổng số sản phẩm
+            p(class="overview-item__detail total-products__detail") #{general.totalProduct}
+        div(class="overview-item inventory")
+            h3(class="overview-item__title inventory__title") Tồn kho
+            p(class="overview-item__detail inventory__detail") #{general.inventory}
+        div(class="overview-item out-of-stock")
+            h3(class="overview-item__title out-of-stock__title") Hết hàng
+            p(class="overview-item__detail out-of-stock__detail") #{general.outOfStock}
+        div(class="overview-item inventory-value")
+            h3(class="overview-item__title inventory-value__title") Giá trị hàng tồn
+            p(class="overview-item__detail inventory-value__detail") #{general.inventoryTotalValue.toLocaleString('vi-VN')}đ
+
+    div(class="list-product")
+         table(class="list-product__table")
             thead
                 tr
                 th(scope="col") 
                     input(type="checkbox" name="sort" id="select" value="1")
-                th(scope="col") Tên sản phẩm
-                th(scope="col") Mã sản phẩm
+                th(scope="col") 
+                    |   Tên sản phẩm
+                    !=pugHepper.sort("name", _sort)
+                th(scope="col") 
+                    |   Mã sản phẩm
+                    !=pugHepper.sort("code", _sort)
                 th(scope="col") Danh mục
-                th(scope="col") Giá gốc
-                th(scope="col") Giá bán
-                th(scope="col") giảm giá
-                th(scope="col") Tồn kho 
+                th(scope="col") 
+                    |   Giá gốc
+                    !=pugHepper.sort("original_price", _sort)
+                th(scope="col") 
+                    |   Giá bán
+                    !=pugHepper.sort("price", _sort)
+                th(scope="col") 
+                    |   giảm giá
+                    !=pugHepper.sort("discount", _sort)
+                th(scope="col") 
+                    |   Tồn kho 
+                    !=pugHepper.sort("inventory", _sort)
                 th(scope="col") Trạng thái 
                 th(scope="col")  
-                th(scope="col")  
+                th(scope="col")
             tbody
                 if listDeletedProduct.length > 0
                     each product in listDeletedProduct
@@ -103,11 +90,11 @@ block main
                                 p #{product.category}
                             
                             td 
-                                p(class="product-item__original_pice")
-                                    |   #{product.original_pice.toLocaleString('vi-VN')}đ
+                                p(class="product-item__original_price")
+                                    |   #{product.original_price.toLocaleString('vi-VN')}đ
                                     span(class="product-item__icon product-item__icon-pen")
                                         i(class="fa-solid fa-pen")
-                                input(class="product-item__input", type="number", value=product.original_pice,field="original_pice",_id=product._id)
+                                input(class="product-item__input", type="number", value=product.original_price,field="original_price",_id=product._id)
                                 form(action="", method="post") 
 
                             td 

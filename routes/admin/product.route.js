@@ -22,7 +22,6 @@ router.patch(
     upload.array("thumbnails", 12),
     productController.editPost
 );
-
 router.patch("/update-price", productController.updatePricePatch);
 router.patch("/update-status", productController.updateStatusPatch);
 router.patch("/restore-product/:id", productController.restore);

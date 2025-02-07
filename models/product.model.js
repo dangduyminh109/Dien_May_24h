@@ -6,7 +6,7 @@ const productSchema = new mongoose.Schema(
         name: String,
         code: String,
         slug: { type: String, unique: true },
-        original_pice: { type: Number, default: 0 },
+        original_price: { type: Number, default: 0 },
         price: { type: Number, default: 0 },
         discount: { type: Number, default: 0 },
         inventory: { type: Number, default: 0 },

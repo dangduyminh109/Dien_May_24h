@@ -63,16 +63,126 @@
     }
 
     /* ============  filter-box =========== */
-    .toolbar__filter-box {
-        padding-top: 20px;
-        overflow: hidden;
+    .toolbar__advanced-box {
         height: 0;
-        .filter-box__tables {
+        overflow: hidden;
+        .toolbar__advanced-header {
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            padding: 3px;
+        }
+        .toolbar__advanced-group-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .block-advanced__title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: $text-color-3;
+            margin: 0;
+        }
+        select {
             width: 100%;
+            border-radius: 3px;
+            font-size: 1.4rem;
+            color: $text-color-3;
+            height: 30px;
+            outline: none;
+            box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px,
+                rgba(0, 0, 0, 0.24) 0px 1px 2px;
+            border: none;
+        }
+        label {
+            background-color: #eeeef5;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 3px 5px;
+            color: $text-color-3;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+                rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+        }
 
-            label {
-                margin-left: 5px;
+        input[type="radio"]:checked + label {
+            background-color: $color-hover;
+            color: #fff;
+        }
+
+        input[type="radio"] {
+            display: none;
+        }
+
+        .toolbar__advanced-form {
+            width: 100%;
+        }
+        .block-advanced {
+            overflow: auto;
+            margin-bottom: 10px;
+        }
+
+        .filter {
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+                rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+            margin: 2px;
+        }
+
+        .filter__title {
+            font-size: 1.4rem;
+            margin: 0;
+            color: $text-color-3;
+            min-width: 150px;
+        }
+
+        .toolbar__advanced-btn {
+            background-color: $primary;
+            width: 100px;
+            border: none;
+            &:hover {
+                background-color: $color-hover;
             }
+        }
+
+        .filter__item {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            height: 40px;
+            padding: 0 10px;
+            background-color: $text-color;
+        }
+        .filter__item-2 {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+            height: 40px;
+            padding: 0 10px;
+        }
+        .filter__radio-group {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .filter__input {
+            border: none;
+            border-radius: 3px;
+            padding: 3px 5px;
+            caret-color: $text-color;
+            font-size: 1.2rem;
+            background-color: #fff;
+            color: $text-color-3;
+            width: 100%;
+            box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px,
+                rgba(0, 0, 0, 0.24) 0px 1px 2px;
+        }
+
+        .filter__number-group {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            width: 250px;
         }
     }
 }
@@ -136,15 +246,15 @@
     }
     .list-product__table {
         width: 100%;
-        min-width: 1150px;
+        min-width: 1450px;
     }
 
-    .list-product__sort-icon{
+    .list-product__sort-icon {
         font-size: 1.2rem;
         cursor: pointer;
         color: $primary;
         padding: 5px;
-        &:hover{
+        &:hover {
             color: $color-hover;
         }
     }
@@ -180,7 +290,7 @@
 
     .product-item__input {
         display: none;
-        border: 2px solid #b7c0cd;
+        border: 2px solid $text-color;
         width: 100px;
         border-radius: 3px;
         overflow: hidden;
@@ -201,11 +311,12 @@
             padding: 10px 0;
         }
     }
+
     .btn-edit,
     .btn-restore {
         background-color: $primary;
         color: #fff;
-        &:hover{
+        &:hover {
             background-color: $color-hover;
         }
     }

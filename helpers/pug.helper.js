@@ -12,7 +12,7 @@ module.exports = {
             desc: "default",
         };
         return `
-            <a href="?_sort&filed=${name}&type=${type[_sortType]}">
+            <a class="list-product__sort-link" href="?_sort&filed=${name}&type=${type[_sortType]}">
                 <span class="list-product__sort-icon">
                     <i class="${icon[_sortType]}"></i>
                 </span>

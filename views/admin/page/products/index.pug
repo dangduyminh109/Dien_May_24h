@@ -1,12 +1,12 @@
 extends ../../layout/default.pug
 include ../../mixins/page_header.pug
+include ../../mixins/toolbar_filter.pug
 block main 
     +page_header("Danh sách sản phẩm", [
         { name: "Sản phẩm", href: `${PATH_ADMIN}/product` },
         { name: "Danh sách sản phẩm", href: `${PATH_ADMIN}/product` },
     ])
 
-    
     div(class="toolbar")
         div(class="toolbar__box")
             div(class="toolbar__left-box")
@@ -27,37 +27,7 @@ block main
                     span(class="create__plus-icon")
                         i(class="fa-solid fa-plus")
                     | Thêm mới sản phẩm
-        div(id="toolbar__filter-box", class="toolbar__filter-box")
-            form(action=`${PATH_ADMIN}/product/filter`,method="POST") 
-                table(class="tables filter-box__tables")
-                    thead
-                        tr
-                        th(scope="col") Sắp Xếp
-                        th(scope="col") Bộ Lọc
-                        th(scope="col") Xử Lí
-                    tbody
-                        tr
-                            td 
-                                h3 Tên sản phẩm
-                        tr
-                            td 
-                                input(type="checkbox" name="sort" id="sort_1" value="A-Z")
-                                label(for="sort_1") A - Z
-                        tr
-                            td 
-                                input(type="checkbox" name="sort" id="sort_2" value="Z-A")
-                                label(for="sort_2") Z - A
-                        
-                        tr
-                            td(colspan="2") 
-                                input(type="checkbox" name="sort" id="sort_3" value="gia_cao")
-                                label(for="sort_3") Giá cao
-                        
-                        tr
-                            td(colspan="2") 
-                                input(type="checkbox" name="sort" id="sort_4" value="gia_thap")
-                                label(for="sort_4") Giá thấp
-                button(type="submit" class="btn btn-primary") submit
+        +toolbarFilter(filter,"product")
     div(class="overview-block") 
         div(class="overview-item total-products")
             h3(class="overview-item__title total-products__title") Tổng số sản phẩm
@@ -73,33 +43,33 @@ block main
             p(class="overview-item__detail inventory-value__detail") #{general.inventoryTotalValue.toLocaleString('vi-VN')}đ
     
     div(class="list-product")
-         table(class="list-product__table")
+        table(class="list-product__table")
             thead
                 tr
-                th(scope="col") 
-                    input(type="checkbox" name="sort" id="select" value="1")
-                th(scope="col") 
-                    |   Tên sản phẩm
-                    !=pugHepper.sort("name", _sort)
-                th(scope="col") 
-                    |   Mã sản phẩm
-                    !=pugHepper.sort("code", _sort)
-                th(scope="col") Danh mục
-                th(scope="col") 
-                    |   Giá gốc
-                    !=pugHepper.sort("original_price", _sort)
-                th(scope="col") 
-                    |   Giá bán
-                    !=pugHepper.sort("price", _sort)
-                th(scope="col") 
-                    |   giảm giá
-                    !=pugHepper.sort("discount", _sort)
-                th(scope="col") 
-                    |   Tồn kho 
-                    !=pugHepper.sort("inventory", _sort)
-                th(scope="col") Trạng thái 
-                th(scope="col")  
-                th(scope="col")  
+                    th(scope="col") 
+                        input(type="checkbox" name="sort" id="select" value="1")
+                    th(scope="col") 
+                        |   Tên sản phẩm
+                        !=pugHepper.sort("name", _sort)
+                    th(scope="col") 
+                        |   Mã sản phẩm
+                        !=pugHepper.sort("code", _sort)
+                    th(scope="col") Danh mục
+                    th(scope="col") 
+                        |   Giá gốc
+                        !=pugHepper.sort("original_price", _sort)
+                    th(scope="col") 
+                        |   Giá bán
+                        !=pugHepper.sort("price", _sort)
+                    th(scope="col") 
+                        |   giảm giá
+                        !=pugHepper.sort("discount", _sort)
+                    th(scope="col") 
+                        |   Tồn kho 
+                        !=pugHepper.sort("inventory", _sort)
+                    th(scope="col") Trạng thái 
+                    th(scope="col")  
+                    th(scope="col")  
             tbody
                 if listProduct.length > 0
                     each product in listProduct
@@ -120,11 +90,11 @@ block main
                                 p #{product.category}
                             
                             td 
-                                p(class="product-item__original_pice")
-                                    |   #{product.original_pice.toLocaleString('vi-VN')}đ
+                                p(class="product-item__original_price")
+                                    |   #{product.original_price.toLocaleString('vi-VN')}đ
                                     span(class="product-item__icon product-item__icon-pen")
                                         i(class="fa-solid fa-pen")
-                                input(class="product-item__input", type="number", value=product.original_pice,field="original_pice",_id=product._id)
+                                input(class="product-item__input", type="number", value=product.original_price,field="original_price",_id=product._id)
                                 form(action="", method="post") 
 
                             td 
@@ -134,7 +104,6 @@ block main
                                         i(class="fa-solid fa-pen")
                                 input(class="product-item__input", type="number", value=product.price, field="price",_id=product._id)
                                 form(action="", method="post") 
-
 
                             td 
                                 p(class="product-item__discount") #{product.discount}%

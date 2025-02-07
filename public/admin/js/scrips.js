@@ -116,12 +116,11 @@ function handleNavigationItem() {
 /* ======================================= main ======================================= */
 function handleFilterButton() {
     const filterBtn = document.getElementById("filter-btn");
-    const toolbarFilterBox = document.getElementById("toolbar__filter-box");
-
+    const toolBarAdvancedBox = document.getElementById("toolbar__advanced-box");
     if (filterBtn) {
         filterBtn.onclick = () => {
-            toolbarFilterBox.style.height =
-                toolbarFilterBox.style.height === "100%" ? "0" : "100%";
+            toolBarAdvancedBox.style.height =
+                toolBarAdvancedBox.style.height === "100%" ? "0" : "100%";
         };
     }
 }
@@ -307,17 +306,75 @@ function handleEditForm() {
 }
 /* ============ handle sort product =========== */
 function handleSortProduct() {
-    
     const listProductSortIcon = document.querySelectorAll(
-        ".list-product__sort-icon"
+        ".list-product__sort-link"
     );
-
     listProductSortIcon.forEach((item) => {
-        item.onclick = () => {
-            item.firstChild.classList = "fa-solid fa-arrow-down-short-wide";
-        }
-    })
+        item.onclick = (e) => {
+            e.preventDefault();
+            var href = item.getAttribute("href");
+            document
+                .querySelectorAll("#filter-form input[type='text']")
+                .forEach((node) => {
+                    href += `&${encodeURIComponent(
+                        node.name
+                    )}=${encodeURIComponent(node.value)}`;
+                });
 
+            document.querySelectorAll("#filter-form select").forEach((node) => {
+                href += `&${encodeURIComponent(node.name)}=${encodeURIComponent(
+                    node.value
+                )}`;
+            });
+            
+            var valueRadio = "";
+            document
+                .querySelectorAll("#filter-form input[type='radio']")
+                .forEach((node) => {
+                    if (node.checked == true) {
+                        valueRadio = node.value;
+                    }
+                });
+            href += `&status=${encodeURIComponent(valueRadio)}`;
+
+            document
+                .querySelectorAll("#filter-form input[type='number']")
+                .forEach((node) => {
+                    href += `&${encodeURIComponent(
+                        node.name
+                    )}=${encodeURIComponent(node.value)}`;
+                });
+
+            window.location.href = href;
+        };
+    });
+}
+
+/* ============ handle Filter Form =========== */
+http: function handleFilterFrom() {
+    const FilterFromResetBtn = document.getElementById("filter-from-reset-btn");
+    if (FilterFromResetBtn) {
+        FilterFromResetBtn.onclick = () => {
+            document
+                .querySelectorAll(
+                    "#filter-form input[type='text'], #filter-form input[type='number']"
+                )
+                .forEach((input) => {
+                    input.value = "";
+                });
+
+            document
+                .querySelectorAll("#filter-form input[type='radio']")
+                .forEach((radio) => {
+                    radio.checked = false;
+                });
+            document
+                .querySelectorAll("#filter-form select")
+                .forEach((select) => {
+                    select.selectedIndex = 0;
+                });
+        };
+    }
 }
 
 /* ======================================= handle responsive ======================================= */
@@ -365,6 +422,6 @@ function init() {
     handleResponsiveNav();
     handleDeleteProduct();
     handleSortProduct();
+    handleFilterFrom();
 }
-
 document.addEventListener("DOMContentLoaded", init);

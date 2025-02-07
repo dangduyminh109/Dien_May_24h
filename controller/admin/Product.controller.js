@@ -1,39 +1,18 @@
 const system = require("../../config/system.js");
 const Product = require("../../models/product.model.js");
+const { filterAndSort, general } = require("../../helpers/product.helper.js");
 const slugify = require("slugify");
 
 class productController {
     // [GET] /admin/products
     async show(req, res) {
-        var listProduct;
-        if (req.query.type == "default") {
-            listProduct = await Product.find();
-        } else {
-            const sortType = req.query.type === "asc" ? 1 : -1;
-            listProduct = await Product.find().sort({
-                [req.query.filed]: sortType,
-            });
-        }
-        const general = {
-            totalProduct: listProduct.length,
-            inventory: listProduct.reduce(
-                (init, item) => (init += item.inventory),
-                0
-            ),
-            outOfStock: listProduct.reduce((init, item) => {
-                if (item.inventory <= 0) init++;
-                return init;
-            }, 0),
-            inventoryTotalValue: listProduct.reduce((init, item) => {
-                init += item.price;
-                return init;
-            }, 0),
-        };
-        res.render("./admin/page/products/", {
+        const listProduct = await filterAndSort(req.query);
+        res.render("./admin/page/products", {
             pageTitle: "Products",
             PATH_ADMIN: system.PATH_ADMIN,
             listProduct,
-            general,
+            general: general(listProduct),
+            filter: req.query,
         });
     }
 
@@ -57,13 +36,13 @@ class productController {
 
     // [GET] /admin/products/products-trash
     async productsTrash(req, res) {
-        const listDeletedProduct = await Product.findWithDeleted({
-            deleted: true,
-        });
+        const listDeletedProduct = await filterAndSort(req.query, true);
         res.render("./admin/page/products/products-trash", {
             pageTitle: "Create products",
             PATH_ADMIN: system.PATH_ADMIN,
             listDeletedProduct,
+            general: general(listDeletedProduct),
+            filter: req.query,
         });
     }
 

@@ -1,0 +1,95 @@
+[{
+  "_id": {
+    "$oid": "67a1a4fd0b1a02486ee460f2"
+  },
+  "name": "Laptop Lenovo Legion 5",
+  "code": "001",
+  "slug": "laptop-lenovo-legion-5-1",
+  "price": 31500000,
+  "discount": 10,
+  "inventory": 10,
+  "supplier": "Lenovo",
+  "category": "danh mục 1",
+  "status": "on",
+  "description": "<p>Laptop gaming <strong>Lenovo Legion <em>5</em></strong> với CPU AMD Ryzen 7 v&agrave; GPU RTX 3060.</p>",
+  "createdAt": {
+    "$date": "2025-02-04T05:26:21.539Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-07T09:59:46.180Z"
+  },
+  "__v": 0,
+  "thumbnails": [
+    "/uploads/1738734865556-laptop.jpg",
+    "/uploads/1738734865556-laptop_2.jpg",
+    "/uploads/1738734865556-laptop_3.jpg"
+  ],
+  "original_price": 35000000,
+  "deleted": true,
+  "deletedAt": {
+    "$date": "2025-02-07T09:59:46.179Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "67a1a62a0b1a02486ee460f4"
+  },
+  "name": "Bàn phím cơ Keychron K8",
+  "code": "002",
+  "slug": "ban-phim-co-keychron-k8",
+  "price": 1200000,
+  "discount": 10,
+  "inventory": 25,
+  "supplier": "Keychron Official Store",
+  "category": "danh mục 2",
+  "status": "on",
+  "description": "<p>B&agrave;n ph&iacute;m cơ Keychron K8 hỗ trợ kết nối Bluetooth v&agrave; USB-C, switch Gateron Brown.</p>",
+  "createdAt": {
+    "$date": "2025-02-04T05:31:22.820Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-07T10:02:06.779Z"
+  },
+  "__v": 0,
+  "thumbnails": [
+    "/uploads/1738729913322-keyboard.jpg",
+    "/uploads/1738729913322-keyboard_3.jpg",
+    "/uploads/1738729913322-kkeyboard_2.jpg"
+  ],
+  "original_price": 1250000,
+  "deleted": true,
+  "deletedAt": {
+    "$date": "2025-02-07T10:02:06.778Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "67a1aaaacd560648795b718b"
+  },
+  "name": "Màn hình LG UltraGear 27GP850",
+  "code": "003",
+  "slug": "man-hinh-lg-ultragear-27gp850-1",
+  "price": 7225000,
+  "discount": 15,
+  "inventory": 8,
+  "supplier": "LG",
+  "category": "danh mục 3",
+  "status": "on",
+  "description": "<p>M&agrave;n h&igrave;nh gaming LG UltraGear 27GP850, tần số qu&eacute;t 165Hz, độ ph&acirc;n giải 2K.</p>",
+  "createdAt": {
+    "$date": "2025-02-04T05:50:34.194Z"
+  },
+  "updatedAt": {
+    "$date": "2025-02-07T10:02:11.312Z"
+  },
+  "__v": 0,
+  "thumbnails": [
+    "/uploads/1738729930614-screen.jpg",
+    "/uploads/1738729930615-screen_2.jpg"
+  ],
+  "original_price": 8500000,
+  "deleted": true,
+  "deletedAt": {
+    "$date": "2025-02-07T10:02:11.311Z"
+  }
+}]
