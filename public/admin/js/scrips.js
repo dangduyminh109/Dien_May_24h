@@ -490,6 +490,39 @@ function handleSelectProductItem() {
     }
 }
 
+/* ============ handle Pagination Btn =========== */
+function handlePaginationBtn() {
+    const btnPrev = document.getElementById("btn-prev");
+    const btnNext = document.getElementById("btn-next");
+    const paginationBtn = document.getElementById("pagination-btn");
+    if (paginationBtn) {
+        let numberOfPage = parseInt(
+            paginationBtn.getAttribute("number-of-page")
+        );
+        let currentPage = parseInt(paginationBtn.getAttribute("current-page"));
+        if (currentPage == 1) {
+            btnPrev.closest(".page-item").classList.add("disable");
+        } else {
+            btnPrev.closest(".page-item").classList.remove("disable");
+        }
+        if (currentPage == numberOfPage) {
+            btnNext.closest(".page-item").classList.add("disable");
+        } else {
+            btnNext.closest(".page-item").classList.remove("disable");
+        }
+        btnNext.onclick = () => {
+            if (currentPage + 1 <= numberOfPage) {
+                window.location.href = `?page=${currentPage + 1}`;
+            }
+        };
+        btnPrev.onclick = () => {
+            if (currentPage - 1 >= 1) {
+                window.location.href = `?page=${currentPage - 1}`;
+            }
+        };
+    }
+}
+
 /* ======================================= handle responsive ======================================= */
 function handleResponsiveNav() {
     const toggleNav = document.getElementById("toggle__nav");
@@ -552,5 +585,6 @@ function init() {
     handleSortProduct();
     handleFilterFrom();
     handleSelectProductItem();
+    handlePaginationBtn();
 }
 document.addEventListener("DOMContentLoaded", init);

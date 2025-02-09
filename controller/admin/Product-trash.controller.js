@@ -1,19 +1,26 @@
 const system = require("../../config/system.js");
 const Product = require("../../models/product.model.js");
-const { filterAndSort, general } = require("../../helpers/product.helper.js");
+const {
+    filterAndSort,
+    generalHelper,
+} = require("../../helpers/product.helper.js");
 class productController {
     // [GET] /admin/product-trash
     async show(req, res) {
-        const listDeletedProduct = await filterAndSort(req.query, true);
+        const { listProduct, pagination } = await filterAndSort(
+            req.query,
+            true
+        );
         const handle = req.session.backData || {};
-        console.log(handle);
+        const general = await generalHelper(true);
         res.render("./admin/page/products/product-trash", {
             pageTitle: "Create products",
             PATH_ADMIN: system.PATH_ADMIN,
-            listDeletedProduct,
-            general: general(listDeletedProduct),
+            listDeletedProduct: listProduct,
+            general,
             filter: req.query,
-            handle: handle,
+            handle,
+            pagination,
         });
     }
 

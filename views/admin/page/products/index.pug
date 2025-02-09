@@ -3,6 +3,7 @@ include ../../mixins/page_header.pug
 include ../../mixins/toolbar_filter.pug
 include ../../mixins/toolbar_handle.pug
 include ../../mixins/deletion_warning.pug
+include ../../mixins/pagination.pug
 
 block main 
     +page_header("Danh sách sản phẩm", [
@@ -37,7 +38,6 @@ block main
                     | Thêm mới sản phẩm
         +toolbarFilter(filter,"product")
         +toolbarHandle(handle,"product")
-
 
     div(class="overview-block") 
         div(class="overview-item total-products")
@@ -138,7 +138,8 @@ block main
                         td(colspan="9")
                             p(class="noProducts") Không có sản phẩm nào!   
                             a(class="noProducts__link", href=`${PATH_ADMIN}/product/create`) Tạo sản phẩm.
-
+   
+    +pagination(pagination)
 
     form(method="POST", type="hidden",id="form-product-delete" ,action=``)
     <!-- Modal -->

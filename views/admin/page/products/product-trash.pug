@@ -3,6 +3,7 @@ include ../../mixins/page_header.pug
 include ../../mixins/toolbar_filter.pug
 include ../../mixins/toolbar_handle.pug
 include ../../mixins/deletion_warning.pug
+include ../../mixins/pagination.pug
 block main 
     +page_header("Danh sách sản phẩm đã xóa", [
         { name: "Sản phẩm", href: `${PATH_ADMIN}/product` },
@@ -137,7 +138,8 @@ block main
                         td(colspan="9")
                             p(class="noProducts") Không có sản phẩm nào đã xóa!   
                             a(class="noProducts__link", href=`${PATH_ADMIN}/product`) Danh sách sản phẩm.
-
+    
+    +pagination(pagination)
 
     form(method="POST", type="hidden",id="form-product-delete" ,action=``)
     <!-- Modal -->

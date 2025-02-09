@@ -151,4 +151,43 @@ li {
     }
 }
 
+/* ============ pagination =========== */
+.pagination-btn {
+    margin-top: 20px;
+
+    .page-item.active {
+        .page-link {
+            color: $text-color-3;
+            background-color: $color-hover;
+            border: 1px solid $text-color;
+        }
+    }
+
+    .page-item.disable {
+        opacity: 0.3;
+        .page-link {
+            cursor: not-allowed;
+        }
+    }
+
+    .page-link {
+        height: 100%;
+        width: 50px;
+        text-align: center;
+        color: $text-color-3;
+        background-color: #fff;
+        border: 1px solid $text-color;
+        &:hover {
+            color: $color-hover;
+        }
+    }
+    span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        font-size: 1rem;
+    }
+}
+
 /* ======================================= end general ======================================= */

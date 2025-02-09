@@ -1,20 +1,25 @@
 const system = require("../../config/system.js");
 const Product = require("../../models/product.model.js");
-const { filterAndSort, general } = require("../../helpers/product.helper.js");
+const {
+    filterAndSort,
+    generalHelper,
+} = require("../../helpers/product.helper.js");
 const slugify = require("slugify");
 
 class productController {
     // [GET] /admin/products
     async show(req, res) {
-        const listProduct = await filterAndSort(req.query);
+        const { listProduct, pagination } = await filterAndSort(req.query);
         const handle = req.session.backData || {};
+        const general = await generalHelper();
         res.render("./admin/page/products", {
             pageTitle: "Products",
             PATH_ADMIN: system.PATH_ADMIN,
             listProduct,
-            general: general(listProduct),
+            general,
             filter: req.query,
             handle,
+            pagination,
         });
     }
 

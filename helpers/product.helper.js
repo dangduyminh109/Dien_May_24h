@@ -1,6 +1,10 @@
 const Product = require("../models/product.model");
 
-function general(listProduct) {
+async function generalHelper(deleted = false) {
+    let listProduct = await Product.find({});
+    if (deleted) {
+        listProduct = await Product.findWithDeleted({ deleted: true });
+    }
     return {
         totalProduct: listProduct.length,
         inventory: listProduct.reduce(
@@ -20,6 +24,9 @@ function general(listProduct) {
 
 async function filterAndSort(query, findDelete = false) {
     var listProduct = [];
+    const limit = 5;
+    let totalPage = 0;
+    let page = query.page ? parseInt(query.page) : 1;
     const filter = Object.entries(query).reduce((obj, [key, value]) => {
         if (value !== "") {
             switch (key) {
@@ -69,6 +76,9 @@ async function filterAndSort(query, findDelete = false) {
         }
         return obj;
     }, {});
+    if (query.page == false) {
+        query.page = 0;
+    }
     if (query.type === "asc" || query.type === "desc") {
         const sortType = query.type === "asc" ? 1 : -1;
         if (findDelete) {
@@ -77,15 +87,32 @@ async function filterAndSort(query, findDelete = false) {
                     ...filter,
                     name: { $regex: filter.name, $options: "i" },
                     deleted: true,
-                }).sort({
-                    [query.filed]: sortType,
+                })
+                    .sort({
+                        [query.filed]: sortType,
+                    })
+                    .skip((page - 1) * limit)
+                    .limit(limit);
+
+                totalPage = await Product.countDocumentsWithDeleted({
+                    ...filter,
+                    name: { $regex: filter.name, $options: "i" },
+                    deleted: true,
                 });
             } else {
                 listProduct = await Product.findWithDeleted({
                     ...filter,
                     deleted: true,
-                }).sort({
-                    [query.filed]: sortType,
+                })
+                    .sort({
+                        [query.filed]: sortType,
+                    })
+                    .skip((page - 1) * limit)
+                    .limit(limit);
+
+                totalPage = await Product.countDocumentsWithDeleted({
+                    ...filter,
+                    deleted: true,
                 });
             }
         } else {
@@ -93,13 +120,24 @@ async function filterAndSort(query, findDelete = false) {
                 listProduct = await Product.find({
                     ...filter,
                     name: { $regex: filter.name, $options: "i" },
-                }).sort({
-                    [query.filed]: sortType,
+                })
+                    .sort({
+                        [query.filed]: sortType,
+                    })
+                    .skip((page - 1) * limit)
+                    .limit(limit);
+                totalPage = await Product.countDocuments({
+                    ...filter,
+                    name: { $regex: filter.name, $options: "i" },
                 });
             } else {
-                listProduct = await Product.find(filter).sort({
-                    [query.filed]: sortType,
-                });
+                listProduct = await Product.find(filter)
+                    .sort({
+                        [query.filed]: sortType,
+                    })
+                    .skip((page - 1) * limit)
+                    .limit(limit);
+                totalPage = await Product.countDocuments(filter);
             }
         }
     } else {
@@ -109,9 +147,24 @@ async function filterAndSort(query, findDelete = false) {
                     ...filter,
                     name: { $regex: filter.name, $options: "i" },
                     deleted: true,
+                })
+                    .skip((page - 1) * limit)
+                    .limit(limit);
+
+                totalPage = await Product.countDocumentsWithDeleted({
+                    ...filter,
+                    name: { $regex: filter.name, $options: "i" },
+                    deleted: true,
                 });
             } else {
                 listProduct = await Product.findWithDeleted({
+                    ...filter,
+                    deleted: true,
+                })
+                    .skip((page - 1) * limit)
+                    .limit(limit);
+
+                totalPage = await Product.countDocumentsWithDeleted({
                     ...filter,
                     deleted: true,
                 });
@@ -121,13 +174,23 @@ async function filterAndSort(query, findDelete = false) {
                 listProduct = await Product.find({
                     ...filter,
                     name: { $regex: filter.name, $options: "i" },
+                })
+                    .skip((page - 1) * limit)
+                    .limit(limit);
+                totalPage = await Product.countDocuments({
+                    ...filter,
+                    name: { $regex: filter.name, $options: "i" },
                 });
             } else {
-                listProduct = await Product.find(filter);
+                listProduct = await Product.find(filter)
+                    .skip((page - 1) * limit)
+                    .limit(limit);
+                totalPage = await Product.countDocuments(filter);
             }
         }
     }
-    return listProduct;
+    totalPage = Math.ceil(totalPage / limit);
+    return { listProduct, pagination: { page, limit, totalPage } };
 }
 
-module.exports = { filterAndSort, general };
+module.exports = { filterAndSort, generalHelper };
