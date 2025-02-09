@@ -9,5 +9,5 @@ mixin formWarning(id,content,idBtn,textBtn = "Có")
                             i(class="fa-solid fa-xmark")
                 div(class="modal-body") !{content}
                 div(class="modal-footer")
-                    button(type="button" class=`${idBtn}__close-btn btn btn-secondary` data-bs-dismiss="modal") Đóng
+                    button(type="button" class=`${idBtn}__close-btn btn btn-primary` data-bs-dismiss="modal") Đóng
                     button(type="button" id=idBtn, class=`btn ${idBtn}`) #{textBtn}

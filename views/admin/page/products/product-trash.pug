@@ -6,15 +6,16 @@ include ../../mixins/deletion_warning.pug
 block main 
     +page_header("Danh sách sản phẩm đã xóa", [
         { name: "Sản phẩm", href: `${PATH_ADMIN}/product` },
-        { name: "Thùng rác", href: `${PATH_ADMIN}/products-trash` },
+        { name: "Thùng rác", href: `${PATH_ADMIN}/product-trash` },
     ])
     div(class="toolbar")
         div(class="toolbar__box")
             div(class="toolbar__left-box")
-                div(class="search")
-                    input(class="search__input", type="text", placeholder="Nhập từ khóa tìm kiếm", spellcheck="false")
-                    span(class="search__toolbar-icon")
-                        i(class="fa-solid fa-magnifying-glass")
+                form(action=`${PATH_ADMIN}/product-trash`, method="GET") 
+                    div(class="search")
+                        input(class="search__input", type="text", name="name",placeholder="Nhập từ khóa tìm kiếm", spellcheck="false")
+                        button(type="submit" class="search__toolbar-icon")
+                            i(class="fa-solid fa-magnifying-glass")
                 button(id="advanced-filter-btn", class="advanced-filter-btn btn btn-primary", type="button")
                     span(class="search__filter-icon")
                         i(class="fa-solid fa-filter")

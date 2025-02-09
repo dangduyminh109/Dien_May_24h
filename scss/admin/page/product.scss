@@ -30,6 +30,7 @@
         cursor: pointer;
         background-color: #fff;
         padding: 0 10px;
+        border: 2px solid transparent;
         border-left: 2px solid $text-color;
         color: $text-color;
         &:hover {
@@ -131,7 +132,6 @@
         }
 
         .toolbar__advanced-btn {
-            background-color: $primary;
             color: #fff;
             width: 100px;
             border: none;

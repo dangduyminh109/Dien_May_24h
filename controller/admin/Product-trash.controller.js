@@ -20,7 +20,7 @@ class productController {
     // [PATCH] /admin/product-trash/restore
     async restore(req, res) {
         await Product.restore({ _id: req.params.id });
-        res.redirect("/admin/products-trash");
+        res.redirect("/admin/product-trash");
     }
 
     // [PATCH] /admin/product-trash/update-more
@@ -52,7 +52,7 @@ class productController {
     // [DELETE] /admin/product-trash/destroy-product/:id
     async destroy(req, res) {
         await Product.deleteOne({ _id: req.params.id });
-        res.redirect("/admin/products-trash");
+        res.redirect("/admin/product-trash");
     }
 
     // [DELETE] /admin/product-trash/destroy-more

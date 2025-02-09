@@ -72,25 +72,59 @@ async function filterAndSort(query, findDelete = false) {
     if (query.type === "asc" || query.type === "desc") {
         const sortType = query.type === "asc" ? 1 : -1;
         if (findDelete) {
-            listProduct = await Product.findWithDeleted({
-                ...filter,
-                deleted: true,
-            }).sort({
-                [query.filed]: sortType,
-            });
+            if (filter.name) {
+                listProduct = await Product.findWithDeleted({
+                    ...filter,
+                    name: { $regex: filter.name, $options: "i" },
+                    deleted: true,
+                }).sort({
+                    [query.filed]: sortType,
+                });
+            } else {
+                listProduct = await Product.findWithDeleted({
+                    ...filter,
+                    deleted: true,
+                }).sort({
+                    [query.filed]: sortType,
+                });
+            }
         } else {
-            listProduct = await Product.find(filter).sort({
-                [query.filed]: sortType,
-            });
+            if (filter.name) {
+                listProduct = await Product.find({
+                    ...filter,
+                    name: { $regex: filter.name, $options: "i" },
+                }).sort({
+                    [query.filed]: sortType,
+                });
+            } else {
+                listProduct = await Product.find(filter).sort({
+                    [query.filed]: sortType,
+                });
+            }
         }
     } else {
         if (findDelete) {
-            listProduct = await Product.findWithDeleted({
-                ...filter,
-                deleted: true,
-            });
+            if (filter.name) {
+                listProduct = await Product.findWithDeleted({
+                    ...filter,
+                    name: { $regex: filter.name, $options: "i" },
+                    deleted: true,
+                });
+            } else {
+                listProduct = await Product.findWithDeleted({
+                    ...filter,
+                    deleted: true,
+                });
+            }
         } else {
-            listProduct = await Product.find(filter);
+            if (filter.name) {
+                listProduct = await Product.find({
+                    ...filter,
+                    name: { $regex: filter.name, $options: "i" },
+                });
+            } else {
+                listProduct = await Product.find(filter);
+            }
         }
     }
     return listProduct;

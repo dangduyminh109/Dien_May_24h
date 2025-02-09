@@ -124,7 +124,8 @@ li {
 }
 
 .warning-delete-multiple-modal-btn,
-.warning-delete-modal-btn {
+.warning-delete-modal-btn,
+.btn-danger {
     height: 28.13px;
     min-width: 48.63px;
     background-color: #dc3545;
@@ -139,7 +140,8 @@ li {
 }
 
 .warning-update-multiple-modal-btn,
-.warning-restore-multiple-modal-btn {
+.warning-restore-multiple-modal-btn,
+.btn-primary {
     height: 28.13px;
     min-width: 48.63px;
     background-color: $primary;

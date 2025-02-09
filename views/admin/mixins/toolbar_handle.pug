@@ -56,7 +56,7 @@ mixin toolbarHandle(handle,path,trash=false)
                         div(class="toolbar__advanced-group-btn")
                             if trash
                                 button(type="button" class="btn toolbar__advanced-btn btn-danger" data-bs-toggle="modal", data-bs-target="#warningDeleteMultipleModal") Xoá vĩnh viễn
-                                button(type="button" class="btn toolbar__advanced-btn" data-bs-toggle="modal", data-bs-target="#warningRestoreMultipleModal") Khôi phục
+                                button(type="button" class="btn toolbar__advanced-btn btn-primary" data-bs-toggle="modal", data-bs-target="#warningRestoreMultipleModal") Khôi phục
                             else
                                 button(type="button" class="btn toolbar__advanced-btn btn-danger" data-bs-toggle="modal", data-bs-target="#warningDeleteMultipleModal") Xoá
         
@@ -64,7 +64,7 @@ mixin toolbarHandle(handle,path,trash=false)
         +formWarning("warningDeleteMultipleModal","Bạn có chắc chắn muốn <b class='warning-text'>Xóa Vĩnh Viễn</b> các sản phẩm đã chọn?<span class='warning-text'> Hành động này không thể hoàn tác!!!</span>","warning-delete-multiple-modal-btn","Xóa Vĩnh Viễn")
         +formWarning("warningRestoreMultipleModal","Bạn có chắc chắn muốn <b class='warning-text'>Khôi Phục</b> các sản phẩm này không?<span class='warning-text'>","warning-restore-multiple-modal-btn","Khôi Phục")
     else
-        +formWarning("warningDeleteMultipleModal","Bạn có chắc chắn muốn <b class='warning-text'>Xóa</b> các sản phẩm đã chọn?","warning-delete-multiple-modal-btn")
+        +formWarning("warningDeleteMultipleModal","Bạn có chắc chắn muốn <b class='warning-text'>Xóa</b> các sản phẩm đã chọn?","warning-delete-multiple-modal-btn","Xóa")
     +formWarning("warningUpdateMultipleModal","Bạn có chắc chắn muốn <b class='warning-text'>Cập Nhật</b> các sản phẩm đã chọn?","warning-update-multiple-modal-btn")
     //- hidden form
     if trash
