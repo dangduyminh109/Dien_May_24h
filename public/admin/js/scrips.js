@@ -115,12 +115,36 @@ function handleNavigationItem() {
 
 /* ======================================= main ======================================= */
 function handleFilterButton() {
-    const filterBtn = document.getElementById("filter-btn");
-    const toolBarAdvancedBox = document.getElementById("toolbar__advanced-box");
+    const filterBtn = document.getElementById("advanced-filter-btn");
+    const handleBtn = document.getElementById("advanced-handle-btn");
+    const toolBarAdvancedFilterBox = document.getElementById(
+        "toolbar__advanced-filter-box"
+    );
+    const toolBarAdvancedHandleBox = document.getElementById(
+        "toolbar__advanced-handle-box"
+    );
     if (filterBtn) {
         filterBtn.onclick = () => {
-            toolBarAdvancedBox.style.height =
-                toolBarAdvancedBox.style.height === "100%" ? "0" : "100%";
+            var height = localStorage.getItem("filterBoxHeight");
+            toolBarAdvancedFilterBox.style.height =
+                height === "100%" ? "0" : "100%";
+
+            localStorage.setItem(
+                "filterBoxHeight",
+                toolBarAdvancedFilterBox.style.height
+            );
+        };
+    }
+    if (handleBtn) {
+        handleBtn.onclick = () => {
+            var height = localStorage.getItem("handleBoxHeight");
+            toolBarAdvancedHandleBox.style.height =
+                height === "100%" ? "0" : "100%";
+
+            localStorage.setItem(
+                "handleBoxHeight",
+                toolBarAdvancedHandleBox.style.height
+            );
         };
     }
 }
@@ -204,6 +228,18 @@ function handleStatusInput() {
     const btnStatusInput = document.querySelectorAll(".btn-status__input");
 
     if (btnStatusInput) {
+        window.onload = () => {
+            btnStatusInput.forEach((element) => {
+                let btnStatusDesc = element.parentNode.parentNode.nextSibling;
+                if (element.value == "on") {
+                    element.checked = true;
+                    btnStatusDesc.textContent = "Hoạt động";
+                } else {
+                    element.checked = false;
+                    btnStatusDesc.textContent = "Không hoạt động";
+                }
+            });
+        };
         btnStatusInput.forEach((element) => {
             element.onchange = debounce(() => {
                 let btnStatusDesc = element.parentNode.parentNode.nextSibling;
@@ -231,15 +267,25 @@ function handleStatusInput() {
     }
 }
 
-/* ============ handle delete product =========== */
-function handleDeleteProduct() {
+/* ============ handle waring form =========== */
+function handleWarningFormProduct() {
     const btnDelete = document.querySelectorAll(".btn-delete");
     const btnDestroy = document.querySelectorAll(".btn-destroy");
     const formProductDelete = document.getElementById("form-product-delete");
-    const warningDeleteModalDeleteBtn = document.getElementById(
-        "warning-delete-modal__delete-btn"
+    const warningDeleteModalBtn = document.getElementById(
+        "warning-delete-modal-btn"
     );
-    if (formProductDelete && warningDeleteModalDeleteBtn) {
+    const warningDeleteMultipleModalBtn = document.getElementById(
+        "warning-delete-multiple-modal-btn"
+    );
+    const warningRestoreMultipleModalBtn = document.getElementById(
+        "warning-restore-multiple-modal-btn"
+    );
+    const warningUpdateMultipleModalBtn = document.getElementById(
+        "warning-update-multiple-modal-btn"
+    );
+
+    if (formProductDelete && warningDeleteModalBtn) {
         if (btnDelete) {
             btnDelete.forEach((btn) => {
                 btn.onclick = () => {
@@ -252,12 +298,30 @@ function handleDeleteProduct() {
             btnDestroy.forEach((btn) => {
                 btn.onclick = () => {
                     const idProduct = btn.getAttribute("data-bs-id");
-                    formProductDelete.action = `${PATH_ADMIN}/product/destroy-product/${idProduct}?_method=DELETE`;
+                    formProductDelete.action = `${PATH_ADMIN}/product-trash/destroy-product/${idProduct}?_method=DELETE`;
                 };
             });
         }
-        warningDeleteModalDeleteBtn.onclick = () => {
+        warningDeleteModalBtn.onclick = () => {
             formProductDelete.submit();
+        };
+    }
+
+    if (warningDeleteMultipleModalBtn) {
+        warningDeleteMultipleModalBtn.onclick = () => {
+            document.getElementById("handle-delete-form").submit();
+        };
+    }
+
+    if (warningRestoreMultipleModalBtn) {
+        warningRestoreMultipleModalBtn.onclick = () => {
+            document.getElementById("handle-restore-form").submit();
+        };
+    }
+
+    if (warningUpdateMultipleModalBtn) {
+        warningUpdateMultipleModalBtn.onclick = () => {
+            document.getElementById("handle-update-form").submit();
         };
     }
 }
@@ -326,7 +390,7 @@ function handleSortProduct() {
                     node.value
                 )}`;
             });
-            
+
             var valueRadio = "";
             document
                 .querySelectorAll("#filter-form input[type='radio']")
@@ -351,28 +415,77 @@ function handleSortProduct() {
 }
 
 /* ============ handle Filter Form =========== */
-http: function handleFilterFrom() {
-    const FilterFromResetBtn = document.getElementById("filter-from-reset-btn");
+function handleFilterFrom() {
+    const FilterFromResetBtn = document.querySelectorAll(
+        ".handle-from-reset-btn"
+    );
     if (FilterFromResetBtn) {
-        FilterFromResetBtn.onclick = () => {
-            document
-                .querySelectorAll(
-                    "#filter-form input[type='text'], #filter-form input[type='number']"
-                )
-                .forEach((input) => {
-                    input.value = "";
-                });
+        FilterFromResetBtn.forEach((item) => {
+            item.onclick = () => {
+                item.closest("form")
+                    .querySelectorAll("input[type='text'],input[type='number']")
+                    .forEach((input) => {
+                        input.value = "";
+                    });
 
-            document
-                .querySelectorAll("#filter-form input[type='radio']")
-                .forEach((radio) => {
-                    radio.checked = false;
+                item.closest("form")
+                    .querySelectorAll("input[type='radio']")
+                    .forEach((radio) => {
+                        radio.checked = false;
+                    });
+                item.closest("form")
+                    .querySelectorAll("select")
+                    .forEach((select) => {
+                        select.selectedIndex = 0;
+                    });
+            };
+        });
+    }
+}
+
+/* ============ handle select Product Item =========== */
+function handleSelectProductItem() {
+    const productItem = document.querySelectorAll(".product-item__select");
+    const productItemSelectAll = document.getElementById(
+        "product-item__select-all"
+    );
+    const listId = document.querySelectorAll(".list-id");
+    if (productItem && productItemSelectAll) {
+        var arr = [];
+        productItem.forEach((item) => {
+            item.onchange = () => {
+                productItemSelectAll.checked = [...productItem].reduce(
+                    (value, item2) => item2.checked && value,
+                    true
+                );
+                arr = JSON.parse(listId[0].value);
+                var idProduct = item.getAttribute("id-product");
+                if (item.checked) {
+                    arr = [...arr, idProduct];
+                } else {
+                    arr = arr.filter((item) => item != idProduct);
+                }
+                listId.forEach((item) => {
+                    item.value = JSON.stringify(arr);
                 });
-            document
-                .querySelectorAll("#filter-form select")
-                .forEach((select) => {
-                    select.selectedIndex = 0;
+            };
+        });
+        productItemSelectAll.onclick = () => {
+            arr = [];
+            productItem.forEach((item) => {
+                item.checked = productItemSelectAll.checked;
+            });
+            if (productItemSelectAll.checked) {
+                productItem.forEach((item) => {
+                    var idProduct = item.getAttribute("id-product");
+                    arr = [...arr, idProduct];
                 });
+            } else {
+                arr = [];
+            }
+            listId.forEach((item) => {
+                item.value = JSON.stringify(arr);
+            });
         };
     }
 }
@@ -406,8 +519,23 @@ function debounce(func, wait) {
     };
 }
 
+// window load
+function handleWindowOnload() {
+    const toolBarAdvancedFilterBox = document.getElementById(
+        "toolbar__advanced-filter-box"
+    );
+    const toolBarAdvancedHandleBox = document.getElementById(
+        "toolbar__advanced-handle-box"
+    );
+    var filterHeight = localStorage.getItem("filterBoxHeight");
+    var handleHeight = localStorage.getItem("handleBoxHeight");
+    toolBarAdvancedFilterBox.style.height = filterHeight;
+    toolBarAdvancedHandleBox.style.height = handleHeight;
+}
+
 // Initialize all handlers
 function init() {
+    handleWindowOnload();
     handleSearchBox();
     handleScreenButtons();
     handleToggleNav();
@@ -420,8 +548,9 @@ function init() {
     handleStatusForm();
     handleEditForm();
     handleResponsiveNav();
-    handleDeleteProduct();
+    handleWarningFormProduct();
     handleSortProduct();
     handleFilterFrom();
+    handleSelectProductItem();
 }
 document.addEventListener("DOMContentLoaded", init);

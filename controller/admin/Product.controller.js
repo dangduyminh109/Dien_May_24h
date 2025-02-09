@@ -7,12 +7,14 @@ class productController {
     // [GET] /admin/products
     async show(req, res) {
         const listProduct = await filterAndSort(req.query);
+        const handle = req.session.backData || {};
         res.render("./admin/page/products", {
             pageTitle: "Products",
             PATH_ADMIN: system.PATH_ADMIN,
             listProduct,
             general: general(listProduct),
             filter: req.query,
+            handle,
         });
     }
 
@@ -31,18 +33,6 @@ class productController {
             pageTitle: "edit Products",
             PATH_ADMIN: system.PATH_ADMIN,
             product,
-        });
-    }
-
-    // [GET] /admin/products/products-trash
-    async productsTrash(req, res) {
-        const listDeletedProduct = await filterAndSort(req.query, true);
-        res.render("./admin/page/products/products-trash", {
-            pageTitle: "Create products",
-            PATH_ADMIN: system.PATH_ADMIN,
-            listDeletedProduct,
-            general: general(listDeletedProduct),
-            filter: req.query,
         });
     }
 
@@ -171,10 +161,19 @@ class productController {
         res.json({ message: "Cập nhật thành công" });
     }
 
-    // [PATCH] /admin/products/restore-status
-    async restore(req, res) {
-        await Product.restore({ _id: req.params.id });
-        res.redirect("/admin/product/products-trash");
+    // [PATCH] /admin/products/update-more
+    async updateMore(req, res) {
+        const listIds = JSON.parse(req.body["list-id"]);
+        delete req.body["list-id"];
+        var dataUpdate = Object.entries(req.body).filter(([key, value]) => {
+            if (value != "") return [key, value];
+        });
+        dataUpdate = Object.fromEntries(dataUpdate);
+        await Product.updateMany(
+            { _id: { $in: listIds } },
+            { $set: dataUpdate }
+        );
+        res.redirect("back");
     }
 
     // [DELETE] /admin/products/delete-product/:id
@@ -183,10 +182,11 @@ class productController {
         res.redirect("/admin/product");
     }
 
-    // [DELETE] /admin/products/destroy-product/:id
-    async destroy(req, res) {
-        await Product.deleteOne({ _id: req.params.id });
-        res.redirect("/admin/product/products-trash");
+    // [DELETE] /admin/products/delete-more
+    async deleteMore(req, res) {
+        const listIds = JSON.parse(req.body["list-id"]);
+        await Product.delete({ _id: { $in: listIds } });
+        res.redirect("back");
     }
 }
 

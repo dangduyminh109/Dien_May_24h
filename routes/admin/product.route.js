@@ -8,7 +8,6 @@ const productController = require("../../controller/admin/Product.controller");
 
 router.get("/", productController.show);
 router.get("/create", productController.create);
-router.get("/products-trash", productController.productsTrash);
 router.get("/edit/:id", productController.edit);
 
 router.post(
@@ -24,9 +23,8 @@ router.patch(
 );
 router.patch("/update-price", productController.updatePricePatch);
 router.patch("/update-status", productController.updateStatusPatch);
-router.patch("/restore-product/:id", productController.restore);
-
+router.patch("/update-more", productController.updateMore);
 
 router.delete("/delete-product/:id", productController.delete);
-router.delete("/destroy-product/:id", productController.destroy);
+router.delete("/delete-more", productController.deleteMore);
 module.exports = router;

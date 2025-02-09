@@ -1,0 +1,13 @@
+mixin formWarning(id,content,idBtn,textBtn = "Có")
+    div(class="modal fade" id=id tabindex="-1" aria-labelledby=id+"Label")
+        div(class="modal-dialog")
+            div(class="modal-content")
+                div(class="modal-header")
+                    h5(class="modal-title" id=id+"Label") Xóa sản phẩm
+                    button(type="button" class="close-button" data-bs-dismiss="modal" aria-label="Close")
+                        span
+                            i(class="fa-solid fa-xmark")
+                div(class="modal-body") !{content}
+                div(class="modal-footer")
+                    button(type="button" class=`${idBtn}__close-btn btn btn-secondary` data-bs-dismiss="modal") Đóng
+                    button(type="button" id=idBtn, class=`btn ${idBtn}`) #{textBtn}

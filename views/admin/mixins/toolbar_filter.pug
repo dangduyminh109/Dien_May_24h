@@ -1,56 +1,57 @@
 mixin toolbarFilter(filter,path)
-    - var height = Object.keys(filter).length === 0 || (Object.keys(filter).length === 3 && Object.keys(filter).includes("_sort")) ? 0 : '100%'
-    div(id="toolbar__advanced-box", class="toolbar__advanced-box" style=`height: ${height};`)
-        form(id="filter-form" class="toolbar__advanced-form", action=`${PATH_ADMIN}/${path}`,method="GET") 
-            div(class="toolbar__advanced-header")
-                h2(class="block-advanced__title") Bộ lọc
-                div(class="toolbar__advanced-group-btn")
-                    button(type="button" id="filter-from-reset-btn" class="toolbar__advanced-btn btn btn-primary") Đặt lại
-                    button(type="submit" class="toolbar__advanced-btn btn btn-primary") Gửi
+    //- style=`height: ${height};`
+    //- - var height = Object.keys(filter).length === 0 || (Object.keys(filter).length === 3 && Object.keys(filter).includes("_sort")) ? 0 : '100%'
+    div(id="toolbar__advanced-filter-box", class="toolbar__advanced-box" )
+        form(id="filter-form" class="toolbar__advanced-form", action=`${PATH_ADMIN}/${path}`,method="GET")
             div(class="block-advanced")
-                div(class="filter")
-                    div(class="filter__item") 
-                        h3(class="filter__title") Tên sản phẩm
-                        input(type="text" class="filter__input" name="name" placeholder="Nhập tên sản phẩm" value=filter.name|| "")
-                    div(class="filter__item-2") 
-                        h3(class="filter__title") Mã sản phẩm
-                        input(type="text" class="filter__input" name="code" placeholder="Nhập mã sản phẩm" value=filter.code|| "")
-                    div(class="filter__item")
-                        h3(class="filter__title") Danh mục
-                        select(name="category", id="category") 
-                            option(value="" selected disabled) -- chọn danh mục -- 
-                            option(value="danh mục 1" selected = filter.category === "danh mục 1" ? true:false) danh mục 1
-                            option(value="danh mục 2" selected = filter.category === "danh mục 2" ? true:false) danh mục 2
-                            option(value="danh mục 3" selected = filter.category === "danh mục 3" ? true:false) danh mục 3
-                            option(value="danh mục 4" selected = filter.category === "danh mục 4" ? true:false) danh mục 4
-                            option(value="danh mục 5" selected = filter.category === "danh mục 5" ? true:false) danh mục 5
-                            option(value="danh mục 6" selected = filter.category === "danh mục 6" ? true:false) danh mục 6
-                    div(class="filter__item-2") 
-                        h3(class="filter__title") Trạng thái
-                        div(class="filter__radio-group")
-                            input(type="radio" name="status" id="status_1" value="default" checked = filter.status === "default" ? true:false) 
-                            label(for="status_1") Mặc định
-                            input(type="radio" name="status" id="status_2" value="on" checked = filter.status === "on" ? true:false)
-                            label(for="status_2") Hoạt Động
-                            input(type="radio" name="status" id="status_3" value="off" checked = filter.status === "off" ? true:false)
-                            label(for="status_3") Không Hoạt Động
-                    div(class="filter__item") 
-                        h3(class="filter__title") Giá gốc
-                        div(class="filter__number-group")
-                            input(type="number" class="filter__input" name="min-original-price" placeholder="Tối thiểu" min=0 value=filter["min-original-price"]) 
-                            input(type="number" class="filter__input" name="max-original-price" placeholder="Tối đa" min=0 value=filter["max-original-price"])
-                    div(class="filter__item-2") 
-                        h3(class="filter__title") Giá bán
-                        div(class="filter__number-group")
-                            input(type="number" class="filter__input" name="min-price" placeholder="Tối thiểu" min=0 value=filter["min-price"])
-                            input(type="number" class="filter__input" name="max-price" placeholder="Tối đa" min=0 value=filter["max-price"])
-                    div(class="filter__item") 
-                        h3(class="filter__title") Giảm giá
-                        div(class="filter__number-group")
-                            input(type="number" class="filter__input" name="min-discount" placeholder="Tối thiểu" min=0 value=filter["min-discount"]) 
-                            input(type="number" class="filter__input" name="max-discount" placeholder="Tối đa" min=0 max=100 value=filter["max-discount"])
-                    div(class="filter__item-2") 
-                        h3(class="filter__title") Tồn kho
-                        div(class="filter__number-group")
-                            input(type="number" class="filter__input" name="min-inventory" placeholder="Tối thiểu" min=0 value=filter["min-inventory"]) 
-                            input(type="number" class="filter__input" name="max-inventory" placeholder="Tối đa" min=0 value=filter["max-inventory"])
+                div(class="advanced")
+                    div(class="advanced__item-header") 
+                            h2(class="block-advanced__title") Bộ Lọc 
+                            div(class="toolbar__advanced-group-btn")
+                                button(type="button" class="toolbar__advanced-btn handle-from-reset-btn btn btn-primary") Đặt lại
+                                button(type="submit" class="toolbar__advanced-btn btn btn-primary") Gửi
+                div(class="advanced__item") 
+                    h3(class="advanced__title") Tên sản phẩm
+                    input(type="text" class="advanced__input" name="name" placeholder="Nhập tên sản phẩm" value=filter.name|| "")
+                div(class="advanced__item-2") 
+                    h3(class="advanced__title") Mã sản phẩm
+                    input(type="text" class="advanced__input" name="code" placeholder="Nhập mã sản phẩm" value=filter.code|| "")
+                div(class="advanced__item")
+                    h3(class="advanced__title") Danh mục
+                    select(name="category", id="category") 
+                        option(value="" selected disabled) -- chọn danh mục -- 
+                        option(value="danh mục 1" selected = filter.category === "danh mục 1" ? true:false) danh mục 1
+                        option(value="danh mục 2" selected = filter.category === "danh mục 2" ? true:false) danh mục 2
+                        option(value="danh mục 3" selected = filter.category === "danh mục 3" ? true:false) danh mục 3
+                        option(value="danh mục 4" selected = filter.category === "danh mục 4" ? true:false) danh mục 4
+                        option(value="danh mục 5" selected = filter.category === "danh mục 5" ? true:false) danh mục 5
+                        option(value="danh mục 6" selected = filter.category === "danh mục 6" ? true:false) danh mục 6
+                div(class="advanced__item-2") 
+                    h3(class="advanced__title") Trạng thái
+                    div(class="advanced__radio-group")
+                        input(type="radio" name="status" id="status_1" value="default" checked = filter.status === "default" ? true:false) 
+                        label(for="status_1") Mặc định
+                        input(type="radio" name="status" id="status_2" value="on" checked = filter.status === "on" ? true:false)
+                        label(for="status_2") Hoạt Động
+                        input(type="radio" name="status" id="status_3" value="off" checked = filter.status === "off" ? true:false)
+                        label(for="status_3") Không Hoạt Động
+                div(class="advanced__item") 
+                    h3(class="advanced__title") Giá gốc
+                    div(class="advanced__number-group")
+                        input(type="number" class="advanced__input" name="min-original-price" placeholder="Tối thiểu" min=0 value=filter["min-original-price"]) 
+                        input(type="number" class="advanced__input" name="max-original-price" placeholder="Tối đa" min=0 value=filter["max-original-price"])
+                div(class="advanced__item-2") 
+                    h3(class="advanced__title") Giá bán
+                    div(class="advanced__number-group")
+                        input(type="number" class="advanced__input" name="min-price" placeholder="Tối thiểu" min=0 value=filter["min-price"])
+                        input(type="number" class="advanced__input" name="max-price" placeholder="Tối đa" min=0 value=filter["max-price"])
+                div(class="advanced__item") 
+                    h3(class="advanced__title") Giảm giá
+                    div(class="advanced__number-group")
+                        input(type="number" class="advanced__input" name="min-discount" placeholder="Tối thiểu" min=0 value=filter["min-discount"]) 
+                        input(type="number" class="advanced__input" name="max-discount" placeholder="Tối đa" min=0 max=100 value=filter["max-discount"])
+                div(class="advanced__item-2") 
+                    h3(class="advanced__title") Tồn kho
+                    div(class="advanced__number-group")
+                        input(type="number" class="advanced__input" name="min-inventory" placeholder="Tối thiểu" min=0 value=filter["min-inventory"]) 
+                        input(type="number" class="advanced__input" name="max-inventory" placeholder="Tối đa" min=0 value=filter["max-inventory"])

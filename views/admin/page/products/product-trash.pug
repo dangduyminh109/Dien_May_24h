@@ -1,10 +1,12 @@
 extends ../../layout/default.pug
 include ../../mixins/page_header.pug
 include ../../mixins/toolbar_filter.pug
+include ../../mixins/toolbar_handle.pug
+include ../../mixins/deletion_warning.pug
 block main 
     +page_header("Danh sách sản phẩm đã xóa", [
         { name: "Sản phẩm", href: `${PATH_ADMIN}/product` },
-        { name: "Thùng rác", href: `${PATH_ADMIN}/product/products-trash` },
+        { name: "Thùng rác", href: `${PATH_ADMIN}/products-trash` },
     ])
     div(class="toolbar")
         div(class="toolbar__box")
@@ -13,10 +15,14 @@ block main
                     input(class="search__input", type="text", placeholder="Nhập từ khóa tìm kiếm", spellcheck="false")
                     span(class="search__toolbar-icon")
                         i(class="fa-solid fa-magnifying-glass")
-                button(id="filter-btn", class="filter-btn btn btn-primary", type="button")
+                button(id="advanced-filter-btn", class="advanced-filter-btn btn btn-primary", type="button")
                     span(class="search__filter-icon")
                         i(class="fa-solid fa-filter")
-                    | Lọc nâng cao
+                    | Bộ Lọc
+                button(id="advanced-handle-btn", class="advanced-handle-btn btn btn-primary", type="button")
+                    span(class="search__filter-icon")
+                        i(class="fa-solid fa-sliders")
+                    | Nâng cao
                 a(href=`${PATH_ADMIN}/product`, class="back-btn btn btn-primary")
                     span(class="search__filter-icon")
                         i(class="fa-solid fa-reply")
@@ -26,7 +32,8 @@ block main
                     span(class="product__list-icon")
                         i(class="fa-regular fa-rectangle-list")
                     | Danh sách sản phẩm
-        +toolbarFilter(filter,"product/products-trash")
+        +toolbarFilter(filter,"product-trash")
+        +toolbarHandle(handle,"product-trash",true)
 
     div(class="overview-block") 
         div(class="overview-item total-products")
@@ -47,7 +54,7 @@ block main
             thead
                 tr
                 th(scope="col") 
-                    input(type="checkbox" name="sort" id="select" value="1")
+                    input(type="checkbox" name="sort" id="product-item__select-all" value="1")
                 th(scope="col") 
                     |   Tên sản phẩm
                     !=pugHepper.sort("name", _sort)
@@ -75,7 +82,7 @@ block main
                     each product in listDeletedProduct
                         tr
                             td 
-                                input(type="checkbox" name="sort" value="1")
+                                input(type="checkbox" class="product-item__select" name="sort" id-product=product._id value="1")
                             td  
                                 div(class="product-item__name")
                                     - var thumbnail = product.thumbnails?.[0] || "/uploads/default-image.jpg"
@@ -120,7 +127,7 @@ block main
                                     p(class="btn-status__desc") Hoạt động          
 
                             td 
-                                form(method="POST", action=`${PATH_ADMIN}/product/restore-product/${product._id}?_method=PATCH`)
+                                form(method="POST", action=`${PATH_ADMIN}/product-trash/restore-product/${product._id}?_method=PATCH`)
                                     button(type="submit", class="btn-restore btn") Khôi phục  
                             td 
                                 button(type="button", class="btn-destroy btn btn-danger",data-bs-toggle="modal",data-bs-id = product._id, data-bs-target="#warningDeleteModal") Xóa vĩnh viễn  
@@ -133,20 +140,4 @@ block main
 
     form(method="POST", type="hidden",id="form-product-delete" ,action=``)
     <!-- Modal -->
-    div(class="modal fade" id="warningDeleteModal" tabindex="-1" aria-labelledby="warningDeleteModalLabel")
-        div(class="modal-dialog")
-            div(class="modal-content")
-                div(class="modal-header")
-                    h5(class="modal-title" id="warningDeleteModalLabel") Xóa sản phẩm
-                    button(type="button" class="close-button" data-bs-dismiss="modal" aria-label="Close")
-                        span
-                            i(class="fa-solid fa-xmark")
-                div(class="modal-body")
-                    |   Bạn có chắc chắn muốn 
-                    b xóa vĩnh viễn
-                    |   sản phẩm này không?
-                    span(class="warning-text")  Hành động này không thể hoàn tác!!!
-                div(class="modal-footer")
-                    button(type="button" class="warning-delete-modal__close-btn btn btn-secondary" data-bs-dismiss="modal") Đóng
-                    button(type="button" id="warning-delete-modal__delete-btn", class="warning-delete-modal__delete-btn btn btn-danger") Xóa
-                               
+    +formWarning("warningDeleteModal","Bạn có chắc chắn muốn <b class='warning-text'>Xóa Vĩnh Viễn</b> sản phẩm này không?<span class='warning-text'> Hành động này không thể hoàn tác!!!</span>","warning-delete-modal-btn","Xóa Vĩnh Viễn")

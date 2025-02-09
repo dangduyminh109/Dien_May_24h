@@ -2,6 +2,7 @@ require("dotenv").config();
 const path = require("path");
 const express = require("express");
 const methodOverride = require("method-override");
+const session = require("express-session");
 
 const routeClient = require("./routes/client/index.route");
 const routeAdmin = require("./routes/admin/index.route");
@@ -37,6 +38,16 @@ app.use(pugHelperMiddleware);
 // set view engine
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
+
+// express-session
+app.use(
+    session({
+        secret: "ABCBA",
+        resave: false,
+        saveUninitialized: true,
+        cookie: { secure: false },
+    })
+);
 
 // routes
 routeClient.index(app);

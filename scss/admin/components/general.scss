@@ -113,7 +113,7 @@ li {
         background-color: $color-hover;
     }
 }
-.close-button{
+.close-button {
     background-color: transparent;
     font-size: 2rem;
     color: #fff;
@@ -122,8 +122,31 @@ li {
 .warning-text {
     color: $color-hover;
 }
-.warning-delete-modal__delete-btn {
-    cursor: pointer;
+
+.warning-delete-multiple-modal-btn,
+.warning-delete-modal-btn {
+    height: 28.13px;
+    min-width: 48.63px;
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: #fff;
+
+    &:hover {
+        background-color: #bb2d3b;
+        border-color: #b02a37;
+        color: #fff;
+    }
+}
+
+.warning-update-multiple-modal-btn,
+.warning-restore-multiple-modal-btn {
+    height: 28.13px;
+    min-width: 48.63px;
+    background-color: $primary;
+    color: #fff;
+    &:hover {
+        background-color: $color-hover;
+    }
 }
 
 /* ======================================= end general ======================================= */
