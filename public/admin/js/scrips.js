@@ -575,10 +575,12 @@ function handleWindowOnload() {
     const toolBarAdvancedHandleBox = document.getElementById(
         "toolbar__advanced-handle-box"
     );
-    var filterHeight = localStorage.getItem("filterBoxHeight") || 0;
-    var handleHeight = localStorage.getItem("handleBoxHeight") || 0;
-    toolBarAdvancedFilterBox.style.height = filterHeight;
-    toolBarAdvancedHandleBox.style.height = handleHeight;
+    if (toolBarAdvancedHandleBox && toolBarAdvancedFilterBox) {
+        var filterHeight = localStorage.getItem("filterBoxHeight") || 0;
+        var handleHeight = localStorage.getItem("handleBoxHeight") || 0;
+        toolBarAdvancedFilterBox.style.height = filterHeight;
+        toolBarAdvancedHandleBox.style.height = handleHeight;
+    }
 }
 
 // Initialize all handlers

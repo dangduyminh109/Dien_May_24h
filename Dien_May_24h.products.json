@@ -1,7 +1,4 @@
 [{
-  "_id": {
-    "$oid": "67a1a4fd0b1a02486ee460f2"
-  },
   "name": "Laptop Lenovo Legion 5",
   "code": "001",
   "slug": "laptop-lenovo-legion-5-1",
@@ -20,16 +17,14 @@
   },
   "__v": 0,
   "thumbnails": [
-    "/uploads/1738734865556-laptop.jpg",
-    "/uploads/1738734865556-laptop_2.jpg",
+    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739200668/upload/oiicj0d6z8w2mvkdbnwf.jpg",
+    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739198556/upload/cqwibjzexmfxa0grbamp.jpg",
+    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739198559/upload/zhbm8oxtoswaye3lqtof.jpg",
     "/uploads/1738734865556-laptop_3.jpg"
   ],
   "original_price": 35000000
 },
 {
-  "_id": {
-    "$oid": "67a1a62a0b1a02486ee460f4"
-  },
   "name": "Bàn phím cơ Keychron K8",
   "code": "001",
   "slug": "ban-phim-co-keychron-k8",
@@ -48,16 +43,13 @@
   },
   "__v": 0,
   "thumbnails": [
-    "/uploads/1738729913322-keyboard.jpg",
-    "/uploads/1738729913322-keyboard_3.jpg",
-    "/uploads/1738729913322-kkeyboard_2.jpg"
+    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739197974/upload/dr2jmdylhadkrwlihwor.jpg",
+    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739198556/upload/mwk644e1eteljrdhfddz.jpg",
+    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739197975/upload/xttuphul7dsimjxbwnhu.jpg"
   ],
   "original_price": 1250000
 },
 {
-  "_id": {
-    "$oid": "67a1aaaacd560648795b718b"
-  },
   "name": "Màn hình LG UltraGear 27GP850",
   "code": "001",
   "slug": "man-hinh-lg-ultragear-27gp850-1",
@@ -76,15 +68,12 @@
   },
   "__v": 0,
   "thumbnails": [
-    "/uploads/1738729930614-screen.jpg",
-    "/uploads/1738729930615-screen_2.jpg"
+    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739201706/upload/vxjbwcecjcy84b4x40sr.jpg",
+    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739197975/upload/xttuphul7dsimjxbwnhu.jpg"
   ],
   "original_price": 8500000
 },
 {
-  "_id": {
-    "$oid": "67a86e331a49f4de5d2d9d30"
-  },
   "name": "Laptop Dell XPS 15",
   "code": "004",
   "slug": "laptop-dell-xps-15",
@@ -96,16 +85,14 @@
   "status": "on",
   "description": "<p>Laptop Dell XPS 15 với màn hình 4K OLED, CPU Intel Core i9.</p>",
   "thumbnails": [
-    "/uploads/1738734865556-laptop.jpg",
-    "/uploads/1738734865556-laptop_2.jpg"
+    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739200668/upload/oiicj0d6z8w2mvkdbnwf.jpg",
+    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739198556/upload/cqwibjzexmfxa0grbamp.jpg",
+    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739198559/upload/zhbm8oxtoswaye3lqtof.jpg"
   ],
   "original_price": 45000000,
   "deleted": false
 },
 {
-  "_id": {
-    "$oid": "67a86e331a49f4de5d2d9d31"
-  },
   "name": "Bàn phím cơ Razer BlackWidow V4",
   "code": "005",
   "slug": "ban-phim-co-razer-blackwidow-v4",
@@ -117,16 +104,13 @@
   "status": "on",
   "description": "<p>Bàn phím cơ Razer BlackWidow V4 với switch xanh, RGB Chroma.</p>",
   "thumbnails": [
-    "/uploads/1738729913322-keyboard.jpg",
-    "/uploads/1738729913322-keyboard_3.jpg"
+    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739197974/upload/dr2jmdylhadkrwlihwor.jpg",
+    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739198556/upload/mwk644e1eteljrdhfddz.jpg"
   ],
   "original_price": 3900000,
   "deleted": false
 },
 {
-  "_id": {
-    "$oid": "67a86e331a49f4de5d2d9d32"
-  },
   "name": "Màn hình ASUS ROG Swift PG259QN",
   "code": "006",
   "slug": "man-hinh-asus-rog-swift-pg259qn",
@@ -138,16 +122,13 @@
   "status": "on",
   "description": "<p>Màn hình gaming ASUS ROG Swift PG259QN 360Hz.</p>",
   "thumbnails": [
-    "/uploads/1738729930614-screen.jpg",
-    "/uploads/1738729930615-screen_2.jpg"
+    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739201706/upload/vxjbwcecjcy84b4x40sr.jpg",
+    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739197975/upload/xttuphul7dsimjxbwnhu.jpg"
   ],
   "original_price": 9900000,
   "deleted": false
 },
 {
-  "_id": {
-    "$oid": "67a86e331a49f4de5d2d9d33"
-  },
   "name": "Chuột gaming Logitech G Pro X Superlight",
   "code": "007",
   "slug": "chuot-gaming-logitech-g-pro-x-superlight",
@@ -159,15 +140,13 @@
   "status": "on",
   "description": "<p>Chuột không dây gaming Logitech G Pro X Superlight.</p>",
   "thumbnails": [
-    "/uploads/1738734865556-laptop.jpg"
+    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739200668/upload/oiicj0d6z8w2mvkdbnwf.jpg",
+    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739198556/upload/cqwibjzexmfxa0grbamp.jpg"
   ],
   "original_price": 3100000,
   "deleted": false
 },
 {
-  "_id": {
-    "$oid": "67a86e331a49f4de5d2d9d34"
-  },
   "name": "Tai nghe Sony WH-1000XM5",
   "code": "008",
   "slug": "tai-nghe-sony-wh-1000xm5",
@@ -179,15 +158,13 @@
   "status": "on",
   "description": "<p>Tai nghe chống ồn Sony WH-1000XM5.</p>",
   "thumbnails": [
-    "/uploads/1738729930614-screen.jpg"
+    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739201706/upload/vxjbwcecjcy84b4x40sr.jpg",
+    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739200670/upload/ovicljtav1ed7q3te0s5.jpg"
   ],
   "original_price": 9500000,
   "deleted": false
 },
 {
-  "_id": {
-    "$oid": "67a86e331a49f4de5d2d9d35"
-  },
   "name": "SSD Samsung 980 Pro 1TB",
   "code": "009",
   "slug": "ssd-samsung-980-pro-1tb",
@@ -199,15 +176,13 @@
   "status": "on",
   "description": "<p>SSD NVMe Samsung 980 Pro 1TB PCIe 4.0.</p>",
   "thumbnails": [
-    "/uploads/1738734865556-laptop_2.jpg"
+    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739198559/upload/zhbm8oxtoswaye3lqtof.jpg",
+    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739197766/upload/hjuoip0kddrbsdwkrszi.jpg"
   ],
   "original_price": 3400000,
   "deleted": false
 },
 {
-  "_id": {
-    "$oid": "67a86e331a49f4de5d2d9d36"
-  },
   "name": "RAM Corsair Vengeance 32GB (2x16GB) DDR5 6000MHz",
   "code": "010",
   "slug": "ram-corsair-vengeance-32gb-ddr5-6000mhz",
@@ -219,15 +194,13 @@
   "status": "on",
   "description": "<p>RAM Corsair Vengeance 32GB DDR5 6000MHz.</p>",
   "thumbnails": [
-    "/uploads/1738729913322-keyboard_3.jpg"
+    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739197766/upload/hjuoip0kddrbsdwkrszi.jpg",
+    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739198556/upload/mwk644e1eteljrdhfddz.jpg"
   ],
   "original_price": 6300000,
   "deleted": false
 },
 {
-  "_id": {
-    "$oid": "67a86e331a49f4de5d2d9d39"
-  },
   "name": "Case NZXT H510 Elite",
   "code": "013",
   "slug": "case-nzxt-h510-elite",
@@ -239,7 +212,8 @@
   "status": "on",
   "description": "<p>Vỏ case NZXT H510 Elite với mặt kính cường lực.</p>",
   "thumbnails": [
-    "/uploads/1738734865556-laptop.jpg"
+    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739200668/upload/oiicj0d6z8w2mvkdbnwf.jpg",
+    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739198556/upload/cqwibjzexmfxa0grbamp.jpg"
   ],
   "original_price": 3850000,
   "deleted": false

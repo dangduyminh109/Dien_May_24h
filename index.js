@@ -15,11 +15,6 @@ database.connect();
 const app = express();
 const port = process.env.PORT;
 
-app.use(
-    "/tinymce",
-    express.static(path.join(__dirname, "node_modules", "tinymce"))
-);
-
 // override with POST having ?_method=...
 app.use(methodOverride("_method"));
 
@@ -35,6 +30,12 @@ app.use(sortMiddleware);
 // pug Helper Middleware
 app.use(pugHelperMiddleware);
 
+// tinymce
+app.use(
+    "/tinymce",
+    express.static(path.join(__dirname, "node_modules", "tinymce"))
+);
+
 // set view engine
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
@@ -42,7 +43,7 @@ app.set("views", path.join(__dirname, "views"));
 // express-session
 app.use(
     session({
-        secret: "ABCBA",
+        secret: process.env.EXPRESS_SESSION,
         resave: false,
         saveUninitialized: true,
         cookie: { secure: false },

@@ -1,4 +1,6 @@
 const Product = require("../models/product.model");
+const { uploadMultipleImages } = require("../helpers/upload.helper.js");
+const slugify = require("slugify");
 
 async function generalHelper(deleted = false) {
     let listProduct = await Product.find({});
@@ -193,4 +195,51 @@ async function filterAndSort(query, findDelete = false) {
     return { listProduct, pagination: { page, limit, totalPage } };
 }
 
-module.exports = { filterAndSort, generalHelper };
+async function handleForm(req, edit = false) {
+    const urls = await uploadMultipleImages(req.files);
+    let formData = req.body;
+    formData.original_price = isNaN(parseFloat(formData.original_price))
+        ? 0
+        : parseFloat(formData.original_price);
+    formData.price = isNaN(parseFloat(formData.price))
+        ? 0
+        : parseFloat(formData.price);
+    formData.discount = isNaN(parseFloat(formData.discount))
+        ? 0
+        : parseFloat(formData.discount);
+    formData.inventory = isNaN(parseInt(formData.inventory))
+        ? 0
+        : parseInt(formData.inventory);
+    if (edit) {
+        formData.thumbnailDeleted =
+            formData.thumbnailDeleted != ""
+                ? JSON.parse(formData.thumbnailDeleted)
+                : [];
+        formData.status = formData.status ? "on" : "off";
+        let product = await Product.findOne({ _id: req.params.id });
+        formData.thumbnails = urls?.length
+            ? urls.concat(product.thumbnails)
+            : product.thumbnails;
+        if (formData.thumbnailDeleted.length > 0) {
+            formData.thumbnails = formData.thumbnails.filter((item) => {
+                if (formData.thumbnailDeleted.includes(item) == false) {
+                    return item;
+                }
+            });
+        }
+    } else {
+        formData.thumbnails = urls?.length ? urls : [];
+    }
+    let slug = slugify(formData.name, {
+        lower: true,
+        strict: true,
+    });
+    let count = await Product.countDocuments({ slug });
+    if (count > 0) {
+        slug = `${slug}-${count}`;
+    }
+    formData.slug = slug;
+    return formData;
+}
+
+module.exports = { filterAndSort, generalHelper, handleForm };

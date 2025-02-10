@@ -54,7 +54,6 @@ class productController {
     // [PATCH] /admin/product-trash/restore-more
     async restoreMore(req, res) {
         const listIds = JSON.parse(req.body["list-id"]);
-        console.log(listIds);
         await Product.restore({ _id: { $in: listIds } });
         res.redirect("back");
     }

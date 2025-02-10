@@ -3,14 +3,14 @@ const Product = require("../../models/product.model.js");
 const {
     filterAndSort,
     generalHelper,
+    handleForm,
 } = require("../../helpers/product.helper.js");
 const paginationHelper = require("../../helpers/pagination.helper.js");
-const slugify = require("slugify");
 
 class productController {
     // [GET] /admin/products
     async show(req, res) {
-        const currentPath = paginationHelper(req)
+        const currentPath = paginationHelper(req);
         const { listProduct, pagination } = await filterAndSort(req.query);
         const handle = req.session.backData || {};
         const general = await generalHelper();
@@ -47,38 +47,9 @@ class productController {
     // [POST] /admin/products/create
     async createPost(req, res) {
         try {
-            const formData = req.body;
-            formData.original_price = isNaN(parseFloat(formData.original_price))
-                ? 0
-                : parseFloat(formData.original_price);
-            formData.price = isNaN(parseFloat(formData.price))
-                ? 0
-                : parseFloat(formData.price);
-            formData.discount = isNaN(parseFloat(formData.discount))
-                ? 0
-                : parseFloat(formData.discount);
-            formData.inventory = isNaN(parseInt(formData.inventory))
-                ? 0
-                : parseInt(formData.inventory);
-            formData.thumbnails = req.files?.length
-                ? req.files.map((el) => `/uploads/${el.filename}`)
-                : [];
-            let slug = slugify(formData.name, {
-                lower: true,
-                strict: true,
-            });
-            let existingProduct = await Product.findOne({ slug });
-            let count = 1;
-            while (existingProduct) {
-                slug = `${slug}-${count}`;
-                existingProduct = await Product.findOne({ slug });
-                count++;
-            }
-            formData.slug = slug;
-
+            const formData = await handleForm(req);
             const newProduct = new Product(formData);
             await newProduct.save();
-
             res.redirect("/admin/product");
         } catch (error) {
             console.error("Error saving product:", error);
@@ -86,59 +57,10 @@ class productController {
         }
     }
 
-    // [PATCH] /admin/products/edit:id
+    // [POST] /admin/products/edit:id
     async editPost(req, res) {
         try {
-            const formData = req.body;
-            formData.thumbnailDeleted =
-                formData.thumbnailDeleted != ""
-                    ? JSON.parse(formData.thumbnailDeleted)
-                    : [];
-            formData.status = formData.status ? "on" : "off";
-            formData.original_price = isNaN(parseFloat(formData.original_price))
-                ? 0
-                : parseFloat(formData.original_price);
-            formData.price = isNaN(parseFloat(formData.price))
-                ? 0
-                : parseFloat(formData.price);
-            formData.discount = isNaN(parseFloat(formData.discount))
-                ? 0
-                : parseFloat(formData.discount);
-            formData.inventory = isNaN(parseInt(formData.inventory))
-                ? 0
-                : parseInt(formData.inventory);
-
-            let thumb = await Product.findOne({ _id: req.params.id });
-            formData.thumbnails = req.files?.length
-                ? req.files
-                      .map((e) => `/uploads/${e.filename}`)
-                      .concat(
-                          thumb.thumbnails.filter((path) =>
-                              path.startsWith("/uploads")
-                          )
-                      )
-                : thumb.thumbnails.filter((path) =>
-                      path.startsWith("/uploads")
-                  );
-            if (formData.thumbnailDeleted.length > 0) {
-                formData.thumbnails = formData.thumbnails.filter((item) => {
-                    if (formData.thumbnailDeleted.includes(item) == false) {
-                        return item;
-                    }
-                });
-            }
-            let slug = slugify(formData.name, {
-                lower: true,
-                strict: true,
-            });
-            let existingProduct = await Product.findOne({ slug });
-            let count = 1;
-            while (existingProduct) {
-                slug = `${slug}-${count}`;
-                existingProduct = await Product.findOne({ slug });
-                count++;
-            }
-            formData.slug = slug;
+            const formData = await handleForm(req,true);
             await Product.updateOne({ _id: req.params.id }, formData);
             res.redirect("/admin/product");
         } catch (error) {

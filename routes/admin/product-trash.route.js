@@ -1,8 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const multer = require("multer");
-const storage = require("../../helpers/multer.helper");
-const upload = multer({ storage });
 
 const productTrashController = require("../../controller/admin/Product-trash.controller");
 

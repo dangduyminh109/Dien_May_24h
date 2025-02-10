@@ -86,7 +86,7 @@
             font-weight: 600;
             color: $text-color;
             margin: 0;
-            min-width: 150px;
+            min-width: 120px;
         }
         select {
             width: 100%;
@@ -106,6 +106,7 @@
             color: $text-color-3;
             box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
                 rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+            white-space: nowrap;
         }
 
         input[type="radio"]:checked + label {
@@ -133,7 +134,7 @@
 
         .toolbar__advanced-btn {
             color: #fff;
-            width: 100px;
+            width: 95px;
             border: none;
             &:hover {
                 background-color: $color-hover;
@@ -156,9 +157,21 @@
             background-color: $text-color;
         }
         .advanced__radio-group {
+            overflow: auto;
             display: flex;
             align-items: center;
             gap: 5px;
+            // scrollbar
+            &::-webkit-scrollbar {
+                height: 5px;
+            }
+            &::-webkit-scrollbar-track {
+                background-color: $bg-color-header;
+            }
+            &::-webkit-scrollbar-thumb {
+                background-color: $color-hover;
+                border-radius: 50px;
+            }
         }
 
         .advanced__input {
