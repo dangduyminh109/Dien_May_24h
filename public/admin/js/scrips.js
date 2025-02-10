@@ -133,6 +133,13 @@ function handleFilterButton() {
                 "filterBoxHeight",
                 toolBarAdvancedFilterBox.style.height
             );
+            if (
+                localStorage.getItem("handleBoxHeight") === "100%" &&
+                localStorage.getItem("filterBoxHeight") === "100%"
+            ) {
+                toolBarAdvancedHandleBox.style.height = "0";
+                localStorage.setItem("handleBoxHeight", "0");
+            }
         };
     }
     if (handleBtn) {
@@ -145,6 +152,13 @@ function handleFilterButton() {
                 "handleBoxHeight",
                 toolBarAdvancedHandleBox.style.height
             );
+            if (
+                localStorage.getItem("handleBoxHeight") === "100%" &&
+                localStorage.getItem("filterBoxHeight") === "100%"
+            ) {
+                toolBarAdvancedFilterBox.style.height = "0";
+                localStorage.setItem("filterBoxHeight", "0");
+            }
         };
     }
 }
@@ -500,6 +514,7 @@ function handlePaginationBtn() {
             paginationBtn.getAttribute("number-of-page")
         );
         let currentPage = parseInt(paginationBtn.getAttribute("current-page"));
+        let currentPath = paginationBtn.getAttribute("current-path");
         if (currentPage == 1) {
             btnPrev.closest(".page-item").classList.add("disable");
         } else {
@@ -512,12 +527,12 @@ function handlePaginationBtn() {
         }
         btnNext.onclick = () => {
             if (currentPage + 1 <= numberOfPage) {
-                window.location.href = `?page=${currentPage + 1}`;
+                window.location.href = `${currentPath}page=${currentPage + 1}`;
             }
         };
         btnPrev.onclick = () => {
             if (currentPage - 1 >= 1) {
-                window.location.href = `?page=${currentPage - 1}`;
+                window.location.href = `${currentPath}page=${currentPage - 1}`;
             }
         };
     }
@@ -560,8 +575,8 @@ function handleWindowOnload() {
     const toolBarAdvancedHandleBox = document.getElementById(
         "toolbar__advanced-handle-box"
     );
-    var filterHeight = localStorage.getItem("filterBoxHeight");
-    var handleHeight = localStorage.getItem("handleBoxHeight");
+    var filterHeight = localStorage.getItem("filterBoxHeight") || 0;
+    var handleHeight = localStorage.getItem("handleBoxHeight") || 0;
     toolBarAdvancedFilterBox.style.height = filterHeight;
     toolBarAdvancedHandleBox.style.height = handleHeight;
 }

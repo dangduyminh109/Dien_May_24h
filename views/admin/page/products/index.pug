@@ -16,7 +16,7 @@ block main
             div(class="toolbar__left-box")
                 form(action=`${PATH_ADMIN}/product`, method="GET") 
                     div(class="search")
-                        input(class="search__input", type="text", name="name",placeholder="Nhập từ khóa tìm kiếm", spellcheck="false")
+                        input(class="search__input", type="text", name="name",placeholder="Nhập từ khóa tìm kiếm", spellcheck="false",value=filter.name)
                         button(type="submit" class="search__toolbar-icon")
                             i(class="fa-solid fa-magnifying-glass")
                 button(id="advanced-filter-btn", class="advanced-filter-btn btn btn-primary", type="button")
@@ -61,23 +61,23 @@ block main
                         input(type="checkbox" id="product-item__select-all" name="sort")
                     th(scope="col") 
                         |   Tên sản phẩm
-                        !=pugHepper.sort("name", _sort)
+                        !=pugHepper.sort("name", _sort,pagination.page)
                     th(scope="col") 
                         |   Mã sản phẩm
-                        !=pugHepper.sort("code", _sort)
+                        !=pugHepper.sort("code", _sort,pagination.page)
                     th(scope="col") Danh mục
                     th(scope="col") 
                         |   Giá gốc
-                        !=pugHepper.sort("original_price", _sort)
+                        !=pugHepper.sort("original_price", _sort,pagination.page)
                     th(scope="col") 
                         |   Giá bán
-                        !=pugHepper.sort("price", _sort)
+                        !=pugHepper.sort("price", _sort,pagination.page)
                     th(scope="col") 
                         |   giảm giá
-                        !=pugHepper.sort("discount", _sort)
+                        !=pugHepper.sort("discount", _sort,pagination.page)
                     th(scope="col") 
                         |   Tồn kho 
-                        !=pugHepper.sort("inventory", _sort)
+                        !=pugHepper.sort("inventory", _sort,pagination.page)
                     th(scope="col") Trạng thái 
                     th(scope="col")  
                     th(scope="col")  
@@ -139,7 +139,7 @@ block main
                             p(class="noProducts") Không có sản phẩm nào!   
                             a(class="noProducts__link", href=`${PATH_ADMIN}/product/create`) Tạo sản phẩm.
    
-    +pagination(pagination)
+    +pagination(pagination,currentPath)
 
     form(method="POST", type="hidden",id="form-product-delete" ,action=``)
     <!-- Modal -->

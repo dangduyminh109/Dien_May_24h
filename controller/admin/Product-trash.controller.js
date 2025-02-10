@@ -4,9 +4,11 @@ const {
     filterAndSort,
     generalHelper,
 } = require("../../helpers/product.helper.js");
+const paginationHelper = require("../../helpers/pagination.helper.js");
 class productController {
     // [GET] /admin/product-trash
     async show(req, res) {
+        const currentPath = paginationHelper(req);
         const { listProduct, pagination } = await filterAndSort(
             req.query,
             true
@@ -21,6 +23,7 @@ class productController {
             filter: req.query,
             handle,
             pagination,
+            currentPath,
         });
     }
 

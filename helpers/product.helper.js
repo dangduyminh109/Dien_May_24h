@@ -88,11 +88,11 @@ async function filterAndSort(query, findDelete = false) {
                     name: { $regex: filter.name, $options: "i" },
                     deleted: true,
                 })
+                    .skip((page - 1) * limit)
+                    .limit(limit)
                     .sort({
                         [query.filed]: sortType,
-                    })
-                    .skip((page - 1) * limit)
-                    .limit(limit);
+                    });
 
                 totalPage = await Product.countDocumentsWithDeleted({
                     ...filter,
@@ -104,11 +104,11 @@ async function filterAndSort(query, findDelete = false) {
                     ...filter,
                     deleted: true,
                 })
+                    .skip((page - 1) * limit)
+                    .limit(limit)
                     .sort({
                         [query.filed]: sortType,
-                    })
-                    .skip((page - 1) * limit)
-                    .limit(limit);
+                    });
 
                 totalPage = await Product.countDocumentsWithDeleted({
                     ...filter,
@@ -121,22 +121,22 @@ async function filterAndSort(query, findDelete = false) {
                     ...filter,
                     name: { $regex: filter.name, $options: "i" },
                 })
+                    .skip((page - 1) * limit)
+                    .limit(limit)
                     .sort({
                         [query.filed]: sortType,
-                    })
-                    .skip((page - 1) * limit)
-                    .limit(limit);
+                    });
                 totalPage = await Product.countDocuments({
                     ...filter,
                     name: { $regex: filter.name, $options: "i" },
                 });
             } else {
                 listProduct = await Product.find(filter)
+                    .skip((page - 1) * limit)
+                    .limit(limit)
                     .sort({
                         [query.filed]: sortType,
-                    })
-                    .skip((page - 1) * limit)
-                    .limit(limit);
+                    });
                 totalPage = await Product.countDocuments(filter);
             }
         }

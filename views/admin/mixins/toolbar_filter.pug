@@ -1,6 +1,4 @@
 mixin toolbarFilter(filter,path)
-    //- style=`height: ${height};`
-    //- - var height = Object.keys(filter).length === 0 || (Object.keys(filter).length === 3 && Object.keys(filter).includes("_sort")) ? 0 : '100%'
     div(id="toolbar__advanced-filter-box", class="toolbar__advanced-box" )
         form(id="filter-form" class="toolbar__advanced-form", action=`${PATH_ADMIN}/${path}`,method="GET")
             div(class="block-advanced")

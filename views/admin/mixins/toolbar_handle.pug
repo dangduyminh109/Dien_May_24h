@@ -1,7 +1,5 @@
 include  ./deletion_warning.pug
 mixin toolbarHandle(handle,path,trash=false)
-    //- - var height = Object.keys(handle).length === 0 ? 0 : "100%"
-    //- style=`height: ${height};`
     div(id="toolbar__advanced-handle-box", class="toolbar__advanced-box")
         form(id="handle-update-form" class="toolbar__advanced-form", action=`${PATH_ADMIN}/${path}/update-more?_method=PATCH`,method="POST") 
             input(type="text" class="list-id" name="list-id" value="[]" style="display:none")

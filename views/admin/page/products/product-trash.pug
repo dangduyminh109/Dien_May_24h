@@ -14,7 +14,7 @@ block main
             div(class="toolbar__left-box")
                 form(action=`${PATH_ADMIN}/product-trash`, method="GET") 
                     div(class="search")
-                        input(class="search__input", type="text", name="name",placeholder="Nhập từ khóa tìm kiếm", spellcheck="false")
+                        input(class="search__input", type="text", name="name",placeholder="Nhập từ khóa tìm kiếm",value=filter.name, spellcheck="false")
                         button(type="submit" class="search__toolbar-icon")
                             i(class="fa-solid fa-magnifying-glass")
                 button(id="advanced-filter-btn", class="advanced-filter-btn btn btn-primary", type="button")
@@ -125,7 +125,7 @@ block main
                                 div(class="btn-status")
                                     div(class="btn-status-toggle")
                                             div(class="form-check form-switch")
-                                                input(class="form-check-input btn-status__input", type="checkbox", role="switch",checked=product.status == "on",_id=product._id)
+                                                input(class="form-check-input btn-status__input", type="checkbox", role="switch",value=product.status,_id=product._id)
                                     p(class="btn-status__desc") Hoạt động          
 
                             td 
@@ -139,7 +139,7 @@ block main
                             p(class="noProducts") Không có sản phẩm nào đã xóa!   
                             a(class="noProducts__link", href=`${PATH_ADMIN}/product`) Danh sách sản phẩm.
     
-    +pagination(pagination)
+    +pagination(pagination,currentPath)
 
     form(method="POST", type="hidden",id="form-product-delete" ,action=``)
     <!-- Modal -->
