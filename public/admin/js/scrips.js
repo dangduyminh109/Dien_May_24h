@@ -73,14 +73,16 @@ function handleToggleNav() {
 
     toggleNav.onclick = () => {
         if (toggleNav.checked) {
+            sessionStorage.setItem("navbarTransform", "0");
             navbar.style.transform = "translateX(0)";
             if (main.offsetWidth > 575.98) {
-                main.style.padding = "103px 30px 20px 280px";
+                main.style.padding = "103px 10px 20px 260px";
             }
         } else {
+            sessionStorage.setItem("navbarTransform", "-100%");
             navbar.style.transform = "translateX(-100%)";
             if (main.offsetWidth > 575.98) {
-                main.style.padding = "103px 30px 20px";
+                main.style.padding = "103px 20px 20px";
             }
         }
     };
@@ -125,39 +127,39 @@ function handleFilterButton() {
     );
     if (filterBtn) {
         filterBtn.onclick = () => {
-            var height = localStorage.getItem("filterBoxHeight");
+            var height = sessionStorage.getItem("filterBoxHeight");
             toolBarAdvancedFilterBox.style.height =
                 height === "100%" ? "0" : "100%";
 
-            localStorage.setItem(
+            sessionStorage.setItem(
                 "filterBoxHeight",
                 toolBarAdvancedFilterBox.style.height
             );
             if (
-                localStorage.getItem("handleBoxHeight") === "100%" &&
-                localStorage.getItem("filterBoxHeight") === "100%"
+                sessionStorage.getItem("handleBoxHeight") === "100%" &&
+                sessionStorage.getItem("filterBoxHeight") === "100%"
             ) {
                 toolBarAdvancedHandleBox.style.height = "0";
-                localStorage.setItem("handleBoxHeight", "0");
+                sessionStorage.setItem("handleBoxHeight", "0");
             }
         };
     }
     if (handleBtn) {
         handleBtn.onclick = () => {
-            var height = localStorage.getItem("handleBoxHeight");
+            var height = sessionStorage.getItem("handleBoxHeight");
             toolBarAdvancedHandleBox.style.height =
                 height === "100%" ? "0" : "100%";
 
-            localStorage.setItem(
+            sessionStorage.setItem(
                 "handleBoxHeight",
                 toolBarAdvancedHandleBox.style.height
             );
             if (
-                localStorage.getItem("handleBoxHeight") === "100%" &&
-                localStorage.getItem("filterBoxHeight") === "100%"
+                sessionStorage.getItem("handleBoxHeight") === "100%" &&
+                sessionStorage.getItem("filterBoxHeight") === "100%"
             ) {
                 toolBarAdvancedFilterBox.style.height = "0";
-                localStorage.setItem("filterBoxHeight", "0");
+                sessionStorage.setItem("filterBoxHeight", "0");
             }
         };
     }
@@ -542,18 +544,25 @@ function handlePaginationBtn() {
 function handleResponsiveNav() {
     const toggleNav = document.getElementById("toggle__nav");
     const navbar = document.getElementById("navbar");
+    const main = document.getElementById("main");
 
     if (window.matchMedia("(max-width: 575.98px)").matches) {
+        sessionStorage.setItem("navbarTransform", "-100%");
         toggleNav.checked = false;
-        navbar.style.transform = "translateX(-100%)";
+        navbar.style.transform = `translateX(-100%)`;
     }
     window.addEventListener("resize", () => {
         if (window.matchMedia("(max-width: 575.98px)").matches) {
+            sessionStorage.setItem("navbarTransform", "-100%");
             toggleNav.checked = false;
             navbar.style.transform = "translateX(-100%)";
-        } else {
+            main.style.padding = "103px 20px 20px";
+        } 
+        else {
+            sessionStorage.setItem("navbarTransform", "0");
             toggleNav.checked = true;
             navbar.style.transform = "translateX(0)";
+            main.style.padding = "103px 10px 20px 260px";
         }
     });
 }
@@ -576,10 +585,30 @@ function handleWindowOnload() {
         "toolbar__advanced-handle-box"
     );
     if (toolBarAdvancedHandleBox && toolBarAdvancedFilterBox) {
-        var filterHeight = localStorage.getItem("filterBoxHeight") || 0;
-        var handleHeight = localStorage.getItem("handleBoxHeight") || 0;
+        var filterHeight = sessionStorage.getItem("filterBoxHeight") || 0;
+        var handleHeight = sessionStorage.getItem("handleBoxHeight") || 0;
         toolBarAdvancedFilterBox.style.height = filterHeight;
         toolBarAdvancedHandleBox.style.height = handleHeight;
+    }
+
+    const toggleNav = document.getElementById("toggle__nav");
+    const navbar = document.getElementById("navbar");
+    const main = document.getElementById("main");
+    const navbarTransform = sessionStorage.getItem("navbarTransform");
+    if (toggleNav && navbar && main) {
+        if (navbarTransform == "0") {
+            toggleNav.checked = true;
+            navbar.style.transform = "translateX(0)";
+            if (main.offsetWidth > 575.98) {
+                main.style.padding = "103px 30px 20px 280px";
+            }
+        } else {
+            toggleNav.checked = false;
+            navbar.style.transform = "translateX(-100%)";
+            if (main.offsetWidth > 575.98) {
+                main.style.padding = "103px 20px 20px";
+            }
+        }
     }
 }
 

@@ -3,9 +3,11 @@ const { uploadMultipleImages } = require("../helpers/upload.helper.js");
 const slugify = require("slugify");
 
 async function generalHelper(deleted = false) {
-    let listProduct = await Product.find({});
+    let listProduct = [];
     if (deleted) {
         listProduct = await Product.findWithDeleted({ deleted: true });
+    } else {
+        listProduct = await Product.find({});
     }
     return {
         totalProduct: listProduct.length,
@@ -31,168 +33,71 @@ async function filterAndSort(query, findDelete = false) {
     let page = query.page ? parseInt(query.page) : 1;
     const filter = Object.entries(query).reduce((obj, [key, value]) => {
         if (value !== "") {
+            const numValue = Number(value);
             switch (key) {
                 case "min-original-price":
-                    obj["original_price"] = {
-                        ...obj["original_price"],
-                        $gte: Number(value),
-                    };
-                    break;
                 case "max-original-price":
                     obj["original_price"] = {
                         ...obj["original_price"],
-                        $lte: Number(value),
+                        [key.includes("min") ? "$gte" : "$lte"]: numValue,
                     };
                     break;
                 case "min-price":
-                    obj.price = { ...obj.price, $gte: Number(value) };
-                    break;
                 case "max-price":
-                    obj.price = { ...obj.price, $lte: Number(value) };
+                    obj.price = {
+                        ...obj.price,
+                        [key.includes("min") ? "$gte" : "$lte"]: numValue,
+                    };
                     break;
                 case "min-discount":
-                    obj.discount = { ...obj.discount, $gte: Number(value) };
-                    break;
                 case "max-discount":
-                    obj.discount = { ...obj.discount, $lte: Number(value) };
+                    obj.discount = {
+                        ...obj.discount,
+                        [key.includes("min") ? "$gte" : "$lte"]: numValue,
+                    };
                     break;
                 case "min-inventory":
-                    obj.inventory = { ...obj.inventory, $gte: Number(value) };
-                    break;
                 case "max-inventory":
-                    obj.inventory = { ...obj.inventory, $lte: Number(value) };
+                    obj.inventory = {
+                        ...obj.inventory,
+                        [key.includes("min") ? "$gte" : "$lte"]: numValue,
+                    };
                     break;
                 case "name":
-                    obj[key] = value;
-                    break;
-                case "code":
-                    obj[key] = value;
-                    break;
-                case "category":
-                    obj[key] = value;
-                    break;
-                case "status":
-                    obj[key] = value;
+                    obj.name = { $regex: value, $options: "i" };
                     break;
             }
         }
         return obj;
     }, {});
-    if (query.page == false) {
-        query.page = 0;
-    }
-    if (query.type === "asc" || query.type === "desc") {
-        const sortType = query.type === "asc" ? 1 : -1;
-        if (findDelete) {
-            if (filter.name) {
-                listProduct = await Product.findWithDeleted({
-                    ...filter,
-                    name: { $regex: filter.name, $options: "i" },
-                    deleted: true,
-                })
-                    .skip((page - 1) * limit)
-                    .limit(limit)
-                    .sort({
-                        [query.filed]: sortType,
-                    });
 
-                totalPage = await Product.countDocumentsWithDeleted({
-                    ...filter,
-                    name: { $regex: filter.name, $options: "i" },
-                    deleted: true,
-                });
-            } else {
-                listProduct = await Product.findWithDeleted({
-                    ...filter,
-                    deleted: true,
-                })
-                    .skip((page - 1) * limit)
-                    .limit(limit)
-                    .sort({
-                        [query.filed]: sortType,
-                    });
+    if (findDelete) filter.deleted = true;
+    const queryMethod = findDelete ? "findWithDeleted" : "find";
+    const countMethod = findDelete
+        ? "countDocumentsWithDeleted"
+        : "countDocuments";
+    const sortOption =
+        query.type === "asc" || query.type === "desc"
+            ? { [query.filed]: query.type === "asc" ? 1 : -1 }
+            : {};
 
-                totalPage = await Product.countDocumentsWithDeleted({
-                    ...filter,
-                    deleted: true,
-                });
-            }
-        } else {
-            if (filter.name) {
-                listProduct = await Product.find({
-                    ...filter,
-                    name: { $regex: filter.name, $options: "i" },
-                })
-                    .skip((page - 1) * limit)
-                    .limit(limit)
-                    .sort({
-                        [query.filed]: sortType,
-                    });
-                totalPage = await Product.countDocuments({
-                    ...filter,
-                    name: { $regex: filter.name, $options: "i" },
-                });
-            } else {
-                listProduct = await Product.find(filter)
-                    .skip((page - 1) * limit)
-                    .limit(limit)
-                    .sort({
-                        [query.filed]: sortType,
-                    });
-                totalPage = await Product.countDocuments(filter);
-            }
-        }
-    } else {
-        if (findDelete) {
-            if (filter.name) {
-                listProduct = await Product.findWithDeleted({
-                    ...filter,
-                    name: { $regex: filter.name, $options: "i" },
-                    deleted: true,
-                })
-                    .skip((page - 1) * limit)
-                    .limit(limit);
+    listProduct = await Product[queryMethod](filter)
+        .skip((page - 1) * limit)
+        .limit(limit)
+        .sort(sortOption);
+    totalPage = await Product[countMethod](filter);
 
-                totalPage = await Product.countDocumentsWithDeleted({
-                    ...filter,
-                    name: { $regex: filter.name, $options: "i" },
-                    deleted: true,
-                });
-            } else {
-                listProduct = await Product.findWithDeleted({
-                    ...filter,
-                    deleted: true,
-                })
-                    .skip((page - 1) * limit)
-                    .limit(limit);
-
-                totalPage = await Product.countDocumentsWithDeleted({
-                    ...filter,
-                    deleted: true,
-                });
-            }
-        } else {
-            if (filter.name) {
-                listProduct = await Product.find({
-                    ...filter,
-                    name: { $regex: filter.name, $options: "i" },
-                })
-                    .skip((page - 1) * limit)
-                    .limit(limit);
-                totalPage = await Product.countDocuments({
-                    ...filter,
-                    name: { $regex: filter.name, $options: "i" },
-                });
-            } else {
-                listProduct = await Product.find(filter)
-                    .skip((page - 1) * limit)
-                    .limit(limit);
-                totalPage = await Product.countDocuments(filter);
-            }
-        }
-    }
-    totalPage = Math.ceil(totalPage / limit);
-    return { listProduct, pagination: { page, limit, totalPage } };
+    return {
+        listProduct,
+        pagination: {
+            listProduct,
+            pagination: {
+                page,
+                limit,
+                totalPage: Math.ceil(totalPage / limit),
+            },
+        },
+    };
 }
 
 async function handleForm(req, edit = false) {
