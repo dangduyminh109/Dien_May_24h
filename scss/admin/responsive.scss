@@ -74,17 +74,28 @@
             position: fixed !important;
         }
     }
-
 }
 
 /* ipad */
 @media (max-width: 767.98px) {
     .create {
-        .brand{
+        .brand {
             display: block;
         }
     }
 
+    .create,
+    .edit {
+        .image-group {
+            grid-template-columns: repeat(3, 1fr);
+            .image-group__preview {
+                &:first-child {
+                    grid-column: span 2;
+                    grid-row: span 2;
+                }
+            }
+        }
+    }
 }
 
 /* mobile */

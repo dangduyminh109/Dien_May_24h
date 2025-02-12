@@ -31,6 +31,7 @@ async function filterAndSort(query, findDelete = false) {
     const limit = 5;
     let totalPage = 0;
     let page = query.page ? parseInt(query.page) : 1;
+    console.log(query);
     const filter = Object.entries(query).reduce((obj, [key, value]) => {
         if (value !== "") {
             const numValue = Number(value);
@@ -66,10 +67,15 @@ async function filterAndSort(query, findDelete = false) {
                 case "name":
                     obj.name = { $regex: value, $options: "i" };
                     break;
+                case "category":
+                case "status":
+                case "code":
+                    obj[key] = value; 
             }
         }
         return obj;
     }, {});
+
 
     if (findDelete) filter.deleted = true;
     const queryMethod = findDelete ? "findWithDeleted" : "find";
@@ -86,16 +92,12 @@ async function filterAndSort(query, findDelete = false) {
         .limit(limit)
         .sort(sortOption);
     totalPage = await Product[countMethod](filter);
-
     return {
         listProduct,
         pagination: {
-            listProduct,
-            pagination: {
-                page,
-                limit,
-                totalPage: Math.ceil(totalPage / limit),
-            },
+            page,
+            limit,
+            totalPage: Math.ceil(totalPage / limit),
         },
     };
 }
