@@ -1,0 +1,55 @@
+extends ../../layout/default.pug
+include ../../mixins/page_header.pug
+include ../../mixins/category_tree.pug
+block main 
+    +page_header("Tạo mới danh mục", [
+        { name: "Sản phẩm", href: `${PATH_ADMIN}/product-category` },
+        { name: "Danh mục sản phẩm", href: `${PATH_ADMIN}/product-category` },
+        { name: "Tạo mới danh mục", href: `${PATH_ADMIN}/product-category/create` },
+    ])
+
+    div(class="create")
+        form(action=`${PATH_ADMIN}/product-category/create`, method="post",enctype="multipart/form-data")
+            h1(class="create__title") Thông tin chung
+            div(class="general")
+                div(class="form-group")
+                    div(class="name form-item")
+                        label(for="name") 
+                            | Tên danh mục (
+                            span(class="important-item") *
+                            | )
+                        input(class="form-control",id="name",name="name",type="text",required)
+                div(class="form-group")
+                    div(class="parentId form-item")
+                        label(for="parentId") Danh mục cha 
+                        select(name="parentId", id="parentId" ) 
+                            option(value="" selected disabled) -- chọn danh mục cha -- 
+                            if(categoryTree.length > 0)
+                                option(value="") Không
+                                +categoryTree(categoryTree)
+                            else 
+                                option(value="" selected disabled) -- Chưa có danh mục nào! -- 
+                label(for="check") Trạng thái 
+                div(class="btn-status")
+                    div(class="btn-status-toggle")
+                            div(class="form-check form-switch")
+                                input(class="form-check-input btn-status-form",name="status",type="checkbox",id="check", role="switch",checked=true)
+                    p(class="btn-status__desc") Hoạt động          
+                label(for="description") Mô tả
+                textarea(class="textarea-mce",name="description",id="description") 
+
+            h1(class="create__title") Hình ảnh
+            div(class="form-group")
+                div(class="image form-item")
+                    div(class="image-group", id="image-group")
+                        label(class="image__upload" for="image") 
+                            span(class="image__upload-icon")
+                                i(class="fa-solid fa-upload")
+                            |   upload
+                            input(id="image",name="thumbnails",type="file",accept="image/*",multiple)
+            div(class="form-group__btn")
+                a(href="/admin/product-category" class="btn back-btn") quay lại
+                button(type="submit" class="btn create-btn") Tạo danh mục
+
+
+            

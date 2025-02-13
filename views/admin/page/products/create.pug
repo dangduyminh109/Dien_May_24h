@@ -1,4 +1,5 @@
 extends ../../layout/default.pug
+include ../../mixins/category_tree.pug
 include ../../mixins/page_header.pug
 block main 
     +page_header("Tạo mới sản phẩm", [
@@ -50,12 +51,11 @@ block main
                             | )
                         select(name="category", id="category" ,required) 
                             option(value="" selected disabled) -- chọn danh mục -- 
-                            option(value="danh mục 1") danh mục 1
-                            option(value="danh mục 2") danh mục 2
-                            option(value="danh mục 3") danh mục 3
-                            option(value="danh mục 4") danh mục 4
-                            option(value="danh mục 5") danh mục 5
-                            option(value="danh mục 6") danh mục 6
+                            if(categoryTree.length > 0)
+                                option(value="") Không
+                                +categoryTree(categoryTree)
+                            else 
+                                option(value="" selected disabled) -- Chưa có danh mục nào! -- 
                     div(class="create-category form-item")
                         p(class="create-category__title") Thêm danh mục 
                         a(href="" class="btn create-category__btn")
@@ -68,11 +68,7 @@ block main
                     p(class="btn-status__desc") Hoạt động          
                 label(for="description") Mô tả sản phẩm
                 textarea(class="textarea-mce",name="description",id="description") 
-
-            h1(class="create__title") 
-                | Hình ảnh (
-                span(class="important-item") *
-                | )
+            h1(class="create__title") Hình ảnh
             div(class="form-group")
                 div(class="image form-item")
                     div(class="image-group", id="image-group")

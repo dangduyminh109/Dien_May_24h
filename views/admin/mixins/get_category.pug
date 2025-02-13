@@ -1,0 +1,6 @@
+mixin getCategory(IdCategory,categoryTree)
+    each category in categoryTree
+        if category._id == IdCategory
+            p #{category.name}
+        else
+            +getCategory(IdCategory,category.children)

@@ -1,5 +1,7 @@
-include  ./deletion_warning.pug
-mixin toolbarHandle(handle,path,trash=false)
+
+include ./category_tree.pug
+include ./deletion_warning.pug
+mixin toolbarHandle(handle,path,categoryTree,trash=false,product=true)
     div(id="toolbar__advanced-handle-box", class="toolbar__advanced-box")
         form(id="handle-update-form" class="toolbar__advanced-form", action=`${PATH_ADMIN}/${path}/update-more?_method=PATCH`,method="POST") 
             input(type="text" class="list-id" name="list-id" value="[]" style="display:none")
@@ -10,22 +12,21 @@ mixin toolbarHandle(handle,path,trash=false)
                         div(class="toolbar__advanced-group-btn")
                             button(type="button" class="toolbar__advanced-btn handle-from-reset-btn btn btn-primary") Đặt lại
                             button(type="button" class="toolbar__advanced-btn btn btn-primary" data-bs-toggle="modal", data-bs-target="#warningUpdateMultipleModal") Gửi
-                    div(class="advanced__item") 
-                        h3(class="advanced__title") Tên sản phẩm
-                        input(type="text" class="advanced__input" name="name" placeholder="Nhập tên sản phẩm" value=handle.name)
-                    div(class="advanced__item-2") 
-                        h3(class="advanced__title") Mã sản phẩm
-                        input(type="text" class="advanced__input" name="code" placeholder="Nhập mã sản phẩm" value=handle.code)
+                    div(class=product ?"advanced__item":"advanced__item-2") 
+                        h3(class="advanced__title")=product ? "Tên sản phẩm" : "Tên danh mục"
+                        input(type="text" class="advanced__input" name="name" placeholder=product ? "Nhập tên sản phẩm" : "Nhập tên danh mục" value=handle.name)
+                    if(product)
+                        div(class="advanced__item-2") 
+                            h3(class="advanced__title") Mã sản phẩm
+                            input(type="text" class="advanced__input" name="code" placeholder="Nhập mã sản phẩm" value=handle.code)
                     div(class="advanced__item")
                         h3(class="advanced__title") Danh mục
                         select(name="category", id="category") 
                             option(value="" selected disabled) -- chọn danh mục -- 
-                            option(value="danh mục 1" selected = handle.category === "danh mục 1" ? true:false) danh mục 1
-                            option(value="danh mục 2" selected = handle.category === "danh mục 1" ? true:false) danh mục 2
-                            option(value="danh mục 3" selected = handle.category === "danh mục 1" ? true:false) danh mục 3
-                            option(value="danh mục 4" selected = handle.category === "danh mục 1" ? true:false) danh mục 4
-                            option(value="danh mục 5" selected = handle.category === "danh mục 1" ? true:false) danh mục 5
-                            option(value="danh mục 6" selected = handle.category === "danh mục 1" ? true:false) danh mục 6
+                            if(categoryTree.length > 0)
+                                +categoryTree(categoryTree)
+                            else 
+                                option(value="" selected disabled) -- Chưa có danh mục nào! -- 
                     div(class="advanced__item-2") 
                         h3(class="advanced__title") Trạng thái
                         div(class="advanced__radio-group")
@@ -33,22 +34,23 @@ mixin toolbarHandle(handle,path,trash=false)
                             label(for="status-advanced_1") Hoạt Động
                             input(type="radio" name="status" id="status-advanced_2" value="off" checked = handle.status === "default" ? true:false)
                             label(for="status-advanced_2") Không Hoạt Động
-                    div(class="advanced__item")
-                        h3(class="advanced__title") Giá gốc
-                        div(class="advanced__number-group")
-                            input(type="number" class="advanced__input" name="original-price" placeholder="0" min=0 value=handle["original-price"])
-                    div(class="advanced__item-2")
-                        h3(class="advanced__title") Giá bán
-                        div(class="advanced__number-group")
-                            input(type="number" class="advanced__input" name="price" placeholder="0" min=0 value=handle.price) 
-                    div(class="advanced__item") 
-                        h3(class="advanced__title") Giảm giá
-                        div(class="advanced__number-group")
-                            input(type="number" class="advanced__input" name="discount" placeholder="0" min=0 max=100 value=handle.discount)
-                    div(class="advanced__item-2")
-                        h3(class="advanced__title") Tồn kho
-                        div(class="advanced__number-group")
-                            input(type="number" class="advanced__input" name="inventory" placeholder="0" min=0 value=handle.inventory)
+                    if(product)
+                        div(class="advanced__item")
+                            h3(class="advanced__title") Giá gốc
+                            div(class="advanced__number-group")
+                                input(type="number" class="advanced__input" name="original-price" placeholder="0" min=0 value=handle["original-price"])
+                        div(class="advanced__item-2")
+                            h3(class="advanced__title") Giá bán
+                            div(class="advanced__number-group")
+                                input(type="number" class="advanced__input" name="price" placeholder="0" min=0 value=handle.price) 
+                        div(class="advanced__item") 
+                            h3(class="advanced__title") Giảm giá
+                            div(class="advanced__number-group")
+                                input(type="number" class="advanced__input" name="discount" placeholder="0" min=0 max=100 value=handle.discount)
+                        div(class="advanced__item-2")
+                            h3(class="advanced__title") Tồn kho
+                            div(class="advanced__number-group")
+                                input(type="number" class="advanced__input" name="inventory" placeholder="0" min=0 value=handle.inventory)
                     div(class="advanced__item-header") 
                         h2(class="block-advanced__title") Xử Lí
                         div(class="toolbar__advanced-group-btn")
@@ -59,11 +61,11 @@ mixin toolbarHandle(handle,path,trash=false)
                                 button(type="button" class="btn toolbar__advanced-btn btn-danger" data-bs-toggle="modal", data-bs-target="#warningDeleteMultipleModal") Xoá
         
     if trash
-        +formWarning("warningDeleteMultipleModal","Bạn có chắc chắn muốn <b class='warning-text'>Xóa Vĩnh Viễn</b> các sản phẩm đã chọn?<span class='warning-text'> Hành động này không thể hoàn tác!!!</span>","warning-delete-multiple-modal-btn","Xóa Vĩnh Viễn")
-        +formWarning("warningRestoreMultipleModal","Bạn có chắc chắn muốn <b class='warning-text'>Khôi Phục</b> các sản phẩm này không?<span class='warning-text'>","warning-restore-multiple-modal-btn","Khôi Phục")
+        +formWarning("warningDeleteMultipleModal","Bạn có chắc chắn muốn <b class='warning-text'>Xóa Vĩnh Viễn</b> các sản phẩm đã chọn?<span class='warning-text'> Hành động này không thể hoàn tác!!!</span>","Xóa sản phẩm","warning-delete-multiple-modal-btn","Xóa Vĩnh Viễn")
+        +formWarning("warningRestoreMultipleModal","Bạn có chắc chắn muốn <b class='warning-text'>Khôi Phục</b> các sản phẩm này không?<span class='warning-text'>","Khôi phục sản phẩm","warning-restore-multiple-modal-btn","Khôi Phục")
     else
-        +formWarning("warningDeleteMultipleModal","Bạn có chắc chắn muốn <b class='warning-text'>Xóa</b> các sản phẩm đã chọn?","warning-delete-multiple-modal-btn","Xóa")
-    +formWarning("warningUpdateMultipleModal","Bạn có chắc chắn muốn <b class='warning-text'>Cập Nhật</b> các sản phẩm đã chọn?","warning-update-multiple-modal-btn")
+        +formWarning("warningDeleteMultipleModal","Bạn có chắc chắn muốn <b class='warning-text'>Xóa</b> các sản phẩm đã chọn?","Xóa sản phẩm","warning-delete-multiple-modal-btn","Xóa")
+    +formWarning("warningUpdateMultipleModal","Bạn có chắc chắn muốn <b class='warning-text'>Cập Nhật</b> các sản phẩm đã chọn?","Cập nhật sản phẩm","warning-update-multiple-modal-btn")
     //- hidden form
     if trash
         form(id="handle-delete-form" class="toolbar__advanced-form", action=`${PATH_ADMIN}/${path}/destroy-more?_method=DELETE`,method="POST") 

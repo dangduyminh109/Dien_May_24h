@@ -6,6 +6,7 @@ const {
     handleForm,
 } = require("../../helpers/product.helper.js");
 const paginationHelper = require("../../helpers/pagination.helper.js");
+const getCategoryTree = require("../../helpers/get-category-tree.helper.js");
 
 class productController {
     // [GET] /admin/products
@@ -14,6 +15,7 @@ class productController {
         const { listProduct, pagination } = await filterAndSort(req.query);
         const handle = req.session.backData || {};
         const general = await generalHelper();
+        const categoryTree = await getCategoryTree();
         res.render("./admin/page/products", {
             pageTitle: "Products",
             PATH_ADMIN: system.PATH_ADMIN,
@@ -23,14 +25,17 @@ class productController {
             handle,
             pagination,
             currentPath,
+            categoryTree,
         });
     }
 
     // [GET] /admin/products/create
-    create(req, res) {
+    async create(req, res) {
+        const categoryTree = await getCategoryTree();
         res.render("./admin/page/products/create", {
             pageTitle: "Create products",
             PATH_ADMIN: system.PATH_ADMIN,
+            categoryTree,
         });
     }
 

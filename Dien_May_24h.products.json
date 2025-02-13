@@ -1,220 +1,222 @@
-[{
-  "name": "Laptop Lenovo Legion 5",
-  "code": "001",
-  "slug": "laptop-lenovo-legion-5-1",
-  "price": 31500000,
-  "discount": 10,
-  "inventory": 10,
-  "supplier": "Lenovo",
-  "category": "danh mục 1",
-  "status": "on",
-  "description": "<p>Laptop gaming <strong>Lenovo Legion <em>5</em></strong> với CPU AMD Ryzen 7 v&agrave; GPU RTX 3060.</p>",
-  "createdAt": {
-    "$date": "2025-02-04T05:26:21.539Z"
-  },
-  "updatedAt": {
-    "$date": "2025-02-09T06:55:57.988Z"
-  },
-  "__v": 0,
-  "thumbnails": [
-    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739200668/upload/oiicj0d6z8w2mvkdbnwf.jpg",
-    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739198556/upload/cqwibjzexmfxa0grbamp.jpg",
-    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739198559/upload/zhbm8oxtoswaye3lqtof.jpg",
-    "/uploads/1738734865556-laptop_3.jpg"
-  ],
-  "original_price": 35000000
-},
-{
-  "name": "Bàn phím cơ Keychron K8",
-  "code": "001",
-  "slug": "ban-phim-co-keychron-k8",
-  "price": 1200000,
-  "discount": 10,
-  "inventory": 25,
-  "supplier": "Keychron Official Store",
-  "category": "danh mục 2",
-  "status": "on",
-  "description": "<p>B&agrave;n ph&iacute;m cơ Keychron K8 hỗ trợ kết nối Bluetooth v&agrave; USB-C, switch Gateron Brown.</p>",
-  "createdAt": {
-    "$date": "2025-02-04T05:31:22.820Z"
-  },
-  "updatedAt": {
-    "$date": "2025-02-09T06:59:09.354Z"
-  },
-  "__v": 0,
-  "thumbnails": [
-    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739197974/upload/dr2jmdylhadkrwlihwor.jpg",
-    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739198556/upload/mwk644e1eteljrdhfddz.jpg",
-    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739197975/upload/xttuphul7dsimjxbwnhu.jpg"
-  ],
-  "original_price": 1250000
-},
-{
-  "name": "Màn hình LG UltraGear 27GP850",
-  "code": "001",
-  "slug": "man-hinh-lg-ultragear-27gp850-1",
-  "price": 7225000,
-  "discount": 15,
-  "inventory": 8,
-  "supplier": "LG",
-  "category": "danh mục 3",
-  "status": "on",
-  "description": "<p>M&agrave;n h&igrave;nh gaming LG UltraGear 27GP850, tần số qu&eacute;t 165Hz, độ ph&acirc;n giải 2K.</p>",
-  "createdAt": {
-    "$date": "2025-02-04T05:50:34.194Z"
-  },
-  "updatedAt": {
-    "$date": "2025-02-09T06:59:13.191Z"
-  },
-  "__v": 0,
-  "thumbnails": [
-    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739201706/upload/vxjbwcecjcy84b4x40sr.jpg",
-    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739197975/upload/xttuphul7dsimjxbwnhu.jpg"
-  ],
-  "original_price": 8500000
-},
-{
-  "name": "Laptop Dell XPS 15",
-  "code": "004",
-  "slug": "laptop-dell-xps-15",
-  "price": 42000000,
-  "discount": 5,
-  "inventory": 12,
-  "supplier": "Dell",
-  "category": "danh mục 1",
-  "status": "on",
-  "description": "<p>Laptop Dell XPS 15 với màn hình 4K OLED, CPU Intel Core i9.</p>",
-  "thumbnails": [
-    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739200668/upload/oiicj0d6z8w2mvkdbnwf.jpg",
-    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739198556/upload/cqwibjzexmfxa0grbamp.jpg",
-    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739198559/upload/zhbm8oxtoswaye3lqtof.jpg"
-  ],
-  "original_price": 45000000,
-  "deleted": false
-},
-{
-  "name": "Bàn phím cơ Razer BlackWidow V4",
-  "code": "005",
-  "slug": "ban-phim-co-razer-blackwidow-v4",
-  "price": 3500000,
-  "discount": 10,
-  "inventory": 20,
-  "supplier": "Razer",
-  "category": "danh mục 2",
-  "status": "on",
-  "description": "<p>Bàn phím cơ Razer BlackWidow V4 với switch xanh, RGB Chroma.</p>",
-  "thumbnails": [
-    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739197974/upload/dr2jmdylhadkrwlihwor.jpg",
-    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739198556/upload/mwk644e1eteljrdhfddz.jpg"
-  ],
-  "original_price": 3900000,
-  "deleted": false
-},
-{
-  "name": "Màn hình ASUS ROG Swift PG259QN",
-  "code": "006",
-  "slug": "man-hinh-asus-rog-swift-pg259qn",
-  "price": 9200000,
-  "discount": 7,
-  "inventory": 15,
-  "supplier": "ASUS",
-  "category": "danh mục 3",
-  "status": "on",
-  "description": "<p>Màn hình gaming ASUS ROG Swift PG259QN 360Hz.</p>",
-  "thumbnails": [
-    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739201706/upload/vxjbwcecjcy84b4x40sr.jpg",
-    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739197975/upload/xttuphul7dsimjxbwnhu.jpg"
-  ],
-  "original_price": 9900000,
-  "deleted": false
-},
-{
-  "name": "Chuột gaming Logitech G Pro X Superlight",
-  "code": "007",
-  "slug": "chuot-gaming-logitech-g-pro-x-superlight",
-  "price": 2900000,
-  "discount": 5,
-  "inventory": 30,
-  "supplier": "Logitech",
-  "category": "danh mục 4",
-  "status": "on",
-  "description": "<p>Chuột không dây gaming Logitech G Pro X Superlight.</p>",
-  "thumbnails": [
-    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739200668/upload/oiicj0d6z8w2mvkdbnwf.jpg",
-    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739198556/upload/cqwibjzexmfxa0grbamp.jpg"
-  ],
-  "original_price": 3100000,
-  "deleted": false
-},
-{
-  "name": "Tai nghe Sony WH-1000XM5",
-  "code": "008",
-  "slug": "tai-nghe-sony-wh-1000xm5",
-  "price": 8500000,
-  "discount": 10,
-  "inventory": 18,
-  "supplier": "Sony",
-  "category": "danh mục 5",
-  "status": "on",
-  "description": "<p>Tai nghe chống ồn Sony WH-1000XM5.</p>",
-  "thumbnails": [
-    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739201706/upload/vxjbwcecjcy84b4x40sr.jpg",
-    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739200670/upload/ovicljtav1ed7q3te0s5.jpg"
-  ],
-  "original_price": 9500000,
-  "deleted": false
-},
-{
-  "name": "SSD Samsung 980 Pro 1TB",
-  "code": "009",
-  "slug": "ssd-samsung-980-pro-1tb",
-  "price": 2900000,
-  "discount": 15,
-  "inventory": 40,
-  "supplier": "Samsung",
-  "category": "danh mục 6",
-  "status": "on",
-  "description": "<p>SSD NVMe Samsung 980 Pro 1TB PCIe 4.0.</p>",
-  "thumbnails": [
-    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739198559/upload/zhbm8oxtoswaye3lqtof.jpg",
-    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739197766/upload/hjuoip0kddrbsdwkrszi.jpg"
-  ],
-  "original_price": 3400000,
-  "deleted": false
-},
-{
-  "name": "RAM Corsair Vengeance 32GB (2x16GB) DDR5 6000MHz",
-  "code": "010",
-  "slug": "ram-corsair-vengeance-32gb-ddr5-6000mhz",
-  "price": 5600000,
-  "discount": 12,
-  "inventory": 25,
-  "supplier": "Corsair",
-  "category": "danh mục 7",
-  "status": "on",
-  "description": "<p>RAM Corsair Vengeance 32GB DDR5 6000MHz.</p>",
-  "thumbnails": [
-    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739197766/upload/hjuoip0kddrbsdwkrszi.jpg",
-    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739198556/upload/mwk644e1eteljrdhfddz.jpg"
-  ],
-  "original_price": 6300000,
-  "deleted": false
-},
-{
-  "name": "Case NZXT H510 Elite",
-  "code": "013",
-  "slug": "case-nzxt-h510-elite",
-  "price": 3500000,
-  "discount": 9,
-  "inventory": 15,
-  "supplier": "NZXT",
-  "category": "danh mục 10",
-  "status": "on",
-  "description": "<p>Vỏ case NZXT H510 Elite với mặt kính cường lực.</p>",
-  "thumbnails": [
-    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739200668/upload/oiicj0d6z8w2mvkdbnwf.jpg",
-    "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739198556/upload/cqwibjzexmfxa0grbamp.jpg"
-  ],
-  "original_price": 3850000,
-  "deleted": false
-}]
+[
+    {
+        "name": "Laptop Lenovo Legion 5",
+        "code": "001",
+        "slug": "laptop-lenovo-legion-5-1",
+        "price": 31500000,
+        "discount": 10,
+        "inventory": 10,
+        "supplier": "Lenovo",
+        "category": "danh mục 1",
+        "status": "on",
+        "description": "<p>Laptop gaming <strong>Lenovo Legion <em>5</em></strong> với CPU AMD Ryzen 7 v&agrave; GPU RTX 3060.</p>",
+        "createdAt": {
+            "$date": "2025-02-04T05:26:21.539Z"
+        },
+        "updatedAt": {
+            "$date": "2025-02-09T06:55:57.988Z"
+        },
+        "__v": 0,
+        "thumbnails": [
+            "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739200668/upload/oiicj0d6z8w2mvkdbnwf.jpg",
+            "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739198556/upload/cqwibjzexmfxa0grbamp.jpg",
+            "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739198559/upload/zhbm8oxtoswaye3lqtof.jpg",
+            "/uploads/1738734865556-laptop_3.jpg"
+        ],
+        "original_price": 35000000
+    },
+    {
+        "name": "Bàn phím cơ Keychron K8",
+        "code": "001",
+        "slug": "ban-phim-co-keychron-k8",
+        "price": 1200000,
+        "discount": 10,
+        "inventory": 25,
+        "supplier": "Keychron Official Store",
+        "category": "danh mục 2",
+        "status": "on",
+        "description": "<p>B&agrave;n ph&iacute;m cơ Keychron K8 hỗ trợ kết nối Bluetooth v&agrave; USB-C, switch Gateron Brown.</p>",
+        "createdAt": {
+            "$date": "2025-02-04T05:31:22.820Z"
+        },
+        "updatedAt": {
+            "$date": "2025-02-09T06:59:09.354Z"
+        },
+        "__v": 0,
+        "thumbnails": [
+            "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739197974/upload/dr2jmdylhadkrwlihwor.jpg",
+            "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739198556/upload/mwk644e1eteljrdhfddz.jpg",
+            "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739197975/upload/xttuphul7dsimjxbwnhu.jpg"
+        ],
+        "original_price": 1250000
+    },
+    {
+        "name": "Màn hình LG UltraGear 27GP850",
+        "code": "001",
+        "slug": "man-hinh-lg-ultragear-27gp850-1",
+        "price": 7225000,
+        "discount": 15,
+        "inventory": 8,
+        "supplier": "LG",
+        "category": "danh mục 3",
+        "status": "on",
+        "description": "<p>M&agrave;n h&igrave;nh gaming LG UltraGear 27GP850, tần số qu&eacute;t 165Hz, độ ph&acirc;n giải 2K.</p>",
+        "createdAt": {
+            "$date": "2025-02-04T05:50:34.194Z"
+        },
+        "updatedAt": {
+            "$date": "2025-02-09T06:59:13.191Z"
+        },
+        "__v": 0,
+        "thumbnails": [
+            "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739201706/upload/vxjbwcecjcy84b4x40sr.jpg",
+            "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739197975/upload/xttuphul7dsimjxbwnhu.jpg"
+        ],
+        "original_price": 8500000
+    },
+    {
+        "name": "Laptop Dell XPS 15",
+        "code": "004",
+        "slug": "laptop-dell-xps-15",
+        "price": 42000000,
+        "discount": 5,
+        "inventory": 12,
+        "supplier": "Dell",
+        "category": "danh mục 1",
+        "status": "on",
+        "description": "<p>Laptop Dell XPS 15 với màn hình 4K OLED, CPU Intel Core i9.</p>",
+        "thumbnails": [
+            "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739200668/upload/oiicj0d6z8w2mvkdbnwf.jpg",
+            "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739198556/upload/cqwibjzexmfxa0grbamp.jpg",
+            "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739198559/upload/zhbm8oxtoswaye3lqtof.jpg"
+        ],
+        "original_price": 45000000,
+        "deleted": false
+    },
+    {
+        "name": "Bàn phím cơ Razer BlackWidow V4",
+        "code": "005",
+        "slug": "ban-phim-co-razer-blackwidow-v4",
+        "price": 3500000,
+        "discount": 10,
+        "inventory": 20,
+        "supplier": "Razer",
+        "category": "danh mục 2",
+        "status": "on",
+        "description": "<p>Bàn phím cơ Razer BlackWidow V4 với switch xanh, RGB Chroma.</p>",
+        "thumbnails": [
+            "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739197974/upload/dr2jmdylhadkrwlihwor.jpg",
+            "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739198556/upload/mwk644e1eteljrdhfddz.jpg"
+        ],
+        "original_price": 3900000,
+        "deleted": false
+    },
+    {
+        "name": "Màn hình ASUS ROG Swift PG259QN",
+        "code": "006",
+        "slug": "man-hinh-asus-rog-swift-pg259qn",
+        "price": 9200000,
+        "discount": 7,
+        "inventory": 15,
+        "supplier": "ASUS",
+        "category": "danh mục 3",
+        "status": "on",
+        "description": "<p>Màn hình gaming ASUS ROG Swift PG259QN 360Hz.</p>",
+        "thumbnails": [
+            "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739201706/upload/vxjbwcecjcy84b4x40sr.jpg",
+            "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739197975/upload/xttuphul7dsimjxbwnhu.jpg"
+        ],
+        "original_price": 9900000,
+        "deleted": false
+    },
+    {
+        "name": "Chuột gaming Logitech G Pro X Superlight",
+        "code": "007",
+        "slug": "chuot-gaming-logitech-g-pro-x-superlight",
+        "price": 2900000,
+        "discount": 5,
+        "inventory": 30,
+        "supplier": "Logitech",
+        "category": "danh mục 4",
+        "status": "on",
+        "description": "<p>Chuột không dây gaming Logitech G Pro X Superlight.</p>",
+        "thumbnails": [
+            "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739200668/upload/oiicj0d6z8w2mvkdbnwf.jpg",
+            "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739198556/upload/cqwibjzexmfxa0grbamp.jpg"
+        ],
+        "original_price": 3100000,
+        "deleted": false
+    },
+    {
+        "name": "Tai nghe Sony WH-1000XM5",
+        "code": "008",
+        "slug": "tai-nghe-sony-wh-1000xm5",
+        "price": 8500000,
+        "discount": 10,
+        "inventory": 18,
+        "supplier": "Sony",
+        "category": "danh mục 5",
+        "status": "on",
+        "description": "<p>Tai nghe chống ồn Sony WH-1000XM5.</p>",
+        "thumbnails": [
+            "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739201706/upload/vxjbwcecjcy84b4x40sr.jpg",
+            "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739200670/upload/ovicljtav1ed7q3te0s5.jpg"
+        ],
+        "original_price": 9500000,
+        "deleted": false
+    },
+    {
+        "name": "SSD Samsung 980 Pro 1TB",
+        "code": "009",
+        "slug": "ssd-samsung-980-pro-1tb",
+        "price": 2900000,
+        "discount": 15,
+        "inventory": 40,
+        "supplier": "Samsung",
+        "category": "danh mục 6",
+        "status": "on",
+        "description": "<p>SSD NVMe Samsung 980 Pro 1TB PCIe 4.0.</p>",
+        "thumbnails": [
+            "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739198559/upload/zhbm8oxtoswaye3lqtof.jpg",
+            "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739197766/upload/hjuoip0kddrbsdwkrszi.jpg"
+        ],
+        "original_price": 3400000,
+        "deleted": false
+    },
+    {
+        "name": "RAM Corsair Vengeance 32GB (2x16GB) DDR5 6000MHz",
+        "code": "010",
+        "slug": "ram-corsair-vengeance-32gb-ddr5-6000mhz",
+        "price": 5600000,
+        "discount": 12,
+        "inventory": 25,
+        "supplier": "Corsair",
+        "category": "danh mục 7",
+        "status": "on",
+        "description": "<p>RAM Corsair Vengeance 32GB DDR5 6000MHz.</p>",
+        "thumbnails": [
+            "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739197766/upload/hjuoip0kddrbsdwkrszi.jpg",
+            "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739198556/upload/mwk644e1eteljrdhfddz.jpg"
+        ],
+        "original_price": 6300000,
+        "deleted": false
+    },
+    {
+        "name": "Case NZXT H510 Elite",
+        "code": "013",
+        "slug": "case-nzxt-h510-elite",
+        "price": 3500000,
+        "discount": 9,
+        "inventory": 15,
+        "supplier": "NZXT",
+        "category": "danh mục 10",
+        "status": "on",
+        "description": "<p>Vỏ case NZXT H510 Elite với mặt kính cường lực.</p>",
+        "thumbnails": [
+            "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739200668/upload/oiicj0d6z8w2mvkdbnwf.jpg",
+            "https://res.cloudinary.com/dwmfgbeyw/image/upload/v1739198556/upload/cqwibjzexmfxa0grbamp.jpg"
+        ],
+        "original_price": 3850000,
+        "deleted": false
+    }
+]

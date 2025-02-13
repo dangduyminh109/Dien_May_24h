@@ -1,0 +1,91 @@
+extends ../../layout/default.pug
+include ../../mixins/page_header.pug
+include ../../mixins/toolbar_filter.pug
+include ../../mixins/toolbar_handle.pug
+include ../../mixins/deletion_warning.pug
+include ../../mixins/pagination.pug
+
+block main 
+    +page_header("Danh mục sản phẩm", [
+        { name: "Sản phẩm", href: `${PATH_ADMIN}/product-category` },
+        { name: "Danh mục sản phẩm", href: `${PATH_ADMIN}/product-category` },
+    ])
+    div(class="toolbar")
+        div(class="toolbar__box")
+            div(class="toolbar__left-box")
+                form(action=`${PATH_ADMIN}/product-category`, method="GET") 
+                    div(class="search")
+                        input(class="search__input", type="text", name="name",placeholder="Nhập từ khóa tìm kiếm", spellcheck="false",value=filter.name)
+                        button(type="submit" class="search__toolbar-icon")
+                            i(class="fa-solid fa-magnifying-glass")
+                button(id="advanced-filter-btn", class="advanced-filter-btn btn btn-primary", type="button")
+                    span(class="search__filter-icon")
+                        i(class="fa-solid fa-filter")
+                    | Bộ Lọc
+                button(id="advanced-handle-btn", class="advanced-handle-btn btn btn-primary", type="button")
+                    span(class="search__filter-icon")
+                        i(class="fa-solid fa-sliders")
+                    | Nâng cao
+                a(href=`${PATH_ADMIN}/category-trash`,id="trash-btn", class="trash-btn btn btn-primary")
+                    span(class="search__filter-icon")
+                        i(class="fa-solid fa-trash-can")
+                    | Thùng rác
+            div(class="toolbar__right-box")
+                a(href=`${PATH_ADMIN}/product-category/create`,class="create-btn btn btn-primary")
+                    span(class="create__plus-icon")
+                        i(class="fa-solid fa-plus")
+                    | Thêm mới danh mục
+        +toolbarFilter(filter,"product-category",categoryTree,false)
+        +toolbarHandle(handle,"product-category",categoryTree,false,false)
+
+    div(class="overview-block") 
+            div(class="overview-item total-products")
+                h3(class="overview-item__title total-products__title") Tổng số danh mục
+                p(class="overview-item__detail total-products__detail") #{general.totalProductCategory}
+    
+    div(class="list-category list-table")
+        table(class="list-category__table")
+            thead
+                tr
+                    th(scope="col") 
+                        input(type="checkbox" id="table-item__select-all" name="sort")
+                    th(scope="col") 
+                        |   Tên danh mục
+                        !=pugHepper.sort("name", _sort,pagination.page)
+                    th(scope="col") Trạng thái 
+                    th(scope="col")
+                    th(scope="col")  
+                    
+            tbody
+                if listProductCategory.length > 0
+                    each ProductCategory in listProductCategory
+                        tr
+                            td 
+                                input(type="checkbox" class="table-item__select" name="sort" value="1" id-product-category=ProductCategory._id)
+                            td  
+                                div(class="table-item__name")
+                                    - var thumbnail = ProductCategory.thumbnails?.[0] || "/uploads/default-image.jpg"
+                                    img(class="table-item__img", src=thumbnail, alt=ProductCategory.name)
+                                    h4(class="table-item__title") #{ProductCategory.name}
+                            td 
+                                div(class="btn-status")
+                                    div(class="btn-status-toggle")
+                                            div(class="form-check form-switch")
+                                                input(class="form-check-input btn-status__input", type="checkbox", role="switch",value=ProductCategory.status,_id=ProductCategory._id, path="product-category/update-status")
+                                    p(class="btn-status__desc") Hoạt động          
+
+                            td 
+                                a(href=`${PATH_ADMIN}/product-category/edit/${ProductCategory._id}`, class="btn-edit btn") Sửa      
+                            td 
+                                button(type="button", class="btn-delete btn btn-danger", data-bs-id = ProductCategory._id ,data-bs-toggle="modal", data-bs-target="#warningDeleteModal",path="product-category/delete-category") Xóa 
+                else  
+                    tr 
+                        td(colspan="9")
+                            p(class="noProductCategory") Không có danh mục nào!   
+                            a(class="noProductCategory__link", href=`${PATH_ADMIN}/product-category/create`) Tạo danh mục.
+   
+    +pagination(pagination,currentPath)
+
+    form(method="POST", type="hidden",id="form-product-delete" ,action=``)
+    <!-- Modal -->
+    +formWarning("warningDeleteModal","Bạn có chắc chắn muốn <b class='warning-text'>Xóa</b> danh mục này không?","Xóa danh mục","warning-delete-modal-btn","Xóa")

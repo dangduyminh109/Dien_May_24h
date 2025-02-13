@@ -5,7 +5,8 @@ const {
     generalHelper,
 } = require("../../helpers/product.helper.js");
 const paginationHelper = require("../../helpers/pagination.helper.js");
-class productController {
+const getCategoryTree = require("../../helpers/get-category-tree.helper.js");
+class productTrashController {
     // [GET] /admin/product-trash
     async show(req, res) {
         const currentPath = paginationHelper(req);
@@ -15,6 +16,7 @@ class productController {
         );
         const handle = req.session.backData || {};
         const general = await generalHelper(true);
+        const categoryTree = await getCategoryTree();
         res.render("./admin/page/products/product-trash", {
             pageTitle: "Create products",
             PATH_ADMIN: system.PATH_ADMIN,
@@ -24,6 +26,7 @@ class productController {
             handle,
             pagination,
             currentPath,
+            categoryTree,
         });
     }
 
@@ -72,4 +75,4 @@ class productController {
     }
 }
 
-module.exports = new productController();
+module.exports = new productTrashController();

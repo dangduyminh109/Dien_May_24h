@@ -31,7 +31,6 @@ async function filterAndSort(query, findDelete = false) {
     const limit = 5;
     let totalPage = 0;
     let page = query.page ? parseInt(query.page) : 1;
-    console.log(query);
     const filter = Object.entries(query).reduce((obj, [key, value]) => {
         if (value !== "") {
             const numValue = Number(value);

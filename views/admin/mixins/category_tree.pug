@@ -1,0 +1,6 @@
+mixin categoryTree(categoryTree,parentId,space="")
+    each category in categoryTree
+        if category.parentId != parentId
+            option(value=category._id, selected=parentId == category._id) #{space} #{category.name}
+            +categoryTree(category.children,parentId,`${space}---`)
+

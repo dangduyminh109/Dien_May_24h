@@ -76,7 +76,7 @@ function handleToggleNav() {
             sessionStorage.setItem("navbarTransform", "0");
             navbar.style.transform = "translateX(0)";
             if (main.offsetWidth > 575.98) {
-                main.style.padding = "103px 10px 20px 260px";
+                main.style.padding = "103px 20px 20px 270px";
             }
         } else {
             sessionStorage.setItem("navbarTransform", "-100%");
@@ -204,7 +204,7 @@ function handleFileUpload() {
 
 /* ============ product change =========== */
 function handleProductItemChange() {
-    const productItemIcon = document.querySelectorAll(".product-item__icon");
+    const productItemIcon = document.querySelectorAll(".table-item__icon");
 
     if (productItemIcon) {
         productItemIcon.forEach((item) => {
@@ -242,7 +242,6 @@ function handleProductItemChange() {
 /* ============ handle status =========== */
 function handleStatusInput() {
     const btnStatusInput = document.querySelectorAll(".btn-status__input");
-
     if (btnStatusInput) {
         window.onload = () => {
             btnStatusInput.forEach((element) => {
@@ -259,6 +258,7 @@ function handleStatusInput() {
         btnStatusInput.forEach((element) => {
             element.onchange = debounce(() => {
                 let btnStatusDesc = element.parentNode.parentNode.nextSibling;
+                let path = element.getAttribute("path");
                 if (element.checked) {
                     element.value = "on";
                     btnStatusDesc.textContent = "Hoạt động";
@@ -266,7 +266,7 @@ function handleStatusInput() {
                     element.value = "off";
                     btnStatusDesc.textContent = "Không hoạt động";
                 }
-                fetch(`${PATH_ADMIN}/product/update-status?_method=PATCH`, {
+                fetch(`${PATH_ADMIN}/${path}?_method=PATCH`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -306,7 +306,8 @@ function handleWarningFormProduct() {
             btnDelete.forEach((btn) => {
                 btn.onclick = () => {
                     const idProduct = btn.getAttribute("data-bs-id");
-                    formProductDelete.action = `${PATH_ADMIN}/product/delete-product/${idProduct}?_method=DELETE`;
+                    const path = btn.getAttribute("path");
+                    formProductDelete.action = `${PATH_ADMIN}/${path}/${idProduct}?_method=DELETE`;
                 };
             });
         }
@@ -314,7 +315,8 @@ function handleWarningFormProduct() {
             btnDestroy.forEach((btn) => {
                 btn.onclick = () => {
                     const idProduct = btn.getAttribute("data-bs-id");
-                    formProductDelete.action = `${PATH_ADMIN}/product-trash/destroy-product/${idProduct}?_method=DELETE`;
+                    const path = btn.getAttribute("path");
+                    formProductDelete.action = `${PATH_ADMIN}/${path}/${idProduct}?_method=DELETE`;
                 };
             });
         }
@@ -461,9 +463,9 @@ function handleFilterFrom() {
 
 /* ============ handle select Product Item =========== */
 function handleSelectProductItem() {
-    const productItem = document.querySelectorAll(".product-item__select");
+    const productItem = document.querySelectorAll(".table-item__select");
     const productItemSelectAll = document.getElementById(
-        "product-item__select-all"
+        "table-item__select-all"
     );
     const listId = document.querySelectorAll(".list-id");
     if (productItem && productItemSelectAll) {
@@ -557,12 +559,11 @@ function handleResponsiveNav() {
             toggleNav.checked = false;
             navbar.style.transform = "translateX(-100%)";
             main.style.padding = "103px 20px 20px";
-        } 
-        else {
+        } else {
             sessionStorage.setItem("navbarTransform", "0");
             toggleNav.checked = true;
             navbar.style.transform = "translateX(0)";
-            main.style.padding = "103px 10px 20px 260px";
+            main.style.padding = "103px 20px 20px 270px";
         }
     });
 }
@@ -600,7 +601,7 @@ function handleWindowOnload() {
             toggleNav.checked = true;
             navbar.style.transform = "translateX(0)";
             if (main.offsetWidth > 575.98) {
-                main.style.padding = "103px 30px 20px 280px";
+                main.style.padding = "103px 20px 20px 270px";
             }
         } else {
             toggleNav.checked = false;
