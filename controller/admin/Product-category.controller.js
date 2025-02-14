@@ -12,13 +12,13 @@ class productCategoryController {
     // [GET] /admin/product-category
     async show(req, res) {
         const currentPath = paginationHelper(req);
+        console.log(req.query);
         const { listProductCategory, pagination } = await filterAndSort(
             req.query
         );
         const handle = req.session.backData || {};
         const general = await generalHelper();
         const categoryTree = await getCategoryTree();
-
         res.render("./admin/page/product-category", {
             pageTitle: "Product-category",
             PATH_ADMIN: system.PATH_ADMIN,
@@ -92,20 +92,20 @@ class productCategoryController {
         res.json({ message: "Cập nhật thành công" });
     }
 
-    // // [PATCH] /admin/products/update-more
-    // async updateMore(req, res) {
-    //     const listIds = JSON.parse(req.body["list-id"]);
-    //     delete req.body["list-id"];
-    //     var dataUpdate = Object.entries(req.body).filter(([key, value]) => {
-    //         if (value != "") return [key, value];
-    //     });
-    //     dataUpdate = Object.fromEntries(dataUpdate);
-    //     await Product.updateMany(
-    //         { _id: { $in: listIds } },
-    //         { $set: dataUpdate }
-    //     );
-    //     res.redirect("back");
-    // }
+    // [PATCH] /admin/product-category/update-more
+    async updateMore(req, res) {
+        const listIds = JSON.parse(req.body["list-id"]);
+        delete req.body["list-id"];
+        var dataUpdate = Object.entries(req.body).filter(([key, value]) => {
+            if (value != "") return [key, value];
+        });
+        dataUpdate = Object.fromEntries(dataUpdate);
+        await ProductCategory.updateMany(
+            { _id: { $in: listIds } },
+            { $set: dataUpdate }
+        );
+        res.redirect("back");
+    }
 
     // [DELETE] /admin/product-category/delete-category/:id
     async delete(req, res) {
@@ -113,13 +113,12 @@ class productCategoryController {
         res.redirect("/admin/product-category");
     }
 
-    // // [DELETE] /admin/product-category/delete-more
-    // async deleteMore(req, res) {
-    //     const listIds = JSON.parse(req.body["list-id"]);
-    //     console.log(listIds);
-    //     await ProductCategory.delete({ _id: { $in: listIds } });
-    //     res.redirect("back");
-    // }
+    // [DELETE] /admin/product-category/delete-more
+    async deleteMore(req, res) {
+        const listIds = JSON.parse(req.body["list-id"]);
+        await ProductCategory.delete({ _id: { $in: listIds } });
+        res.redirect("back");
+    }
 }
 
 module.exports = new productCategoryController();

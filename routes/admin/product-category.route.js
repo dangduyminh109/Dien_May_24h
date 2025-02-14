@@ -22,8 +22,8 @@ router.patch(
     productCategoryController.editPatch
 );
 router.patch("/update-status", productCategoryController.updateStatusPatch);
-// router.patch("/update-more", productCategoryController.updateMore);
+router.patch("/update-more", productCategoryController.updateMore);
 
 router.delete("/delete-category/:id", productCategoryController.delete);
-// router.delete("/delete-more", productCategoryController.deleteMore);
+router.delete("/delete-more", productCategoryController.deleteMore);
 module.exports = router;

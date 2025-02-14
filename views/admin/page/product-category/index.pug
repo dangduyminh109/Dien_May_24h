@@ -61,7 +61,7 @@ block main
                     each ProductCategory in listProductCategory
                         tr
                             td 
-                                input(type="checkbox" class="table-item__select" name="sort" value="1" id-product-category=ProductCategory._id)
+                                input(type="checkbox" class="table-item__select" name="sort" value="1" _id=ProductCategory._id)
                             td  
                                 div(class="table-item__name")
                                     - var thumbnail = ProductCategory.thumbnails?.[0] || "/uploads/default-image.jpg"

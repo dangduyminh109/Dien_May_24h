@@ -87,10 +87,10 @@ class productController {
 
     // [PATCH] /admin/products/update-status
     async updateStatusPatch(req, res) {
-        const priceUpdate = req.body;
+        const statusUpdate = req.body;
         await Product.updateOne(
-            { _id: priceUpdate._id },
-            { status: priceUpdate.value }
+            { _id: statusUpdate._id },
+            { status: statusUpdate.value }
         );
 
         res.json({ message: "Cập nhật thành công" });

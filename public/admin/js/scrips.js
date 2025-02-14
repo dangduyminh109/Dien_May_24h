@@ -463,21 +463,21 @@ function handleFilterFrom() {
 
 /* ============ handle select Product Item =========== */
 function handleSelectProductItem() {
-    const productItem = document.querySelectorAll(".table-item__select");
-    const productItemSelectAll = document.getElementById(
+    const tableItem = document.querySelectorAll(".table-item__select");
+    const tableItemSelectAll = document.getElementById(
         "table-item__select-all"
     );
-    const listId = document.querySelectorAll(".list-id");
-    if (productItem && productItemSelectAll) {
+    const listId =document.querySelectorAll(".list-id");
+    if (tableItem && tableItemSelectAll) {
         var arr = [];
-        productItem.forEach((item) => {
+        tableItem.forEach((item) => {
             item.onchange = () => {
-                productItemSelectAll.checked = [...productItem].reduce(
+                tableItemSelectAll.checked = [...tableItem].reduce(
                     (value, item2) => item2.checked && value,
                     true
                 );
                 arr = JSON.parse(listId[0].value);
-                var idProduct = item.getAttribute("id-product");
+                var idProduct = item.getAttribute("_id");
                 if (item.checked) {
                     arr = [...arr, idProduct];
                 } else {
@@ -488,14 +488,14 @@ function handleSelectProductItem() {
                 });
             };
         });
-        productItemSelectAll.onclick = () => {
+        tableItemSelectAll.onclick = () => {
             arr = [];
-            productItem.forEach((item) => {
-                item.checked = productItemSelectAll.checked;
+            tableItem.forEach((item) => {
+                item.checked = tableItemSelectAll.checked;
             });
-            if (productItemSelectAll.checked) {
-                productItem.forEach((item) => {
-                    var idProduct = item.getAttribute("id-product");
+            if (tableItemSelectAll.checked) {
+                tableItem.forEach((item) => {
+                    var idProduct = item.getAttribute("_id");
                     arr = [...arr, idProduct];
                 });
             } else {

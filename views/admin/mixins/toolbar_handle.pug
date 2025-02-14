@@ -12,21 +12,21 @@ mixin toolbarHandle(handle,path,categoryTree,trash=false,product=true)
                         div(class="toolbar__advanced-group-btn")
                             button(type="button" class="toolbar__advanced-btn handle-from-reset-btn btn btn-primary") Đặt lại
                             button(type="button" class="toolbar__advanced-btn btn btn-primary" data-bs-toggle="modal", data-bs-target="#warningUpdateMultipleModal") Gửi
-                    div(class=product ?"advanced__item":"advanced__item-2") 
-                        h3(class="advanced__title")=product ? "Tên sản phẩm" : "Tên danh mục"
-                        input(type="text" class="advanced__input" name="name" placeholder=product ? "Nhập tên sản phẩm" : "Nhập tên danh mục" value=handle.name)
                     if(product)
+                        div(class="advanced__item") 
+                            h3(class="advanced__title")=product ? "Tên sản phẩm" : "Tên danh mục"
+                            input(type="text" class="advanced__input" name="name" placeholder=product ? "Nhập tên sản phẩm" : "Nhập tên danh mục" value=handle.name)
                         div(class="advanced__item-2") 
                             h3(class="advanced__title") Mã sản phẩm
                             input(type="text" class="advanced__input" name="code" placeholder="Nhập mã sản phẩm" value=handle.code)
-                    div(class="advanced__item")
-                        h3(class="advanced__title") Danh mục
-                        select(name="category", id="category") 
-                            option(value="" selected disabled) -- chọn danh mục -- 
-                            if(categoryTree.length > 0)
-                                +categoryTree(categoryTree)
-                            else 
-                                option(value="" selected disabled) -- Chưa có danh mục nào! -- 
+                        div(class="advanced__item")
+                            h3(class="advanced__title") Danh mục
+                            select(name="category", id="category") 
+                                option(value="" selected disabled) -- chọn danh mục -- 
+                                if(categoryTree.length > 0)
+                                    +categoryTree(categoryTree)
+                                else 
+                                    option(value="" selected disabled) -- Chưa có danh mục nào! -- 
                     div(class="advanced__item-2") 
                         h3(class="advanced__title") Trạng thái
                         div(class="advanced__radio-group")

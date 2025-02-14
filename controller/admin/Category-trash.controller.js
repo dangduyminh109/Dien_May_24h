@@ -36,30 +36,40 @@ class productController {
         res.redirect("/admin/category-trash");
     }
 
-    // // [PATCH] /admin/product-trash/update-more
-    // async updateMore(req, res) {
-    //     const listIds = JSON.parse(req.body["list-id"]);
-    //     delete req.body["list-id"];
-    //     var dataUpdate = Object.entries(req.body).filter(([key, value]) => {
-    //         if (value != "") return [key, value];
-    //     });
-    //     dataUpdate = Object.fromEntries(dataUpdate);
-    //     await Product.updateManyDeleted(
-    //         { _id: { $in: listIds } },
-    //         { $set: dataUpdate }
-    //     );
-    //     req.session.backData = {
-    //         formData: req.body,
-    //     };
-    //     res.redirect("back");
-    // }
+    // [PATCH] /admin/category-trash/update-more
+    async updateMore(req, res) {
+        const listIds = JSON.parse(req.body["list-id"]);
+        delete req.body["list-id"];
+        var dataUpdate = Object.entries(req.body).filter(([key, value]) => {
+            if (value != "") return [key, value];
+        });
+        dataUpdate = Object.fromEntries(dataUpdate);
+        await ProductCategory.updateManyDeleted(
+            { _id: { $in: listIds } },
+            { $set: dataUpdate }
+        );
+        req.session.backData = {
+            formData: req.body,
+        };
+        res.redirect("back");
+    }
 
-    // // [PATCH] /admin/product-trash/restore-more
-    // async restoreMore(req, res) {
-    //     const listIds = JSON.parse(req.body["list-id"]);
-    //     await Product.restore({ _id: { $in: listIds } });
-    //     res.redirect("back");
-    // }
+    // [PATCH] /admin/category-trash/restore-more
+    async restoreMore(req, res) {
+        const listIds = JSON.parse(req.body["list-id"]);
+        await ProductCategory.restore({ _id: { $in: listIds } });
+        res.redirect("back");
+    }
+
+    // [PATCH] /admin/category-trash/update-status
+    async updateStatusPatch(req, res) {
+        const statusUpdate = req.body;
+        await ProductCategory.updateOneDeleted(
+            { _id: statusUpdate._id },
+            { status: statusUpdate.value }
+        );
+        res.json({ message: "Cập nhật thành công" });
+    }
 
     // [DELETE] /admin/category-trash/destroy-category/:id
     async destroy(req, res) {
@@ -67,12 +77,12 @@ class productController {
         res.redirect("/admin/category-trash");
     }
 
-    // // [DELETE] /admin/product-trash/destroy-more
-    // async destroyMore(req, res) {
-    //     const listIds = JSON.parse(req.body["list-id"]);
-    //     await Product.deleteMany({ _id: { $in: listIds } });
-    //     res.redirect("back");
-    // }
+    // [DELETE] /admin/category-trash/destroy-more
+    async destroyMore(req, res) {
+        const listIds = JSON.parse(req.body["list-id"]);
+        await ProductCategory.deleteMany({ _id: { $in: listIds } });
+        res.redirect("back");
+    }
 }
 
 module.exports = new productController();

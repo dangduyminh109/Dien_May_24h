@@ -27,7 +27,7 @@ async function filterAndSort(query, findDelete = false) {
                 case "name":
                     obj.name = { $regex: value, $options: "i" };
                     break;
-                case "paren_category":
+                case "parentId":
                 case "status":
                     obj[key] = value;
             }

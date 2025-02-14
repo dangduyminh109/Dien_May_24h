@@ -17,17 +17,26 @@ mixin toolbarFilter(filter,path,categoryTree,product=true)
                         h3(class="advanced__title") Mã sản phẩm
                         input(type="text" class="advanced__input" name="code" placeholder="Nhập mã sản phẩm" value=filter.code|| "")
                 div(class="advanced__item")
-                    h3(class="advanced__title") Danh mục
-                    select(name="category", id="category") 
-                      option(value="" selected disabled) -- chọn danh mục -- 
-                            if(categoryTree.length > 0)
-                                +categoryTree(categoryTree)
-                            else 
-                                option(value="" selected disabled) -- Chưa có danh mục nào! -- 
+                    if(product)
+                        h3(class="advanced__title") Danh mục
+                        select(name="category", id="category") 
+                            option(value="" selected disabled) -- chọn danh mục -- 
+                                if(categoryTree.length > 0)
+                                    +categoryTree(categoryTree)
+                                else 
+                                    option(value="" selected disabled) -- Chưa có danh mục nào! -- 
+                    else
+                        h3(class="advanced__title") Danh mục cha
+                        select(name="parentId", id="category") 
+                            option(value="" selected disabled) -- chọn danh mục cha-- 
+                                if(categoryTree.length > 0)
+                                    +categoryTree(categoryTree)
+                                else 
+                                    option(value="" selected disabled) -- Chưa có danh mục nào! -- 
                 div(class="advanced__item-2") 
                     h3(class="advanced__title") Trạng thái
                     div(class="advanced__radio-group")
-                        input(type="radio" name="status" id="status_1" value="default" checked = filter.status === "default" ? true:false) 
+                        input(type="radio" name="status" id="status_1" value="" checked = filter.status === "" ? true:false) 
                         label(for="status_1") Mặc định
                         input(type="radio" name="status" id="status_2" value="on" checked = filter.status === "on" ? true:false)
                         label(for="status_2") Hoạt Động

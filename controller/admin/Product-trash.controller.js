@@ -36,6 +36,17 @@ class productTrashController {
         res.redirect("/admin/product-trash");
     }
 
+    // [PATCH] /admin/product-trash/update-status
+    async updateStatusPatch(req, res) {
+        const statusUpdate = req.body;
+        await Product.updateOneDeleted(
+            { _id: statusUpdate._id },
+            { status: statusUpdate.value }
+        );
+
+        res.json({ message: "Cập nhật thành công" });
+    }
+
     // [PATCH] /admin/product-trash/update-more
     async updateMore(req, res) {
         const listIds = JSON.parse(req.body["list-id"]);

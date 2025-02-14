@@ -8,6 +8,7 @@ include ../../mixins/pagination.pug
 block main 
     +page_header("Danh sách sản phẩm đã xóa", [
         { name: "Sản phẩm", href: `${PATH_ADMIN}/product` },
+        { name: "Danh sách sản phẩm", href: `${PATH_ADMIN}/product` },
         { name: "Thùng rác", href: `${PATH_ADMIN}/product-trash` },
     ])
     div(class="toolbar")
@@ -85,7 +86,7 @@ block main
                     each product in listDeletedProduct
                         tr
                             td 
-                                input(type="checkbox" class="table-item__select" name="sort" id-product=product._id value="1")
+                                input(type="checkbox" class="table-item__select" name="sort" _id=product._id value="1")
                             td  
                                 div(class="table-item__name")
                                     - var thumbnail = product.thumbnails?.[0] || "/uploads/default-image.jpg"
@@ -124,7 +125,7 @@ block main
                                 div(class="btn-status")
                                     div(class="btn-status-toggle")
                                             div(class="form-check form-switch")
-                                                input(class="form-check-input btn-status__input", type="checkbox", role="switch",value=product.status,_id=product._id,path="product/update-status")
+                                                input(class="form-check-input btn-status__input", type="checkbox", role="switch",value=product.status,_id=product._id,path="product-trash/update-status")
                                     p(class="btn-status__desc") Hoạt động          
 
                             td 
