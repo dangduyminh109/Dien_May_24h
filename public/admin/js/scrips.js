@@ -1,5 +1,41 @@
 const PATH_ADMIN = "/admin";
 
+/* ============ alert =========== */
+function alert(type = "success", message) {
+    const alertDiv = document.createElement("div");
+    alertDiv.classList.add("alert-container", type);
+    let icon = `<i class="fa-solid fa-circle-info"></i>`;
+    if (type == "error") {
+        icon = `<i class="fa-solid fa-bug"></i>`;
+    } else if (type == "warning") {
+        icon = `<i class="fa-solid fa-triangle-exclamation"></i>`;
+    }
+    alertDiv.innerHTML = `
+                            <span class="alert-icon">
+                                ${icon}
+                            </span>
+                            <p class="alert-content">${message}</p>
+                            <span class="alert-icon-close">
+                                <i class="fa-solid fa-xmark"></i>
+                            </span>
+                        `;
+    document.querySelector("main").appendChild(alertDiv);
+    setTimeout(() => {
+        alertDiv.classList.add("active");
+        alertDiv.querySelector(".alert-icon-close").onclick = () => {
+            alertDiv.classList.remove("active");
+        };
+        setTimeout(() => {
+            alertDiv.classList.remove("active");
+        }, 5000);
+
+        setTimeout(() => {
+            if (alertDiv.parentNode) {
+                alertDiv.parentNode.removeChild(alertDiv);
+            }
+        }, 7000);
+    }, 100);
+}
 /* ======================================= admin header ======================================= */
 /* ============ left box =========== */
 // search box
@@ -211,7 +247,7 @@ function handleProductItemChange() {
             item.onclick = () => {
                 let parent = item.parentNode;
                 let ProductItemInput = parent.nextSibling;
-
+                let path = item.getAttribute("path");
                 parent.style.display = "none";
                 ProductItemInput.style.display = "block";
                 ProductItemInput.focus();
@@ -222,7 +258,7 @@ function handleProductItemChange() {
                     ).toLocaleString("vi-VN")}đ`;
                     parent.style.display = "block";
                     ProductItemInput.style.display = "none";
-                    fetch(`${PATH_ADMIN}/product/update-price?_method=PATCH`, {
+                    fetch(`${PATH_ADMIN}/${path}/update-price?_method=PATCH`, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
@@ -232,7 +268,22 @@ function handleProductItemChange() {
                             value: ProductItemInput.value,
                             _id: ProductItemInput.getAttribute("_id"),
                         }),
-                    }).catch((error) => console.error("Lỗi cập nhật:", error));
+                    })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            if (data.success && !data.error) {
+                                alert("success", data.message);
+                            } else {
+                                alert(
+                                    "error",
+                                    data.message || "Có lỗi xảy ra!"
+                                );
+                            }
+                        })
+                        .catch((err) => {
+                            alert("error", "Không thể kết nối đến server!");
+                            console.log("Lỗi Fetch API:", err);
+                        });
                 }, 300);
             };
         });
@@ -276,8 +327,18 @@ function handleStatusInput() {
                         _id: element.getAttribute("_id"),
                     }),
                 })
-                    .then((data) => console.log(data))
-                    .catch((error) => console.error("Lỗi cập nhật:", error));
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.success && !data.error) {
+                            alert("success", data.message);
+                        } else {
+                            alert("error", data.message || "Có lỗi xảy ra!");
+                        }
+                    })
+                    .catch((err) => {
+                        alert("error", "Không thể kết nối đến server!");
+                        console.log("Lỗi Fetch API:", err);
+                    });
             }, 300);
         });
     }
@@ -467,7 +528,7 @@ function handleSelectProductItem() {
     const tableItemSelectAll = document.getElementById(
         "table-item__select-all"
     );
-    const listId =document.querySelectorAll(".list-id");
+    const listId = document.querySelectorAll(".list-id");
     if (tableItem && tableItemSelectAll) {
         var arr = [];
         tableItem.forEach((item) => {

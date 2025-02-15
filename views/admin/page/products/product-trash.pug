@@ -5,7 +5,10 @@ include ../../mixins/toolbar_handle.pug
 include ../../mixins/deletion_warning.pug
 include ../../mixins/get_category.pug
 include ../../mixins/pagination.pug
+include ../../mixins/alert.pug
+
 block main 
+    +alert(messages)
     +page_header("Danh sách sản phẩm đã xóa", [
         { name: "Sản phẩm", href: `${PATH_ADMIN}/product` },
         { name: "Danh sách sản phẩm", href: `${PATH_ADMIN}/product` },
@@ -102,7 +105,7 @@ block main
                             td 
                                 p(class="product-item__original_price")
                                     |   #{product.original_price.toLocaleString('vi-VN')}đ
-                                    span(class="table-item__icon table-item__icon-pen")
+                                    span(class="table-item__icon table-item__icon-pen" path="product-trash")
                                         i(class="fa-solid fa-pen")
                                 input(class="table-item__input", type="number", value=product.original_price,field="original_price",_id=product._id)
                                 form(action="", method="post") 
@@ -110,7 +113,7 @@ block main
                             td 
                                 p(class="product-item__price")
                                     |   #{product.price.toLocaleString('vi-VN')}đ
-                                    span(class="table-item__icon table-item__icon-pen")
+                                    span(class="table-item__icon table-item__icon-pen" path="product-trash")
                                         i(class="fa-solid fa-pen")
                                 input(class="table-item__input", type="number", value=product.price, field="price",_id=product._id)
                                 form(action="", method="post") 

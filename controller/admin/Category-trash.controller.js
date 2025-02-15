@@ -32,56 +32,99 @@ class productController {
 
     // [PATCH] /admin/category-trash/restore-category
     async restore(req, res) {
-        await ProductCategory.restore({ _id: req.params.id });
-        res.redirect("/admin/category-trash");
+        try {
+            await ProductCategory.restore({ _id: req.params.id });
+            req.flash("success", "Khôi phục danh mục thành công!");
+            res.redirect("/admin/category-trash");
+        } catch (error) {
+            console.log(error);
+            req.flash("error", "Khôi phục danh mục không thành công!");
+            res.redirect("/admin/category-trash");
+        }
     }
 
     // [PATCH] /admin/category-trash/update-more
     async updateMore(req, res) {
-        const listIds = JSON.parse(req.body["list-id"]);
-        delete req.body["list-id"];
-        var dataUpdate = Object.entries(req.body).filter(([key, value]) => {
-            if (value != "") return [key, value];
-        });
-        dataUpdate = Object.fromEntries(dataUpdate);
-        await ProductCategory.updateManyDeleted(
-            { _id: { $in: listIds } },
-            { $set: dataUpdate }
-        );
-        req.session.backData = {
-            formData: req.body,
-        };
-        res.redirect("back");
+        try {
+            const listIds = JSON.parse(req.body["list-id"]);
+            delete req.body["list-id"];
+            var dataUpdate = Object.entries(req.body).filter(([key, value]) => {
+                if (value != "") return [key, value];
+            });
+            dataUpdate = Object.fromEntries(dataUpdate);
+            await ProductCategory.updateManyDeleted(
+                { _id: { $in: listIds } },
+                { $set: dataUpdate }
+            );
+            req.session.backData = {
+                formData: req.body,
+            };
+            req.flash("success", "Cập nhật danh mục thành công!");
+            res.redirect("back");
+        } catch (error) {
+            console.log(error);
+            req.flash("error", "Cập nhật danh mục không thành công!");
+            res.redirect("back");
+        }
     }
 
     // [PATCH] /admin/category-trash/restore-more
     async restoreMore(req, res) {
         const listIds = JSON.parse(req.body["list-id"]);
-        await ProductCategory.restore({ _id: { $in: listIds } });
-        res.redirect("back");
+        try {
+            await ProductCategory.restore({ _id: { $in: listIds } });
+            req.flash("success", "Khôi phục danh mục thành công!");
+            res.redirect("/admin/category-trash");
+        } catch (error) {
+            console.log(error);
+            req.flash("error", "Khôi phục danh mục không thành công!");
+            res.redirect("/admin/category-trash");
+        }
     }
 
     // [PATCH] /admin/category-trash/update-status
     async updateStatusPatch(req, res) {
         const statusUpdate = req.body;
-        await ProductCategory.updateOneDeleted(
-            { _id: statusUpdate._id },
-            { status: statusUpdate.value }
-        );
-        res.json({ message: "Cập nhật thành công" });
+        try {
+            await ProductCategory.updateOneDeleted(
+                { _id: statusUpdate._id },
+                { status: statusUpdate.value }
+            );
+            res.json({ success: true, message: "Cập nhật thành công!" });
+        } catch (error) {
+            res.json({
+                error: true,
+                message: "Cập nhật không thành công!",
+                err: error,
+            });
+        }
     }
 
     // [DELETE] /admin/category-trash/destroy-category/:id
     async destroy(req, res) {
-        await ProductCategory.deleteOne({ _id: req.params.id });
-        res.redirect("/admin/category-trash");
+        try {
+            await ProductCategory.deleteOne({ _id: req.params.id });
+            req.flash("success", "Xóa danh mục thành công!");
+            res.redirect("/admin/category-trash");
+        } catch (error) {
+            console.log(error);
+            req.flash("error", "Xóa danh mục không thành công!");
+            res.redirect("/admin/category-trash");
+        }
     }
 
     // [DELETE] /admin/category-trash/destroy-more
     async destroyMore(req, res) {
-        const listIds = JSON.parse(req.body["list-id"]);
-        await ProductCategory.deleteMany({ _id: { $in: listIds } });
-        res.redirect("back");
+        try {
+            const listIds = JSON.parse(req.body["list-id"]);
+            await ProductCategory.deleteMany({ _id: { $in: listIds } });
+            req.flash("success", "Xóa danh mục thành công!");
+            res.redirect("back");
+        } catch (error) {
+            console.log(error);
+            req.flash("error", "Xóa danh mục không thành công!");
+            res.redirect("back");
+        }
     }
 }
 

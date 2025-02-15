@@ -1,5 +1,7 @@
 extends ../../layout/default.pug
 include ../../mixins/page_header.pug
+include ../../mixins/category_tree.pug
+
 block main 
     +page_header("Chỉnh sửa sản phẩm", [
         { name: "Sản phẩm", href: `${PATH_ADMIN}/product` },
@@ -49,13 +51,12 @@ block main
                             span(class="important-item") *
                             | )
                         select(name="category", id="category" ,required) 
-                            option(value="" disabled) -- chọn danh mục -- 
-                            option(value="danh mục 1" selected= product.category == "danh mục 1" ? true:false) danh mục 1
-                            option(value="danh mục 2" selected= product.category == "danh mục 2" ? true:false) danh mục 2
-                            option(value="danh mục 3" selected= product.category == "danh mục 3" ? true:false) danh mục 3
-                            option(value="danh mục 4" selected= product.category == "danh mục 4" ? true:false) danh mục 4
-                            option(value="danh mục 5" selected= product.category == "danh mục 5" ? true:false) danh mục 5
-                            option(value="danh mục 6" selected= product.category == "danh mục 6" ? true:false) danh mục 6
+                            option(value="" selected disabled) -- chọn danh mục -- 
+                            if(categoryTree.length > 0)
+                                option(value="") Không
+                                +categoryTree(categoryTree,product.category)
+                            else 
+                                option(value="" selected disabled) -- Chưa có danh mục nào! -- 
                     div(class="edit-category form-item")
                         p(class="edit-category__title") Thêm danh mục 
                         a(href="" class="btn edit-category__btn")

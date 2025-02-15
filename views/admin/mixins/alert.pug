@@ -1,0 +1,16 @@
+mixin alert(messages)
+    if (messages.success)
+        script.
+            document.addEventListener("DOMContentLoaded", function () {
+                alert("success", !{JSON.stringify(messages.success)});
+            });
+    else if (messages.error)
+        script.
+            document.addEventListener("DOMContentLoaded", function () {
+                alert("error", !{JSON.stringify(messages.error)});
+            });
+    else if (messages.warning)
+        script.
+            document.addEventListener("DOMContentLoaded", function () {
+                alert("warning", !{JSON.stringify(messages.warning)});
+            });

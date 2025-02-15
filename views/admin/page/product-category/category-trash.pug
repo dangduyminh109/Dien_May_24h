@@ -4,7 +4,10 @@ include ../../mixins/toolbar_filter.pug
 include ../../mixins/toolbar_handle.pug
 include ../../mixins/deletion_warning.pug
 include ../../mixins/pagination.pug
+include ../../mixins/alert.pug
+
 block main 
+    +alert(messages)
     +page_header("Danh mục đã xóa", [
         { name: "Sản phẩm", href: `${PATH_ADMIN}/product-category` },
         { name: "Danh mục sản phẩm", href: `${PATH_ADMIN}/product-category` },

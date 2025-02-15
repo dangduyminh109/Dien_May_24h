@@ -32,57 +32,117 @@ class productTrashController {
 
     // [PATCH] /admin/product-trash/restore
     async restore(req, res) {
-        await Product.restore({ _id: req.params.id });
-        res.redirect("/admin/product-trash");
+        try {
+            await Product.restore({ _id: req.params.id });
+            req.flash("success", "Khôi phục sản phẩm thành công!");
+            res.redirect("/admin/product-trash");
+        } catch (error) {
+            console.error("Error saving product:", error);
+            req.flash("error", "Khôi phục sản phẩm không thành công!");
+            res.redirect("/admin/product-trash");
+        }
+    }
+
+    // [PATCH] /admin/product-trash/update-price
+    async updatePricePatch(req, res) {
+        const priceUpdate = req.body;
+        try {
+            await Product.updateOneDeleted(
+                { _id: priceUpdate._id },
+                { [priceUpdate.field]: parseInt(priceUpdate.value) }
+            );
+            res.json({ success: true, message: "Cập nhật thành công!" });
+        } catch (error) {
+            res.json({
+                error: true,
+                message: "Cập nhật không thành công!",
+                err: error,
+            });
+        }
     }
 
     // [PATCH] /admin/product-trash/update-status
     async updateStatusPatch(req, res) {
         const statusUpdate = req.body;
-        await Product.updateOneDeleted(
-            { _id: statusUpdate._id },
-            { status: statusUpdate.value }
-        );
-
-        res.json({ message: "Cập nhật thành công" });
+        try {
+            await Product.updateOneDeleted(
+                { _id: statusUpdate._id },
+                { status: statusUpdate.value }
+            );
+            res.json({ success: true, message: "Cập nhật thành công!" });
+        } catch (error) {
+            res.json({
+                error: true,
+                message: "Cập nhật không thành công!",
+                err: error,
+            });
+        }
     }
 
     // [PATCH] /admin/product-trash/update-more
     async updateMore(req, res) {
-        const listIds = JSON.parse(req.body["list-id"]);
-        delete req.body["list-id"];
-        var dataUpdate = Object.entries(req.body).filter(([key, value]) => {
-            if (value != "") return [key, value];
-        });
-        dataUpdate = Object.fromEntries(dataUpdate);
-        await Product.updateManyDeleted(
-            { _id: { $in: listIds } },
-            { $set: dataUpdate }
-        );
-        req.session.backData = {
-            formData: req.body,
-        };
-        res.redirect("back");
+        try {
+            const listIds = JSON.parse(req.body["list-id"]);
+            delete req.body["list-id"];
+            var dataUpdate = Object.entries(req.body).filter(([key, value]) => {
+                if (value != "") return [key, value];
+            });
+            dataUpdate = Object.fromEntries(dataUpdate);
+            await Product.updateManyDeleted(
+                { _id: { $in: listIds } },
+                { $set: dataUpdate }
+            );
+            req.session.backData = {
+                formData: req.body,
+            };
+            req.flash("success", "Câp nhật sản phẩm thành công!");
+            res.redirect("back");
+        } catch (error) {
+            console.error("Error saving product:", error);
+            req.flash("error", "Câp nhật sản phẩm không thành công!");
+            res.redirect("back");
+        }
     }
 
     // [PATCH] /admin/product-trash/restore-more
     async restoreMore(req, res) {
-        const listIds = JSON.parse(req.body["list-id"]);
-        await Product.restore({ _id: { $in: listIds } });
-        res.redirect("back");
+        try {
+            const listIds = JSON.parse(req.body["list-id"]);
+            await Product.restore({ _id: { $in: listIds } });
+            req.flash("success", "Khôi phục sản phẩm thành công!");
+            res.redirect("back");
+        } catch (error) {
+            console.error("Error saving product:", error);
+            req.flash("error", "Khôi phục sản phẩm không thành công!");
+            res.redirect("back");
+        }
     }
 
     // [DELETE] /admin/product-trash/destroy-product/:id
     async destroy(req, res) {
-        await Product.deleteOne({ _id: req.params.id });
-        res.redirect("/admin/product-trash");
+        try {
+            await Product.deleteOne({ _id: req.params.id });
+            req.flash("success", "Xóa sản phẩm thành công!");
+            res.redirect("/admin/product-trash");
+        } catch (error) {
+            console.error("Error saving product:", error);
+            req.flash("error", "Xóa sản phẩm không thành công!");
+            res.redirect("/admin/product-trash");
+        }
     }
 
     // [DELETE] /admin/product-trash/destroy-more
     async destroyMore(req, res) {
-        const listIds = JSON.parse(req.body["list-id"]);
-        await Product.deleteMany({ _id: { $in: listIds } });
-        res.redirect("back");
+        try {
+            const listIds = JSON.parse(req.body["list-id"]);
+            await Product.deleteMany({ _id: { $in: listIds } });
+            req.flash("success", "Xóa sản phẩm thành công!");
+            res.redirect("back");
+        } catch (error) {
+            console.error("Error saving product:", error);
+            req.flash("error", "Xóa sản phẩm không thành công!");
+            res.redirect("back");
+        }
     }
 }
 

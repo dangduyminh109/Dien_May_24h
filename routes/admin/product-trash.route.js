@@ -7,6 +7,7 @@ router.get("/", productTrashController.show);
 
 router.patch("/restore-product/:id", productTrashController.restore);
 router.patch("/update-more", productTrashController.updateMore);
+router.patch("/update-price", productTrashController.updatePricePatch);
 router.patch("/update-status", productTrashController.updateStatusPatch);
 router.patch(
     "/restore-more",

@@ -3,6 +3,8 @@ const path = require("path");
 const express = require("express");
 const methodOverride = require("method-override");
 const session = require("express-session");
+const flash = require("express-flash");
+const cookieParser = require("cookie-parser");
 
 const routeClient = require("./routes/client/index.route");
 const routeAdmin = require("./routes/admin/index.route");
@@ -46,9 +48,13 @@ app.use(
         secret: process.env.EXPRESS_SESSION,
         resave: false,
         saveUninitialized: true,
-        cookie: { secure: false },
+        cookie: { secure: false, maxAge: 60000 },
     })
 );
+
+// Kích hoạt flash messages
+app.use(cookieParser(process.env.COOKIE_PARSER));
+app.use(flash());
 
 // routes
 routeClient.index(app);
