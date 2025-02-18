@@ -1,0 +1,14 @@
+mixin categoryTree(subcategory,classChild="")
+    ul(class=`subcategory__list ${classChild}`)
+        each category,index in subcategory
+            if(category.children.length > 0)
+                li(class="subcategory-item")
+                    a(class="subcategory-item__label" href=`/category/${category.id}`) #{category.name}
+                    +categoryTree(category.children,"subcategory__list--child")
+            else
+                li(class="subcategory-item")
+                    a(class="subcategory-item__label" href=`/category/${category.id}`) #{category.name}
+                        
+                                   
+                
+    

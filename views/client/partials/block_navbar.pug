@@ -1,40 +1,32 @@
+include ../mixins/categoryTree.pug
+
 nav(class="nav-bar d-none d-lg-block")
     div(class="container-xl")
         div(class="wrapper")
-            div(class="left-box")
+            div(class="category-box")
                 div(id="category" class="category")
                     ul(id="list-category" class="list-category")
-                        li(class="category-item")
-                            p(class="category-item__title") máy lạnh
-                            <i class="category-item__btn fa-solid fa-caret-down"></i>
-                        li(class="category-item")
-                            p(class="category-item__title") tivi
-                            <i class="category-item__btn fa-solid fa-caret-down"></i>
-                        li(class="category-item")
-                            p(class="category-item__title") tủ lạnh
-                            <i class="category-item__btn fa-solid fa-caret-down"></i>
-                        li(class="category-item")
-                            p(class="category-item__title") máy giặt
-                            <i class="category-item__btn fa-solid fa-caret-down"></i>
-                        li(class="category-item")
-                            p(class="category-item__title") đồ gia dụng
-                            <i class="category-item__btn fa-solid fa-caret-down"></i>
-                        li(class="category-item")
-                            p(class="category-item__title") điện thoại
-                            <i class="category-item__btn fa-solid fa-caret-down"></i>
-                        li(class="category-item")
-                            p(class="category-item__title") máy lọc nước
-                            <i class="category-item__btn fa-solid fa-caret-down"></i>
-                        li(class="category-item")
-                            p(class="category-item__title") phụ kiên
-                            <i class="category-item__btn fa-solid fa-caret-down"></i>
-                        li(class="category-item")
-                            p(class="category-item__title") tin tức
-                            <i class="category-item__btn fa-solid fa-caret-down"></i>  
-                div(class="category-btn")
-                    <i id="category-btn__prev" class="category-item__btn fa-solid fa-caret-left"></i>
-                    <i id="category-btn__next" class="category-item__btn fa-solid fa-caret-right"></i>
-            div(class="right-box")
-                a(class="promotion",href="")
+                        each category,index in [...categoryTree]
+                            if category.children.length > 0
+                                li(class="category-item")
+                                    a(class="category-item__name category-item__label" href=`/category/${category.id}`)
+                                        p(class="category-item__name") #{category.name}
+                                        if category.children.length > 0
+                                            span(class="category-item__btn")
+                                                i(class="fa-solid fa-caret-down")
+                                    div(class="category-group")
+                                        +categoryTree(category.children)
+                            else 
+                                li(class="category-item")
+                                    a(class="category-item__name category-item__label" href=`/category/${category.id}`) #{category.name}
+                                    
+                div(class="category-group-btn" id="category-group-btn")
+                    span(class="category-btn", id="category-btn__prev")
+                        i(class="fa-solid fa-caret-left")
+                    span(class="category-btn", id="category-btn__next")                    
+                        i(class="fa-solid fa-caret-right")
+
+            div(class="promotion-box")
+                a(class="promotion__link",href="")
                     img(class="promotion__img" src="https://bizweb.dktcdn.net/100/488/001/themes/910675/assets/gift.gif?1735792319782", alt="")
                     p(class="promotion__title") KHUYẾN MÃI
