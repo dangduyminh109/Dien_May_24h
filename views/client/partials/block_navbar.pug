@@ -9,7 +9,7 @@ nav(class="nav-bar d-none d-lg-block")
                         each category,index in [...categoryTree]
                             if category.children.length > 0
                                 li(class="category-item")
-                                    a(class="category-item__name category-item__label" href=`/category/${category.id}`)
+                                    a(class="category-item__name category-item__label" href=`/${category.id}`)
                                         p(class="category-item__name") #{category.name}
                                         if category.children.length > 0
                                             span(class="category-item__btn")
@@ -18,7 +18,7 @@ nav(class="nav-bar d-none d-lg-block")
                                         +categoryTree(category.children)
                             else 
                                 li(class="category-item")
-                                    a(class="category-item__name category-item__label" href=`/category/${category.id}`) #{category.name}
+                                    a(class="category-item__name category-item__label" href=`/${category.id}`) #{category.name}
                                     
                 div(class="category-group-btn" id="category-group-btn")
                     span(class="category-btn", id="category-btn__prev")

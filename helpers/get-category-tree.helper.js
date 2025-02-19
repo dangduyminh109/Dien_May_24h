@@ -6,7 +6,7 @@ const getCategoryTree = async (parentId = "") => {
     for (let category of categories) {
         category.children = await getCategoryTree(category._id);
     }
-    return categories;
+    return [...categories];
 };
 
 module.exports = getCategoryTree;

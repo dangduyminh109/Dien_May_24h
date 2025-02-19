@@ -73,6 +73,7 @@
         background-color: $primary;
         border-radius: 0 20px 20px 0;
         padding: 5px 25px 5px 10px;
+        text-transform: uppercase;
         &:hover {
             .product-title__link {
                 color: $color-hover;
@@ -96,6 +97,7 @@
         border-radius: 50px;
         border: 1px solid $primary;
         transition: 0.5s;
+        text-transform: capitalize;
         &:hover {
             color: $text-color;
             background-color: $primary;
@@ -115,7 +117,6 @@
     }
     /* ============ list-product =========== */
     .product-list {
-        justify-content: space-between;
         align-items: center;
         margin: 0;
         gap: 10px;
@@ -126,41 +127,37 @@
         box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 4px 0px,
             rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
         max-width: 24%;
-        height: 100%;
-        position: relative;
         border-radius: 5px;
         overflow: hidden;
         padding: 0;
     }
-
-    .product-item__brand {
-        position: absolute;
-        width: 40%;
-        top: 0;
-        left: 0;
-        z-index: 1;
-    }
-
-    .product-item__link {
-        display: block;
+    .product-item__img-wrapper {
         overflow: hidden;
         text-align: center;
+        height: 250px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     .product-item__img {
-        width: 90%;
+        width: 100%;
         transition: transform 0.3s ease;
         &:hover {
             transform: scale(1.1);
         }
     }
     .product-item__desc {
-        padding: 0 15px;
+        padding: 10px 15px;
         color: $primary;
     }
     .product-item__title {
         color: $text-color-2;
         font-size: 1.4rem;
-        &:hover{
+        text-wrap: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        &:hover {
             color: $color-hover;
         }
     }

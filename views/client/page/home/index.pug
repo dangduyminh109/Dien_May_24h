@@ -11,11 +11,11 @@ block main
                         button(type="button", data-bs-target="#slide", data-bs-slide-to="2", aria-label="Slide 3")
                     div(class="carousel-inner")
                         a(href="", class="carousel-item active")
-                            img(class="carousel-item__img d-block w-100", src="../../../client/images/slider_1.jpg", alt="...")
+                            img(class="carousel-item__img d-block w-100", src="../../../client/images/slider_1.webp", alt="...")
                         a(href="", class="carousel-item")
-                            img(class="carousel-item__img d-block w-100", src="../../../client/images/slider_2.jpg", alt="...")
+                            img(class="carousel-item__img d-block w-100", src="../../../client/images/slider_2.webp", alt="...")
                         a(href="", class="carousel-item")
-                            img(class="carousel-item__img d-block w-100", src="../../../client/images/slider_3.jpg", alt="...")
+                            img(class="carousel-item__img d-block w-100", src="../../../client/images/slider_3.webp", alt="...")
                     button(class="carousel-control-prev", type="button", data-bs-target="#slide", data-bs-slide="prev")
                         span(class="carousel-control-prev-icon", aria-hidden="true")
                         span(class="visually-hidden") Previous
@@ -24,101 +24,36 @@ block main
                         span(class="visually-hidden") Next
                 div(class="banner col-md-3 col-12")
                     a(class="banner__link",href="")
-                        img(class="banner__img", src="../../../client/images/slider_1.jpg", alt="") 
+                        img(class="banner__img", src="../../../client/images/slider_1.webp", alt="") 
                     a(class="banner__link",href="")
-                        img(class="banner__img", src="../../../client/images/slider_2.jpg", alt="")
+                        img(class="banner__img", src="../../../client/images/slider_2.webp", alt="")
                     a(class="banner__link",href="")
-                        img(class="banner__img", src="../../../client/images/slider_3.jpg", alt="")
+                        img(class="banner__img", src="../../../client/images/slider_3.webp", alt="")
 
-            div(class="block-brand")
-                a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
-                a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
-                a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
-                a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
-                a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
-                a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
-                a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
-                a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
-                a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
-                a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
-                a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
-                a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
-                a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
-                a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
-                a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
-                a(class="brand-item", href="#") 
-                    img(class="brand-item__img", src="../../../client/images/thuonghieu_1.jpg", alt="")
+            each category in categoryTree
+                section(class="product")
+                    div(class="product-header")
+                        div(class="product-title")
+                            a(class="product-title__link",href=`${category.slug}`) #{category.name}
+                        div(class="product-category")
+                            each subCategory in category.children
+                                a(class="product-category__btn",href=`/${subCategory.slug}`) #{subCategory.name}
+                    div(class="product-banner")
+                        a(class="product-banner__link",href=`/${category.slug}`)
+                            img(class="product-banner__img",src=category.thumbnails[0], alt=category.name)
 
-            section(class="product")
-                div(class="product-header")
-                    div(class="product-title")
-                        a(class="product-title__link",href="") MÁY LẠNH
-
-                    div(class="product-category")
-                        button(class="product-category__btn") máy lạnh âm trần
-                        button(class="product-category__btn") máy lạnh treo tường
-                        button(class="product-category__btn") máy lạnh tủ đứng
-
-                div(class="product-banner")
-                    a(class="product-banner__link",href="")
-                        img(class="product-banner__img",src="../../../client/images/men_product_img.webp", alt="")
-
-                div(class="product-list row")
-                   each i in [1,2,3]
-                        div(class="product-item col-xl-3 col-lg-4 col-md-6 col-12")
-                            img(class="product-item__brand", src="../../../client/images/thuonghieu_1.jpg", alt="")
-                            a(class="product-item__link",href="")
-                                img(class="product-item__img", src="../../../client/images/maylanhdaikininverter1hp.webp", alt="") 
-                            div(class="product-item__desc") 
-                                a(href="product-item__link") 
-                                    h3(class="product-item__title") Máy lạnh Daikin Inverter 1.0 HP (1 Ngựa) FTKB25XVMV 
-                                p(class="product-item__price-discounted") 8.900.000₫
-                                span(class="product-item__price-original") 11.440.000₫ 
-                                span(class="product-item__price-discount-percent")  (-22%)   
-                        div(class="product-item col-xl-3 col-lg-4 col-md-6 col-12")
-                            img(class="product-item__brand", src="../../../client/images/thuonghieu_1.jpg", alt="")
-                            a(class="product-item__link",href="")
-                                img(class="product-item__img", src="../../../client/images/maylanhdaikininverter1hp.webp", alt="") 
-                            div(class="product-item__desc") 
-                                a(href="product-item__link") 
-                                    h3(class="product-item__title") Máy lạnh Daikin Inverter 1.0 HP (1 Ngựa) FTKB25XVMV 
-                                p(class="product-item__price-discounted") 8.900.000₫
-                                span(class="product-item__price-original") 11.440.000₫ 
-                                span(class="product-item__price-discount-percent")  (-22%)   
-                        div(class="product-item col-xl-3 col-lg-4 col-md-6 col-12")
-                            img(class="product-item__brand", src="../../../client/images/thuonghieu_1.jpg", alt="")
-                            a(class="product-item__link",href="")
-                                img(class="product-item__img", src="../../../client/images/maylanhdaikininverter1hp.webp", alt="") 
-                            div(class="product-item__desc") 
-                                a(href="product-item__link") 
-                                    h3(class="product-item__title") Máy lạnh Daikin Inverter 1.0 HP (1 Ngựa) FTKB25XVMV 
-                                p(class="product-item__price-discounted") 8.900.000₫
-                                span(class="product-item__price-original") 11.440.000₫ 
-                                span(class="product-item__price-discount-percent")  (-22%)   
-                        div(class="product-item col-xl-3 col-lg-4 col-md-6 col-12")
-                            img(class="product-item__brand", src="../../../client/images/thuonghieu_1.jpg", alt="")
-                            a(class="product-item__link",href="")
-                                img(class="product-item__img", src="../../../client/images/maylanhdaikininverter1hp.webp", alt="") 
-                            div(class="product-item__desc") 
-                                a(href="product-item__link") 
-                                    h3(class="product-item__title") Máy lạnh Daikin Inverter 1.0 HP (1 Ngựa) FTKB25XVMV 
-                                p(class="product-item__price-discounted") 8.900.000₫                     
-                                span(class="product-item__price-original") 11.440.000₫ 
-                                span(class="product-item__price-discount-percent") (-6%)   
+                    div(class="product-list row")
+                        each product in listProduct
+                                div(class="product-item col-xl-3 col-lg-4 col-md-6 col-12")
+                                    div(class="product-item__img-wrapper")
+                                        a(class="product-item__link",href=`/${product.slug}`)
+                                            img(class="product-item__img", src=product.thumbnails[0], alt="") 
+                                    div(class="product-item__desc") 
+                                        a(href=`/${product.slug}`, class="product-item__link") 
+                                            h3(class="product-item__title") #{product.name}
+                                        p(class="product-item__price-discounted") #{product.price.toLocaleString('vi-VN')}đ
+                                        span(class="product-item__price-original") #{product.original_price.toLocaleString('vi-VN')}đ
+                                        span(class="product-item__price-discount-percent")  (-#{product.discount}%)   
+                   
 
                                 
