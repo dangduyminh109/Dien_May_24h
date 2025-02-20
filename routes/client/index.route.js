@@ -3,5 +3,5 @@ const productRouter = require("./product.route");
 
 module.exports.index = (app) => {
     app.use("/", homeRouter);
-    app.use("/products", productRouter);
+    app.use("/product", productRouter);
 };

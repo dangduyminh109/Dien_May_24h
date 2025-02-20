@@ -26,6 +26,7 @@ productSchema.plugin(mongoose_delete, {
     deletedAt: true,
 });
 
-const Product = mongoose.model("Product", productSchema, "products");
+const Product =
+    mongoose.models.Product || mongoose.model("Product", productSchema);
 
 module.exports = Product;

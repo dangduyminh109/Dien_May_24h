@@ -28,4 +28,25 @@ ul {
 li {
     list-style: none;
 }
+
+// page header
+.breadcrumb-nav {
+    width: 100%;
+    color: $text-color-2;
+    background-color: #e3e1e1;
+}
+
+.breadcrumb{
+    margin: 0;
+    padding: 10px 0 ;
+    .breadcrumb-item {
+        font-size: 1.2rem;
+        &:hover {
+            color: $color-hover;
+        }
+        &:last-child {
+            color: $color-hover;
+        }
+    }
+}
 /* ======================================= end general ======================================= */

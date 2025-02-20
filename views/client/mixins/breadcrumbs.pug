@@ -1,0 +1,6 @@
+mixin breadcrumb(title,breadcrumb = {name: title, href: "/"})
+    nav(aria-label="breadcrumb")
+        ol(class="breadcrumb")
+            each item in breadcrumb
+                li(class="breadcrumb-item")
+                    a(href=`${item.href}`)= item.name

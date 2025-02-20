@@ -20,8 +20,6 @@
             order: 3;
             margin-top: 5px;
         }
-
-        
     }
 
     .home {
@@ -30,6 +28,26 @@
         }
     }
 
+    .product-detail {
+        height: 100%;
+        .left-box {
+            flex-direction: column-reverse;
+            margin-bottom: 20px;
+        }
+        .product-detail__thumb {
+            width: 100px;
+            margin-bottom: 20;
+        }
+        .product-detail__img-preview-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 350px;
+        }
+        .product-detail__img-preview {
+            width: auto;
+        }
+    }
 }
 
 /* ipad */
@@ -92,6 +110,12 @@
 
         .carousel-item__img {
             height: 150px;
+        }
+    }
+
+    .product-detail {
+        .product-detail__img-preview-wrapper {
+            height: 200px;
         }
     }
 }

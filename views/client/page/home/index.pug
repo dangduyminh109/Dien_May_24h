@@ -46,10 +46,10 @@ block main
                         each product in listProduct
                                 div(class="product-item col-xl-3 col-lg-4 col-md-6 col-12")
                                     div(class="product-item__img-wrapper")
-                                        a(class="product-item__link",href=`/${product.slug}`)
+                                        a(class="product-item__link",href=`/product/detail/${product.slug}`)
                                             img(class="product-item__img", src=product.thumbnails[0], alt="") 
                                     div(class="product-item__desc") 
-                                        a(href=`/${product.slug}`, class="product-item__link") 
+                                        a(href=`product/detail/${product.slug}`, class="product-item__link") 
                                             h3(class="product-item__title") #{product.name}
                                         p(class="product-item__price-discounted") #{product.price.toLocaleString('vi-VN')}đ
                                         span(class="product-item__price-original") #{product.original_price.toLocaleString('vi-VN')}đ

@@ -1,5 +1,5 @@
-const Product = require("../../models/product.model.js");
-const getCategoryTree = require("../../helpers/get-category-tree.helper.js");
+const Product = require("../../models/product.model");
+const getCategoryTree = require("../../helpers/get-category-tree.helper");
 
 class homeController {
     async show(req, res) {
