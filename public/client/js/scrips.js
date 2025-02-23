@@ -77,7 +77,7 @@ function handleImgProduct() {
                     document.querySelectorAll(".carousel-item");
 
                 carouselIndicators.forEach((indicator) => {
-                    if (indicator.firstChild.src === thumb.src) {
+                    if (indicator.firstChild.src === thumb.firstChild.src) {
                         carouselIndicators.forEach((indicator) => {
                             indicator.classList.remove("active");
                         });
@@ -109,28 +109,77 @@ function handleImgProduct() {
             }
         };
     }
-
-    carousel.addEventListener("slid.bs.carousel", () => {
-        carouselItem.forEach((item) => {
-            if (item.classList.contains("active")) {
-                const src = item.firstChild.src;
-                thumbnails.forEach((thumb) => {
-                    if (thumb.src === src) {
-                        thumbnails.forEach((thumb) => {
-                            thumb.classList.remove("active");
-                        });
-                        thumb.classList.add("active");
-                        return;
-                    }
-                });
-            }
+    if (carousel) {
+        carousel.addEventListener("slid.bs.carousel", () => {
+            carouselItem.forEach((item) => {
+                if (item.classList.contains("active")) {
+                    const src = item.firstChild.src;
+                    thumbnails.forEach((thumb) => {
+                        if (thumb.firstChild.src === src) {
+                            thumbnails.forEach((thumb) => {
+                                thumb.classList.remove("active");
+                            });
+                            thumb.classList.add("active");
+                            return;
+                        }
+                    });
+                }
+            });
         });
-    });
+    }
+}
+
+function handleProductFilter() {
+    const productCategoryFilterSelect = document.getElementById(
+        "product-category__filter__select"
+    );
+    if (productCategoryFilterSelect) {
+        productCategoryFilterSelect.onchange = () => {
+            const form = productCategoryFilterSelect.closest("form");
+            form.submit();
+        };
+    }
+}
+
+/* ============ handle Pagination Btn =========== */
+function handlePaginationBtn() {
+    const btnPrev = document.getElementById("btn-prev");
+    const btnNext = document.getElementById("btn-next");
+    const paginationBtn = document.getElementById("pagination-btn");
+    if (paginationBtn) {
+        let numberOfPage = parseInt(
+            paginationBtn.getAttribute("number-of-page")
+        );
+        let currentPage = parseInt(paginationBtn.getAttribute("current-page"));
+        let currentPath = paginationBtn.getAttribute("current-path");
+        if (currentPage == 1) {
+            btnPrev.closest(".page-item").classList.add("disable");
+        } else {
+            btnPrev.closest(".page-item").classList.remove("disable");
+        }
+        if (currentPage == numberOfPage) {
+            btnNext.closest(".page-item").classList.add("disable");
+        } else {
+            btnNext.closest(".page-item").classList.remove("disable");
+        }
+        btnNext.onclick = () => {
+            if (currentPage + 1 <= numberOfPage) {
+                window.location.href = `${currentPath}page=${currentPage + 1}`;
+            }
+        };
+        btnPrev.onclick = () => {
+            if (currentPage - 1 >= 1) {
+                window.location.href = `${currentPath}page=${currentPage - 1}`;
+            }
+        };
+    }
 }
 
 // Initialize all handlers
 function init() {
     handleNavbar();
     handleImgProduct();
+    handleProductFilter();
+    handlePaginationBtn();
 }
 document.addEventListener("DOMContentLoaded", init);

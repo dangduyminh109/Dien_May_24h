@@ -1,9 +1,104 @@
+.product-category-wrapper {
+    .product-category__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: $text-color-2;
+        padding: 10px 0;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .product-category__title {
+        margin: 0;
+        font-size: 1.8rem;
+        background-color: $primary;
+        border-radius: 0 20px 20px 0;
+        padding: 5px 25px 5px 10px;
+        text-transform: uppercase;
+        color: $text-color;
+    }
+    .product-category__filter {
+        border: 1px solid $primary;
+        border-radius: 5px;
+        padding: 5px;
+    }
+    .product-category__filter__item {
+        font-size: 1.2rem;
+    }
+    .product-category__filter__select {
+        cursor: pointer;
+        border: none;
+        outline: none;
+    }
+    /* ============ list-product =========== */
+    .product-list {
+        align-items: center;
+        margin: 0;
+        padding: 10px 0;
+        row-gap: 15px;
+    }
+
+    .product-item {
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 4px 0px,
+            rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;
+        border-radius: 5px;
+        overflow: hidden;
+        padding: 0;
+        height: 300px;
+    }
+    .product-item__img-wrapper {
+        height: 200px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .product-item__img {
+        max-width: 100%;
+        height: 100%;
+        transition: transform 0.3s ease;
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+    .product-item__desc {
+        padding: 10px 15px;
+        color: $primary;
+        height: 100px;
+    }
+    .product-item__title {
+        color: $text-color-2;
+        font-size: 1.4rem;
+        text-wrap: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        &:hover {
+            color: $color-hover;
+        }
+    }
+    .product-item__price-discounted {
+        margin: 0;
+    }
+    .product-item__price-original {
+        font-size: 1.2rem;
+        text-decoration: line-through;
+        color: #ccc;
+    }
+
+    .product-item__price-discount-percent {
+        color: red;
+        font-size: 1.2rem;
+        text-decoration: none;
+        margin-left: 5px;
+    }
+}
+
 .product-detail {
     color: $text-color-2;
     padding-top: 20px;
     .product-detail__content {
-        height: 400px;
-        overflow: hidden;
+        padding: 0 10px;
     }
     .right-box {
         padding: 0 10px;
@@ -12,31 +107,43 @@
     }
     .left-box {
         height: 100%;
+        padding: 0;
     }
 
     .product-detail__thumb {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
         height: 100px;
-        width: 100%;
+        width: 100px;
         border: 1px solid transparent;
         cursor: pointer;
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
         margin-bottom: 5px;
         border-radius: 5px;
-        padding: 0 5px;
+        padding: 3px;
     }
     .product-detail__thumb.active {
         border: 2px solid $primary;
+    }
+
+    .product-detail__img {
+        width: auto;
+        height: 100%;
     }
 
     .product-detail__img-preview-wrapper {
         height: 100%;
         text-align: center;
         position: relative;
-
         .product-detail__img-preview {
             margin: 0 auto;
-            height: 400px;
+            height: 350px;
             width: auto;
+        }
+        .product-detail__img-preview-carousel {
+            width: 100%;
         }
 
         .product-detail__img-preview-btn-prev,
@@ -97,7 +204,7 @@
 
     .product-detail__quantity {
         margin-top: 10px;
-        height: 35px;
+        display: flex;
     }
 
     .product-detail__quantity-btn-next,
@@ -105,8 +212,10 @@
         border: 1px solid $primary;
         background-color: transparent;
         width: 35px;
-        height: 100%;
+        height: 35px;
         color: $primary;
+        font-size: 1rem;
+        display: block;
         &:hover {
             border: 1px solid $color-hover;
             color: $color-hover;
@@ -115,11 +224,12 @@
     .product-detail__quantity-input {
         width: 70px;
         text-align: center;
-        height: 100%;
+        height: 35px;
         padding: 0;
         border: 1px solid $primary;
         border-left: 0;
         border-right: 0;
+        display: block;
         &::-webkit-inner-spin-button,
         &::-webkit-outer-spin-button {
             -webkit-appearance: none;
@@ -150,4 +260,3 @@
 .desc__title {
     font-size: 2.4rem;
 }
-

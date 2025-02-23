@@ -16,21 +16,23 @@ block main
                     div(class="col-lg-2 col-12")
                         div(class="product-detail__thumbnails d-flex d-lg-block")
                             each thumbnail,index in product.thumbnails
-                                img(class=`product-detail__thumb ${index == 0 ? "active" : ""}`, src=thumbnail, alt=product.name)
+                                div(class=`product-detail__thumb ${index == 0 ? "active" : ""}`,)
+                                    img(class="product-detail__img",src=thumbnail, alt=product.name)
 
                     div(class="col-lg-10 col-12")
                         div(class="product-detail__img-preview-wrapper")
-                            div(id="product-detail__img-preview-carousel" class="carousel slide" data-bs-ride="true",data-bs-interval="false")
+                            div(id="product-detail__img-preview-carousel" class="carousel slide product-detail__img-preview-carousel" data-bs-ride="true",data-bs-interval="false")
 
                                 div(class="carousel-inner")
                                     each thumbnail,index in product.thumbnails
                                         div(class=`carousel-item ${index == 0 ? "active" : ""}`)
                                             img(src=thumbnail, class="d-block product-detail__img-preview", alt=product.name)
                                 
-                                button(class="product-detail__img-preview-btn-prev",id="product-detail__img-preview-btn-prev",type="button" data-bs-target="#product-detail__img-preview-carousel" data-bs-slide="prev")
-                                    <i class="fa-solid fa-chevron-left"></i>
-                                button(class="product-detail__img-preview-btn-next",id="product-detail__img-preview-btn-next",type="button" data-bs-target="#product-detail__img-preview-carousel" data-bs-slide="next")
-                                    <i class="fa-solid fa-chevron-right"></i>
+                                if product.thumbnails.length > 1
+                                    button(class="product-detail__img-preview-btn-prev",id="product-detail__img-preview-btn-prev",type="button" data-bs-target="#product-detail__img-preview-carousel" data-bs-slide="prev")
+                                        <i class="fa-solid fa-chevron-left"></i>
+                                    button(class="product-detail__img-preview-btn-next",id="product-detail__img-preview-btn-next",type="button" data-bs-target="#product-detail__img-preview-carousel" data-bs-slide="next")
+                                        <i class="fa-solid fa-chevron-right"></i>
 
                 div(class="col-lg-5 col-12 right-box")
                     h1(class="product-detail__title") #{product.name}
@@ -39,9 +41,11 @@ block main
                     p(class="product-detail__price-original") #{product.original_price.toLocaleString('vi-VN')}đ
                     span(class="product-detail__price-discount-percent")  (-#{product.discount}%)   
                     div(class="product-detail__quantity")
-                        button(class="product-detail__quantity-btn-prev", id="product-detail__quantity-btn-prev") -
+                        button(class="product-detail__quantity-btn-prev", id="product-detail__quantity-btn-prev") 
+                            i(class="fa-solid fa-minus")
                         input(class="product-detail__quantity-input", id="product-detail__quantity-input",type="number", value="1",min="1",max=`${product.inventory}`)
-                        button(class="product-detail__quantity-btn-next",id="product-detail__quantity-btn-next") +
+                        button(class="product-detail__quantity-btn-next",id="product-detail__quantity-btn-next")
+                            i(class="fa-solid fa-plus")
                     div(class="product-detail__btn-wrapper")
                         button(class="product-detail__btn") Thêm vào giỏ hàng
                         button(class="product-detail__btn") Mua ngay

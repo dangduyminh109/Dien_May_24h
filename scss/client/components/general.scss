@@ -9,6 +9,7 @@ body {
     font-size: 1.6rem;
     font-family: "sora", sans-serif;
     color: $text-color;
+    min-height: 100vh;
 }
 
 input {
@@ -36,9 +37,9 @@ li {
     background-color: #e3e1e1;
 }
 
-.breadcrumb{
+.breadcrumb {
     margin: 0;
-    padding: 10px 0 ;
+    padding: 10px 0;
     .breadcrumb-item {
         font-size: 1.2rem;
         &:hover {
@@ -49,4 +50,44 @@ li {
         }
     }
 }
+
+/* ============ pagination =========== */
+.pagination-btn {
+    margin-top: 20px;
+
+    .page-item.active {
+        .page-link {
+            color: $text-color;
+            background-color: $primary;
+            border: 1px solid $primary;
+        }
+    }
+
+    .page-item.disable {
+        opacity: 0.3;
+        .page-link {
+            cursor: not-allowed;
+        }
+    }
+
+    .page-link {
+        height: 100%;
+        width: 50px;
+        text-align: center;
+        color: $primary;
+        background-color: $text-color;
+        border: 1px solid $primary;
+        &:hover {
+            color: $color-hover;
+        }
+    }
+    span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        font-size: 1rem;
+    }
+}
+
 /* ======================================= end general ======================================= */
