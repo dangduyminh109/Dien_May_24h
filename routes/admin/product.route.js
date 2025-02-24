@@ -5,6 +5,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 const productController = require("../../controller/admin/Product.controller");
+const validate = require("../../validates/product.validate");
 
 router.get("/", productController.show);
 router.get("/create", productController.create);
@@ -13,12 +14,14 @@ router.get("/edit/:id", productController.edit);
 router.post(
     "/create",
     upload.array("thumbnails", 12),
+    validate,
     productController.createPost
 );
 
 router.patch(
     "/edit/:id",
     upload.array("thumbnails", 12),
+    validate,
     productController.editPost
 );
 router.patch("/update-price", productController.updatePricePatch);

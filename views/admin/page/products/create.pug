@@ -1,7 +1,9 @@
 extends ../../layout/default.pug
 include ../../mixins/category_tree.pug
+include ../../mixins/alert.pug
 include ../../mixins/page_header.pug
 block main 
+    +alert(messages)
     +page_header("Tạo mới sản phẩm", [
         { name: "Sản phẩm", href: `${PATH_ADMIN}/product` },
         { name: "Danh sách sản phẩm", href: `${PATH_ADMIN}/product` },
