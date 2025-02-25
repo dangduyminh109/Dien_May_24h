@@ -26,7 +26,6 @@ async function filterAndSort(query, category) {
     totalPage = await Product.countDocuments({
         category: { $in: [category._id, ...listIdCategory] },
     });
-    console.log(Math.ceil(totalPage / limit));
     return {
         listProduct,
         pagination: {

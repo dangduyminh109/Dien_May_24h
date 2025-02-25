@@ -6,7 +6,7 @@ nav(class="navbar", id="navbar")
                 button(class="navigation-item__btn btn",id="navigation-item__btn",type="button",data-bs-toggle="collapse",data-bs-target="#navigation-item__collapse-dashboard",aria-expanded="false",aria-controls="navigation-item__collapse-dashboard") 
                     span(class="navigation-item__btn-icon")
                         i(class="fa-solid fa-gauge")
-                    | bảng điều khiển
+                    | Bảng điều khiển
                     span(class="navigation-item__btn-icon-down")
                         i(class="fa-solid fa-caret-down")
                 div(class="navigation-item__collapse-dashboard collapse", id="navigation-item__collapse-dashboard")
@@ -31,16 +31,32 @@ nav(class="navbar", id="navbar")
                 button(class="navigation-item__btn btn",id="navigation-item__btn",type="button",data-bs-toggle="collapse",data-bs-target="#navigation-item__collapse-product",aria-expanded="false",aria-controls="navigation-item__collapse-product") 
                     span(class="navigation-item__btn-icon")
                         i(class="fa-brands fa-product-hunt")
-                    | sản phẩm
+                    | Sản phẩm
                     span(class="navigation-item__btn-icon-down")
                         i(class="fa-solid fa-caret-down")
                 div(class="navigation-item__collapse-product collapse", id="navigation-item__collapse-product")
                     a(class="navigation-item__link",href="/admin/product") 
                         span(class="navigation-item__icon")
                             i(class="fa-solid fa-plus")
-                        h3(class="navigation-item__title") danh sách sản phẩm
+                        h3(class="navigation-item__title") Danh sách sản phẩm
                     a(class="navigation-item__link",href="/admin/product-category") 
                         span(class="navigation-item__icon")
                             i(class="fa-solid fa-plus")
-                        h3(class="navigation-item__title") danh mục sản phẩm
+                        h3(class="navigation-item__title") Danh mục sản phẩm
+            li(class="navigation-item")
+                button(class="navigation-item__btn btn",id="navigation-item__btn",type="button",data-bs-toggle="collapse",data-bs-target="#navigation-item__collapse-role",aria-expanded="false",aria-controls="navigation-item__collapse-role") 
+                    span(class="navigation-item__btn-icon")
+                        i(class="fa-brands fa-product-hunt")
+                    | Quản lí quyền
+                    span(class="navigation-item__btn-icon-down")
+                        i(class="fa-solid fa-caret-down")
+                div(class="navigation-item__collapse-role collapse", id="navigation-item__collapse-role")
+                    a(class="navigation-item__link",href="/admin/roles") 
+                        span(class="navigation-item__icon")
+                            i(class="fa-solid fa-plus")
+                        h3(class="navigation-item__title") Nhóm quyền
+                    a(class="navigation-item__link",href="/admin/roles/permission") 
+                        span(class="navigation-item__icon")
+                            i(class="fa-solid fa-plus")
+                        h3(class="navigation-item__title") Phân quyền
 </nav>

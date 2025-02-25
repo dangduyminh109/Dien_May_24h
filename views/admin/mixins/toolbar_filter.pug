@@ -1,5 +1,5 @@
 include ./category_tree.pug
-mixin toolbarFilter(filter,path,categoryTree,product=true)
+mixin toolbarFilter({filter,path,categoryTree,product=false,category=false})
     div(id="toolbar__advanced-filter-box", class="toolbar__advanced-box" )
         form(id="filter-form" class="toolbar__advanced-form", action=`${PATH_ADMIN}/${path}`,method="GET")
             div(class="block-advanced")

@@ -1,0 +1,29 @@
+extends ../../layout/default.pug
+include ../../mixins/alert.pug
+include ../../mixins/page_header.pug
+block main 
+    +alert(messages)
+    +page_header("Tạo Quyền Mới", [
+        { name: "Quản Lí Quyền", href: `${PATH_ADMIN}/roles` },
+        { name: "Nhóm Quyền", href: `${PATH_ADMIN}/roles` },
+        { name: "Tạo Quyền Mới", href: `${PATH_ADMIN}/roles/create` },
+    ])
+    div(class="create")
+        form(action=`${PATH_ADMIN}/roles/create`, method="post")
+            h1(class="create__title") Thông tin chung
+            div(class="general")
+                div(class="form-group")
+                    div(class="name form-item")
+                        label(for="name") 
+                            | Tên quyền(
+                            span(class="important-item") *
+                            | )
+                        input(class="form-control",id="name",name="name",type="text",required)
+                label(for="description") Mô tả
+                textarea(class="textarea-mce",name="description",id="description") 
+            div(class="form-group__btn")
+                a(href="/admin/roles" class="btn back-btn") quay lại
+                button(type="submit" class="btn create-btn") Tạo quyền
+
+
+            

@@ -6,7 +6,7 @@ const {
 } = require("../../helpers/product-category.helper.js");
 const getCategoryTree = require("../../helpers/get-category-tree.helper.js");
 const paginationHelper = require("../../helpers/pagination.helper.js");
-class productController {
+class categoryTrashController {
     // [GET] /admin/product-trash
     async show(req, res) {
         const currentPath = paginationHelper(req);
@@ -18,7 +18,7 @@ class productController {
         const categoryTree = await getCategoryTree();
         const general = await generalHelper(true);
         res.render("./admin/page/product-category/category-trash", {
-            pageTitle: "product trash",
+            pageTitle: "Category trash",
             PATH_ADMIN: system.PATH_ADMIN,
             listDeletedCategory: listProductCategory,
             general,
@@ -128,4 +128,4 @@ class productController {
     }
 }
 
-module.exports = new productController();
+module.exports = new categoryTrashController();

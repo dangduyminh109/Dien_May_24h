@@ -39,8 +39,8 @@ block main
                     span(class="product__list-icon")
                         i(class="fa-regular fa-rectangle-list")
                     | Danh sách sản phẩm
-        +toolbarFilter(filter,"product-trash",categoryTree)
-        +toolbarHandle(handle,"product-trash",categoryTree,true)
+        +toolbarFilter({filter,path: "product-trash",categoryTree,product:true})
+        +toolbarHandle({handle,path: "product-trash",categoryTree,product:true,trash:true})
 
     div(class="overview-block") 
         div(class="overview-item total-products")

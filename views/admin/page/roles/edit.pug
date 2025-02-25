@@ -1,0 +1,34 @@
+extends ../../layout/default.pug
+include ../../mixins/page_header.pug
+include ../../mixins/category_tree.pug
+include ../../mixins/alert.pug
+
+block main 
+    +alert(messages)
+    +page_header("Chỉnh Sửa Quyền", [
+       { name: "Quản Lí Quyền", href: `${PATH_ADMIN}/roles` },
+        { name: "Nhóm Quyền", href: `${PATH_ADMIN}/roles` },
+        { name: "Chỉnh Sửa Quyền", href: `${PATH_ADMIN}/roles/edit` },
+    ])
+
+    div(class="edit")
+        form(action=`${PATH_ADMIN}/roles/edit/${roles._id}?_method=PATCH`, method="post",id="form-edit")
+            h1(class="edit__title") Thông tin chung
+            div(class="general")
+                div(class="form-group")
+                    div(class="name form-item")
+                        label(for="name") 
+                            | Tên quyền (
+                            span(class="important-item") *
+                            | )
+                        input(class="form-control",id="name",name="name",type="text",value=roles.name,required)
+                    
+                label(for="description") Mô tả
+                textarea(class="textarea-mce",name="description",id="description") 
+                    != roles.description 
+            div(class="form-group__btn")
+                a(href="/admin/roles" class="btn back-btn") quay lại
+                button(type="submit" class="btn create-btn") Sửa quyền
+
+
+            

@@ -36,8 +36,8 @@ block main
             div(class="toolbar__right-box")
                 a(href=`${PATH_ADMIN}/product-category`,class="create-btn btn btn-primary")
                     span(class="create__plus-icon") Danh mục sản phẩm
-        +toolbarFilter(filter,"category-trash",categoryTree,false)
-        +toolbarHandle(handle,"category-trash",categoryTree,true,false)
+        +toolbarFilter({filter,path: "category-trash",categoryTree,category:true})
+        +toolbarHandle({handle,path: "category-trash",categoryTree,trash:true,category:true})
     
     div(class="overview-block") 
             div(class="overview-item total-products")

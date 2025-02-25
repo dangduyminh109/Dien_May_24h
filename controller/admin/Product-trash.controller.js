@@ -18,7 +18,7 @@ class productTrashController {
         const general = await generalHelper(true);
         const categoryTree = await getCategoryTree();
         res.render("./admin/page/products/product-trash", {
-            pageTitle: "Create products",
+            pageTitle: "Product Trash",
             PATH_ADMIN: system.PATH_ADMIN,
             listDeletedProduct: listProduct,
             general,

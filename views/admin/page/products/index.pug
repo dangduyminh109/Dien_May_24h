@@ -39,8 +39,8 @@ block main
                     span(class="create__plus-icon")
                         i(class="fa-solid fa-plus")
                     | Thêm mới sản phẩm
-        +toolbarFilter(filter,"product",categoryTree)
-        +toolbarHandle(handle,"product",categoryTree,false,true)
+        +toolbarFilter({filter,path: "product-trash",categoryTree,product:true})
+        +toolbarHandle({handle,path: "product-trash",categoryTree,product:true})
 
     div(class="overview-block") 
         div(class="overview-item total-products")
