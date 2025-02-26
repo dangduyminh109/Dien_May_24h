@@ -10,4 +10,4 @@ mixin formWarning(id,content,title,idBtn,textBtn = "Có")
                 div(class="modal-body") !{content}
                 div(class="modal-footer")
                     button(type="button" class=`${idBtn}__close-btn btn btn-primary` data-bs-dismiss="modal") Đóng
-                    button(type="button" id=idBtn, class=`btn ${idBtn}`) #{textBtn}
+                    button(type="button" id=idBtn, class=`btn ${idBtn} form-waring-btn`) #{textBtn}

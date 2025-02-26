@@ -12,6 +12,7 @@ router.get("/permissions", roleController.showPermissions);
 router.post("/create", validate, roleController.createPost);
 
 router.patch("/edit/:id", validate, roleController.editPatch);
+router.patch("/permissions/update", roleController.permissionUpdate);
 
 router.delete("/delete-roles/:id", roleController.delete);
 router.delete("/delete-more", roleController.deleteMore);

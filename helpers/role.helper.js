@@ -21,8 +21,6 @@ async function roleHelper(query, findDelete = false) {
         ? "countDocumentsWithDeleted"
         : "countDocuments";
 
-    console.log(queryMethod);
-
     const listRoles = await Role[queryMethod](filter)
         .skip((page - 1) * limit)
         .limit(limit);

@@ -361,6 +361,9 @@ function handleWarningFormProduct() {
     const warningUpdateMultipleModalBtn = document.getElementById(
         "warning-update-multiple-modal-btn"
     );
+    const warningPermissionModalBtn = document.getElementById(
+        "warning-permission-modal-btn"
+    );
 
     if (formProductDelete && warningDeleteModalBtn) {
         if (btnDelete) {
@@ -401,6 +404,12 @@ function handleWarningFormProduct() {
     if (warningUpdateMultipleModalBtn) {
         warningUpdateMultipleModalBtn.onclick = () => {
             document.getElementById("handle-update-form").submit();
+        };
+    }
+
+    if (warningPermissionModalBtn) {
+        warningPermissionModalBtn.onclick = () => {
+            document.getElementById("handle-permission-form").submit();
         };
     }
 }
@@ -657,7 +666,6 @@ function handlePermissionsCheckBox() {
                     }
                 });
                 role.value = JSON.stringify(arr);
-                console.log(role.name, role.value);
             };
         });
     }
@@ -731,6 +739,25 @@ function handleWindowOnload() {
                 main.style.padding = "103px 20px 20px";
             }
         }
+    }
+
+    const tableItem = document.querySelectorAll(".table-item__label");
+    const tableItemSelectAll = document.querySelectorAll(
+        ".table-item__label-all"
+    );
+    if (tableItem && tableItemSelectAll) {
+        tableItemSelectAll.forEach((labelAll) => {
+            const inputAll = document.getElementById(labelAll.htmlFor);
+            const checkboxes = [...tableItem].filter(
+                (item) =>
+                    item.getAttribute("_id") === labelAll.getAttribute("_id")
+            );
+
+            inputAll.checked = checkboxes.every((item) => {
+                const input = document.getElementById(item.htmlFor);
+                return input.checked;
+            });
+        });
     }
 }
 

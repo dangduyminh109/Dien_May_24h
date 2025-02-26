@@ -42,7 +42,7 @@ class roleController {
 
     // [GET] /admin/roles/permissions
     async showPermissions(req, res) {
-        const { listRoles, pagination } = await roleHelper(req.query);
+        const { listRoles } = await roleHelper(req.query);
         res.render("./admin/page/roles/permission", {
             pageTitle: "Điện Máy 24h - Phân Quyền",
             PATH_ADMIN: system.PATH_ADMIN,
@@ -53,7 +53,6 @@ class roleController {
     // [POST] /admin/roles/create
     async createPost(req, res) {
         try {
-            console.log(req.body);
             const newRoles = new Role(req.body);
             await newRoles.save();
             req.flash("success", "Tạo quyền mới thành công!");
@@ -76,6 +75,26 @@ class roleController {
             console.error("Error saving roles:", error);
             req.flash("error", "Sửa quyền không thành công!");
             res.redirect("/admin/roles");
+        }
+    }
+
+    // [PATCH] /admin/roles/permissions/update
+    async permissionUpdate(req, res) {
+        try {
+            const formData = req.body;
+            for (const item in formData) {
+                const permission = JSON.parse(formData[item]);
+                await Role.updateOne(
+                    { _id: item },
+                    { $set: { permission: permission } }
+                );
+            }
+            req.flash("success", "Thiết lập phân quyền thành công!");
+            res.redirect("/admin/roles/permissions");
+        } catch (error) {
+            console.error("Error saving Permissions:", error);
+            req.flash("error", "Thiết lập phân quyền không thành công!");
+            res.redirect("/admin/roles/permissions");
         }
     }
 
