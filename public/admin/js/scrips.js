@@ -603,6 +603,66 @@ function handlePaginationBtn() {
     }
 }
 
+/* ============ handle permissions checkbox =========== */
+function handlePermissionsCheckBox() {
+    const tableItem = document.querySelectorAll(".table-item__label");
+    const tableItemSelectAll = document.querySelectorAll(
+        ".table-item__label-all"
+    );
+    const listRole = document.querySelectorAll(".list-role");
+    if (tableItem && tableItemSelectAll) {
+        tableItem.forEach((item) => {
+            const input = document.getElementById(item.htmlFor);
+            input.onchange = () => {
+                const LabelAll = Array.from(tableItemSelectAll).find(
+                    (itemAll) =>
+                        itemAll.getAttribute("_id") == item.getAttribute("_id")
+                );
+                const inputAll = document.getElementById(LabelAll.htmlFor);
+                inputAll.checked = [...tableItem].reduce((value, item2) => {
+                    if (
+                        item2.getAttribute("_id") !=
+                        LabelAll.getAttribute("_id")
+                    )
+                        return value;
+                    const input2 = document.getElementById(item2.htmlFor);
+                    return input2.checked && value;
+                }, true);
+                const role = Array.from(listRole).find(
+                    (input) => input.name == item.getAttribute("_id")
+                );
+                arr = JSON.parse(role.value);
+                if (input.checked) {
+                    arr = [...arr, input.value];
+                } else {
+                    arr = arr.filter((item) => item != input.value);
+                }
+                role.value = JSON.stringify(arr);
+            };
+        });
+        tableItemSelectAll.forEach((item) => {
+            const inputAll = document.getElementById(item.htmlFor);
+            inputAll.onchange = () => {
+                let arr = [];
+                const role = Array.from(listRole).find(
+                    (input) => input.name == item.getAttribute("_id")
+                );
+                tableItem.forEach((item2) => {
+                    if (item2.getAttribute("_id") == item.getAttribute("_id")) {
+                        const input = document.getElementById(item2.htmlFor);
+                        input.checked = inputAll.checked;
+                        if (inputAll.checked) {
+                            arr = [...arr, input.value];
+                        }
+                    }
+                });
+                role.value = JSON.stringify(arr);
+                console.log(role.name, role.value);
+            };
+        });
+    }
+}
+
 /* ======================================= handle responsive ======================================= */
 function handleResponsiveNav() {
     const toggleNav = document.getElementById("toggle__nav");
@@ -694,5 +754,6 @@ function init() {
     handleFilterFrom();
     handleSelectProductItem();
     handlePaginationBtn();
+    handlePermissionsCheckBox();
 }
 document.addEventListener("DOMContentLoaded", init);

@@ -1,0 +1,141 @@
+extends ../../layout/default.pug
+include ../../mixins/page_header.pug
+include ../../mixins/pagination.pug
+include ../../mixins/alert.pug
+include ../../mixins/deletion_warning.pug
+include ../../mixins/toolbar_handle.pug
+
+
+block main 
+    +alert(messages)
+    +page_header("Phân Quyền", [
+        { name: "Quản Lí Quyền", href: `${PATH_ADMIN}/roles/Permissions` },
+        { name: "Phân Quyền", href: `${PATH_ADMIN}/roles/Permissions` },
+    ])
+    div(class="permissions-block")
+            form(action="/admin/roles/permissions", method="post")
+                each role in listRoles
+                    input(type="text" class="list-role" name=role.id value="[]" style="display:none")
+            div(class="permissions-block__header")
+                h1(class="permissions-block__title") Thiết lập phân quyền
+                button(class="btn btn-primary btn-permissions") Đặt lại
+                button(class="btn btn-primary btn-permissions") Cập Nhật
+            div(class="list-permissions list-table")
+                table(class="list-permissions__table")
+                    thead
+                        tr(class="row-title")
+                            th(scope="col")
+                            each roles in listRoles 
+                                th(scope="col") 
+                                    |   #{roles.name}
+                    tbody 
+                        tr  
+                            td Chọn tất cả
+                            each role,index in listRoles
+                                td 
+                                    input(type="checkbox" class="table-item__select-all" value="all" id=`table-all-${index}`)
+                                    label(for=`table-all-${index}` class="table-item__label-all" _id=`${role.id}`)
+                        tr 
+                            td
+
+                        tr(class="row-title")  
+                            td(colspan="4") Sản Phẩm
+                        tr 
+                            td Xem 
+                            each role,index in listRoles
+                                td 
+                                    input(type="checkbox" class="table-item__select" value="view-product" id=`table-product-view-${index}`)
+                                    label(for=`table-product-view-${index}` class="table-item__label" _id=`${role.id}`)
+                        tr
+                            td Thêm mới
+                            each role,index in listRoles
+                                td 
+                                    input(type="checkbox" class="table-item__select" value="add-product" id=`table-product-add-${index}`)
+                                    label(for=`table-product-add-${index}` class="table-item__label" _id=`${role.id}`)
+                        
+                        tr 
+                            td Thay đổi trạng thái 
+                            each role,index in listRoles
+                                td 
+                                    input(type="checkbox" class="table-item__select" value="change-product" id=`table-product-change-${index}`)
+                                    label(for=`table-product-change-${index}` class="table-item__label" _id=`${role.id}`)
+                        tr
+                            td Cập nhật 
+                            each role,index in listRoles
+                                td 
+                                    input(type="checkbox" class="table-item__select" value="update-product" id=`table-product-update-${index}`)
+                                    label(for=`table-product-update-${index}` class="table-item__label" _id=`${role.id}`)
+                        tr
+                            td
+
+                        
+                        tr(class="row-title")  
+                            td(colspan="4") Danh mục 
+                        tr 
+                            td Xem 
+                            each role,index in listRoles
+                                td 
+                                    input(type="checkbox" class="table-item__select" value="view-category" id=`table-category-view-${index}`)
+                                    label(for=`table-category-view-${index}` class="table-item__label" _id=`${role.id}`)
+                        tr
+                            td Thêm mới
+                            each role,index in listRoles
+                                td 
+                                    input(type="checkbox" class="table-item__select" value="add-category" id=`table-category-add-${index}`)
+                                    label(for=`table-category-add-${index}` class="table-item__label" _id=`${role.id}`)
+                        tr 
+                            td Thay đổi trạng thái 
+                            each role,index in listRoles
+                                td 
+                                    input(type="checkbox" class="table-item__select" value="change-category" id=`table-category-change-${index}`)
+                                    label(for=`table-category-change-${index}` class="table-item__label" _id=`${role.id}`)
+                        tr
+                            td Cập nhật 
+                            each role,index in listRoles
+                                td 
+                                    input(type="checkbox" class="table-item__select" value="update-category" id=`table-category-update-${index}`)
+                                    label(for=`table-category-update-${index}` class="table-item__label" _id=`${role.id}`)
+                        tr
+                            td
+
+                        
+                        tr(class="row-title")  
+                            td(colspan="4") Nhóm Quyền
+                        tr 
+                            td Xem 
+                            each role,index in listRoles
+                                td 
+                                    input(type="checkbox" class="table-item__select" value="view-role" id=`table-roles-view-${index}`)
+                                    label(for=`table-roles-view-${index}` class="table-item__label" _id=`${role.id}`)
+                        tr
+                            td Thêm mới
+                            each role,index in listRoles
+                                td 
+                                    input(type="checkbox" class="table-item__select" value="add-role" id=`table-roles-add-${index}`)
+                                    label(for=`table-roles-add-${index}` class="table-item__label" _id=`${role.id}`)
+                        tr
+                            td Cập nhật 
+                            each role,index in listRoles
+                                td 
+                                    input(type="checkbox" class="table-item__select" value="update-role" id=`table-roles-update-${index}`)
+                                    label(for=`table-roles-update-${index}` class="table-item__label" _id=`${role.id}`)
+                        tr
+                            td
+
+                        
+                        tr(class="row-title")  
+                            td(colspan="4") Phân Quyền
+                        tr 
+                            td Xem 
+                            each role,index in listRoles
+                                td 
+                                    input(type="checkbox" class="table-item__select" value="view-permission" id=`table-permissions-view-${index}`)
+                                    label(for=`table-permissions-view-${index}` class="table-item__label" _id=`${role.id}`)
+                        tr
+                            td Cập nhật 
+                            each role,index in listRoles
+                                td 
+                                    input(type="checkbox" class="table-item__select" value="update-permission" id=`table-permissions-update-${index}`)
+                                    label(for=`table-permissions-update-${index}` class="table-item__label" _id=`${role.id}`)
+                        tr
+                            td

@@ -40,6 +40,16 @@ class roleController {
         });
     }
 
+    // [GET] /admin/roles/permissions
+    async showPermissions(req, res) {
+        const { listRoles, pagination } = await roleHelper(req.query);
+        res.render("./admin/page/roles/permission", {
+            pageTitle: "Điện Máy 24h - Phân Quyền",
+            PATH_ADMIN: system.PATH_ADMIN,
+            listRoles,
+        });
+    }
+
     // [POST] /admin/roles/create
     async createPost(req, res) {
         try {

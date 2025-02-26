@@ -7,6 +7,7 @@ const validate = require("../../validates/role.validate");
 router.get("/", roleController.show);
 router.get("/create", roleController.create);
 router.get("/edit/:id", roleController.edit);
+router.get("/permissions", roleController.showPermissions);
 
 router.post("/create", validate, roleController.createPost);
 

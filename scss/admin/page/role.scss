@@ -1,0 +1,78 @@
+/* ======================================= permissions ======================================= */
+.permissions-block {
+    background-color: #fff;
+    padding: 10px;
+    margin-top: 10px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 2px;
+    .permissions-block__header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        .permissions-block__title {
+            color: $text-color-3;
+            font-size: 1.6rem;
+            flex: 1;
+        }
+        .btn-permissions {
+            margin-left: auto;
+        }
+    }
+    .list-permissions {
+        padding: 10px 0 0;
+        .list-permissions__table {
+            min-width: 450px;
+            overflow: auto;
+            .table-item__label,
+            .table-item__label-all {
+                height: 20px;
+                width: 20px;
+                border-radius: 2px;
+                border: 1px solid $text-color;
+                position: relative;
+                cursor: pointer;
+                &::before {
+                    content: "L";
+                    position: absolute;
+                    top: -4px;
+                    left: 5px;
+                    transform: rotate(45deg) scaleX(-1);
+                    display: none;
+                }
+            }
+            .table-item__select,
+            .table-item__select-all {
+                display: none;
+            }
+
+            .table-item__select:checked + .table-item__label,
+            .table-item__select-all:checked + .table-item__label-all {
+                background-color: #eeeef5;
+                &::before {
+                    display: block;
+                    color: $primary;
+                }
+            }
+        }
+
+        table {
+            th,
+            td {
+                padding: 10px 5px;
+                text-align: center;
+            }
+            td {
+                &:first-child {
+                    text-align: start;
+                }
+            }
+        }
+        .row-title {
+            background-color: $text-color;
+            color: $text-color-3;
+            font-size: 1.2rem;
+        }
+    }
+}
+/* ============ box =========== */
+/* ======================================= block ======================================= */
