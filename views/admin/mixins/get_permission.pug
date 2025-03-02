@@ -1,0 +1,4 @@
+mixin getPermission(listRoles,roleId)
+    each role in listRoles
+        if role.id === roleId
+            p #{role.name}

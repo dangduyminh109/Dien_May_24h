@@ -23,10 +23,12 @@ productCategorySchema.plugin(mongoose_delete, {
     deletedAt: true,
 });
 
-const ProductCategory = mongoose.model(
-    "ProductCategory",
-    productCategorySchema,
-    "product-category"
-);
+const ProductCategory =
+    mongoose.models.ProductCategory ||
+    mongoose.model(
+        "ProductCategory",
+        productCategorySchema,
+        "product-category"
+    );
 
 module.exports = ProductCategory;

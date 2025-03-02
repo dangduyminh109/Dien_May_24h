@@ -1,0 +1,50 @@
+.list-account__table {
+    width: 100%;
+    min-width: 991px;
+}
+
+.create-account {
+    .avatar__upload {
+        width: 150px;
+        height: 150px;
+        min-width: 100px;
+        min-height: 100px;
+        margin-top: 0;
+        border: 1px dashed #263544;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .avatar__upload-icon {
+        font-size: 3.4rem;
+    }
+
+    .avatar__preview {
+        width: 150px;
+        height: 150px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        padding: 5px;
+        border: 1px solid #263544;
+        position: relative;
+
+        img {
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .image__close-icon {
+        font-size: 1.6rem;
+        position: absolute;
+        top: -8px;
+        right: -10px;
+        color: orange;
+        background-color: #fff;
+        cursor: pointer;
+        border-radius: 50%;
+    }
+}

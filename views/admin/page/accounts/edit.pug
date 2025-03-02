@@ -1,0 +1,69 @@
+extends ../../layout/default.pug
+include ../../mixins/alert.pug
+include ../../mixins/page_header.pug
+block main 
+    +alert(messages)
+    +page_header("Sửa đổi tài khoản", [
+        { name: "Danh sách tài khoản", href: `${PATH_ADMIN}/accounts` },
+        { name: "Sửa đổi tài khoản", href: `${PATH_ADMIN}/accounts/edit/${account.id}` },
+    ])
+    div(class="create create-account")
+        form(action=`${PATH_ADMIN}/accounts/edit/${account.id}?_method=PATCH`, method="post",enctype="multipart/form-data")
+            h1(class="create__title") Thông tin chung
+            div(class="general")
+                div(class="form-group")
+                    div(class="fullName form-item")
+                        label(for="fullName") 
+                            | Họ và tên (
+                            span(class="important-item") *
+                            | )
+                        input(class="form-control",id="fullName",name="fullName",type="text",value=account.fullName,required)
+                    div(class="email form-item")
+                        label(for="email") 
+                            | Email (
+                            span(class="important-item") *
+                            | )
+                        input(class="form-control",id="email",name="email",type="email",value=account.email,required)  
+                    div(class="phone form-item")
+                        label(for="phone")  Số điện thoại
+                        input(class="form-control",id="phone",name="phone",type="number",value=account.phone)  
+                div(class="form-group")
+                    div(class="password form-item")
+                        label(for="password") Mật khẩu mới
+                        input(class="form-control",id="password",name="password",type="password")   
+                    div(class="listRoles form-item")
+                        label(for="listRoles")  
+                            | Phân quyền (
+                            span(class="important-item") *
+                            | )
+                        select(name="roleId", id="listRoles",required) 
+                            option(value="" selected disabled) -- chọn quyền -- 
+                            if(listRoles.length > 0)
+                                each role in listRoles
+                                    option(value=role.id,selected=account.roleId === role.id) #{role.name} 
+                            else 
+                                option(value="" selected disabled) -- Chưa có phân quền nào! -- 
+                    div(class="create-more form-item")
+                        p(class="create-more__title") Thêm quyền 
+                        a(href="" class="btn create-more__btn")
+                            i(class="fa-solid fa-plus") 
+                label(for="check") Trạng thái 
+                div(class="btn-status")
+                    div(class="btn-status-toggle")
+                            div(class="form-check form-switch")
+                                input(class="form-check-input btn-status-form",name="status",type="checkbox",id="check", role="switch",checked=true)
+                    p(class="btn-status__desc") Hoạt động          
+            h1(class="create__title") Avatar
+            div(class="avatar-wrapper", id="avatar-wrapper")
+                label(class="avatar__upload" for="image" style="display:none") 
+                    span(class="avatar__upload-icon")
+                        i(class="fa-solid fa-upload")
+                    |   upload
+                    input(id="image",name="thumbnails",type="file",accept="image/*")
+                div(class="avatar__preview")
+                    img(src=account.avatar,alt=account.fullName) 
+                    span(class="image__close-icon")
+                        i(class="fa-solid fa-circle-xmark", style="background-color: #fff; border-radius: 50%; display: block;")
+            div(class="form-group__btn")
+                a(href="/admin/accounts" class="btn back-btn") quay lại
+                button(type="submit" class="btn create-btn") Sửa tài khoản

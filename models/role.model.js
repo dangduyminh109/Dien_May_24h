@@ -17,6 +17,7 @@ roleSchema.plugin(mongoose_delete, {
     deletedAt: true,
 });
 
-const Role = mongoose.models.role || mongoose.model("Role", roleSchema);
+const Role =
+    mongoose.models.Role || mongoose.model("Role", roleSchema, "roles");
 
 module.exports = Role;

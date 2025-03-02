@@ -204,16 +204,17 @@ function handleFilterButton() {
 /* ============ upload file =========== */
 function handleFileUpload() {
     const imageGroup = document.getElementById("image-group");
+    const avatarWrapper = document.getElementById("avatar-wrapper");
     const uploadFile = document.querySelector("input[type='file']");
     const MAX_IMAGES = 12;
-
-    if (uploadFile) {
-        uploadFile.onchange = (e) => {
+    if (uploadFile && imageGroup) {
+        uploadFile.onchange = () => {
             var files = [...uploadFile.files];
             if (files.length === 0) return;
             if (files.length > MAX_IMAGES) {
-                alert(`Chỉ được chọn tối đa ${MAX_IMAGES} ảnh!`);
+                alert("error", `Chỉ upload được tối đa ${MAX_IMAGES} ảnh`);
                 files = files.slice(0, MAX_IMAGES);
+                return;
             }
             files.forEach((file) => {
                 var thumbnailPreview = document.createElement("div");
@@ -234,6 +235,33 @@ function handleFileUpload() {
                     e.target.closest(".image-group__preview").remove();
                 };
             });
+        };
+    }
+    if (uploadFile && avatarWrapper) {
+        uploadFile.onchange = () => {
+            var files = [...uploadFile.files];
+            if (files.length === 0) return;
+            if (files.length > 1) {
+                alert("error", `Chỉ upload được tối đa 1 ảnh`);
+                files = files.slice(0, MAX_IMAGES);
+                return;
+            }
+            var thumbnailPreview = document.createElement("div");
+            var imgPreview = document.createElement("img");
+            var closeIcon = document.createElement("span");
+            imgPreview.src = URL.createObjectURL(files[0]);
+            closeIcon.classList.add("image__close-icon");
+            closeIcon.innerHTML += `<i class="fa-solid fa-circle-xmark" style="background-color: #fff; border-radius: 50%; display: block;"></i>`;
+            thumbnailPreview.append(imgPreview, closeIcon);
+            thumbnailPreview.classList.add("avatar__preview");
+            imgPreview.onload = () => URL.revokeObjectURL(imgPreview.src);
+            avatarWrapper.firstChild.style.display = "none";
+            avatarWrapper.prepend(thumbnailPreview);
+            closeIcon.onclick = (e) => {
+                e.target.closest(".avatar__preview").remove();
+                avatarWrapper.firstChild.style.display = "flex";
+                uploadFile.value = "";
+            };
         };
     }
 }
@@ -436,9 +464,17 @@ function handleStatusForm() {
 function handleEditForm() {
     const thumbnailDeleted = document.getElementById("thumbnail-deleted");
     const imgCloseIcon = document.querySelectorAll(".image__close-icon");
+    const avatarWrapper = document.getElementById("avatar-wrapper");
     var arr = [];
-
-    if (imgCloseIcon) {
+    if (imgCloseIcon && avatarWrapper) {
+        imgCloseIcon.forEach((item) => {
+            item.onclick = (e) => {
+                e.target.closest(".avatar__preview").remove();
+                avatarWrapper.firstChild.style.display = "flex";
+                uploadFile.value = "";
+            };
+        });
+    } else if (imgCloseIcon) {
         imgCloseIcon.forEach((item) => {
             item.onclick = (e) => {
                 let imgGroupPreview = e.target.closest(".image-group__preview");
@@ -449,7 +485,6 @@ function handleEditForm() {
                         "$1"
                     ),
                 ];
-
                 thumbnailDeleted.value = JSON.stringify(arr);
                 imgGroupPreview.remove();
             };

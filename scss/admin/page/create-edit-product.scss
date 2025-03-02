@@ -53,16 +53,16 @@
         min-width: 150px;
     }
 
-    .edit-category,
-    .create-category {
+    .edit-more,
+    .create-more {
         align-self: flex-end;
     }
-    .edit-category__title,
-    .create-category__title {
+    .edit-more__title,
+    .create-more__title {
         margin: 10px 0 0 0;
     }
-    .edit-category__btn,
-    .create-category__btn {
+    .edit-more__btn,
+    .create-more__btn {
         color: #fff;
         background-color: $primary;
         width: 25%;

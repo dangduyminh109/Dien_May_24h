@@ -1,5 +1,5 @@
 include ./category_tree.pug
-mixin toolbarFilter({filter,path,categoryTree,product=false,category=false})
+mixin toolbarFilter({filter,path,categoryTree,product=false,category=false,account=false})
     div(id="toolbar__advanced-filter-box", class="toolbar__advanced-box" )
         form(id="filter-form" class="toolbar__advanced-form", action=`${PATH_ADMIN}/${path}`,method="GET")
             div(class="block-advanced")
@@ -11,7 +11,10 @@ mixin toolbarFilter({filter,path,categoryTree,product=false,category=false})
                                 button(type="submit" class="toolbar__advanced-btn btn btn-primary") Gửi
                 div(class=product ?"advanced__item":"advanced__item-2")
                     h3(class="advanced__title")=product ? "Tên sản phẩm" : "Tên danh mục"
-                    input(type="text" class="advanced__input" name="name" placeholder=product ? "Nhập tên sản phẩm" : "Nhập tên danh mục" value=filter.name|| "")
+                    if(account)
+                        input(type="text" class="advanced__input" name="fullName" placeholder="Nhập tên tài khoản" value=filter.fullName|| "")
+                    else
+                        input(type="text" class="advanced__input" name="name" placeholder=product ? "Nhập tên sản phẩm" : "Nhập tên danh mục" value=filter.name|| "")
                 if(product)
                     div(class="advanced__item-2") 
                         h3(class="advanced__title") Mã sản phẩm
@@ -25,7 +28,7 @@ mixin toolbarFilter({filter,path,categoryTree,product=false,category=false})
                                     +categoryTree(categoryTree)
                                 else 
                                     option(value="" selected disabled) -- Chưa có danh mục nào! -- 
-                    else
+                    else if(category)
                         h3(class="advanced__title") Danh mục cha
                         select(name="parentId", id="category") 
                             option(value="" selected disabled) -- chọn danh mục cha-- 
@@ -33,6 +36,15 @@ mixin toolbarFilter({filter,path,categoryTree,product=false,category=false})
                                     +categoryTree(categoryTree)
                                 else 
                                     option(value="" selected disabled) -- Chưa có danh mục nào! -- 
+                    else if(account)
+                        h3(class="advanced__title") Phân quyền
+                        select(name="roleId", id="roleId") 
+                            option(value="" selected disabled) -- chọn quyền -- 
+                            if(listRoles.length > 0)
+                                each role in listRoles
+                                    option(value=role.id, selected=role.id === filter.roleId) #{role.name} 
+                            else 
+                                option(value="" selected disabled) -- Chưa có phân quền nào! -- 
                 div(class="advanced__item-2") 
                     h3(class="advanced__title") Trạng thái
                     div(class="advanced__radio-group")

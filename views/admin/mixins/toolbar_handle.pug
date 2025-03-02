@@ -1,13 +1,13 @@
 
 include ./category_tree.pug
 include ./deletion_warning.pug
-mixin toolbarHandle({handle,path,categoryTree,trash=false,product=false,category=false,role=false})
+mixin toolbarHandle({handle,path,categoryTree,trash=false,product=false,category=false,role=false,account=false})
     div(id="toolbar__advanced-handle-box", class="toolbar__advanced-box")
         form(id="handle-update-form" class="toolbar__advanced-form", action=`${PATH_ADMIN}/${path}/update-more?_method=PATCH`,method="POST") 
             input(type="text" class="list-id" name="list-id" value="[]" style="display:none")
             div(class="block-advanced")
                 div(class="advanced")
-                    if product || category
+                    if product || category || account
                         div(class="advanced__item-header") 
                             h2(class="block-advanced__title") Cập Nhật
                             div(class="toolbar__advanced-group-btn")
@@ -28,7 +28,17 @@ mixin toolbarHandle({handle,path,categoryTree,trash=false,product=false,category
                                     +categoryTree(categoryTree)
                                 else 
                                     option(value="" selected disabled) -- Chưa có danh mục nào! -- 
-                    if product || category
+                    if account 
+                        div(class="advanced__item")
+                            h3(class="advanced__title") Phân quyền
+                            select(name="roleId", id="roleId") 
+                                option(value="" selected disabled) -- chọn quyền -- 
+                                if(listRoles.length > 0)
+                                    each role in listRoles
+                                        option(value=role.id) #{role.name} 
+                                else 
+                                    option(value="" selected disabled) -- Chưa có phân quền nào! -- 
+                    if product || category || account
                         div(class="advanced__item-2") 
                             h3(class="advanced__title") Trạng thái
                             div(class="advanced__radio-group")
@@ -53,7 +63,7 @@ mixin toolbarHandle({handle,path,categoryTree,trash=false,product=false,category
                             h3(class="advanced__title") Tồn kho
                             div(class="advanced__number-group")
                                 input(type="number" class="advanced__input" name="inventory" placeholder="0" min=0 value=handle.inventory)
-                    if product || category || role
+                    if product || category || role || account
                         div(class="advanced__item-header") 
                             h2(class="block-advanced__title") Xử Lí
                             div(class="toolbar__advanced-group-btn")

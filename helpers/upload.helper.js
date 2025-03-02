@@ -28,6 +28,15 @@ const uploadMultipleImages = async (files) => {
     }
 };
 
+const uploadSingleImages = async (file) => {
+    if (file) {
+        const uploadPromises = uploadToCloudinary(file.buffer);
+        const result = await uploadPromises;
+        return result.secure_url;
+    }
+};
+
 module.exports = {
     uploadMultipleImages,
+    uploadSingleImages,
 };

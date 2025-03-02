@@ -29,10 +29,7 @@ block main
                         i(class="fa-solid fa-reply")
                     | Quay lại
             div(class="toolbar__right-box")
-                a(href=`${PATH_ADMIN}/roles`,class="create-btn btn btn-primary")
-                    span(class="create__plus-icon")
-                        i(class="fa-solid fa-plus")
-                    | Quản lí quyền
+                a(href=`${PATH_ADMIN}/roles`,class="create-btn btn btn-primary") Quản lí quyền
         +toolbarHandle({handle,path: "roles-trash",role:true,trash:true})
 
     div(class="list-roles list-table")

@@ -19,7 +19,7 @@ block main
                     input(type="text" class="list-role" name=role.id value=permission style="display:none")
             div(class="permissions-block__header")
                 h1(class="permissions-block__title") Thiết lập phân quyền
-                button(class="btn btn-primary btn-permissions") Đặt lại
+                button(class="btn btn-primary btn-permissions",onclick="location.reload()") Đặt lại
                 button(type="button" class="btn btn-primary btn-permissions" data-bs-toggle="modal", data-bs-target="#warningPermissionModal") Cập nhật      
             div(class="list-permissions list-table")
                 table(class="list-permissions__table")

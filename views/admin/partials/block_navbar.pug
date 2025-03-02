@@ -46,7 +46,7 @@ nav(class="navbar", id="navbar")
             li(class="navigation-item")
                 button(class="navigation-item__btn btn",id="navigation-item__btn",type="button",data-bs-toggle="collapse",data-bs-target="#navigation-item__collapse-role",aria-expanded="false",aria-controls="navigation-item__collapse-role") 
                     span(class="navigation-item__btn-icon")
-                        i(class="fa-brands fa-product-hunt")
+                        i(class="fa-solid fa-users-gear")
                     | Quản lí quyền
                     span(class="navigation-item__btn-icon-down")
                         i(class="fa-solid fa-caret-down")
@@ -59,4 +59,9 @@ nav(class="navbar", id="navbar")
                         span(class="navigation-item__icon")
                             i(class="fa-solid fa-plus")
                         h3(class="navigation-item__title") Phân quyền
+            li(class="navigation-item")
+                a(href="/admin/accounts", class="navigation-item__btn btn") 
+                    span(class="navigation-item__btn-icon")
+                        i(class="fa-solid fa-user")
+                    | Danh sách tài khoản
 </nav>

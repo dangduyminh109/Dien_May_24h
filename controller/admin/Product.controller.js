@@ -129,11 +129,11 @@ class productController {
                 { _id: { $in: listIds } },
                 { $set: dataUpdate }
             );
-            req.flash("success", "Cập nhật phẩm thành công!");
+            req.flash("success", "Cập nhật sản phẩm thành công!");
             res.redirect("back");
         } catch (error) {
             console.error("Error saving product:", error);
-            req.flash("error", "Cập nhật phẩm không thành công!");
+            req.flash("error", "Cập nhật sản phẩm không thành công!");
             res.redirect("back");
         }
     }

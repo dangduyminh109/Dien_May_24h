@@ -6,7 +6,8 @@ const productCategoryRouter = require("./product-category.route");
 const categoryTrashRouter = require("./category-trash.route");
 const roleRouter = require("./role.route");
 const rolesTrashRouter = require("./role-trash.route");
-
+const accountRouter = require("./account.route");
+const accountsTrashRouter = require("./account-trash.route");
 
 module.exports.index = (app) => {
     app.use(`${system.PATH_ADMIN}/dashboard`, dashboardRouter);
@@ -16,4 +17,6 @@ module.exports.index = (app) => {
     app.use(`${system.PATH_ADMIN}/category-trash`, categoryTrashRouter);
     app.use(`${system.PATH_ADMIN}/roles`, roleRouter);
     app.use(`${system.PATH_ADMIN}/roles-trash`, rolesTrashRouter);
+    app.use(`${system.PATH_ADMIN}/accounts`, accountRouter);
+    app.use(`${system.PATH_ADMIN}/accounts-trash`, accountsTrashRouter);
 };
