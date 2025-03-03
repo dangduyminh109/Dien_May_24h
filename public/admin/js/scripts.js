@@ -19,7 +19,7 @@ function alert(type = "success", message) {
                                 <i class="fa-solid fa-xmark"></i>
                             </span>
                         `;
-    document.querySelector("main").appendChild(alertDiv);
+    document.querySelector("body").appendChild(alertDiv);
     setTimeout(() => {
         alertDiv.classList.add("active");
         alertDiv.querySelector(".alert-icon-close").onclick = () => {
@@ -106,22 +106,23 @@ function handleToggleNav() {
     const toggleNav = document.getElementById("toggle__nav");
     const navbar = document.getElementById("navbar");
     const main = document.getElementById("main");
-
-    toggleNav.onclick = () => {
-        if (toggleNav.checked) {
-            sessionStorage.setItem("navbarTransform", "0");
-            navbar.style.transform = "translateX(0)";
-            if (main.offsetWidth > 575.98) {
-                main.style.padding = "103px 20px 20px 270px";
+    if (toggleNav) {
+        toggleNav.onclick = () => {
+            if (toggleNav.checked) {
+                sessionStorage.setItem("navbarTransform", "0");
+                navbar.style.transform = "translateX(0)";
+                if (main.offsetWidth > 575.98) {
+                    main.style.padding = "103px 20px 20px 270px";
+                }
+            } else {
+                sessionStorage.setItem("navbarTransform", "-100%");
+                navbar.style.transform = "translateX(-100%)";
+                if (main.offsetWidth > 575.98) {
+                    main.style.padding = "103px 20px 20px";
+                }
             }
-        } else {
-            sessionStorage.setItem("navbarTransform", "-100%");
-            navbar.style.transform = "translateX(-100%)";
-            if (main.offsetWidth > 575.98) {
-                main.style.padding = "103px 20px 20px";
-            }
-        }
-    };
+        };
+    }
 }
 
 // right box dropdown btn
@@ -131,24 +132,28 @@ function handleRightBoxDropdown() {
     );
     const rightBox = document.getElementById("right-box");
 
-    rightBoxBtnDropdown.onclick = () => {
-        if (rightBoxBtnDropdown.classList.contains("active")) {
-            rightBoxBtnDropdown.classList.remove("active");
-            rightBox.style.top = "0";
-        } else {
-            rightBoxBtnDropdown.classList.add("active");
-            rightBox.style.top = "80px";
-        }
-    };
+    if (rightBoxBtnDropdown) {
+        rightBoxBtnDropdown.onclick = () => {
+            if (rightBoxBtnDropdown.classList.contains("active")) {
+                rightBoxBtnDropdown.classList.remove("active");
+                rightBox.style.top = "0";
+            } else {
+                rightBoxBtnDropdown.classList.add("active");
+                rightBox.style.top = "80px";
+            }
+        };
+    }
 }
 
 /* ======================================= nav ======================================= */
 function handleNavigationItem() {
     const navigationItemBtn = document.getElementById("navigation-item__btn");
 
-    navigationItemBtn.onclick = () => {
-        navigationItemBtn.classList.toggle("active");
-    };
+    if (navigationItemBtn) {
+        navigationItemBtn.onclick = () => {
+            navigationItemBtn.classList.toggle("active");
+        };
+    }
 }
 
 /* ======================================= main ======================================= */
@@ -712,24 +717,26 @@ function handleResponsiveNav() {
     const navbar = document.getElementById("navbar");
     const main = document.getElementById("main");
 
-    if (window.matchMedia("(max-width: 575.98px)").matches) {
-        sessionStorage.setItem("navbarTransform", "-100%");
-        toggleNav.checked = false;
-        navbar.style.transform = `translateX(-100%)`;
-    }
-    window.addEventListener("resize", () => {
+    if (toggleNav || navbar) {
         if (window.matchMedia("(max-width: 575.98px)").matches) {
             sessionStorage.setItem("navbarTransform", "-100%");
             toggleNav.checked = false;
-            navbar.style.transform = "translateX(-100%)";
-            main.style.padding = "103px 20px 20px";
-        } else {
-            sessionStorage.setItem("navbarTransform", "0");
-            toggleNav.checked = true;
-            navbar.style.transform = "translateX(0)";
-            main.style.padding = "103px 20px 20px 270px";
+            navbar.style.transform = `translateX(-100%)`;
         }
-    });
+        window.addEventListener("resize", () => {
+            if (window.matchMedia("(max-width: 575.98px)").matches) {
+                sessionStorage.setItem("navbarTransform", "-100%");
+                toggleNav.checked = false;
+                navbar.style.transform = "translateX(-100%)";
+                main.style.padding = "103px 20px 20px";
+            } else {
+                sessionStorage.setItem("navbarTransform", "0");
+                toggleNav.checked = true;
+                navbar.style.transform = "translateX(0)";
+                main.style.padding = "103px 20px 20px 270px";
+            }
+        });
+    }
 }
 
 // Utility function

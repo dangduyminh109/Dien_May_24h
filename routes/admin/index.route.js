@@ -1,3 +1,5 @@
+const authMiddleware = require("../../middlewares/auth.middleware");
+
 const system = require("../../config/system");
 const dashboardRouter = require("./dashboard.route");
 const productRouter = require("./product.route");
@@ -8,15 +10,37 @@ const roleRouter = require("./role.route");
 const rolesTrashRouter = require("./role-trash.route");
 const accountRouter = require("./account.route");
 const accountsTrashRouter = require("./account-trash.route");
+const authTrashRouter = require("./auth.route");
 
 module.exports.index = (app) => {
-    app.use(`${system.PATH_ADMIN}/dashboard`, dashboardRouter);
-    app.use(`${system.PATH_ADMIN}/product`, productRouter);
-    app.use(`${system.PATH_ADMIN}/product-trash`, productTrashRouter);
-    app.use(`${system.PATH_ADMIN}/product-category`, productCategoryRouter);
-    app.use(`${system.PATH_ADMIN}/category-trash`, categoryTrashRouter);
-    app.use(`${system.PATH_ADMIN}/roles`, roleRouter);
-    app.use(`${system.PATH_ADMIN}/roles-trash`, rolesTrashRouter);
-    app.use(`${system.PATH_ADMIN}/accounts`, accountRouter);
-    app.use(`${system.PATH_ADMIN}/accounts-trash`, accountsTrashRouter);
+    app.use(`${system.PATH_ADMIN}/dashboard`, authMiddleware, dashboardRouter);
+    app.use(`${system.PATH_ADMIN}/product`, authMiddleware, productRouter);
+    app.use(
+        `${system.PATH_ADMIN}/product-trash`,
+        authMiddleware,
+        productTrashRouter
+    );
+    app.use(
+        `${system.PATH_ADMIN}/product-category`,
+        authMiddleware,
+        productCategoryRouter
+    );
+    app.use(
+        `${system.PATH_ADMIN}/category-trash`,
+        authMiddleware,
+        categoryTrashRouter
+    );
+    app.use(`${system.PATH_ADMIN}/roles`, authMiddleware, roleRouter);
+    app.use(
+        `${system.PATH_ADMIN}/roles-trash`,
+        authMiddleware,
+        rolesTrashRouter
+    );
+    app.use(`${system.PATH_ADMIN}/accounts`, authMiddleware, accountRouter);
+    app.use(
+        `${system.PATH_ADMIN}/accounts-trash`,
+        authMiddleware,
+        accountsTrashRouter
+    );
+    app.use(`${system.PATH_ADMIN}/auth`, authTrashRouter);
 };

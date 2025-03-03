@@ -1,0 +1,14 @@
+extends ../../layout/auth.pug
+include ../../mixins/alert.pug
+
+block main 
+    +alert(messages)
+    div(class="auth auth-login")
+        div(class="login__wrapper")
+            form(action=`${PATH_ADMIN}/auth/login`, method="POST") 
+                h1(class="login__title") Đăng Nhập
+                input(class="login__input login__email" name="email" type="email" placeholder ="example@gmail.com",required)
+                input(class="login__input login__password" name="password" type="password" placeholder ="password",required)
+                div(class="login__forget")
+                    a(href="/forgot-password" class="login__forget-link text-decoration-none") Quên mật khẩu?
+                button(class="login__btn btn btn-primary",type="submit") Đăng nhập
