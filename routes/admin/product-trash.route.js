@@ -2,18 +2,44 @@ const express = require("express");
 const router = express.Router();
 
 const productTrashController = require("../../controller/admin/Product-trash.controller");
+const authorization = require("../../middlewares/authorization.middleware");
 
-router.get("/", productTrashController.show);
+router.get("/", authorization("view-product"), productTrashController.show);
 
-router.patch("/restore-product/:id", productTrashController.restore);
-router.patch("/update-more", productTrashController.updateMore);
-router.patch("/update-price", productTrashController.updatePricePatch);
-router.patch("/update-status", productTrashController.updateStatusPatch);
+router.patch(
+    "/restore-product/:id",
+    authorization("update-product"),
+    productTrashController.restore
+);
+router.patch(
+    "/update-more",
+    authorization("update-product"),
+    productTrashController.updateMore
+);
+router.patch(
+    "/update-price",
+    authorization("update-product"),
+    productTrashController.updatePricePatch
+);
+router.patch(
+    "/update-status",
+    authorization("update-product"),
+    productTrashController.updateStatusPatch
+);
 router.patch(
     "/restore-more",
+    authorization("update-product"),
     productTrashController.restoreMore
 );
 
-router.delete("/destroy-product/:id", productTrashController.destroy);
-router.delete("/destroy-more", productTrashController.destroyMore);
+router.delete(
+    "/destroy-product/:id",
+    authorization("delete-product"),
+    productTrashController.destroy
+);
+router.delete(
+    "/destroy-more",
+    authorization("delete-product"),
+    productTrashController.destroyMore
+);
 module.exports = router;

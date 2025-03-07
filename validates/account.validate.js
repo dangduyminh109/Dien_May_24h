@@ -2,7 +2,7 @@ module.exports = (req, res, next) => {
     const isUpdating = req.method === "PUT" || req.method === "PATCH";
     if (
         !req.body.fullName ||
-        !req.body.password ||
+        (!req.body.password && !isUpdating) ||
         !req.body.roleId ||
         !req.body.email
     ) {

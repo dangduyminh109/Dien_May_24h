@@ -9,141 +9,161 @@ include ../../mixins/alert.pug
 
 block main 
     +alert(messages)
-    +page_header("Danh sách sản phẩm đã xóa", [
-        { name: "Sản phẩm", href: `${PATH_ADMIN}/product` },
-        { name: "Danh sách sản phẩm", href: `${PATH_ADMIN}/product` },
-        { name: "Thùng rác", href: `${PATH_ADMIN}/product-trash` },
-    ])
-    div(class="toolbar")
-        div(class="toolbar__box")
-            div(class="toolbar__left-box")
-                form(action=`${PATH_ADMIN}/product-trash`, method="GET") 
-                    div(class="search")
-                        input(class="search__input", type="text", name="name",placeholder="Nhập từ khóa tìm kiếm",value=filter.name, spellcheck="false")
-                        button(type="submit" class="search__toolbar-icon")
-                            i(class="fa-solid fa-magnifying-glass")
-                button(id="advanced-filter-btn", class="advanced-filter-btn btn btn-primary", type="button")
-                    span(class="search__filter-icon")
-                        i(class="fa-solid fa-filter")
-                    | Bộ Lọc
-                button(id="advanced-handle-btn", class="advanced-handle-btn btn btn-primary", type="button")
-                    span(class="search__filter-icon")
-                        i(class="fa-solid fa-sliders")
-                    | Nâng cao
-                a(href=`${PATH_ADMIN}/product`, class="back-btn btn btn-primary")
-                    span(class="search__filter-icon")
-                        i(class="fa-solid fa-reply")
-                    | Quay lại
-            div(class="toolbar__right-box")
-                a(href=`${PATH_ADMIN}/product`,class="trash-btn btn btn-primary")
-                    span(class="product__list-icon")
-                        i(class="fa-regular fa-rectangle-list")
-                    | Danh sách sản phẩm
-        +toolbarFilter({filter,path: "product-trash",categoryTree,product:true})
-        +toolbarHandle({handle,path: "product-trash",categoryTree,product:true,trash:true})
+    if permission.includes("view-product")
+        +page_header("Danh sách sản phẩm đã xóa", [
+            { name: "Sản phẩm", href: `${PATH_ADMIN}/product` },
+            { name: "Danh sách sản phẩm", href: `${PATH_ADMIN}/product` },
+            { name: "Thùng rác", href: `${PATH_ADMIN}/product-trash` },
+        ])
+        div(class="toolbar")
+            div(class="toolbar__box")
+                div(class="toolbar__left-box")
+                    form(action=`${PATH_ADMIN}/product-trash`, method="GET") 
+                        div(class="search")
+                            input(class="search__input", type="text", name="name",placeholder="Nhập từ khóa tìm kiếm",value=filter.name, spellcheck="false")
+                            button(type="submit" class="search__toolbar-icon")
+                                i(class="fa-solid fa-magnifying-glass")
+                    button(id="advanced-filter-btn", class="advanced-filter-btn btn btn-primary", type="button")
+                        span(class="search__filter-icon")
+                            i(class="fa-solid fa-filter")
+                        | Bộ Lọc
+                    button(id="advanced-handle-btn", class="advanced-handle-btn btn btn-primary", type="button")
+                        span(class="search__filter-icon")
+                            i(class="fa-solid fa-sliders")
+                        | Nâng cao
+                    a(href=`${PATH_ADMIN}/product`, class="back-btn btn btn-primary")
+                        span(class="search__filter-icon")
+                            i(class="fa-solid fa-reply")
+                        | Quay lại
+                div(class="toolbar__right-box")
+                    a(href=`${PATH_ADMIN}/product`,class="trash-btn btn btn-primary")
+                        span(class="product__list-icon")
+                            i(class="fa-regular fa-rectangle-list")
+                        | Danh sách sản phẩm
+            +toolbarFilter({filter,path: "product-trash",categoryTree,product:true})
+            if permission.includes("update-product") || permission.includes("delete-product")
+                -var Update = permission.includes("update-product");
+                -var Delete = permission.includes("delete-product");
+                +toolbarHandle({handle,path: "product-trash",categoryTree,product:true,trash:true,Update: Update,Delete: Delete})
 
-    div(class="overview-block") 
-        div(class="overview-item total-products")
-            h3(class="overview-item__title total-products__title") Tổng số sản phẩm
-            p(class="overview-item__detail total-products__detail") #{general.totalProduct}
-        div(class="overview-item inventory")
-            h3(class="overview-item__title inventory__title") Tồn kho
-            p(class="overview-item__detail inventory__detail") #{general.inventory}
-        div(class="overview-item out-of-stock")
-            h3(class="overview-item__title out-of-stock__title") Hết hàng
-            p(class="overview-item__detail out-of-stock__detail") #{general.outOfStock}
-        div(class="overview-item inventory-value")
-            h3(class="overview-item__title inventory-value__title") Giá trị hàng tồn
-            p(class="overview-item__detail inventory-value__detail") #{general.inventoryTotalValue.toLocaleString('vi-VN')}đ
+        div(class="overview-block") 
+            div(class="overview-item total-products")
+                h3(class="overview-item__title total-products__title") Tổng số sản phẩm
+                p(class="overview-item__detail total-products__detail") #{general.totalProduct}
+            div(class="overview-item inventory")
+                h3(class="overview-item__title inventory__title") Tồn kho
+                p(class="overview-item__detail inventory__detail") #{general.inventory}
+            div(class="overview-item out-of-stock")
+                h3(class="overview-item__title out-of-stock__title") Hết hàng
+                p(class="overview-item__detail out-of-stock__detail") #{general.outOfStock}
+            div(class="overview-item inventory-value")
+                h3(class="overview-item__title inventory-value__title") Giá trị hàng tồn
+                p(class="overview-item__detail inventory-value__detail") #{general.inventoryTotalValue.toLocaleString('vi-VN')}đ
 
-    div(class="list-product list-table")
-         table(class="list-product__table")
-            thead
-                tr
-                    th(scope="col") 
-                        input(type="checkbox" name="sort" id="table-item__select-all" value="1")
-                    th(scope="col") 
-                        |   Tên sản phẩm
-                        !=pugHepper.sort("name", _sort)
-                    th(scope="col") 
-                        |   Mã sản phẩm
-                        !=pugHepper.sort("code", _sort)
-                    th(scope="col") Danh mục
-                    th(scope="col") 
-                        |   Giá gốc
-                        !=pugHepper.sort("original_price", _sort)
-                    th(scope="col") 
-                        |   Giá bán
-                        !=pugHepper.sort("price", _sort)
-                    th(scope="col") 
-                        |   giảm giá
-                        !=pugHepper.sort("discount", _sort)
-                    th(scope="col") 
-                        |   Tồn kho 
-                        !=pugHepper.sort("inventory", _sort)
-                    th(scope="col") Trạng thái 
-                    th(scope="col")  
-                    th(scope="col")
-            tbody
-                if listDeletedProduct.length > 0
-                    each product in listDeletedProduct
-                        tr
-                            td 
-                                input(type="checkbox" class="table-item__select" name="sort" _id=product._id value="1")
-                            td  
-                                div(class="table-item__name")
-                                    - var thumbnail = product.thumbnails?.[0] || "/uploads/default-image.jpg"
-                                    img(class="table-item__img", src=thumbnail, alt=product.name)
-                                    h4(class="table-item__title") #{product.name}
-                            td 
-                                p 
-                                    span(class="table-item__icon")
-                                        i(class="fa-solid fa-tag" style="transform: scaleX(-1)")
-                                    | #{product.code}
-                            td 
-                                +getCategory(product.category,categoryTree)
-                            td 
-                                p(class="product-item__original_price")
-                                    |   #{product.original_price.toLocaleString('vi-VN')}đ
-                                    span(class="table-item__icon table-item__icon-pen" path="product-trash")
-                                        i(class="fa-solid fa-pen")
-                                input(class="table-item__input", type="number", value=product.original_price,field="original_price",_id=product._id)
-                                form(action="", method="post") 
+        div(class="list-product list-table")
+            table(class="list-product__table")
+                thead
+                    tr
+                        th(scope="col") 
+                            input(type="checkbox" name="sort" id="table-item__select-all" value="1")
+                        th(scope="col") 
+                            |   Tên sản phẩm
+                            !=pugHepper.sort("name", _sort)
+                        th(scope="col") 
+                            |   Mã sản phẩm
+                            !=pugHepper.sort("code", _sort)
+                        th(scope="col") Danh mục
+                        th(scope="col") 
+                            |   Giá gốc
+                            !=pugHepper.sort("original_price", _sort)
+                        th(scope="col") 
+                            |   Giá bán
+                            !=pugHepper.sort("price", _sort)
+                        th(scope="col") 
+                            |   giảm giá
+                            !=pugHepper.sort("discount", _sort)
+                        th(scope="col") 
+                            |   Tồn kho 
+                            !=pugHepper.sort("inventory", _sort)
+                        th(scope="col") Trạng thái 
+                        th(scope="col")  
+                        th(scope="col")
+                tbody
+                    if listDeletedProduct.length > 0
+                        each product in listDeletedProduct
+                            tr
+                                td 
+                                    input(type="checkbox" class="table-item__select" name="sort" _id=product._id value="1")
+                                td  
+                                    div(class="table-item__name")
+                                        - var thumbnail = product.thumbnails?.[0] || "/uploads/default-image.jpg"
+                                        img(class="table-item__img", src=thumbnail, alt=product.name)
+                                        h4(class="table-item__title") #{product.name}
+                                td 
+                                    p 
+                                        span(class="table-item__icon")
+                                            i(class="fa-solid fa-tag" style="transform: scaleX(-1)")
+                                        | #{product.code}
+                                td 
+                                    +getCategory(product.category,categoryTree)
+                                td 
+                                    if permission.includes("update-product")
+                                        p(class="product-item__original_price")
+                                            |   #{product.original_price.toLocaleString('vi-VN')}đ
+                                            span(class="table-item__icon table-item__icon-pen" path="product-trash")
+                                                i(class="fa-solid fa-pen")
+                                        input(class="table-item__input", type="number", value=product.original_price,field="original_price",_id=product._id)
+                                        form(action="", method="post") 
+                                    else
+                                        p(class="product-item__original_price") #{product.original_price.toLocaleString('vi-VN')}đ
 
-                            td 
-                                p(class="product-item__price")
-                                    |   #{product.price.toLocaleString('vi-VN')}đ
-                                    span(class="table-item__icon table-item__icon-pen" path="product-trash")
-                                        i(class="fa-solid fa-pen")
-                                input(class="table-item__input", type="number", value=product.price, field="price",_id=product._id)
-                                form(action="", method="post") 
+                                td 
+                                    if permission.includes("update-product")
+                                        p(class="product-item__price")
+                                            |   #{product.price.toLocaleString('vi-VN')}đ
+                                            span(class="table-item__icon table-item__icon-pen" path="product-trash")
+                                                i(class="fa-solid fa-pen")
+                                        input(class="table-item__input", type="number", value=product.price, field="price",_id=product._id)
+                                        form(action="", method="post") 
+                                    else
+                                        div(class="btn-status")
+                                            p(class="product-item__price") #{product.price.toLocaleString('vi-VN')}đ
 
-                            td 
-                                p(class="product-item__discount") #{product.discount}%
+                                td 
+                                    p(class="product-item__discount") #{product.discount}%
 
-                            td 
-                                p(class="product-item__inventory") #{product.inventory}
-                            
-                            td 
-                                div(class="btn-status")
-                                    div(class="btn-status-toggle")
-                                            div(class="form-check form-switch")
-                                                input(class="form-check-input btn-status__input", type="checkbox", role="switch",value=product.status,_id=product._id,path="product-trash/update-status")
-                                    p(class="btn-status__desc") Hoạt động          
+                                td 
+                                    p(class="product-item__inventory") #{product.inventory}
+                                
+                                td 
+                                    if permission.includes("update-product")
+                                        div(class="btn-status")
+                                            div(class="btn-status-toggle")
+                                                    div(class="form-check form-switch")
+                                                        input(class="form-check-input btn-status__input", type="checkbox", role="switch",value=product.status,_id=product._id,path="product-trash/update-status")
+                                            p(class="btn-status__desc") Hoạt động     
+                                    else 
+                                        div(class="btn-status")
+                                            p(class="btn-status__desc") #{product.status =="on" ? "Hoạt động" : "Không hoạt động"}  
 
-                            td 
-                                form(method="POST", action=`${PATH_ADMIN}/product-trash/restore-product/${product._id}?_method=PATCH`)
-                                    button(type="submit", class="btn-restore btn") Khôi phục  
-                            td 
-                                button(type="button", class="btn-destroy btn btn-danger",data-bs-toggle="modal",data-bs-id = product._id, data-bs-target="#warningDeleteModal",path="product-trash/destroy-product") Xóa vĩnh viễn  
-                else  
-                    tr 
-                        td(colspan="9")
-                            p(class="noProducts") Không có sản phẩm nào đã xóa!   
-                            a(class="noProducts__link", href=`${PATH_ADMIN}/product`) Danh sách sản phẩm.
-    
-    +pagination(pagination,currentPath)
+                                td 
+                                    if permission.includes("update-product")
+                                        form(method="POST", action=`${PATH_ADMIN}/product-trash/restore-product/${product._id}?_method=PATCH`)
+                                            button(type="submit", class="btn-restore btn") Khôi phục  
+                                td  
+                                    if permission.includes("delete-product")
+                                        button(type="button", class="btn-destroy btn btn-danger",data-bs-toggle="modal",data-bs-id = product._id, data-bs-target="#warningDeleteModal",path="product-trash/destroy-product") Xóa vĩnh viễn  
+                    else  
+                        tr 
+                            td(colspan="9")
+                                p(class="noProducts") Không có sản phẩm nào đã xóa!   
+                                a(class="noProducts__link", href=`${PATH_ADMIN}/product`) Danh sách sản phẩm.
+        
+        +pagination(pagination,currentPath)
 
-    form(method="POST", type="hidden",id="form-product-delete" ,action=``)
-    <!-- Modal -->
-    +formWarning("warningDeleteModal","Bạn có chắc chắn muốn <b class='warning-text'>Xóa Vĩnh Viễn</b> sản phẩm này không?<span class='warning-text'> Hành động này không thể hoàn tác!!!</span>","Xóa sản phẩm","warning-delete-modal-btn","Xóa Vĩnh Viễn")
+        if permission.includes("delete-product")
+            form(method="POST", type="hidden",id="form-product-delete" ,action=``)
+            <!-- Modal -->
+            +formWarning("warningDeleteModal","Bạn có chắc chắn muốn <b class='warning-text'>Xóa Vĩnh Viễn</b> sản phẩm này không?<span class='warning-text'> Hành động này không thể hoàn tác!!!</span>","Xóa sản phẩm","warning-delete-modal-btn","Xóa Vĩnh Viễn")
+    else 
+        h1 Bạn không có quyền truy cập trang này 

@@ -7,66 +7,74 @@ include ../../mixins/alert.pug
 
 block main 
     +alert(messages)
-    +page_header("Quyền Đã Xóa", [
-        { name: "Quản Lí Quyền", href: `${PATH_ADMIN}/roles` },
-        { name: "Nhóm Quyền", href: `${PATH_ADMIN}/roles` },
-        { name: "Thùng Rác", href: `${PATH_ADMIN}/roles-trash` },
-    ])
-    div(class="toolbar")
-        div(class="toolbar__box")
-            div(class="toolbar__left-box")
-                form(action=`${PATH_ADMIN}/roles-trash`, method="GET") 
-                    div(class="search")
-                        input(class="search__input", type="text", name="name",placeholder="Nhập từ khóa tìm kiếm", spellcheck="false",value=filter.name)
-                        button(type="submit" class="search__toolbar-icon")
-                            i(class="fa-solid fa-magnifying-glass")
-                button(id="advanced-handle-btn", class="advanced-handle-btn btn btn-primary", type="button")
-                    span(class="search__filter-icon")
-                        i(class="fa-solid fa-sliders")
-                    | Nâng cao
-                a(href=`${PATH_ADMIN}/roles`, class="back-btn btn btn-primary")
-                    span(class="search__filter-icon")
-                        i(class="fa-solid fa-reply")
-                    | Quay lại
-            div(class="toolbar__right-box")
-                a(href=`${PATH_ADMIN}/roles`,class="create-btn btn btn-primary") Quản lí quyền
-        +toolbarHandle({handle,path: "roles-trash",role:true,trash:true})
+    if permission.includes("view-role")
+        +page_header("Quyền Đã Xóa", [
+            { name: "Quản Lí Quyền", href: `${PATH_ADMIN}/roles` },
+            { name: "Nhóm Quyền", href: `${PATH_ADMIN}/roles` },
+            { name: "Thùng Rác", href: `${PATH_ADMIN}/roles-trash` },
+        ])
+        div(class="toolbar")
+            div(class="toolbar__box")
+                div(class="toolbar__left-box")
+                    form(action=`${PATH_ADMIN}/roles-trash`, method="GET") 
+                        div(class="search")
+                            input(class="search__input", type="text", name="name",placeholder="Nhập từ khóa tìm kiếm", spellcheck="false",value=filter.name)
+                            button(type="submit" class="search__toolbar-icon")
+                                i(class="fa-solid fa-magnifying-glass")
+                    if permission.includes("delete-role")
+                        button(id="advanced-handle-btn", class="advanced-handle-btn btn btn-primary", type="button")
+                            span(class="search__filter-icon")
+                                i(class="fa-solid fa-sliders")
+                            | Nâng cao
+                    a(href=`${PATH_ADMIN}/roles`, class="back-btn btn btn-primary")
+                        span(class="search__filter-icon")
+                            i(class="fa-solid fa-reply")
+                        | Quay lại
+                div(class="toolbar__right-box")
+                    a(href=`${PATH_ADMIN}/roles`,class="create-btn btn btn-primary") Quản lí quyền
+            if permission.includes("delete-role")
+                -var Delete = permission.includes("delete-role")
+                +toolbarHandle({handle,path: "roles-trash",role:true,trash:true,Delete:Delete})
 
-    div(class="list-roles list-table")
-        table(class="list-roles__table")
-            thead
-                tr
-                    th(scope="col") 
-                        input(type="checkbox" id="table-item__select-all" name="sort")
-                    th(scope="col") 
-                        |   Quyền
-                    th(scope="col") 
-                        |   Mô tả
-                    th(scope="col")
-                    th(scope="col")  
-            tbody
-                if listRoles.length > 0
-                    each roles in listRoles
-                          tr
-                            td 
-                                input(type="checkbox" class="table-item__select" name="sort" value="1" _id=roles._id)
-                            td  
-                                h4(class="table-item__title") #{roles.name}
-                            td 
-                                |   !{roles.description}
-                            td 
-                                form(method="POST", action=`${PATH_ADMIN}/roles-trash/restore-roles/${roles._id}?_method=PATCH`)
-                                    button(type="submit", class="btn-restore btn") Khôi phục  
-                            td 
-                                button(type="button", class="btn-delete btn btn-danger", data-bs-id = roles._id ,data-bs-toggle="modal", data-bs-target="#warningDeleteModal",path="roles-trash/destroy-roles") Xóa 
-                else  
-                    tr 
-                        td(colspan="9")
-                            p(class="noProducts") Không có quyền nào đã xóa!   
-                            a(class="noProducts__link", href=`${PATH_ADMIN}/roles`) Quản lí quyền.
-    
-    +pagination(pagination,currentPath)
-
-    form(method="POST", type="hidden",id="form-product-delete" ,action=``)
-    <!-- Modal -->
-    +formWarning("warningDeleteModal","Bạn có chắc chắn muốn <b class='warning-text'>Xóa Vĩnh Viễn</b> quyền này không?<span class='warning-text'> Hành động này không thể hoàn tác!!!</span>","Xóa quyền","warning-delete-modal-btn","Xóa Vĩnh Viễn")
+        div(class="list-roles list-table")
+            table(class="list-roles__table")
+                thead
+                    tr
+                        th(scope="col") 
+                            input(type="checkbox" id="table-item__select-all" name="sort")
+                        th(scope="col") 
+                            |   Quyền
+                        th(scope="col") 
+                            |   Mô tả
+                        th(scope="col")
+                        th(scope="col")  
+                tbody
+                    if listRoles.length > 0
+                        each roles in listRoles
+                            tr
+                                td 
+                                    input(type="checkbox" class="table-item__select" name="sort" value="1" _id=roles._id)
+                                td  
+                                    h4(class="table-item__title") #{roles.name}
+                                td 
+                                    |   !{roles.description}
+                                td 
+                                    if permission.includes("update-role")
+                                        form(method="POST", action=`${PATH_ADMIN}/roles-trash/restore-roles/${roles._id}?_method=PATCH`)
+                                            button(type="submit", class="btn-restore btn") Khôi phục  
+                                td 
+                                    if permission.includes("delete-role")
+                                        button(type="button", class="btn-delete btn btn-danger", data-bs-id = roles._id ,data-bs-toggle="modal", data-bs-target="#warningDeleteModal",path="roles-trash/destroy-roles") Xóa 
+                    else  
+                        tr 
+                            td(colspan="9")
+                                p(class="noProducts") Không có quyền nào đã xóa!   
+                                a(class="noProducts__link", href=`${PATH_ADMIN}/roles`) Quản lí quyền.
+        
+        +pagination(pagination,currentPath)
+        if permission.includes("delete-role")
+            form(method="POST", type="hidden",id="form-product-delete" ,action=``)
+            <!-- Modal -->
+            +formWarning("warningDeleteModal","Bạn có chắc chắn muốn <b class='warning-text'>Xóa Vĩnh Viễn</b> quyền này không?<span class='warning-text'> Hành động này không thể hoàn tác!!!</span>","Xóa quyền","warning-delete-modal-btn","Xóa Vĩnh Viễn")
+    else 
+        h1 Bạn không có quyền truy cập trang này 

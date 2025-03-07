@@ -2,17 +2,39 @@ const express = require("express");
 const router = express.Router();
 
 const categoryTrashController = require("../../controller/admin/Category-trash.controller");
+const authorization = require("../../middlewares/authorization.middleware");
 
-router.get("/", categoryTrashController.show);
+router.get("/", authorization("view-category"), categoryTrashController.show);
 
-router.patch("/restore-category/:id", categoryTrashController.restore);
-router.patch("/update-more", categoryTrashController.updateMore);
-router.patch("/update-status", categoryTrashController.updateStatusPatch);
+router.patch(
+    "/restore-category/:id",
+    authorization("update-category"),
+    categoryTrashController.restore
+);
+router.patch(
+    "/update-more",
+    authorization("update-category"),
+    categoryTrashController.updateMore
+);
+router.patch(
+    "/update-status",
+    authorization("update-category"),
+    categoryTrashController.updateStatusPatch
+);
 router.patch(
     "/restore-more",
+    authorization("update-category"),
     categoryTrashController.restoreMore
 );
 
-router.delete("/destroy-category/:id", categoryTrashController.destroy);
-router.delete("/destroy-more", categoryTrashController.destroyMore);
+router.delete(
+    "/destroy-category/:id",
+    authorization("delete-category"),
+    categoryTrashController.destroy
+);
+router.delete(
+    "/destroy-more",
+    authorization("delete-category"),
+    categoryTrashController.destroyMore
+);
 module.exports = router;

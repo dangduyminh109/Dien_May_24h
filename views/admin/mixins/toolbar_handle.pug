@@ -1,75 +1,78 @@
 
 include ./category_tree.pug
 include ./deletion_warning.pug
-mixin toolbarHandle({handle,path,categoryTree,trash=false,product=false,category=false,role=false,account=false})
+mixin toolbarHandle({handle,path,categoryTree,trash=false,product=false,category=false,role=false,account=false,Update=false,Delete=false})
     div(id="toolbar__advanced-handle-box", class="toolbar__advanced-box")
         form(id="handle-update-form" class="toolbar__advanced-form", action=`${PATH_ADMIN}/${path}/update-more?_method=PATCH`,method="POST") 
             input(type="text" class="list-id" name="list-id" value="[]" style="display:none")
             div(class="block-advanced")
                 div(class="advanced")
-                    if product || category || account
-                        div(class="advanced__item-header") 
-                            h2(class="block-advanced__title") Cập Nhật
-                            div(class="toolbar__advanced-group-btn")
-                                button(type="button" class="toolbar__advanced-btn handle-from-reset-btn btn btn-primary") Đặt lại
-                                button(type="button" class="toolbar__advanced-btn btn btn-primary" data-bs-toggle="modal", data-bs-target="#warningUpdateMultipleModal") Gửi
-                    if(product)
-                        div(class="advanced__item") 
-                            h3(class="advanced__title")=product ? "Tên sản phẩm" : "Tên danh mục"
-                            input(type="text" class="advanced__input" name="name" placeholder=product ? "Nhập tên sản phẩm" : "Nhập tên danh mục" value=handle.name)
-                        div(class="advanced__item-2") 
-                            h3(class="advanced__title") Mã sản phẩm
-                            input(type="text" class="advanced__input" name="code" placeholder="Nhập mã sản phẩm" value=handle.code)
-                        div(class="advanced__item")
-                            h3(class="advanced__title") Danh mục
-                            select(name="category", id="category") 
-                                option(value="" selected disabled) -- chọn danh mục -- 
-                                if(categoryTree.length > 0)
-                                    +categoryTree(categoryTree)
-                                else 
-                                    option(value="" selected disabled) -- Chưa có danh mục nào! -- 
-                    if account 
-                        div(class="advanced__item")
-                            h3(class="advanced__title") Phân quyền
-                            select(name="roleId", id="roleId") 
-                                option(value="" selected disabled) -- chọn quyền -- 
-                                if(listRoles.length > 0)
-                                    each role in listRoles
-                                        option(value=role.id) #{role.name} 
-                                else 
-                                    option(value="" selected disabled) -- Chưa có phân quền nào! -- 
-                    if product || category || account
-                        div(class="advanced__item-2") 
-                            h3(class="advanced__title") Trạng thái
-                            div(class="advanced__radio-group")
-                                input(type="radio" name="status" id="status-advanced_1" value="on" checked = handle.status === "default" ? true:false)
-                                label(for="status-advanced_1") Hoạt Động
-                                input(type="radio" name="status" id="status-advanced_2" value="off" checked = handle.status === "default" ? true:false)
-                                label(for="status-advanced_2") Không Hoạt Động
-                    if(product)
-                        div(class="advanced__item")
-                            h3(class="advanced__title") Giá gốc
-                            div(class="advanced__number-group")
-                                input(type="number" class="advanced__input" name="original-price" placeholder="0" min=0 value=handle["original-price"])
-                        div(class="advanced__item-2")
-                            h3(class="advanced__title") Giá bán
-                            div(class="advanced__number-group")
-                                input(type="number" class="advanced__input" name="price" placeholder="0" min=0 value=handle.price) 
-                        div(class="advanced__item") 
-                            h3(class="advanced__title") Giảm giá
-                            div(class="advanced__number-group")
-                                input(type="number" class="advanced__input" name="discount" placeholder="0" min=0 max=100 value=handle.discount)
-                        div(class="advanced__item-2")
-                            h3(class="advanced__title") Tồn kho
-                            div(class="advanced__number-group")
-                                input(type="number" class="advanced__input" name="inventory" placeholder="0" min=0 value=handle.inventory)
-                    if product || category || role || account
+                    if Update
+                        if product || category || account
+                            div(class="advanced__item-header") 
+                                h2(class="block-advanced__title") Cập Nhật
+                                div(class="toolbar__advanced-group-btn")
+                                    button(type="button" class="toolbar__advanced-btn handle-from-reset-btn btn btn-primary") Đặt lại
+                                    button(type="button" class="toolbar__advanced-btn btn btn-primary" data-bs-toggle="modal", data-bs-target="#warningUpdateMultipleModal") Gửi
+                        if(product)
+                            div(class="advanced__item") 
+                                h3(class="advanced__title")=product ? "Tên sản phẩm" : "Tên danh mục"
+                                input(type="text" class="advanced__input" name="name" placeholder=product ? "Nhập tên sản phẩm" : "Nhập tên danh mục" value=handle.name)
+                            div(class="advanced__item-2") 
+                                h3(class="advanced__title") Mã sản phẩm
+                                input(type="text" class="advanced__input" name="code" placeholder="Nhập mã sản phẩm" value=handle.code)
+                            div(class="advanced__item")
+                                h3(class="advanced__title") Danh mục
+                                select(name="category", id="category") 
+                                    option(value="" selected disabled) -- chọn danh mục -- 
+                                    if(categoryTree.length > 0)
+                                        +categoryTree(categoryTree)
+                                    else 
+                                        option(value="" selected disabled) -- Chưa có danh mục nào! -- 
+                        if account 
+                            div(class="advanced__item")
+                                h3(class="advanced__title") Phân quyền
+                                select(name="roleId", id="roleId") 
+                                    option(value="" selected disabled) -- chọn quyền -- 
+                                    if(listRoles.length > 0)
+                                        each role in listRoles
+                                            option(value=role.id) #{role.name} 
+                                    else 
+                                        option(value="" selected disabled) -- Chưa có phân quền nào! -- 
+                        if product || category || account
+                            div(class="advanced__item-2") 
+                                h3(class="advanced__title") Trạng thái
+                                div(class="advanced__radio-group")
+                                    input(type="radio" name="status" id="status-advanced_1" value="on" checked = handle.status === "default" ? true:false)
+                                    label(for="status-advanced_1") Hoạt Động
+                                    input(type="radio" name="status" id="status-advanced_2" value="off" checked = handle.status === "default" ? true:false)
+                                    label(for="status-advanced_2") Không Hoạt Động
+                        if(product)
+                            div(class="advanced__item")
+                                h3(class="advanced__title") Giá gốc
+                                div(class="advanced__number-group")
+                                    input(type="number" class="advanced__input" name="original-price" placeholder="0" min=0 value=handle["original-price"])
+                            div(class="advanced__item-2")
+                                h3(class="advanced__title") Giá bán
+                                div(class="advanced__number-group")
+                                    input(type="number" class="advanced__input" name="price" placeholder="0" min=0 value=handle.price) 
+                            div(class="advanced__item") 
+                                h3(class="advanced__title") Giảm giá
+                                div(class="advanced__number-group")
+                                    input(type="number" class="advanced__input" name="discount" placeholder="0" min=0 max=100 value=handle.discount)
+                            div(class="advanced__item-2")
+                                h3(class="advanced__title") Tồn kho
+                                div(class="advanced__number-group")
+                                    input(type="number" class="advanced__input" name="inventory" placeholder="0" min=0 value=handle.inventory)
+                    if (product || category || role || account) && (trash && Update || Delete)
                         div(class="advanced__item-header") 
                             h2(class="block-advanced__title") Xử Lí
                             div(class="toolbar__advanced-group-btn")
-                                if trash
-                                    button(type="button" class="btn toolbar__advanced-btn btn-danger" data-bs-toggle="modal", data-bs-target="#warningDeleteMultipleModal") Xoá vĩnh viễn
-                                    button(type="button" class="btn toolbar__advanced-btn btn-primary" data-bs-toggle="modal", data-bs-target="#warningRestoreMultipleModal") Khôi phục
+                                if trash && (Update || Delete)
+                                    if Delete
+                                        button(type="button" class="btn toolbar__advanced-btn btn-danger" data-bs-toggle="modal", data-bs-target="#warningDeleteMultipleModal") Xoá vĩnh viễn
+                                    if Update
+                                        button(type="button" class="btn toolbar__advanced-btn btn-primary" data-bs-toggle="modal", data-bs-target="#warningRestoreMultipleModal") Khôi phục
                                 else
                                     button(type="button" class="btn toolbar__advanced-btn btn-danger" data-bs-toggle="modal", data-bs-target="#warningDeleteMultipleModal") Xoá
         

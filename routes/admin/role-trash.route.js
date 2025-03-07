@@ -2,13 +2,30 @@ const express = require("express");
 const router = express.Router();
 
 const rolesTrashController = require("../../controller/admin/Role-trash.controller");
+const authorization = require("../../middlewares/authorization.middleware");
 
-router.get("/", rolesTrashController.show);
+router.get("/", authorization("view-role"), rolesTrashController.show);
 
-router.patch("/restore-roles/:id", rolesTrashController.restore);
-router.patch("/restore-more", rolesTrashController.restoreMore);
+router.patch(
+    "/restore-roles/:id",
+    authorization("update-role"),
+    rolesTrashController.restore
+);
+router.patch(
+    "/restore-more",
+    authorization("update-role"),
+    rolesTrashController.restoreMore
+);
 
-router.delete("/destroy-roles/:id", rolesTrashController.destroy);
-router.delete("/destroy-more", rolesTrashController.destroyMore);
+router.delete(
+    "/destroy-roles/:id",
+    authorization("delete-role"),
+    rolesTrashController.destroy
+);
+router.delete(
+    "/destroy-more",
+    authorization("delete-role"),
+    rolesTrashController.destroyMore
+);
 
 module.exports = router;

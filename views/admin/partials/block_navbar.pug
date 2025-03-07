@@ -3,65 +3,54 @@ nav(class="navbar", id="navbar")
         h2(class="navigation__title") Navigation 
         ul(class="navigation__list")
             li(class="navigation-item")
-                button(class="navigation-item__btn btn",id="navigation-item__btn",type="button",data-bs-toggle="collapse",data-bs-target="#navigation-item__collapse-dashboard",aria-expanded="false",aria-controls="navigation-item__collapse-dashboard") 
+                a(href="/admin/dashboard", class="navigation-item__btn btn") 
                     span(class="navigation-item__btn-icon")
                         i(class="fa-solid fa-gauge")
                     | Bảng điều khiển
-                    span(class="navigation-item__btn-icon-down")
-                        i(class="fa-solid fa-caret-down")
-                div(class="navigation-item__collapse-dashboard collapse", id="navigation-item__collapse-dashboard")
-                    a(class="navigation-item__link",href="#") 
-                        span(class="navigation-item__icon")
-                            i(class="fa-solid fa-plus")
-                        h3(class="navigation-item__title") Phân tích
-                    a(class="navigation-item__link",href="#") 
-                        span(class="navigation-item__icon")
-                            i(class="fa-solid fa-plus")
-                        h3(class="navigation-item__title") E-Commerce
-                    a(class="navigation-item__link",href="#") 
-                        span(class="navigation-item__icon")
-                            i(class="fa-solid fa-plus")
-                        h3(class="navigation-item__title") Tài chính
-                    a(class="navigation-item__link",href="#") 
-                        span(class="navigation-item__icon")
-                            i(class="fa-solid fa-plus")
-                        h3(class="navigation-item__title") Bán hàng
+            if permission.includes("view-product") || permission.includes("view-category") 
+                li(class="navigation-item")
+                    button(class="navigation-item__btn btn",id="navigation-item__btn",type="button",data-bs-toggle="collapse",data-bs-target="#navigation-item__collapse-product",aria-expanded="false",aria-controls="navigation-item__collapse-product") 
+                        span(class="navigation-item__btn-icon")
+                            i(class="fa-brands fa-product-hunt")
+                        | Sản phẩm
+                        span(class="navigation-item__btn-icon-down")
+                            i(class="fa-solid fa-caret-down")
+                    div(class="navigation-item__collapse-product collapse", id="navigation-item__collapse-product")
+                        if permission.includes("view-product")
+                            a(class="navigation-item__link",href="/admin/product") 
+                                span(class="navigation-item__icon")
+                                    i(class="fa-solid fa-plus")
+                                h3(class="navigation-item__title") Danh sách sản phẩm
+                        if permission.includes("view-category") 
+                            a(class="navigation-item__link",href="/admin/product-category") 
+                                span(class="navigation-item__icon")
+                                    i(class="fa-solid fa-plus")
+                                h3(class="navigation-item__title") Danh mục sản phẩm
 
-            li(class="navigation-item")
-                button(class="navigation-item__btn btn",id="navigation-item__btn",type="button",data-bs-toggle="collapse",data-bs-target="#navigation-item__collapse-product",aria-expanded="false",aria-controls="navigation-item__collapse-product") 
-                    span(class="navigation-item__btn-icon")
-                        i(class="fa-brands fa-product-hunt")
-                    | Sản phẩm
-                    span(class="navigation-item__btn-icon-down")
-                        i(class="fa-solid fa-caret-down")
-                div(class="navigation-item__collapse-product collapse", id="navigation-item__collapse-product")
-                    a(class="navigation-item__link",href="/admin/product") 
-                        span(class="navigation-item__icon")
-                            i(class="fa-solid fa-plus")
-                        h3(class="navigation-item__title") Danh sách sản phẩm
-                    a(class="navigation-item__link",href="/admin/product-category") 
-                        span(class="navigation-item__icon")
-                            i(class="fa-solid fa-plus")
-                        h3(class="navigation-item__title") Danh mục sản phẩm
-            li(class="navigation-item")
-                button(class="navigation-item__btn btn",id="navigation-item__btn",type="button",data-bs-toggle="collapse",data-bs-target="#navigation-item__collapse-role",aria-expanded="false",aria-controls="navigation-item__collapse-role") 
-                    span(class="navigation-item__btn-icon")
-                        i(class="fa-solid fa-users-gear")
-                    | Quản lí quyền
-                    span(class="navigation-item__btn-icon-down")
-                        i(class="fa-solid fa-caret-down")
-                div(class="navigation-item__collapse-role collapse", id="navigation-item__collapse-role")
-                    a(class="navigation-item__link",href="/admin/roles") 
-                        span(class="navigation-item__icon")
-                            i(class="fa-solid fa-plus")
-                        h3(class="navigation-item__title") Nhóm quyền
-                    a(class="navigation-item__link",href="/admin/roles/permissions") 
-                        span(class="navigation-item__icon")
-                            i(class="fa-solid fa-plus")
-                        h3(class="navigation-item__title") Phân quyền
-            li(class="navigation-item")
-                a(href="/admin/accounts", class="navigation-item__btn btn") 
-                    span(class="navigation-item__btn-icon")
-                        i(class="fa-solid fa-user")
-                    | Danh sách tài khoản
+            if permission.includes("view-role") || permission.includes("view-permission") 
+                li(class="navigation-item")
+                    button(class="navigation-item__btn btn",id="navigation-item__btn",type="button",data-bs-toggle="collapse",data-bs-target="#navigation-item__collapse-role",aria-expanded="false",aria-controls="navigation-item__collapse-role") 
+                        span(class="navigation-item__btn-icon")
+                            i(class="fa-solid fa-users-gear")
+                        | Quản lí quyền
+                        span(class="navigation-item__btn-icon-down")
+                            i(class="fa-solid fa-caret-down")
+                    div(class="navigation-item__collapse-role collapse", id="navigation-item__collapse-role")
+                        if permission.includes("view-role")
+                            a(class="navigation-item__link",href="/admin/roles") 
+                                span(class="navigation-item__icon")
+                                    i(class="fa-solid fa-plus")
+                                h3(class="navigation-item__title") Nhóm quyền
+                        if permission.includes("view-permission")
+                            a(class="navigation-item__link",href="/admin/roles/permissions") 
+                                span(class="navigation-item__icon")
+                                    i(class="fa-solid fa-plus")
+                                h3(class="navigation-item__title") Phân quyền
+            
+            if permission.includes("view-account")
+                li(class="navigation-item")
+                    a(href="/admin/accounts", class="navigation-item__btn btn") 
+                        span(class="navigation-item__btn-icon")
+                            i(class="fa-solid fa-user")
+                        | Danh sách tài khoản
 </nav>

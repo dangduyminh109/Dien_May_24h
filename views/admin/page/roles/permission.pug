@@ -8,19 +8,22 @@ include ../../mixins/toolbar_handle.pug
 
 block main 
     +alert(messages)
-    +page_header("Phân Quyền", [
-        { name: "Quản Lí Quyền", href: `${PATH_ADMIN}/roles/Permissions` },
-        { name: "Phân Quyền", href: `${PATH_ADMIN}/roles/Permissions` },
-    ])
-    div(class="permissions-block")
-            form(action="/admin/roles/permissions/update?_method=PATCH", method="post",id="handle-permission-form")
-                each role in listRoles
-                    - var permission = JSON.stringify(role.permission) || "[]"
-                    input(type="text" class="list-role" name=role.id value=permission style="display:none")
+    if permission.includes("view-permission")
+        +page_header("Phân Quyền", [
+            { name: "Quản Lí Quyền", href: `${PATH_ADMIN}/roles/Permissions` },
+            { name: "Phân Quyền", href: `${PATH_ADMIN}/roles/Permissions` },
+        ])
+        div(class="permissions-block")
+            if permission.includes("update-permission")
+                form(action="/admin/roles/permissions/update?_method=PATCH", method="post",id="handle-permission-form")
+                    each role in listRoles
+                        - var permission = JSON.stringify(role.permission) || "[]"
+                        input(type="text" class="list-role" name=role.id value=permission style="display:none")
             div(class="permissions-block__header")
                 h1(class="permissions-block__title") Thiết lập phân quyền
-                button(class="btn btn-primary btn-permissions",onclick="location.reload()") Đặt lại
-                button(type="button" class="btn btn-primary btn-permissions" data-bs-toggle="modal", data-bs-target="#warningPermissionModal") Cập nhật      
+                if permission.includes("update-permission")
+                    button(class="btn btn-primary btn-permissions",onclick="location.reload()") Đặt lại
+                    button(type="button" class="btn btn-primary btn-permissions" data-bs-toggle="modal", data-bs-target="#warningPermissionModal") Cập nhật      
             div(class="list-permissions list-table")
                 table(class="list-permissions__table")
                     thead
@@ -56,13 +59,6 @@ block main
                                     input(type="checkbox" class="table-item__select" value="add-product" id=`table-product-add-${index}` checked=check)
                                     label(for=`table-product-add-${index}` class="table-item__label" _id=`${role.id}`)
                         
-                        tr 
-                            td Thay đổi trạng thái 
-                            each role,index in listRoles
-                                td 
-                                    - var check = role.permission.includes("change-product")
-                                    input(type="checkbox" class="table-item__select" value="change-product" id=`table-product-change-${index}` checked=check)
-                                    label(for=`table-product-change-${index}` class="table-item__label" _id=`${role.id}`)
                         tr
                             td Cập nhật 
                             each role,index in listRoles
@@ -70,6 +66,15 @@ block main
                                     - var check = role.permission.includes("update-product")
                                     input(type="checkbox" class="table-item__select" value="update-product" id=`table-product-update-${index}` checked=check)
                                     label(for=`table-product-update-${index}` class="table-item__label" _id=`${role.id}`)
+                        
+                        tr 
+                            td Xóa
+                            each role,index in listRoles
+                                td 
+                                    - var check = role.permission.includes("delete-product")
+                                    input(type="checkbox" class="table-item__select" value="delete-product" id=`table-product-delete-${index}` checked=check)
+                                    label(for=`table-product-delete-${index}` class="table-item__label" _id=`${role.id}`)
+                        
                         tr
                             td
 
@@ -90,13 +95,7 @@ block main
                                     - var check = role.permission.includes("add-category")
                                     input(type="checkbox" class="table-item__select" value="add-category" id=`table-category-add-${index}` checked=check)
                                     label(for=`table-category-add-${index}` class="table-item__label" _id=`${role.id}`)
-                        tr 
-                            td Thay đổi trạng thái 
-                            each role,index in listRoles
-                                td 
-                                    - var check = role.permission.includes("change-category")
-                                    input(type="checkbox" class="table-item__select" value="change-category" id=`table-category-change-${index}` checked=check)
-                                    label(for=`table-category-change-${index}` class="table-item__label" _id=`${role.id}`)
+                    
                         tr
                             td Cập nhật 
                             each role,index in listRoles
@@ -104,9 +103,16 @@ block main
                                     - var check = role.permission.includes("update-category")
                                     input(type="checkbox" class="table-item__select" value="update-category" id=`table-category-update-${index}` checked=check)
                                     label(for=`table-category-update-${index}` class="table-item__label" _id=`${role.id}`)
+                        
+                        tr 
+                            td Xóa
+                            each role,index in listRoles
+                                td 
+                                    - var check = role.permission.includes("delete-category")
+                                    input(type="checkbox" class="table-item__select" value="delete-category" id=`table-category-delete-${index}` checked=check)
+                                    label(for=`table-category-delete-${index}` class="table-item__label" _id=`${role.id}`)
                         tr
                             td
-
                         
                         tr(class="row-title")  
                             td(colspan=`${listRoles.length+1}`) Nhóm Quyền
@@ -131,9 +137,16 @@ block main
                                     - var check = role.permission.includes("update-role")
                                     input(type="checkbox" class="table-item__select" value="update-role" id=`table-roles-update-${index}` checked=check)
                                     label(for=`table-roles-update-${index}` class="table-item__label" _id=`${role.id}`)
+                        tr 
+                            td Xóa
+                            each role,index in listRoles
+                                td 
+                                    - var check = role.permission.includes("delete-role")
+                                    input(type="checkbox" class="table-item__select" value="delete-role" id=`table-role-delete-${index}` checked=check)
+                                    label(for=`table-role-delete-${index}` class="table-item__label" _id=`${role.id}`)
+                    
                         tr
                             td
-
                         
                         tr(class="row-title")  
                             td(colspan=`${listRoles.length+1}`) Phân Quyền
@@ -154,5 +167,40 @@ block main
                         tr
                             td
 
-    <!-- Modal -->
-    +formWarning("warningPermissionModal","Bạn có chắc chắn muốn <b class='warning-text'>Thiết Lập Phân Quyền</b> không?<span class='warning-text'>","Thiết Lập Phân Quyền","warning-permission-modal-btn","Có")
+                        tr(class="row-title")  
+                            td(colspan=`${listRoles.length+1}`) Tài Khoản
+                        tr 
+                            td Xem 
+                            each role,index in listRoles
+                                td 
+                                    - var check = role.permission.includes("view-account")
+                                    input(type="checkbox" class="table-item__select" value="view-account" id=`table-account-view-${index}` checked=check)
+                                    label(for=`table-account-view-${index}` class="table-item__label" _id=`${role.id}`)
+                        tr
+                            td Thêm mới
+                            each role,index in listRoles
+                                td 
+                                    - var check = role.permission.includes("add-account")
+                                    input(type="checkbox" class="table-item__select" value="add-account" id=`table-account-add-${index}` checked=check)
+                                    label(for=`table-account-add-${index}` class="table-item__label" _id=`${role.id}`)
+                        tr
+                            td Cập nhật 
+                            each role,index in listRoles
+                                td 
+                                    - var check = role.permission.includes("update-account")
+                                    input(type="checkbox" class="table-item__select" value="update-account" id=`table-account-update-${index}` checked=check)
+                                    label(for=`table-account-update-${index}` class="table-item__label" _id=`${role.id}`)
+                        tr 
+                            td Xóa
+                            each role,index in listRoles
+                                td 
+                                    - var check = role.permission.includes("delete-account")
+                                    input(type="checkbox" class="table-item__select" value="delete-account" id=`table-account-delete-${index}` checked=check)
+                                    label(for=`table-account-delete-${index}` class="table-item__label" _id=`${role.id}`)
+                        tr
+                            td
+        if permission.includes("update-permission")
+            <!-- Modal -->
+            +formWarning("warningPermissionModal","Bạn có chắc chắn muốn <b class='warning-text'>Thiết Lập Phân Quyền</b> không?<span class='warning-text'>","Thiết Lập Phân Quyền","warning-permission-modal-btn","Có")
+    else 
+        h1 Bạn không có quyền truy cập trang này 

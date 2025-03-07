@@ -33,7 +33,7 @@ class roleController {
         }
         res.cookie("token", account.token);
         req.flash("success", "Đăng nhập thành công!");
-        res.redirect("/admin/product");
+        res.redirect("/admin/dashboard");
     }
 }
 

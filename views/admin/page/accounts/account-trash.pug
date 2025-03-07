@@ -9,90 +9,103 @@ include ../../mixins/get_permission.pug
 
 block main 
     +alert(messages)
-    +page_header("Tài khoản Đã Xóa", [
-        { name: "Danh sách tài khoảng", href: `${PATH_ADMIN}/accounts` },
-        { name: "Thùng Rác", href: `${PATH_ADMIN}/accounts-trash` },
-    ])
-    div(class="toolbar")
-        div(class="toolbar__box")
-            div(class="toolbar__left-box")
-                form(action=`${PATH_ADMIN}/accounts`, method="GET") 
-                    div(class="search")
-                        input(class="search__input", type="text", name="name",placeholder="Nhập từ khóa tìm kiếm", spellcheck="false")
-                        button(type="submit" class="search__toolbar-icon")
-                            i(class="fa-solid fa-magnifying-glass")
-                button(id="advanced-filter-btn", class="advanced-filter-btn btn btn-primary", type="button")
-                    span(class="search__filter-icon")
-                        i(class="fa-solid fa-filter")
-                    | Bộ Lọc
-                button(id="advanced-handle-btn", class="advanced-handle-btn btn btn-primary", type="button")
-                    span(class="search__filter-icon")
-                        i(class="fa-solid fa-sliders")
-                    | Nâng cao
-                a(href=`${PATH_ADMIN}/accounts`, class="back-btn btn btn-primary")
-                    span(class="search__filter-icon")
-                        i(class="fa-solid fa-reply")
-                    | Quay lại
-            div(class="toolbar__right-box")
-                a(href=`${PATH_ADMIN}/accounts/create`,class="create-btn btn btn-primary") Danh sách tài khoản
-        +toolbarHandle({handle,path: "accounts-trash",account: true,trash: true})
-        +toolbarFilter({filter,path: "accounts-trash",account:true})
+    if permission.includes("view-account")
+        +page_header("Tài khoản Đã Xóa", [
+            { name: "Danh sách tài khoảng", href: `${PATH_ADMIN}/accounts` },
+            { name: "Thùng Rác", href: `${PATH_ADMIN}/accounts-trash` },
+        ])
+        div(class="toolbar")
+            div(class="toolbar__box")
+                div(class="toolbar__left-box")
+                    form(action=`${PATH_ADMIN}/accounts`, method="GET") 
+                        div(class="search")
+                            input(class="search__input", type="text", name="name",placeholder="Nhập từ khóa tìm kiếm", spellcheck="false")
+                            button(type="submit" class="search__toolbar-icon")
+                                i(class="fa-solid fa-magnifying-glass")
+                    button(id="advanced-filter-btn", class="advanced-filter-btn btn btn-primary", type="button")
+                        span(class="search__filter-icon")
+                            i(class="fa-solid fa-filter")
+                        | Bộ Lọc
+                    if permission.includes("update-account") || permission.includes("delete-account")
+                        button(id="advanced-handle-btn", class="advanced-handle-btn btn btn-primary", type="button")
+                            span(class="search__filter-icon")
+                                i(class="fa-solid fa-sliders")
+                            | Nâng cao
+                    a(href=`${PATH_ADMIN}/accounts`, class="back-btn btn btn-primary")
+                        span(class="search__filter-icon")
+                            i(class="fa-solid fa-reply")
+                        | Quay lại
+                div(class="toolbar__right-box")
+                    a(href=`${PATH_ADMIN}/accounts/create`,class="create-btn btn btn-primary") Danh sách tài khoản
+            +toolbarFilter({filter,path: "accounts-trash",account:true})
+            if permission.includes("update-account") || permission.includes("delete-account")
+                -var Update = permission.includes("update-account");
+                -var Delete = permission.includes("delete-account");
+                +toolbarHandle({handle,path: "accounts-trash",account: true,trash: true,Delete:Delete,Update:Update})
 
-    div(class="overview-block") 
-        each key in Object.keys(general)
-            div(class="overview-item total-accounts")
-                h3(class="overview-item__title total-accounts__title") #{key}
-                p(class="overview-item__detail total-accounts__detail") #{general[key]}
-    div(class="list-account list-table")
-        table(class="list-account__table")
-            thead
-                tr
-                    th(scope="col") 
-                        input(type="checkbox" id="table-item__select-all" name="sort")
-                    th(scope="col") Họ tên
-                    th(scope="col") Email 
-                    th(scope="col") Số điện thoại
-                    th(scope="col") Phân tài khoản
-                    th(scope="col") Trạng thái 
-                    th(scope="col")  
-                    th(scope="col")  
-            tbody
-                if listDeletedAccounts.length > 0
-                    each account in listDeletedAccounts
-                        tr
-                            td 
-                                input(type="checkbox" class="table-item__select" name="sort" value="1" _id=account._id)
-                            td  
-                                div(class="table-item__name")
-                                    - var avatar = account.avatar || "/uploads/default-image.jpg"
-                                    img(class="table-item__img", src=avatar, alt=account.fullName)
-                                    h4(class="table-item__title") #{account.fullName}
+        div(class="overview-block") 
+            each key in Object.keys(general)
+                div(class="overview-item total-accounts")
+                    h3(class="overview-item__title total-accounts__title") #{key}
+                    p(class="overview-item__detail total-accounts__detail") #{general[key]}
+        div(class="list-account list-table")
+            table(class="list-account__table")
+                thead
+                    tr
+                        th(scope="col") 
+                            input(type="checkbox" id="table-item__select-all" name="sort")
+                        th(scope="col") Họ tên
+                        th(scope="col") Email 
+                        th(scope="col") Số điện thoại
+                        th(scope="col") Phân tài khoản
+                        th(scope="col") Trạng thái 
+                        th(scope="col")  
+                        th(scope="col")  
+                tbody
+                    if listDeletedAccounts.length > 0
+                        each account in listDeletedAccounts
+                            tr
+                                td 
+                                    input(type="checkbox" class="table-item__select" name="sort" value="1" _id=account._id)
+                                td  
+                                    div(class="table-item__name")
+                                        - var avatar = account.avatar || "/uploads/default-image.jpg"
+                                        img(class="table-item__img", src=avatar, alt=account.fullName)
+                                        h4(class="table-item__title") #{account.fullName}
 
-                            td 
-                                p(class="account-item__discount") #{account.email}
-                            td 
-                                p(class="account-item__inventory") #{account.phone}
-                            td 
-                                +getPermission(listRoles,account.roleId)
-                            td 
-                                div(class="btn-status")
-                                    div(class="btn-status-toggle")
-                                            div(class="form-check form-switch")
-                                                input(class="form-check-input btn-status__input", type="checkbox", role="switch",value=account.status,_id=account._id , path="accounts-trash/update-status")
-                                    p(class="btn-status__desc") Hoạt động    
-                            td 
-                                form(method="POST", action=`${PATH_ADMIN}/accounts-trash/restore-account/${account._id}?_method=PATCH`)
-                                    button(type="submit", class="btn-restore btn") Khôi phục  
-                            td 
-                                button(type="button", class="btn-destroy btn btn-danger",data-bs-toggle="modal",data-bs-id = account._id, data-bs-target="#warningDeleteModal",path="accounts-trash/destroy-account") Xóa vĩnh viễn  
-                else  
-                    tr 
-                        td(colspan="9")
-                            p(class="noProducts") Không có tài khoản nào đã xóa!   
-                            a(class="noProducts__link", href=`${PATH_ADMIN}/accounts`) Danh sách tài khoản.
-    
-    +pagination(pagination,currentPath)
-
-    form(method="POST", type="hidden",id="form-product-delete" ,action=``)
-    <!-- Modal -->
-    +formWarning("warningDeleteModal","Bạn có chắc chắn muốn <b class='warning-text'>Xóa Vĩnh Viễn tài khoản</b> này không?<span class='warning-text'> Hành động này không thể hoàn tác!!!</span>","Xóa tài khoản","warning-delete-modal-btn","Xóa Vĩnh Viễn")
+                                td 
+                                    p(class="account-item__discount") #{account.email}
+                                td 
+                                    p(class="account-item__inventory") #{account.phone}
+                                td 
+                                    +getPermission(listRoles,account.roleId)
+                                td 
+                                    if permission.includes("update-account")
+                                        div(class="btn-status")
+                                            div(class="btn-status-toggle")
+                                                    div(class="form-check form-switch")
+                                                        input(class="form-check-input btn-status__input", type="checkbox", role="switch",value=account.status,_id=account._id , path="accounts-trash/update-status")
+                                            p(class="btn-status__desc") Hoạt động    
+                                    else
+                                        div(class="btn-status")
+                                            p(class="btn-status__desc") #{account.status =="on" ? "Hoạt động" : "Không hoạt động"}
+                                td 
+                                    if permission.includes("update-account")
+                                        form(method="POST", action=`${PATH_ADMIN}/accounts-trash/restore-account/${account._id}?_method=PATCH`)
+                                            button(type="submit", class="btn-restore btn") Khôi phục  
+                                td 
+                                    if permission.includes("delete-account")
+                                        button(type="button", class="btn-destroy btn btn-danger",data-bs-toggle="modal",data-bs-id = account._id, data-bs-target="#warningDeleteModal",path="accounts-trash/destroy-account") Xóa vĩnh viễn  
+                    else  
+                        tr 
+                            td(colspan="9")
+                                p(class="noProducts") Không có tài khoản nào đã xóa!   
+                                a(class="noProducts__link", href=`${PATH_ADMIN}/accounts`) Danh sách tài khoản.
+        
+        +pagination(pagination,currentPath)
+        if permission.includes("delete-account")
+            form(method="POST", type="hidden",id="form-product-delete" ,action=``)
+            <!-- Modal -->
+            +formWarning("warningDeleteModal","Bạn có chắc chắn muốn <b class='warning-text'>Xóa Vĩnh Viễn tài khoản</b> này không?<span class='warning-text'> Hành động này không thể hoàn tác!!!</span>","Xóa tài khoản","warning-delete-modal-btn","Xóa Vĩnh Viễn")
+    else 
+        h1 Bạn không có quyền truy cập trang này 
