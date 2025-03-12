@@ -11,9 +11,11 @@ const rolesTrashRouter = require("./role-trash.route");
 const accountRouter = require("./account.route");
 const accountsTrashRouter = require("./account-trash.route");
 const authTrashRouter = require("./auth.route");
+const profileRouter = require("./profile.route");
 
 module.exports.index = (app) => {
     app.use(`${system.PATH_ADMIN}/dashboard`, authMiddleware, dashboardRouter);
+    app.use(`${system.PATH_ADMIN}/profile`, authMiddleware, profileRouter);
     app.use(`${system.PATH_ADMIN}/product`, authMiddleware, productRouter);
     app.use(
         `${system.PATH_ADMIN}/product-trash`,

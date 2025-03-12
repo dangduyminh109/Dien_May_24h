@@ -1,0 +1,30 @@
+extends ../../layout/default.pug
+include ../../mixins/page_header.pug
+block main 
+    +page_header("Profile", ["Profile"])
+    div(class="profile")
+        div(class="profile__wrapper")
+            div(class="avatar")
+                img(src=user.avatar, class="avatar__img",alt="avatar") 
+            div(class="info")
+                h1(class="info__title") Thông tin cá nhân
+                hr
+                div(class="info-wrapper")
+                    div(class="info__item")    
+                        p(class="info__field") 
+                            | Họ Tên: 
+                            Strong #{user.fullName}
+                        p(class="info__field") 
+                            | Email: 
+                            Strong #{user.email}
+                        p(class="info__field") 
+                            | Số điện thoại: 
+                            Strong #{user.phone}
+                    div(class="info__item")    
+                        p(class="info__field") 
+                            | Phân quyền: 
+                            Strong #{role}
+                    div(class="info__item")   
+                        p(class="info__field") 
+                            | Trang thái: 
+                            Strong #{user.status == "on" ? "Hoạt động" : "Không hoạt động"} 

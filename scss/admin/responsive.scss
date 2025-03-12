@@ -74,6 +74,13 @@
             position: fixed !important;
         }
     }
+
+    .profile {
+        .info-wrapper {
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+    }
 }
 
 /* ipad */
@@ -94,6 +101,11 @@
                     grid-row: span 2;
                 }
             }
+        }
+    }
+    .profile {
+        .profile__wrapper {
+            display: block;
         }
     }
 }
