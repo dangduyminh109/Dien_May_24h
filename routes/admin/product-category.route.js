@@ -19,6 +19,11 @@ router.get(
     authorization("update-category"),
     productCategoryController.edit
 );
+router.get(
+    "/detail/:id",
+    authorization("view-category"),
+    productCategoryController.detail
+);
 
 router.post(
     "/create",

@@ -23,6 +23,11 @@ router.get(
     authorization("update-account"),
     accountController.edit
 );
+router.get(
+    "/detail/:id",
+    authorization("view-account"),
+    accountController.detail
+);
 
 router.post(
     "/create",

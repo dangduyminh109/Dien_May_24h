@@ -15,6 +15,11 @@ router.get(
     authorization("update-product"),
     productController.edit
 );
+router.get(
+    "/detail/:id",
+    authorization("view-product"),
+    productController.detail
+);
 
 router.post(
     "/create",

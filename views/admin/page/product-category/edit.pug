@@ -6,13 +6,13 @@ include ../../mixins/alert.pug
 block main 
     +alert(messages)
     +page_header("Chỉnh sửa danh mục", [
-        { name: "Sản phẩm", href: `${PATH_ADMIN}/product` },
-        { name: "Danh mục sản phẩm", href: `${PATH_ADMIN}/product` },
-        { name: "Chỉnh sửa danh mục", href: `${PATH_ADMIN}/product/edit` },
+        { name: "Sản phẩm", href: `${PATH_ADMIN}/product-category` },
+        { name: "Danh mục sản phẩm", href: `${PATH_ADMIN}/product-category` },
+        { name: "Chỉnh sửa danh mục", href: `${PATH_ADMIN}/product-category/edit/${productCategory._id}` },
     ])
     div(class="edit")
         form(action=`${PATH_ADMIN}/product-category/edit/${productCategory._id}?_method=PATCH`, method="post",enctype="multipart/form-data",id="form-edit")
-            h1(class="edit__title") Thông tin chung
+            h1(class="title") Thông tin chung
             div(class="general")
                 div(class="form-group")
                     div(class="name form-item")
@@ -23,7 +23,7 @@ block main
                         input(class="form-control",id="name",name="name",type="text",value=productCategory.name,required)
                 div(class="form-group")
                     div(class="category form-item")
-                      label(for="parentId") Danh mục cha
+                        label(for="parentId") Danh mục cha
                         select(name="parentId", id="parentId" ) 
                             option(value="" selected disabled) -- chọn danh mục cha -- 
                             if(categoryTree.length > 0)
@@ -40,7 +40,7 @@ block main
                 label(for="description") Mô tả
                 textarea(class="textarea-mce",name="description",id="description") 
                     != productCategory.description 
-            h1(class="create__title") Hình ảnh
+            h1(class="title") Hình ảnh
             div(class="form-group")
                 div(class="image form-item")
                     div(class="image-group", id="image-group")
@@ -57,8 +57,8 @@ block main
                             input(id="image",name="thumbnails",type="file",accept="image/*")
             input(type="hidden",name="thumbnailDeleted",id="thumbnail-deleted")
             div(class="form-group__btn")
-                a(href="/admin/product-category" class="btn back-btn") quay lại
-                button(type="submit" class="btn create-btn") Sửa Sản Phẩm 
+                a(href="/admin/product-category" class="btn btn-primary") Quay lại
+                button(type="submit" class="btn btn-primary") Sửa Sản Phẩm 
 
 
             

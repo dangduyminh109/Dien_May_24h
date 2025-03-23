@@ -13,7 +13,7 @@ block main
 
     div(class="edit")
         form(action=`${PATH_ADMIN}/roles/edit/${roles._id}?_method=PATCH`, method="post",id="form-edit")
-            h1(class="edit__title") Thông tin chung
+            h1(class="title") Thông tin chung
             div(class="general")
                 div(class="form-group")
                     div(class="name form-item")
@@ -27,8 +27,8 @@ block main
                 textarea(class="textarea-mce",name="description",id="description") 
                     != roles.description 
             div(class="form-group__btn")
-                a(href="/admin/roles" class="btn back-btn") quay lại
-                button(type="submit" class="btn create-btn") Sửa quyền
+                a(href="/admin/roles" class="btn btn-primary") Quay lại
+                button(type="submit" class="btn btn-primary") Sửa quyền
 
 
             

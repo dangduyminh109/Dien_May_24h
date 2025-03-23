@@ -7,6 +7,7 @@ const {
 } = require("../../helpers/product.helper.js");
 const paginationHelper = require("../../helpers/pagination.helper.js");
 const getCategoryTree = require("../../helpers/get-category-tree.helper.js");
+const ProductCategory = require("../../models/product-category.model.js");
 
 class productController {
     // [GET] /admin/products
@@ -39,7 +40,7 @@ class productController {
         });
     }
 
-    // [GET] /admin/products/edit
+    // [GET] /admin/products/edit:id
     async edit(req, res) {
         const product = await Product.findOne({ _id: req.params.id });
         const categoryTree = await getCategoryTree();
@@ -48,6 +49,22 @@ class productController {
             PATH_ADMIN: system.PATH_ADMIN,
             product,
             categoryTree,
+        });
+    }
+
+    // [GET] /admin/product/detail:id
+    async detail(req, res) {
+        const product = await Product.findOne({
+            _id: req.params.id,
+        });
+        const category = await ProductCategory.findOne({
+            _id: product.category,
+        });
+        res.render("./admin/page/products/detail", {
+            pageTitle: "Product detail",
+            PATH_ADMIN: system.PATH_ADMIN,
+            product,
+            category,
         });
     }
 

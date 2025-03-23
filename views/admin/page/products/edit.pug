@@ -8,11 +8,11 @@ block main
     +page_header("Chỉnh sửa sản phẩm", [
         { name: "Sản phẩm", href: `${PATH_ADMIN}/product` },
         { name: "Danh sách sản phẩm", href: `${PATH_ADMIN}/product` },
-        { name: "Chỉnh sửa sản phẩm", href: `${PATH_ADMIN}/product/edit` },
+        { name: "Chỉnh sửa sản phẩm", href: `${PATH_ADMIN}/product/edit/${product.id}` },
     ])
     div(class="edit")
         form(action=`${PATH_ADMIN}/product/edit/${product._id}?_method=PATCH`, method="post",enctype="multipart/form-data",id="form-edit")
-            h1(class="edit__title") Thông tin chung
+            h1(class="title") Thông tin chung
             div(class="general")
                 div(class="form-group")
                     div(class="name form-item")
@@ -23,7 +23,7 @@ block main
                         input(class="form-control",id="name",name="name",type="text",value=product.name,required)
                     div(class="code form-item")
                         label(for="code") 
-                            | mã sản phẩm (
+                            | Mã sản phẩm (
                             span(class="important-item") *
                             | )
                         input(class="form-control",id="code",name="code",type="text",value=product.code,required)    
@@ -38,10 +38,10 @@ block main
                             | )
                         input(class="form-control",id="price",name="price",value=product.price,type="number",placeholder="0",min="0",required) 
                     div(class="discount form-item")
-                        label(for="discount") giảm giá(%)
+                        label(for="discount") Giảm giá(%)
                         input(class="form-control",id="discount",name="discount",value=product.discount,type="number",placeholder="0",min="0")
                     div(class="inventory form-item")
-                        label(for="inventory") tồn kho
+                        label(for="inventory") Tồn kho
                         input(class="form-control",id="inventory",name="inventory",value=product.inventory,type="number",placeholder="0",min="0")           
                 div(class="form-group")
                     div(class="supplier form-item")
@@ -59,9 +59,9 @@ block main
                                 +categoryTree(categoryTree,product.category)
                             else 
                                 option(value="" selected disabled) -- Chưa có danh mục nào! -- 
-                    div(class="edit-more form-item")
-                        p(class="edit-more__title") Thêm danh mục 
-                        a(href="" class="btn edit-more__btn")
+                    div(class="add-more form-item")
+                        p(class="add-more__title") Thêm danh mục 
+                        a(href="/admin/category/create" class="btn btn-primary")
                             i(class="fa-solid fa-plus") 
                 label(for="check") Trạng thái 
                 div(class="btn-status")
@@ -72,7 +72,7 @@ block main
                 label(for="description") Mô tả sản phẩm
                 textarea(class="textarea-mce",name="description",id="description") 
                     != product.description 
-            h1(class="create__title") 
+            h1(class="title") 
                 | Hình ảnh (
                 span(class="important-item") *
                 | )
@@ -92,8 +92,8 @@ block main
                             input(id="image",name="thumbnails",type="file",accept="image/*",multiple)
             input(type="hidden",name="thumbnailDeleted",id="thumbnail-deleted")
             div(class="form-group__btn")
-                a(href="/admin/product" class="btn back-btn") quay lại
-                button(type="submit" class="btn create-btn") Sửa Sản Phẩm 
+                a(href="/admin/product" class="btn btn-primary") Quay lại
+                button(type="submit" class="btn btn-primary") Sửa Sản Phẩm 
 
 
             

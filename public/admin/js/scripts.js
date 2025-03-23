@@ -109,13 +109,13 @@ function handleToggleNav() {
     if (toggleNav) {
         toggleNav.onclick = () => {
             if (toggleNav.checked) {
-                sessionStorage.setItem("navbarTransform", "0");
+                localStorage.setItem("navbarTransform", "0");
                 navbar.style.transform = "translateX(0)";
                 if (main.offsetWidth > 575.98) {
                     main.style.padding = "103px 20px 20px 270px";
                 }
             } else {
-                sessionStorage.setItem("navbarTransform", "-100%");
+                localStorage.setItem("navbarTransform", "-100%");
                 navbar.style.transform = "translateX(-100%)";
                 if (main.offsetWidth > 575.98) {
                     main.style.padding = "103px 20px 20px";
@@ -146,13 +146,17 @@ function handleRightBoxDropdown() {
 }
 
 /* ======================================= nav ======================================= */
-function handleNavigationItem() {
-    const navigationItemBtn = document.getElementById("navigation-item__btn");
-
-    if (navigationItemBtn) {
-        navigationItemBtn.onclick = () => {
-            navigationItemBtn.classList.toggle("active");
-        };
+function handleNavigation() {
+    const navItem = document.querySelectorAll("[data-menu]");
+    if (navItem) {
+        navItem.forEach((item) => {
+            item.onclick = () => {
+                sessionStorage.setItem(
+                    "data-menu",
+                    item.getAttribute("data-menu")
+                );
+            };
+        });
     }
 }
 
@@ -542,35 +546,6 @@ function handleSortProduct() {
     });
 }
 
-/* ============ handle Filter Form =========== */
-function handleFilterFrom() {
-    const FilterFromResetBtn = document.querySelectorAll(
-        ".handle-from-reset-btn"
-    );
-    if (FilterFromResetBtn) {
-        FilterFromResetBtn.forEach((item) => {
-            item.onclick = () => {
-                item.closest("form")
-                    .querySelectorAll("input[type='text'],input[type='number']")
-                    .forEach((input) => {
-                        input.value = "";
-                    });
-
-                item.closest("form")
-                    .querySelectorAll("input[type='radio']")
-                    .forEach((radio) => {
-                        radio.checked = false;
-                    });
-                item.closest("form")
-                    .querySelectorAll("select")
-                    .forEach((select) => {
-                        select.selectedIndex = 0;
-                    });
-            };
-        });
-    }
-}
-
 /* ============ handle select Product Item =========== */
 function handleSelectProductItem() {
     const tableItem = document.querySelectorAll(".table-item__select");
@@ -719,18 +694,18 @@ function handleResponsiveNav() {
 
     if (toggleNav || navbar) {
         if (window.matchMedia("(max-width: 575.98px)").matches) {
-            sessionStorage.setItem("navbarTransform", "-100%");
+            localStorage.setItem("navbarTransform", "-100%");
             toggleNav.checked = false;
             navbar.style.transform = `translateX(-100%)`;
         }
         window.addEventListener("resize", () => {
             if (window.matchMedia("(max-width: 575.98px)").matches) {
-                sessionStorage.setItem("navbarTransform", "-100%");
+                localStorage.setItem("navbarTransform", "-100%");
                 toggleNav.checked = false;
                 navbar.style.transform = "translateX(-100%)";
                 main.style.padding = "103px 20px 20px";
             } else {
-                sessionStorage.setItem("navbarTransform", "0");
+                localStorage.setItem("navbarTransform", "0");
                 toggleNav.checked = true;
                 navbar.style.transform = "translateX(0)";
                 main.style.padding = "103px 20px 20px 270px";
@@ -766,7 +741,7 @@ function handleWindowOnload() {
     const toggleNav = document.getElementById("toggle__nav");
     const navbar = document.getElementById("navbar");
     const main = document.getElementById("main");
-    const navbarTransform = sessionStorage.getItem("navbarTransform");
+    const navbarTransform = localStorage.getItem("navbarTransform");
     if (toggleNav && navbar && main) {
         if (navbarTransform == "0") {
             toggleNav.checked = true;
@@ -801,6 +776,32 @@ function handleWindowOnload() {
             });
         });
     }
+    // navigation
+    const navItem = document.querySelectorAll("[data-menu]");
+    if (navItem) {
+        const dataMenu = sessionStorage.getItem("data-menu") || "dashboard";
+        navItem.forEach((item) => {
+            if (dataMenu === item.getAttribute("data-menu")) {
+                item.classList.add("active");
+                const navigationItem = item.closest(".navigation-item");
+                if (
+                    navigationItem &&
+                    navigationItem.querySelectorAll("button")
+                ) {
+                    const btnExpand = navigationItem.querySelectorAll("button");
+                    btnExpand.forEach((btn) => {
+                        btn.classList.add("active");
+                        btn.classList.remove("collapsed");
+                        btn.setAttribute("aria-expanded", "true");
+                        const nextSibling = btn?.nextElementSibling;
+                        nextSibling.classList.add("show");
+                    });
+                }
+            } else {
+                item.classList.remove("active");
+            }
+        });
+    }
 }
 
 // Initialize all handlers
@@ -810,7 +811,7 @@ function init() {
     handleScreenButtons();
     handleToggleNav();
     handleRightBoxDropdown();
-    handleNavigationItem();
+    handleNavigation();
     handleFilterButton();
     handleFileUpload();
     handleProductItemChange();
@@ -820,7 +821,6 @@ function init() {
     handleResponsiveNav();
     handleWarningFormProduct();
     handleSortProduct();
-    handleFilterFrom();
     handleSelectProductItem();
     handlePaginationBtn();
     handlePermissionsCheckBox();

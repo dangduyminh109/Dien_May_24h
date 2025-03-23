@@ -1,0 +1,40 @@
+extends ../../layout/default.pug
+include ../../mixins/alert.pug
+include ../../mixins/page_header.pug
+block main 
+    +alert(messages)
+    +page_header("Chi tiết tài khoản", [
+        { name: "Danh sách tài khoản", href: `${PATH_ADMIN}/accounts` },
+        { name: "Chi tiết tài khoản", href: `${PATH_ADMIN}/accounts/detail/${account.id}` },
+    ])
+    div(class="detail account")
+        h1(class="title") Thông tin chung
+        div(class="general")
+            div(class="form-group")
+                div(class="fullName form-item")
+                    p(class="label")
+                        b Họ và tên
+                    p(class="content") #{account.fullName}
+                div(class="email form-item")
+                    p(class="label") 
+                        b Email 
+                    p(class="content") #{account.email}
+                div(class="phone form-item")
+                    p(class="label") 
+                        b Số điện thoại
+                    p(class="content") #{account.phone}
+            div(class="form-group")
+                div(class="listRoles form-item")
+                    p(class="label") 
+                        b  Phân quyền 
+                    p(class="content") #{role.name}
+            p(class="label") 
+                b Trạng thái 
+            p(class=`status ${account.status == "on" ? "active" : ""}`) #{account.status == "on" ? "Hoạt động" : "Không hoạt động"}       
+        h1(class="title") Avatar
+            div(class="avatar-wrapper", id="avatar-wrapper")
+                div(class="avatar__preview")
+                    img(src=account.avatar,alt=account.fullName) 
+        div(class="form-group__btn")
+            a(href="/admin/accounts" class="btn btn-primary") Quay lại
+            a(href=`/admin/accounts/edit/${account.id}` class="btn update-btn btn-primary") Cập nhật tài khoản

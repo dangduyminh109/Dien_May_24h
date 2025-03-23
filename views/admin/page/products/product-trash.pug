@@ -24,20 +24,20 @@ block main
                             button(type="submit" class="search__toolbar-icon")
                                 i(class="fa-solid fa-magnifying-glass")
                     button(id="advanced-filter-btn", class="advanced-filter-btn btn btn-primary", type="button")
-                        span(class="search__filter-icon")
+                        span(class="icon-btn")
                             i(class="fa-solid fa-filter")
                         | Bộ Lọc
                     button(id="advanced-handle-btn", class="advanced-handle-btn btn btn-primary", type="button")
-                        span(class="search__filter-icon")
+                        span(class="icon-btn")
                             i(class="fa-solid fa-sliders")
                         | Nâng cao
-                    a(href=`${PATH_ADMIN}/product`, class="back-btn btn btn-primary")
-                        span(class="search__filter-icon")
+                    a(href=`${PATH_ADMIN}/product`, class="btn btn-primary")
+                        span(class="icon-btn")
                             i(class="fa-solid fa-reply")
                         | Quay lại
                 div(class="toolbar__right-box")
-                    a(href=`${PATH_ADMIN}/product`,class="trash-btn btn btn-primary")
-                        span(class="product__list-icon")
+                    a(href=`${PATH_ADMIN}/product`,class=" btn btn-primary")
+                        span(class="icon-btn")
                             i(class="fa-regular fa-rectangle-list")
                         | Danh sách sản phẩm
             +toolbarFilter({filter,path: "product-trash",categoryTree,product:true})
@@ -80,14 +80,12 @@ block main
                             |   Giá bán
                             !=pugHepper.sort("price", _sort)
                         th(scope="col") 
-                            |   giảm giá
+                            |   Giảm giá
                             !=pugHepper.sort("discount", _sort)
                         th(scope="col") 
                             |   Tồn kho 
                             !=pugHepper.sort("inventory", _sort)
                         th(scope="col") Trạng thái 
-                        th(scope="col")  
-                        th(scope="col")
                 tbody
                     if listDeletedProduct.length > 0
                         each product in listDeletedProduct
@@ -146,11 +144,13 @@ block main
                                         div(class="btn-status")
                                             p(class="btn-status__desc") #{product.status =="on" ? "Hoạt động" : "Không hoạt động"}  
 
-                                td 
+                                td(style="text-align: center")
                                     if permission.includes("update-product")
                                         form(method="POST", action=`${PATH_ADMIN}/product-trash/restore-product/${product._id}?_method=PATCH`)
-                                            button(type="submit", class="btn-restore btn") Khôi phục  
-                                td  
+                                            button(type="submit", class="btn-primary btn") Khôi phục  
+                                td(style="text-align: center")
+                                    a(href=`${PATH_ADMIN}/product-trash/detail/${product._id}`, class="btn-warning btn") Chi tiết 
+                                td(style="text-align: center") 
                                     if permission.includes("delete-product")
                                         button(type="button", class="btn-destroy btn btn-danger",data-bs-toggle="modal",data-bs-id = product._id, data-bs-target="#warningDeleteModal",path="product-trash/destroy-product") Xóa vĩnh viễn  
                     else  

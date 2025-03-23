@@ -23,21 +23,21 @@ block main
                             button(type="submit" class="search__toolbar-icon")
                                 i(class="fa-solid fa-magnifying-glass")
                     button(id="advanced-filter-btn", class="advanced-filter-btn btn btn-primary", type="button")
-                        span(class="search__filter-icon")
+                        span(class="icon-btn")
                             i(class="fa-solid fa-filter")
                         | Bộ Lọc
                     if permission.includes("update-category") || permission.includes("delete-category")
                         button(id="advanced-handle-btn", class="advanced-handle-btn btn btn-primary", type="button")
-                            span(class="search__filter-icon")
+                            span(class="icon-btn")
                                 i(class="fa-solid fa-sliders")
                             | Nâng cao
-                    a(href=`${PATH_ADMIN}/product-category`, class="back-btn btn btn-primary")
-                        span(class="search__filter-icon")
+                    a(href=`${PATH_ADMIN}/product-category`, class="btn btn-primary")
+                        span(class="icon-btn")
                             i(class="fa-solid fa-reply")
                         | Quay lại
                 div(class="toolbar__right-box")
-                    a(href=`${PATH_ADMIN}/product-category`,class="create-btn btn btn-primary")
-                        span(class="create__plus-icon") Danh mục sản phẩm
+                    a(href=`${PATH_ADMIN}/product-category`,class="btn btn-primary")
+                        span(class="icon-btn") Danh mục sản phẩm
             +toolbarFilter({filter,path: "category-trash",categoryTree,category:true})
             if permission.includes("update-category") || permission.includes("delete-category")
                 -var Update = permission.includes("update-category");
@@ -82,11 +82,13 @@ block main
                                     else
                                         div(class="btn-status")
                                             p(class="btn-status__desc") #{category.status == "on" ? "Hoạt động" : "Không hoạt động"}
-                                td 
+                                td(style="text-align: center")
                                     if permission.includes("update-category")
                                         form(method="POST", action=`${PATH_ADMIN}/category-trash/restore-category/${category._id}?_method=PATCH`)
-                                            button(type="submit", class="btn-restore btn") Khôi phục  
-                                td 
+                                            button(type="submit", class="btn-primary btn") Khôi phục  
+                                td(style="text-align: center")
+                                    a(href=`${PATH_ADMIN}/category-trash/detail/${category._id}`, class="btn-warning btn") Chi tiết  
+                                td(style="text-align: center")
                                     if permission.includes("delete-category")
                                         button(type="button", class="btn-destroy btn btn-danger",data-bs-toggle="modal",data-bs-id = category._id, data-bs-target="#warningDeleteModal",path="category-trash/destroy-category") Xóa vĩnh viễn  
                     else  

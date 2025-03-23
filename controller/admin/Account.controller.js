@@ -53,6 +53,26 @@ class roleController {
         });
     }
 
+    // [GET] /admin/accounts/detail:id
+    async detail(req, res) {
+        try {
+            const account = await Account.findOne({
+                _id: req.params.id,
+            });
+            const role = await Role.findOne({ _id: account.roleId });
+            res.render("./admin/page/accounts/detail", {
+                pageTitle: "Detail account",
+                PATH_ADMIN: system.PATH_ADMIN,
+                account,
+                role,
+            });
+        } catch (error) {
+            req.flash("error", "Có lỗi sảy ra!");
+            console.error("Error:", error);
+            res.redirect("/admin/accounts");
+        }
+    }
+
     // [POST] /admin/accounts/create
     async createPost(req, res) {
         try {

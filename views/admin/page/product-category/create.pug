@@ -13,7 +13,7 @@ block main
 
     div(class="create")
         form(action=`${PATH_ADMIN}/product-category/create`, method="post",enctype="multipart/form-data")
-            h1(class="create__title") Thông tin chung
+            h1(class="title") Thông tin chung
             div(class="general")
                 div(class="form-group")
                     div(class="name form-item")
@@ -41,7 +41,7 @@ block main
                 label(for="description") Mô tả
                 textarea(class="textarea-mce",name="description",id="description") 
 
-            h1(class="create__title") Hình ảnh
+            h1(class="title") Hình ảnh
             div(class="form-group")
                 div(class="image form-item")
                     div(class="image-group", id="image-group")
@@ -51,8 +51,8 @@ block main
                             |   upload
                             input(id="image",name="thumbnails",type="file",accept="image/*",multiple)
             div(class="form-group__btn")
-                a(href="/admin/product-category" class="btn back-btn") quay lại
-                button(type="submit" class="btn create-btn") Tạo danh mục
+                a(href="/admin/product-category" class="btn btn-primary") Quay lại
+                button(type="submit" class="btn btn-primary") Tạo danh mục
 
 
             

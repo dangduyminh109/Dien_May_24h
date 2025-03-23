@@ -5,6 +5,11 @@ const productTrashController = require("../../controller/admin/Product-trash.con
 const authorization = require("../../middlewares/authorization.middleware");
 
 router.get("/", authorization("view-product"), productTrashController.show);
+router.get(
+    "/detail/:id",
+    authorization("view-product"),
+    productTrashController.detail
+);
 
 router.patch(
     "/restore-product/:id",

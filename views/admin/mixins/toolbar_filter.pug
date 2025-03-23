@@ -7,8 +7,8 @@ mixin toolbarFilter({filter,path,categoryTree,product=false,category=false,accou
                     div(class="advanced__item-header") 
                             h2(class="block-advanced__title") Bộ Lọc 
                             div(class="toolbar__advanced-group-btn")
-                                button(type="button" class="toolbar__advanced-btn handle-from-reset-btn btn btn-primary") Đặt lại
-                                button(type="submit" class="toolbar__advanced-btn btn btn-primary") Gửi
+                                button(type="reset" class="btn btn-primary") Đặt lại
+                                button(type="submit" class=" btn btn-primary") Gửi
                 div(class=product ?"advanced__item":"advanced__item-2")
                     h3(class="advanced__title")=product ? "Tên sản phẩm" : "Tên danh mục"
                     if(account)
@@ -18,7 +18,7 @@ mixin toolbarFilter({filter,path,categoryTree,product=false,category=false,accou
                 if(product)
                     div(class="advanced__item-2") 
                         h3(class="advanced__title") Mã sản phẩm
-                        input(type="text" class="advanced__input" name="code" placeholder="Nhập mã sản phẩm" value=filter.code|| "")
+                        input(type="text" class="advanced__input" name="code" placeholder="Nhập Mã sản phẩm" value=filter.code|| "")
                 div(class="advanced__item")
                     if(product)
                         h3(class="advanced__title") Danh mục

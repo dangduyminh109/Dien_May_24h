@@ -23,22 +23,22 @@ block main
                             button(type="submit" class="search__toolbar-icon")
                                 i(class="fa-solid fa-magnifying-glass")
                     button(id="advanced-filter-btn", class="advanced-filter-btn btn btn-primary", type="button")
-                        span(class="search__filter-icon")
+                        span(class="icon-btn")
                             i(class="fa-solid fa-filter")
                         | Bộ Lọc
                     if permission.includes("update-account") || permission.includes("delete-account")
                         button(id="advanced-handle-btn", class="advanced-handle-btn btn btn-primary", type="button")
-                            span(class="search__filter-icon")
+                            span(class="icon-btn")
                                 i(class="fa-solid fa-sliders")
                             | Nâng cao
-                    a(href=`${PATH_ADMIN}/accounts-trash`,id="trash-btn", class="trash-btn btn btn-primary")
-                        span(class="search__filter-icon")
+                    a(href=`${PATH_ADMIN}/accounts-trash`,id="btn btn-primary", class=" btn btn-primary")
+                        span(class="icon-btn")
                             i(class="fa-solid fa-trash-can")
                         | Thùng rác
                 if permission.includes("add-account")
                     div(class="toolbar__right-box")
-                        a(href=`${PATH_ADMIN}/accounts/create`,class="create-btn btn btn-primary")
-                            span(class="create__plus-icon")
+                        a(href=`${PATH_ADMIN}/accounts/create`,class="btn btn-primary")
+                            span(class="icon-btn")
                                 i(class="fa-solid fa-plus")
                             | Thêm tài khoản mới
             +toolbarFilter({filter,path: "accounts",account:true})
@@ -94,10 +94,12 @@ block main
                                     else
                                         div(class="btn-status")
                                             p(class="btn-status__desc") #{account.status =="on" ? "Hoạt động" : "Không hoạt động"}
-                                td 
+                                td(style="text-align: center")
                                     if permission.includes("update-account")
-                                        a(href=`${PATH_ADMIN}/accounts/edit/${account._id}`, class="btn-edit btn") Sửa      
-                                td 
+                                        a(href=`${PATH_ADMIN}/accounts/edit/${account._id}`, class="btn-primary btn") Sửa      
+                                td(style="text-align: center")
+                                    a(href=`${PATH_ADMIN}/accounts/detail/${account._id}`, class="btn-warning btn") Chi tiết 
+                                td(style="text-align: center")
                                     if permission.includes("delete-account")
                                         button(type="button", class="btn-delete btn btn-danger", data-bs-id = account._id ,data-bs-toggle="modal", data-bs-target="#warningDeleteModal",path="accounts/delete-account") Xóa 
                     else  

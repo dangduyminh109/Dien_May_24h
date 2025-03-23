@@ -1,4 +1,5 @@
 .create,
+.detail,
 .edit {
     color: $text-color-3;
 
@@ -6,6 +7,11 @@
         display: block;
         margin-top: 20px;
         cursor: pointer;
+        white-space: nowrap;
+    }
+    .label {
+        margin: 0;
+        white-space: nowrap;
     }
 
     textarea {
@@ -16,25 +22,42 @@
         outline: none;
     }
 
-    .create__title,
-    .edit__title {
+    .title {
         margin: 0;
         font-size: 2rem;
-        padding: 20px 0 5px 0;
+        margin-top: 10px;
     }
 
     .general {
-        padding: 10px 10px 20px;
+        padding: 10px;
         border: 1px dashed $text-color-3;
         border-radius: 5px;
     }
 
+    .status {
+        background-color: #ccc;
+        padding: 5px 10px;
+        border-radius: 5px;
+        display: inline-block;
+        margin: 5px 0 0;
+        &.active {
+            color: $page-bg-color;
+            background-color: green;
+        }
+    }
     .form-group {
         display: flex;
         justify-content: space-between;
         align-items: center;
         gap: 0 10px;
         flex-wrap: wrap;
+        margin-bottom: 10px;
+        .content {
+            white-space: nowrap;
+            &::first-letter {
+                text-transform: uppercase;
+            }
+        }
 
         input,
         textarea,
@@ -47,22 +70,17 @@
             height: 30px;
         }
     }
-
     .form-item {
         flex: 1;
-        min-width: 150px;
     }
-
-    .edit-more,
-    .create-more {
+    .add-more {
         align-self: flex-end;
     }
-    .edit-more__title,
-    .create-more__title {
-        margin: 10px 0 0 0;
+    .add-more__title {
+        margin: 0;
+        white-space: nowrap;
     }
-    .edit-more__btn,
-    .create-more__btn {
+    .add-more__btn {
         color: #fff;
         background-color: $primary;
         width: 25%;
@@ -79,17 +97,7 @@
     .form-group__btn {
         display: flex;
         justify-content: space-between;
-    }
-    
-    .create-btn,.back-btn,
-    .edit-btn {
-        background-color: $primary;
-        color: #fff;
-        font-size: 1.4rem;
-        margin-top: 20px;
-        &:hover {
-            background-color: $color-hover;
-        }
+        margin-top: 10px;
     }
 
     .image {
@@ -103,7 +111,6 @@
         display: grid;
         grid-template-columns: repeat(5, 1fr);
         gap: 10px;
-        grid-auto-rows: minmax(150px, auto);
         .image-group__preview {
             width: 100%;
             height: 100%;
@@ -151,6 +158,7 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
+        aspect-ratio: 1 / 1;
         &:hover {
             color: $color-hover;
             border: 1px dashed $color-hover;
@@ -162,5 +170,17 @@
 
     input[type="file"] {
         display: none;
+    }
+}
+.detail {
+    .content {
+        margin-bottom: 0;
+    }
+    .form-item {
+        background-color: rgba(238, 238, 245, 0.8);
+        border-radius: 8px;
+        padding: 10px;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+            rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     }
 }

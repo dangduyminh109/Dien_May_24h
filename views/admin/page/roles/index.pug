@@ -23,18 +23,18 @@ block main
                                 i(class="fa-solid fa-magnifying-glass")
                     if permission.includes("delete-role")
                         button(id="advanced-handle-btn", class="advanced-handle-btn btn btn-primary", type="button")
-                            span(class="search__filter-icon")
+                            span(class="icon-btn")
                                 i(class="fa-solid fa-sliders")
                             | Nâng cao
-                    a(href=`${PATH_ADMIN}/roles-trash`,id="trash-btn", class="trash-btn btn btn-primary")
-                        span(class="search__filter-icon")
+                    a(href=`${PATH_ADMIN}/roles-trash`,id="btn btn-primary", class=" btn btn-primary")
+                        span(class="icon-btn")
                             i(class="fa-solid fa-trash-can")
                         | Thùng rác
 
                 if permission.includes("add-role")
                     div(class="toolbar__right-box")
-                        a(href=`${PATH_ADMIN}/roles/create`,class="create-btn btn btn-primary")
-                            span(class="create__plus-icon")
+                        a(href=`${PATH_ADMIN}/roles/create`,class="btn btn-primary")
+                            span(class="icon-btn")
                                 i(class="fa-solid fa-plus")
                             | Thêm quyền mới
 
@@ -66,7 +66,7 @@ block main
                                     |   !{roles.description}
                                 td 
                                     if permission.includes("update-role")
-                                        a(href=`${PATH_ADMIN}/roles/edit/${roles._id}`, class="btn-edit btn") Sửa      
+                                        a(href=`${PATH_ADMIN}/roles/edit/${roles._id}`, class="btn-primary btn") Sửa      
                                 td 
                                     if permission.includes("delete-role")
                                         button(type="button", class="btn-delete btn btn-danger", data-bs-id = roles._id ,data-bs-toggle="modal", data-bs-target="#warningDeleteModal",path="roles/delete-roles") Xóa 

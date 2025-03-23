@@ -23,20 +23,20 @@ block main
                             button(type="submit" class="search__toolbar-icon")
                                 i(class="fa-solid fa-magnifying-glass")
                     button(id="advanced-filter-btn", class="advanced-filter-btn btn btn-primary", type="button")
-                        span(class="search__filter-icon")
+                        span(class="icon-btn")
                             i(class="fa-solid fa-filter")
                         | Bộ Lọc
                     if permission.includes("update-account") || permission.includes("delete-account")
                         button(id="advanced-handle-btn", class="advanced-handle-btn btn btn-primary", type="button")
-                            span(class="search__filter-icon")
+                            span(class="icon-btn")
                                 i(class="fa-solid fa-sliders")
                             | Nâng cao
-                    a(href=`${PATH_ADMIN}/accounts`, class="back-btn btn btn-primary")
-                        span(class="search__filter-icon")
+                    a(href=`${PATH_ADMIN}/accounts`, class="btn btn-primary")
+                        span(class="icon-btn")
                             i(class="fa-solid fa-reply")
                         | Quay lại
                 div(class="toolbar__right-box")
-                    a(href=`${PATH_ADMIN}/accounts/create`,class="create-btn btn btn-primary") Danh sách tài khoản
+                    a(href=`${PATH_ADMIN}/accounts/create`,class="btn btn-primary") Danh sách tài khoản
             +toolbarFilter({filter,path: "accounts-trash",account:true})
             if permission.includes("update-account") || permission.includes("delete-account")
                 -var Update = permission.includes("update-account");
@@ -92,7 +92,7 @@ block main
                                 td 
                                     if permission.includes("update-account")
                                         form(method="POST", action=`${PATH_ADMIN}/accounts-trash/restore-account/${account._id}?_method=PATCH`)
-                                            button(type="submit", class="btn-restore btn") Khôi phục  
+                                            button(type="submit", class="btn-primary btn") Khôi phục  
                                 td 
                                     if permission.includes("delete-account")
                                         button(type="button", class="btn-destroy btn btn-danger",data-bs-toggle="modal",data-bs-id = account._id, data-bs-target="#warningDeleteModal",path="accounts-trash/destroy-account") Xóa vĩnh viễn  

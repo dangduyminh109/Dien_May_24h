@@ -12,15 +12,15 @@ mixin toolbarHandle({handle,path,categoryTree,trash=false,product=false,category
                             div(class="advanced__item-header") 
                                 h2(class="block-advanced__title") Cập Nhật
                                 div(class="toolbar__advanced-group-btn")
-                                    button(type="button" class="toolbar__advanced-btn handle-from-reset-btn btn btn-primary") Đặt lại
-                                    button(type="button" class="toolbar__advanced-btn btn btn-primary" data-bs-toggle="modal", data-bs-target="#warningUpdateMultipleModal") Gửi
+                                    button(type="reset" class="btn btn-primary") Đặt lại
+                                    button(type="button" class=" btn btn-primary" data-bs-toggle="modal", data-bs-target="#warningUpdateMultipleModal") Gửi
                         if(product)
                             div(class="advanced__item") 
                                 h3(class="advanced__title")=product ? "Tên sản phẩm" : "Tên danh mục"
                                 input(type="text" class="advanced__input" name="name" placeholder=product ? "Nhập tên sản phẩm" : "Nhập tên danh mục" value=handle.name)
                             div(class="advanced__item-2") 
                                 h3(class="advanced__title") Mã sản phẩm
-                                input(type="text" class="advanced__input" name="code" placeholder="Nhập mã sản phẩm" value=handle.code)
+                                input(type="text" class="advanced__input" name="code" placeholder="Nhập Mã sản phẩm" value=handle.code)
                             div(class="advanced__item")
                                 h3(class="advanced__title") Danh mục
                                 select(name="category", id="category") 
@@ -70,11 +70,11 @@ mixin toolbarHandle({handle,path,categoryTree,trash=false,product=false,category
                             div(class="toolbar__advanced-group-btn")
                                 if trash && (Update || Delete)
                                     if Delete
-                                        button(type="button" class="btn toolbar__advanced-btn btn-danger" data-bs-toggle="modal", data-bs-target="#warningDeleteMultipleModal") Xoá vĩnh viễn
+                                        button(type="button" class="btn  btn-danger" data-bs-toggle="modal", data-bs-target="#warningDeleteMultipleModal") Xoá vĩnh viễn
                                     if Update
-                                        button(type="button" class="btn toolbar__advanced-btn btn-primary" data-bs-toggle="modal", data-bs-target="#warningRestoreMultipleModal") Khôi phục
+                                        button(type="button" class="btn  btn-primary" data-bs-toggle="modal", data-bs-target="#warningRestoreMultipleModal") Khôi phục
                                 else
-                                    button(type="button" class="btn toolbar__advanced-btn btn-danger" data-bs-toggle="modal", data-bs-target="#warningDeleteMultipleModal") Xoá
+                                    button(type="button" class="btn  btn-danger" data-bs-toggle="modal", data-bs-target="#warningDeleteMultipleModal") Xoá
         
     if trash
         +formWarning("warningDeleteMultipleModal","Bạn có chắc chắn muốn <b class='warning-text'>Xóa Vĩnh Viễn</b> các sản phẩm đã chọn?<span class='warning-text'> Hành động này không thể hoàn tác!!!</span>","Xóa sản phẩm","warning-delete-multiple-modal-btn","Xóa Vĩnh Viễn")

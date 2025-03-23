@@ -7,9 +7,9 @@ block main
         { name: "Danh sách tài khoản", href: `${PATH_ADMIN}/accounts` },
         { name: "Sửa đổi tài khoản", href: `${PATH_ADMIN}/accounts/edit/${account.id}` },
     ])
-    div(class="create create-account")
+    div(class="create account")
         form(action=`${PATH_ADMIN}/accounts/edit/${account.id}?_method=PATCH`, method="post",enctype="multipart/form-data")
-            h1(class="create__title") Thông tin chung
+            h1(class="title") Thông tin chung
             div(class="general")
                 div(class="form-group")
                     div(class="fullName form-item")
@@ -43,9 +43,9 @@ block main
                                     option(value=role.id,selected=account.roleId === role.id) #{role.name} 
                             else 
                                 option(value="" selected disabled) -- Chưa có phân quền nào! -- 
-                    div(class="create-more form-item")
-                        p(class="create-more__title") Thêm quyền 
-                        a(href="" class="btn create-more__btn")
+                    div(class="add-more form-item")
+                        p(class="add-more__title") Thêm quyền 
+                        a(href="" class="btn btn-primary")
                             i(class="fa-solid fa-plus") 
                 label(for="check") Trạng thái 
                 div(class="btn-status")
@@ -53,7 +53,7 @@ block main
                             div(class="form-check form-switch")
                                 input(class="form-check-input btn-status-form",name="status",type="checkbox",id="check", role="switch",checked=true)
                     p(class="btn-status__desc") Hoạt động          
-            h1(class="create__title") Avatar
+            h1(class="title") Avatar
             div(class="avatar-wrapper", id="avatar-wrapper")
                 label(class="avatar__upload" for="image" style="display:none") 
                     span(class="avatar__upload-icon")
@@ -65,5 +65,5 @@ block main
                     span(class="image__close-icon")
                         i(class="fa-solid fa-circle-xmark", style="background-color: #fff; border-radius: 50%; display: block;")
             div(class="form-group__btn")
-                a(href="/admin/accounts" class="btn back-btn") quay lại
-                button(type="submit" class="btn create-btn") Sửa tài khoản
+                a(href="/admin/accounts" class="btn btn-primary") Quay lại
+                button(type="submit" class="btn btn-primary") Sửa tài khoản

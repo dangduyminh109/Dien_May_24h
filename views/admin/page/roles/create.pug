@@ -10,7 +10,7 @@ block main
     ])
     div(class="create")
         form(action=`${PATH_ADMIN}/roles/create`, method="post")
-            h1(class="create__title") Thông tin chung
+            h1(class="title") Thông tin chung
             div(class="general")
                 div(class="form-group")
                     div(class="name form-item")
@@ -22,8 +22,8 @@ block main
                 label(for="description") Mô tả
                 textarea(class="textarea-mce",name="description",id="description") 
             div(class="form-group__btn")
-                a(href="/admin/roles" class="btn back-btn") quay lại
-                button(type="submit" class="btn create-btn") Tạo quyền
+                a(href="/admin/roles" class="btn btn-primary") Quay lại
+                button(type="submit" class="btn btn-primary") Tạo quyền
 
 
             

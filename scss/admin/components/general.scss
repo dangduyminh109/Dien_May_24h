@@ -64,6 +64,7 @@ li {
 
 .btn-status {
     display: flex;
+    align-items: center;
     gap: 5px;
     .btn-status__desc {
         margin: 0;
@@ -72,7 +73,7 @@ li {
         cursor: pointer;
         transition: 0.2s;
         width: 35px;
-
+        padding: 8px 18px;
         border: 1px solid #4caf50;
         box-shadow: 0 0 0 0.25rem rgba(#4caf50, 0.25);
         background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%234CAF50'/%3e%3c/svg%3e");
@@ -123,18 +124,26 @@ li {
     color: $color-hover;
 }
 
+.btn {
+    padding: 5px 8px;
+    min-width: 55px;
+    border: none;
+    &:focus {
+        outline: none;
+        box-shadow: none;
+        border-color: inherit;
+        color: currentColor;
+    }
+}
+
 .warning-delete-multiple-modal-btn,
 .warning-delete-modal-btn,
 .btn-danger {
-    height: 28.13px;
-    min-width: 48.63px;
     background-color: #dc3545;
-    border-color: #dc3545;
     color: #fff;
-
+    &:focus,
     &:hover {
-        background-color: #bb2d3b;
-        border-color: #b02a37;
+        background-color: darken(#dc3545, 5%);
         color: #fff;
     }
 }
@@ -143,12 +152,22 @@ li {
 .warning-update-multiple-modal-btn,
 .warning-restore-multiple-modal-btn,
 .btn-primary {
-    height: 28.13px;
-    min-width: 48.63px;
     background-color: $primary;
     color: #fff;
+    &:focus,
     &:hover {
-        background-color: $color-hover;
+        color: #fff;
+        background-color: darken($primary, 5%);
+    }
+}
+
+.btn-warning {
+    background-color: #f7a100;
+    color: #fff;
+    &:focus,
+    &:hover {
+        color: #fff;
+        background-color: darken(#f7a100, 5%);
     }
 }
 
@@ -193,68 +212,53 @@ li {
 
 /* ======================================= toolbar ======================================= */
 .toolbar {
-    padding: 30px 0 10px;
+    padding: 20px 0 10px;
     border-bottom: 1px solid $text-color;
-    /* ============ left box =========== */
     .toolbar__box {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
-    }
-    .search {
-        border: 2px solid $text-color;
-        border-radius: 3px;
-        display: flex;
-        align-items: center;
-        overflow: hidden;
-    }
-
-    .search__input {
-        border: none;
-        padding: 5px;
-        caret-color: $text-color;
-        font-size: 1.2rem;
-        background-color: #fff;
-        width: 300px;
-    }
-
-    .search__toolbar-icon {
-        display: inline-block;
-        cursor: pointer;
-        background-color: #fff;
-        padding: 0 10px;
-        border: 2px solid transparent;
-        border-left: 2px solid $text-color;
-        color: $text-color;
-        &:hover {
-            color: $color-hover;
+        gap: 5px;
+        .icon-btn {
+            margin-right: 5px;
         }
     }
-
-    /* ============  right-box =========== */
-    .advanced-filter-btn,
-    .advanced-handle-btn,
-    .trash-btn,
-    .back-btn,
-    .btn-restore,
-    .create-btn {
-        margin-top: 5px;
-        background-color: $primary;
-        border: none;
-        color: #fff;
-        &:hover {
-            background-color: $color-hover;
+    /* ============ left box =========== */
+    .toolbar__left-box {
+        // search box
+        .search {
+            border: 2px solid $text-color;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            max-width: 300px;
         }
-    }
-    .trash-btn,
-    .advanced-handle-btn,
-    .back-btn {
-        margin-left: 5px;
-    }
-    .search__filter-icon,
-    .product__list-icon,
-    .create__plus-icon {
-        margin-right: 5px;
+        .search__input {
+            border: none;
+            padding: 5px;
+            caret-color: $text-color;
+            font-size: 1.2rem;
+            background-color: #fff;
+            width: 300px;
+        }
+        .search__toolbar-icon {
+            display: inline-block;
+            cursor: pointer;
+            background-color: #fff;
+            padding: 0 10px;
+            border: 2px solid transparent;
+            border-left: 2px solid $text-color;
+            color: $text-color;
+            &:hover {
+                color: $color-hover;
+            }
+        }
+
+        // btn block
+        .btn-primary {
+            margin: 5px 5px 0 0;
+        }
     }
 
     /* ============  filter-box,handle-box =========== */
@@ -323,14 +327,6 @@ li {
             margin: 0;
             color: $text-color-3;
             min-width: 150px;
-        }
-
-        .toolbar__advanced-btn {
-            color: #fff;
-            border: none;
-            &:hover {
-                background-color: $color-hover;
-            }
         }
 
         .advanced__item {

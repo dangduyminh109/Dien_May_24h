@@ -29,6 +29,28 @@ class categoryTrashController {
             categoryTree,
         });
     }
+    // [GET] /admin/category-trash/detail:id
+    async detail(req, res) {
+        const productCategory = await ProductCategory.findOneDeleted({
+            _id: req.params.id,
+        });
+        var parentCategory = "";
+        if (productCategory.parentId != "") {
+            parentCategory = await ProductCategory.findOne({
+                _id: productCategory.parentId,
+            });
+        }
+        res.render("./admin/page/product-category/detail", {
+            pageTitle: "Product detail",
+            PATH_ADMIN: system.PATH_ADMIN,
+            productCategory,
+            parentCategory:
+                parentCategory != ""
+                    ? parentCategory.name
+                    : "Không có danh mục cha",
+            deleted: true,
+        });
+    }
 
     // [PATCH] /admin/category-trash/restore-category
     async restore(req, res) {

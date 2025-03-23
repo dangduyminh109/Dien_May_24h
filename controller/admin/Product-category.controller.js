@@ -41,7 +41,7 @@ class productCategoryController {
         });
     }
 
-    // [GET] /admin/products/edit
+    // [GET] /admin/products/edit/:id
     async edit(req, res) {
         const productCategory = await ProductCategory.findOne({
             _id: req.params.id,
@@ -52,6 +52,28 @@ class productCategoryController {
             PATH_ADMIN: system.PATH_ADMIN,
             productCategory,
             categoryTree,
+        });
+    }
+
+    // [GET] /admin/product-category/detail:id
+    async detail(req, res) {
+        const productCategory = await ProductCategory.findOne({
+            _id: req.params.id,
+        });
+        var parentCategory = "";
+        if (productCategory.parentId != "") {
+            parentCategory = await ProductCategory.findOne({
+                _id: productCategory.parentId,
+            });
+        }
+        res.render("./admin/page/product-category/detail", {
+            pageTitle: "Product category detail",
+            PATH_ADMIN: system.PATH_ADMIN,
+            productCategory,
+            parentCategory:
+                parentCategory != ""
+                    ? parentCategory.name
+                    : "Không có danh mục cha",
         });
     }
 

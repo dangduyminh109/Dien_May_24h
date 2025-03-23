@@ -1,0 +1,50 @@
+extends ../../layout/default.pug
+include ../../mixins/page_header.pug
+include ../../mixins/category_tree.pug
+include ../../mixins/alert.pug
+
+block main 
+    +alert(messages)
+    +page_header("Chi tiết danh mục", [
+        { name: "Sản phẩm", href: `${PATH_ADMIN}/product-category` },
+        { name: "Danh mục sản phẩm", href: `${PATH_ADMIN}/product-category` },
+        { name: "Chi tiết danh mục", href: `${PATH_ADMIN}/product-category/detail/${productCategory._id}` },
+    ])
+    div(class="detail")
+        h1(class="title") Thông tin chung
+        div(class="general")
+            div(class="form-group")
+                div(class="name form-item")
+                    p(class="label")
+                        b Tên danh mục
+                    p(class="content") #{productCategory.name}
+                div(class="category form-item")
+                    p(class="label")
+                        b Danh mục cha
+                    p(class="content") #{parentCategory}
+            div(class="form-group")
+                div(class="form-item")
+                    p(class="label") 
+                        b Trạng thái 
+                    p(class=`status ${productCategory.status == "on" ? "active" : ""}`) #{productCategory.status == "on" ? "Hoạt động" : "Không hoạt động"}   
+            div(class="form-group")
+                div(class="form-item")
+                    p(class="label") 
+                        b Mô tả
+                    div(class="content")!=productCategory.description
+        
+        h1(class="title") Hình ảnh
+        div(class="form-group")
+            div(class="image form-item")
+                div(class="image-group", id="image-group")
+                    if productCategory.thumbnails.length > 0
+                        each imgSrc in productCategory.thumbnails 
+                            div(class="image-group__preview")
+                                img(src=imgSrc)
+        div(class="form-group__btn")
+            a(href=`/admin/${deleted ? "category-trash":"product-category"}` class="btn btn-primary") Quay lại
+            if(!deleted)
+                a(href=`/admin/product-category/edit/${productCategory._id}` class="btn btn-primary") Sửa Sản Phẩm 
+
+
+            

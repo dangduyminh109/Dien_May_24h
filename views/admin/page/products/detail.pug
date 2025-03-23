@@ -1,0 +1,76 @@
+extends ../../layout/default.pug
+include ../../mixins/page_header.pug
+include ../../mixins/category_tree.pug
+include ../../mixins/alert.pug
+
+block main 
+    +alert(messages)
+    +page_header("Chi tiết sản phẩm", [
+        { name: "Sản phẩm", href: `${PATH_ADMIN}/product` },
+        { name: "Danh sách sản phẩm", href: `${PATH_ADMIN}/product` },
+        { name: "Chi tiết sản phẩm", href: `${PATH_ADMIN}/product/detail` },
+    ])
+    div(class="detail")
+        h1(class="title") Thông tin chung
+        div(class="general")
+            div(class="form-group")
+                div(class="name form-item")
+                    p(class="label")
+                        b Tên sản phẩm
+                    p(class="content") #{product.name}
+                div(class="code form-item")
+                    p(class="label")
+                        b Mã sản phẩm 
+                    p(class="content") #{product.code}
+            div(class="form-group")
+                div(class="original_price form-item")
+                    p(class="label")
+                        b Giá gốc(VND)
+                    p(class="content") #{product.original_price}
+                div(class="price form-item")
+                    p(class="label")
+                        b Giá bán(VND)
+                    p(class="content") #{product.price}
+                div(class="discount form-item")
+                    p(class="label")
+                        b Giảm giá(%)
+                    p(class="content") #{product.discount}
+                div(class="inventory form-item")
+                    p(class="label")
+                        b Tồn kho
+                    p(class="content") #{product.inventory}
+            div(class="form-group")
+                div(class="supplier form-item")
+                    p(class="label")
+                        b Nhà cung cấp
+                    p(class="content") #{product.supplier}
+                div(class="category form-item")
+                    p(class="label")
+                        b Danh mục
+                    p(class="content") #{category.name}
+            div(class="form-group")
+                div(class="form-item")
+                    p(class="label") 
+                        b Trạng thái 
+                    p(class=`status ${product.status == "on" ? "active" : ""}`) #{product.status == "on" ? "Hoạt động" : "Không hoạt động"}     
+            div(class="form-group")
+                div(class="form-item")
+                    p(class="label") 
+                        b Mô tả sản phẩm
+                    div(class="content")!=product.description
+            
+        h1(class="title") Hình ảnh
+        div(class="form-group")
+            div(class="image form-item")
+                div(class="image-group", id="image-group")
+                    if product.thumbnails.length > 0
+                        each imgSrc in product.thumbnails 
+                            div(class="image-group__preview")
+                                img(src=imgSrc)
+        div(class="form-group__btn")
+            a(href=`/admin/${deleted ? "product-trash":"product"}` class="btn btn-primary") Quay lại
+            if(!deleted)
+                a(href=`/admin/product/edit/${product.id}` class="btn btn-primary") Sửa Sản Phẩm 
+
+
+        

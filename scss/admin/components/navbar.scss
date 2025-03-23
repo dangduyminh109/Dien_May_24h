@@ -43,20 +43,27 @@ $bg-color-navbar-hover: #1d2531;
             background-color: $bg-color-navbar-hover;
             color: $color-hover;
         }
+        &.active {
+            background-color: $bg-color-navbar-hover;
+        }
+        &.single.active {
+            background-color: $bg-color-navbar-2;
+            color: $color-hover;
+        }
     }
 
     .navigation-item__btn.active {
-        .navigation-item__btn-icon-down {
+        .navigation-item__icon-btn-down {
             transform: rotate(0);
         }
     }
 
-    .navigation-item__btn-icon {
+    .navigation-item__icon-btn {
         margin-right: 10px;
         font-size: 1.2rem;
     }
 
-    .navigation-item__btn-icon-down {
+    .navigation-item__icon-btn-down {
         margin-left: auto;
         transition: 0.3s;
         transform: rotate(-90deg);
@@ -77,6 +84,9 @@ $bg-color-navbar-hover: #1d2531;
         &:focus {
             box-shadow: none;
             background-color: $bg-color-navbar-hover;
+            color: $color-hover;
+        }
+        &.active {
             color: $color-hover;
         }
     }

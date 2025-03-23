@@ -5,7 +5,11 @@ const categoryTrashController = require("../../controller/admin/Category-trash.c
 const authorization = require("../../middlewares/authorization.middleware");
 
 router.get("/", authorization("view-category"), categoryTrashController.show);
-
+router.get(
+    "/detail/:id",
+    authorization("view-category"),
+    categoryTrashController.detail
+);
 router.patch(
     "/restore-category/:id",
     authorization("update-category"),

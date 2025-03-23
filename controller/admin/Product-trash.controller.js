@@ -6,6 +6,7 @@ const {
 } = require("../../helpers/product.helper.js");
 const paginationHelper = require("../../helpers/pagination.helper.js");
 const getCategoryTree = require("../../helpers/get-category-tree.helper.js");
+const ProductCategory = require("../../models/product-category.model.js");
 class productTrashController {
     // [GET] /admin/product-trash
     async show(req, res) {
@@ -27,6 +28,23 @@ class productTrashController {
             pagination,
             currentPath,
             categoryTree,
+        });
+    }
+    
+    // [GET] /admin/product-trash/detail:id
+    async detail(req, res) {
+        const product = await Product.findOneDeleted({
+            _id: req.params.id,
+        });
+        const category = await ProductCategory.findOne({
+            _id: product.category,
+        });
+        res.render("./admin/page/products/detail", {
+            pageTitle: "Product detail",
+            PATH_ADMIN: system.PATH_ADMIN,
+            product,
+            category,
+            deleted: true,
         });
     }
 

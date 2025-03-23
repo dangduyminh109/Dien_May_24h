@@ -23,22 +23,22 @@ block main
                             button(type="submit" class="search__toolbar-icon")
                                 i(class="fa-solid fa-magnifying-glass")
                     button(id="advanced-filter-btn", class="advanced-filter-btn btn btn-primary", type="button")
-                        span(class="search__filter-icon")
+                        span(class="icon-btn")
                             i(class="fa-solid fa-filter")
                         | Bộ Lọc
                     if permission.includes("update-product") || permission.includes("delete-product")
                         button(id="advanced-handle-btn", class="advanced-handle-btn btn btn-primary", type="button")
-                            span(class="search__filter-icon")
+                            span(class="icon-btn")
                                 i(class="fa-solid fa-sliders")
                             | Nâng cao
-                    a(href=`${PATH_ADMIN}/product-trash`,id="trash-btn", class="trash-btn btn btn-primary")
-                        span(class="search__filter-icon")
+                    a(href=`${PATH_ADMIN}/product-trash`,id="btn btn-primary", class=" btn btn-primary")
+                        span(class="icon-btn")
                             i(class="fa-solid fa-trash-can")
                         | Thùng rác
                 if permission.includes("add-product")
                     div(class="toolbar__right-box")
-                        a(href=`${PATH_ADMIN}/product/create`,class="create-btn btn btn-primary")
-                            span(class="create__plus-icon")
+                        a(href=`${PATH_ADMIN}/product/create`,class="btn btn-primary")
+                            span(class="icon-btn")
                                 i(class="fa-solid fa-plus")
                             | Thêm mới sản phẩm
             +toolbarFilter({filter,path: "product-trash",categoryTree,product:true})
@@ -81,14 +81,12 @@ block main
                             |   Giá bán
                             !=pugHepper.sort("price", _sort,pagination.page)
                         th(scope="col") 
-                            |   giảm giá
+                            |   Giảm giá
                             !=pugHepper.sort("discount", _sort,pagination.page)
                         th(scope="col") 
                             |   Tồn kho 
                             !=pugHepper.sort("inventory", _sort,pagination.page)
                         th(scope="col") Trạng thái 
-                        th(scope="col")  
-                        th(scope="col")  
                 tbody
                     if listProduct.length > 0
                         each product in listProduct
@@ -146,10 +144,12 @@ block main
                                         div(class="btn-status")
                                             p(class="btn-status__desc") #{product.status =="on" ? "Hoạt động" : "Không hoạt động"}
 
-                                td 
+                                td(style="text-align: center")
                                     if permission.includes("update-product")
-                                        a(href=`${PATH_ADMIN}/product/edit/${product._id}`, class="btn-edit btn") Sửa      
-                                td 
+                                        a(href=`${PATH_ADMIN}/product/edit/${product._id}`, class="btn-primary btn") Sửa      
+                                td(style="text-align: center")
+                                    a(href=`${PATH_ADMIN}/product/detail/${product._id}`, class="btn-warning btn") Chi tiết 
+                                td(style="text-align: center")
                                     if permission.includes("delete-product")
                                         button(type="button", class="btn-delete btn btn-danger", data-bs-id = product._id ,data-bs-toggle="modal", data-bs-target="#warningDeleteModal",path="product/delete-product") Xóa 
                     else  

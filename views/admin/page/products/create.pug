@@ -11,7 +11,7 @@ block main
     ])
     div(class="create")
         form(action=`${PATH_ADMIN}/product/create`, method="post",enctype="multipart/form-data")
-            h1(class="create__title") Thông tin chung
+            h1(class="title") Thông tin chung
             div(class="general")
                 div(class="form-group")
                     div(class="name form-item")
@@ -22,7 +22,7 @@ block main
                         input(class="form-control",id="name",name="name",type="text",required)
                     div(class="code form-item")
                         label(for="code") 
-                            | mã sản phẩm (
+                            | Mã sản phẩm (
                             span(class="important-item") *
                             | )
                         input(class="form-control",id="code",name="code",type="text",required)    
@@ -37,10 +37,10 @@ block main
                             | )
                         input(class="form-control",id="price",name="price",type="number",placeholder="0",min="0",required) 
                     div(class="discount form-item")
-                        label(for="discount") giảm giá(%)
+                        label(for="discount") Giảm giá(%)
                         input(class="form-control",id="discount",name="discount",type="number",placeholder="0",min="0")
                     div(class="inventory form-item")
-                        label(for="inventory") tồn kho
+                        label(for="inventory") Tồn kho
                         input(class="form-control",id="inventory",name="inventory",type="number",placeholder="0",min="0")           
                 div(class="form-group")
                     div(class="supplier form-item")
@@ -58,9 +58,9 @@ block main
                                 +categoryTree(categoryTree)
                             else 
                                 option(value="" selected disabled) -- Chưa có danh mục nào! -- 
-                    div(class="create-more form-item")
-                        p(class="create-more__title") Thêm danh mục 
-                        a(href="" class="btn create-more__btn")
+                    div(class="add-more form-item")
+                        p(class="add-more__title") Thêm danh mục 
+                        a(href="" class="btn btn-primary")
                             i(class="fa-solid fa-plus") 
                 label(for="check") Trạng thái 
                 div(class="btn-status")
@@ -70,7 +70,7 @@ block main
                     p(class="btn-status__desc") Hoạt động          
                 label(for="description") Mô tả sản phẩm
                 textarea(class="textarea-mce",name="description",id="description") 
-            h1(class="create__title") Hình ảnh
+            h1(class="title") Hình ảnh
             div(class="form-group")
                 div(class="image form-item")
                     div(class="image-group", id="image-group")
@@ -80,8 +80,8 @@ block main
                             |   upload
                             input(id="image",name="thumbnails",type="file",accept="image/*",multiple)
             div(class="form-group__btn")
-                a(href="/admin/product" class="btn back-btn") quay lại
-                button(type="submit" class="btn create-btn") Tạo Sản Phẩm 
+                a(href="/admin/product" class="btn btn-primary") Quay lại
+                button(type="submit" class="btn btn-primary") Tạo Sản Phẩm 
 
 
             

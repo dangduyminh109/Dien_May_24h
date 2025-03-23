@@ -57,8 +57,7 @@
         border-radius: 50px;
     }
     .list-product__table {
-        width: 100%;
-        min-width: 1450px;
+        min-width: 100%;
     }
 
     .list-category__table,
@@ -119,6 +118,11 @@
         margin-left: 15px;
     }
 
+    th {
+        padding-right: 30px;
+        white-space: nowrap;
+    }
+
     tbody {
         tr {
             border-width: 2px 0 0 0;
@@ -126,16 +130,8 @@
             border-color: $text-color transparent transparent transparent;
         }
         td {
-            padding: 10px 0;
-        }
-    }
-
-    .btn-edit,
-    .btn-restore {
-        background-color: $primary;
-        color: #fff;
-        &:hover {
-            background-color: $color-hover;
+            padding: 10px 30px 10px 0;
+            white-space: nowrap;
         }
     }
 
