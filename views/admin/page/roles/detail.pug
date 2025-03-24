@@ -1,0 +1,30 @@
+extends ../../layout/default.pug
+include ../../mixins/page_header.pug
+include ../../mixins/category_tree.pug
+include ../../mixins/alert.pug
+
+block main 
+    +alert(messages)
+    +page_header("Chi tiết Quyền", [
+       { name: "Quản Lí Quyền", href: `${PATH_ADMIN}/roles` },
+        { name: "Nhóm Quyền", href: `${PATH_ADMIN}/roles` },
+        { name: "Chi tiết Quyền", href: `${PATH_ADMIN}/roles/detail/${roles.id}` },
+    ])
+
+    div(class="detail")
+        h1(class="title") Thông tin chung
+        div(class="general")
+            div(class="form-group")
+                div(class="name form-item")
+                    p(class="label")
+                        b Tên quyền
+                    p(class="content") #{roles.name}
+            div(class="form-group")
+                div(class="form-item")
+                    p(class="label") 
+                        b Mô tả
+                    div(class="content")!=roles.description 
+        div(class="form-group__btn")
+            a(href=`/admin/${deleted ? "roles-trash":"roles"}` class="btn btn-primary") Quay lại
+            if(!deleted)
+                a(href=`/admin/roles/edit/${roles.id}` class="btn btn-primary") Sửa Quyền

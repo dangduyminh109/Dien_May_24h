@@ -19,6 +19,25 @@ class roleTrashController {
             pagination,
         });
     }
+    // [GET] /admin/role-trash/detail:id
+    async detail(req, res) {
+        try {
+            const roles = await Role.findOneDeleted({
+                _id: req.params.id,
+            });
+
+            res.render("./admin/page/roles/detail", {
+                pageTitle: "Role detail",
+                PATH_ADMIN: system.PATH_ADMIN,
+                roles,
+                deleted: true,
+            });
+        } catch (error) {
+            req.flash("error", "Có lỗi sảy ra!");
+            console.error("Error:", error);
+            res.redirect("/admin/accounts");
+        }
+    }
 
     // [PATCH] /admin/roles-trash/restore-roles
     async restore(req, res) {

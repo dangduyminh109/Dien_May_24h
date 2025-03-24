@@ -42,7 +42,7 @@ block main
             if permission.includes("update-category") || permission.includes("delete-category")
                 -var Update = permission.includes("update-category");
                 -var Delete = permission.includes("delete-category");
-                +toolbarHandle({handle,path: "category-trash",categoryTree,trash:true,category:true,Update: Update,Delete: Delete})
+                +toolbarHandle({handle,path: "category-trash",categoryTree,trash:true,category:true,Update: Update,Delete: Delete,title: "Danh mục"})
         
         div(class="overview-block") 
                 div(class="overview-item total-products")
@@ -69,7 +69,7 @@ block main
                                     input(type="checkbox" class="table-item__select" name="sort" _id=category._id value="1")
                                 td  
                                     div(class="table-item__name")
-                                        - var thumbnail = category.thumbnails?.[0] || "/uploads/default-image.jpg"
+                                        - var thumbnail = category.thumbnail|| "/uploads/default-image.jpg"
                                         img(class="table-item__img", src=thumbnail, alt=category.name)
                                         h4(class="table-item__title") #{category.name}
                                 td 
@@ -84,10 +84,11 @@ block main
                                             p(class="btn-status__desc") #{category.status == "on" ? "Hoạt động" : "Không hoạt động"}
                                 td(style="text-align: center")
                                     if permission.includes("update-category")
-                                        form(method="POST", action=`${PATH_ADMIN}/category-trash/restore-category/${category._id}?_method=PATCH`)
+                                        form(method="POST", action=`${PATH_ADMIN}/category-trash/restore-category/${category.id}?_method=PATCH`)
                                             button(type="submit", class="btn-primary btn") Khôi phục  
                                 td(style="text-align: center")
-                                    a(href=`${PATH_ADMIN}/category-trash/detail/${category._id}`, class="btn-warning btn") Chi tiết  
+                                    if permission.includes("view-category")
+                                        a(href=`${PATH_ADMIN}/category-trash/detail/${category.id}`, class="btn-warning btn") Chi tiết  
                                 td(style="text-align: center")
                                     if permission.includes("delete-category")
                                         button(type="button", class="btn-destroy btn btn-danger",data-bs-toggle="modal",data-bs-id = category._id, data-bs-target="#warningDeleteModal",path="category-trash/destroy-category") Xóa vĩnh viễn  

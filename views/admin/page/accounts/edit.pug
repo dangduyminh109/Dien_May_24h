@@ -54,13 +54,13 @@ block main
                                 input(class="form-check-input btn-status-form",name="status",type="checkbox",id="check", role="switch",checked=true)
                     p(class="btn-status__desc") Hoạt động          
             h1(class="title") Avatar
-            div(class="avatar-wrapper", id="avatar-wrapper")
-                label(class="avatar__upload" for="image" style="display:none") 
-                    span(class="avatar__upload-icon")
+            div(class="single-image-wrapper", id="image-wrapper")
+                label(class="single-image__upload" for="image" style="display:none") 
+                    span(class="single-image__upload-icon")
                         i(class="fa-solid fa-upload")
                     |   upload
                     input(id="image",name="thumbnails",type="file",accept="image/*")
-                div(class="avatar__preview")
+                div(class="single-image__preview")
                     img(src=account.avatar,alt=account.fullName) 
                     span(class="image__close-icon")
                         i(class="fa-solid fa-circle-xmark", style="background-color: #fff; border-radius: 50%; display: block;")

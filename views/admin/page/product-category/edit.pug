@@ -8,10 +8,10 @@ block main
     +page_header("Chỉnh sửa danh mục", [
         { name: "Sản phẩm", href: `${PATH_ADMIN}/product-category` },
         { name: "Danh mục sản phẩm", href: `${PATH_ADMIN}/product-category` },
-        { name: "Chỉnh sửa danh mục", href: `${PATH_ADMIN}/product-category/edit/${productCategory._id}` },
+        { name: "Chỉnh sửa danh mục", href: `${PATH_ADMIN}/product-category/edit/${productCategory.id}` },
     ])
-    div(class="edit")
-        form(action=`${PATH_ADMIN}/product-category/edit/${productCategory._id}?_method=PATCH`, method="post",enctype="multipart/form-data",id="form-edit")
+    div(class="edit product-category")
+        form(action=`${PATH_ADMIN}/product-category/edit/${productCategory.id}?_method=PATCH`, method="post",enctype="multipart/form-data",id="form-edit")
             h1(class="title") Thông tin chung
             div(class="general")
                 div(class="form-group")
@@ -40,25 +40,22 @@ block main
                 label(for="description") Mô tả
                 textarea(class="textarea-mce",name="description",id="description") 
                     != productCategory.description 
+           
             h1(class="title") Hình ảnh
-            div(class="form-group")
-                div(class="image form-item")
-                    div(class="image-group", id="image-group")
-                        if productCategory.thumbnails.length > 0
-                            each imgSrc in productCategory.thumbnails 
-                                div(class="image-group__preview")
-                                    img(src=imgSrc)
-                                    span(class="image__close-icon" )
-                                        i(class="fa-solid fa-circle-xmark", style="background-color: #fff; border-radius: 50%; display: block;")
-                        label(class="image__upload" for="image") 
-                            span(class="image__upload-icon")
-                                i(class="fa-solid fa-upload")
-                            |   upload
-                            input(id="image",name="thumbnails",type="file",accept="image/*")
+            div(class="single-image-wrapper", id="image-wrapper")
+                label(class="single-image__upload" for="image" style="display:none") 
+                    span(class="single-image__upload-icon")
+                        i(class="fa-solid fa-upload")
+                    |   upload
+                    input(id="image",name="thumbnails",type="file",accept="image/*")
+                div(class="single-image__preview")
+                    img(src=productCategory.thumbnail,alt=productCategory.name) 
+                    span(class="image__close-icon")
+                        i(class="fa-solid fa-circle-xmark", style="background-color: #fff; border-radius: 50%; display: block;")
             input(type="hidden",name="thumbnailDeleted",id="thumbnail-deleted")
             div(class="form-group__btn")
                 a(href="/admin/product-category" class="btn btn-primary") Quay lại
-                button(type="submit" class="btn btn-primary") Sửa Sản Phẩm 
+                button(type="submit" class="btn btn-primary") Sửa danh mục
 
 
             

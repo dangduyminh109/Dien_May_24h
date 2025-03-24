@@ -44,7 +44,7 @@ block main
             if permission.includes("update-product") || permission.includes("delete-product")
                 -var Update = permission.includes("update-product");
                 -var Delete = permission.includes("delete-product");
-                +toolbarHandle({handle,path: "product-trash",categoryTree,product:true,trash:true,Update: Update,Delete: Delete})
+                +toolbarHandle({handle,path: "product-trash",categoryTree,product:true,trash:true,Update: Update,Delete: Delete,title: "Sản phẩm"})
 
         div(class="overview-block") 
             div(class="overview-item total-products")
@@ -146,10 +146,11 @@ block main
 
                                 td(style="text-align: center")
                                     if permission.includes("update-product")
-                                        form(method="POST", action=`${PATH_ADMIN}/product-trash/restore-product/${product._id}?_method=PATCH`)
+                                        form(method="POST", action=`${PATH_ADMIN}/product-trash/restore-product/${product.id}?_method=PATCH`)
                                             button(type="submit", class="btn-primary btn") Khôi phục  
                                 td(style="text-align: center")
-                                    a(href=`${PATH_ADMIN}/product-trash/detail/${product._id}`, class="btn-warning btn") Chi tiết 
+                                    if permission.includes("view-product")
+                                        a(href=`${PATH_ADMIN}/product-trash/detail/${product.id}`, class="btn-warning btn") Chi tiết 
                                 td(style="text-align: center") 
                                     if permission.includes("delete-product")
                                         button(type="button", class="btn-destroy btn btn-danger",data-bs-toggle="modal",data-bs-id = product._id, data-bs-target="#warningDeleteModal",path="product-trash/destroy-product") Xóa vĩnh viễn  

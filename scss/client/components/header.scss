@@ -27,7 +27,7 @@
         height: 40px;
         width: 130px;
         background-color: $primary;
-        font-size: 1.4rem;
+        font-size: 1.8rem;
         line-height: 0.7;
         border-radius: 50px;
         border: none;
@@ -39,11 +39,11 @@
         }
     }
     .store-system-btn__title {
-        font-size: 0.9rem;
+        font-size: 1rem;
         color: $text-color;
     }
     .store-system-btn__desc {
-        font-size: 0.9rem;
+        font-size: 1rem;
         color: $text-color;
         display: inline-block;
     }
@@ -68,7 +68,7 @@
     }
     .search-box__input {
         flex: 1;
-        font-size: 1.4rem;
+        font-size: 1.8rem;
         border: none;
         width: 100%;
         padding-left: 20px;
@@ -107,14 +107,14 @@
         }
     }
     .hotline__title {
-        font-size: 1.2rem;
+        font-size: 1.8rem;
         color: $color-hover;
         margin-bottom: 5px;
     }
 
     .hotline__number {
         color: $primary;
-        font-size: 1.4rem;
+        font-size: 1.8rem;
         line-height: 1;
         font-weight: 600;
         transition: 0.2s;
@@ -149,7 +149,7 @@
     }
 
     .favorite-products__title {
-        font-size: 1.2rem;
+        font-size: 1.8rem;
         color: $color-hover;
         margin-bottom: 5px;
         transition: 0.2s;
@@ -158,7 +158,7 @@
         display: flex;
         align-items: center;
         color: $primary;
-        font-size: 1.4rem;
+        font-size: 1.8rem;
         line-height: 1;
         font-weight: 600;
         margin: 0;

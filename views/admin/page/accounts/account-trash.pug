@@ -41,7 +41,7 @@ block main
             if permission.includes("update-account") || permission.includes("delete-account")
                 -var Update = permission.includes("update-account");
                 -var Delete = permission.includes("delete-account");
-                +toolbarHandle({handle,path: "accounts-trash",account: true,trash: true,Delete:Delete,Update:Update})
+                +toolbarHandle({handle,path: "accounts-trash",account: true,trash: true,Delete:Delete,Update:Update,title: "Tài khoản"})
 
         div(class="overview-block") 
             each key in Object.keys(general)
@@ -89,11 +89,14 @@ block main
                                     else
                                         div(class="btn-status")
                                             p(class="btn-status__desc") #{account.status =="on" ? "Hoạt động" : "Không hoạt động"}
-                                td 
+                                td(style="text-align: center")
                                     if permission.includes("update-account")
-                                        form(method="POST", action=`${PATH_ADMIN}/accounts-trash/restore-account/${account._id}?_method=PATCH`)
+                                        form(method="POST", action=`${PATH_ADMIN}/accounts-trash/restore-account/${account.id}?_method=PATCH`)
                                             button(type="submit", class="btn-primary btn") Khôi phục  
-                                td 
+                                td(style="text-align: center")
+                                    if permission.includes("view-account")
+                                        a(href=`${PATH_ADMIN}/accounts-trash/detail/${account.id}`, class="btn-warning btn") Chi tiết
+                                td(style="text-align: center")
                                     if permission.includes("delete-account")
                                         button(type="button", class="btn-destroy btn btn-danger",data-bs-toggle="modal",data-bs-id = account._id, data-bs-target="#warningDeleteModal",path="accounts-trash/destroy-account") Xóa vĩnh viễn  
                     else  

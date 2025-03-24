@@ -93,7 +93,7 @@
     .product-category__btn {
         height: 100%;
         padding: 10px;
-        font-size: 1.2rem;
+        font-size: 1.8rem;
         color: $primary;
         background-color: #fff;
         border-radius: 50px;
@@ -154,7 +154,7 @@
     }
     .product-item__title {
         color: $text-color-2;
-        font-size: 1.4rem;
+        font-size: 1.8rem;
         text-wrap: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -167,14 +167,14 @@
         margin: 0;
     }
     .product-item__price-original {
-        font-size: 1.2rem;
+        font-size: 1.8rem;
         text-decoration: line-through;
         color: #ccc;
     }
 
     .product-item__price-discount-percent {
         color: red;
-        font-size: 1.2rem;
+        font-size: 1.8rem;
         text-decoration: none;
         margin-left: 5px;
     }

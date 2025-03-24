@@ -32,9 +32,10 @@ block main
                 b Trạng thái 
             p(class=`status ${account.status == "on" ? "active" : ""}`) #{account.status == "on" ? "Hoạt động" : "Không hoạt động"}       
         h1(class="title") Avatar
-            div(class="avatar-wrapper", id="avatar-wrapper")
-                div(class="avatar__preview")
-                    img(src=account.avatar,alt=account.fullName) 
+        div(class="single-image-wrapper", id="single-image-wrapper")
+            div(class="single-image__preview")
+                img(src=account.avatar,alt=account.fullName) 
         div(class="form-group__btn")
-            a(href="/admin/accounts" class="btn btn-primary") Quay lại
-            a(href=`/admin/accounts/edit/${account.id}` class="btn update-btn btn-primary") Cập nhật tài khoản
+            a(href=`/admin/${deleted ? "accounts-trash":"accounts"}` class="btn btn-primary") Quay lại
+            if(!deleted)
+                a(href=`/admin/accounts/edit/${account.id}` class="btn btn-primary") Sửa tài khoản

@@ -50,6 +50,19 @@ class roleController {
         });
     }
 
+    // [GET] /admin/role/detail:id
+    async detail(req, res) {
+        const roles = await Role.findOne({
+            _id: req.params.id,
+        });
+
+        res.render("./admin/page/roles/detail", {
+            pageTitle: "Role detail",
+            PATH_ADMIN: system.PATH_ADMIN,
+            roles,
+        });
+    }
+
     // [POST] /admin/roles/create
     async createPost(req, res) {
         try {

@@ -28,7 +28,7 @@ router.get(
 router.post(
     "/create",
     authorization("add-category"),
-    upload.array("thumbnails", 1),
+    upload.single("thumbnails"),
     validate,
     productCategoryController.createPost
 );
@@ -36,7 +36,7 @@ router.post(
 router.patch(
     "/edit/:id",
     authorization("update-category"),
-    upload.array("thumbnails", 12),
+    upload.single("thumbnails"),
     validate,
     productCategoryController.editPatch
 );

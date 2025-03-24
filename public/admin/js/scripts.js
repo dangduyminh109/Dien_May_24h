@@ -158,6 +158,13 @@ function handleNavigation() {
             };
         });
     }
+    // remove data-menu on logout
+    const logout = document.getElementById("logout");
+    if (logout) {
+        logout.onclick = () => {
+            sessionStorage.removeItem("data-menu");
+        };
+    }
 }
 
 /* ======================================= main ======================================= */
@@ -213,7 +220,7 @@ function handleFilterButton() {
 /* ============ upload file =========== */
 function handleFileUpload() {
     const imageGroup = document.getElementById("image-group");
-    const avatarWrapper = document.getElementById("avatar-wrapper");
+    const imageWrapper = document.getElementById("image-wrapper");
     const uploadFile = document.querySelector("input[type='file']");
     const MAX_IMAGES = 12;
     if (uploadFile && imageGroup) {
@@ -246,7 +253,7 @@ function handleFileUpload() {
             });
         };
     }
-    if (uploadFile && avatarWrapper) {
+    if (uploadFile && imageWrapper) {
         uploadFile.onchange = () => {
             var files = [...uploadFile.files];
             if (files.length === 0) return;
@@ -262,13 +269,13 @@ function handleFileUpload() {
             closeIcon.classList.add("image__close-icon");
             closeIcon.innerHTML += `<i class="fa-solid fa-circle-xmark" style="background-color: #fff; border-radius: 50%; display: block;"></i>`;
             thumbnailPreview.append(imgPreview, closeIcon);
-            thumbnailPreview.classList.add("avatar__preview");
+            thumbnailPreview.classList.add("single-image__preview");
             imgPreview.onload = () => URL.revokeObjectURL(imgPreview.src);
-            avatarWrapper.firstChild.style.display = "none";
-            avatarWrapper.prepend(thumbnailPreview);
+            imageWrapper.firstChild.style.display = "none";
+            imageWrapper.prepend(thumbnailPreview);
             closeIcon.onclick = (e) => {
-                e.target.closest(".avatar__preview").remove();
-                avatarWrapper.firstChild.style.display = "flex";
+                e.target.closest(".single-image__preview").remove();
+                imageWrapper.firstChild.style.display = "flex";
                 uploadFile.value = "";
             };
         };
@@ -473,12 +480,12 @@ function handleStatusForm() {
 function handleEditForm() {
     const thumbnailDeleted = document.getElementById("thumbnail-deleted");
     const imgCloseIcon = document.querySelectorAll(".image__close-icon");
-    const avatarWrapper = document.getElementById("avatar-wrapper");
+    const avatarWrapper = document.getElementById("image-wrapper");
     var arr = [];
     if (imgCloseIcon && avatarWrapper) {
         imgCloseIcon.forEach((item) => {
             item.onclick = (e) => {
-                e.target.closest(".avatar__preview").remove();
+                e.target.closest(".single-image__preview").remove();
                 avatarWrapper.firstChild.style.display = "flex";
                 uploadFile.value = "";
             };

@@ -11,7 +11,7 @@ block main
         { name: "Chỉnh sửa sản phẩm", href: `${PATH_ADMIN}/product/edit/${product.id}` },
     ])
     div(class="edit")
-        form(action=`${PATH_ADMIN}/product/edit/${product._id}?_method=PATCH`, method="post",enctype="multipart/form-data",id="form-edit")
+        form(action=`${PATH_ADMIN}/product/edit/${product.id}?_method=PATCH`, method="post",enctype="multipart/form-data",id="form-edit")
             h1(class="title") Thông tin chung
             div(class="general")
                 div(class="form-group")

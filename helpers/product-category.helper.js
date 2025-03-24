@@ -1,5 +1,5 @@
 const ProductCategory = require("../models/product-category.model.js");
-const { uploadMultipleImages } = require("./upload.helper.js");
+const { uploadSingleImages } = require("./upload.helper.js");
 const slugify = require("slugify");
 
 async function generalHelper(deleted = false) {
@@ -61,27 +61,16 @@ async function filterAndSort(query, findDelete = false) {
 }
 
 async function handleForm(req, edit = false) {
-    const urls = await uploadMultipleImages(req.files);
+    const url = await uploadSingleImages(req.file);
     let formData = req.body;
+    formData.thumbnail = url || "";
     if (edit) {
-        formData.thumbnailDeleted =
-            formData.thumbnailDeleted != ""
-                ? JSON.parse(formData.thumbnailDeleted)
-                : [];
         formData.status = formData.status ? "on" : "off";
-        let product = await ProductCategory.findOne({ _id: req.params.id });
-        formData.thumbnails = urls?.length
-            ? urls.concat(product.thumbnails)
-            : product.thumbnails;
-        if (formData.thumbnailDeleted.length > 0) {
-            formData.thumbnails = formData.thumbnails.filter((item) => {
-                if (formData.thumbnailDeleted.includes(item) == false) {
-                    return item;
-                }
-            });
+        if (!url) {
+            delete formData.thumbnail;
         }
     } else {
-        formData.thumbnails = urls?.length ? urls : [];
+        formData.thumbnail = url || "";
     }
     let slug = slugify(formData.name, {
         lower: true,

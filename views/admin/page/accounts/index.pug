@@ -45,7 +45,7 @@ block main
             if permission.includes("update-account") || permission.includes("delete-account")
                 -var Update = permission.includes("update-account");
                 -var Delete = permission.includes("delete-account");
-                +toolbarHandle({handle,path: "accounts",account: true,Update:Update,Delete:Delete})
+                +toolbarHandle({handle,path: "accounts",account: true,Update:Update,Delete:Delete,title: "Tài khoản"})
         
         div(class="overview-block") 
             each key in Object.keys(general)
@@ -96,9 +96,10 @@ block main
                                             p(class="btn-status__desc") #{account.status =="on" ? "Hoạt động" : "Không hoạt động"}
                                 td(style="text-align: center")
                                     if permission.includes("update-account")
-                                        a(href=`${PATH_ADMIN}/accounts/edit/${account._id}`, class="btn-primary btn") Sửa      
+                                        a(href=`${PATH_ADMIN}/accounts/edit/${account.id}`, class="btn-primary btn") Sửa      
                                 td(style="text-align: center")
-                                    a(href=`${PATH_ADMIN}/accounts/detail/${account._id}`, class="btn-warning btn") Chi tiết 
+                                    if permission.includes("view-account")
+                                        a(href=`${PATH_ADMIN}/accounts/detail/${account.id}`, class="btn-warning btn") Chi tiết 
                                 td(style="text-align: center")
                                     if permission.includes("delete-account")
                                         button(type="button", class="btn-delete btn btn-danger", data-bs-id = account._id ,data-bs-toggle="modal", data-bs-target="#warningDeleteModal",path="accounts/delete-account") Xóa 

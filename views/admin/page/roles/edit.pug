@@ -8,11 +8,11 @@ block main
     +page_header("Chỉnh Sửa Quyền", [
        { name: "Quản Lí Quyền", href: `${PATH_ADMIN}/roles` },
         { name: "Nhóm Quyền", href: `${PATH_ADMIN}/roles` },
-        { name: "Chỉnh Sửa Quyền", href: `${PATH_ADMIN}/roles/edit` },
+        { name: "Chỉnh Sửa Quyền", href: `${PATH_ADMIN}/roles/edit/${roles.id}` },
     ])
 
     div(class="edit")
-        form(action=`${PATH_ADMIN}/roles/edit/${roles._id}?_method=PATCH`, method="post",id="form-edit")
+        form(action=`${PATH_ADMIN}/roles/edit/${roles.id}?_method=PATCH`, method="post",id="form-edit")
             h1(class="title") Thông tin chung
             div(class="general")
                 div(class="form-group")

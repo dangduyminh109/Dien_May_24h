@@ -40,7 +40,7 @@ block main
 
             if permission.includes("delete-role")
                 -var Delete = permission.includes("delete-role")
-                +toolbarHandle({handle,path: "roles",categoryTree,role:true,Delete: Delete})
+                +toolbarHandle({handle,path: "roles",categoryTree,role:true,Delete: Delete,title:"Quyền"})
         
         div(class="list-roles list-table")
             table(class="list-roles__table")
@@ -64,10 +64,13 @@ block main
                                     h4(class="table-item__title") #{roles.name}
                                 td 
                                     |   !{roles.description}
-                                td 
+                                td(style="text-align: center")
                                     if permission.includes("update-role")
-                                        a(href=`${PATH_ADMIN}/roles/edit/${roles._id}`, class="btn-primary btn") Sửa      
-                                td 
+                                        a(href=`${PATH_ADMIN}/roles/edit/${roles.id}`, class="btn-primary btn") Sửa      
+                                td(style="text-align: center")
+                                    if permission.includes("view-role")
+                                        a(href=`${PATH_ADMIN}/roles/detail/${roles.id}`, class="btn-warning btn") Chi tiết 
+                                td(style="text-align: center")
                                     if permission.includes("delete-role")
                                         button(type="button", class="btn-delete btn btn-danger", data-bs-id = roles._id ,data-bs-toggle="modal", data-bs-target="#warningDeleteModal",path="roles/delete-roles") Xóa 
                     else  

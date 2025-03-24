@@ -8,9 +8,9 @@ block main
     +page_header("Chi tiết danh mục", [
         { name: "Sản phẩm", href: `${PATH_ADMIN}/product-category` },
         { name: "Danh mục sản phẩm", href: `${PATH_ADMIN}/product-category` },
-        { name: "Chi tiết danh mục", href: `${PATH_ADMIN}/product-category/detail/${productCategory._id}` },
+        { name: "Chi tiết danh mục", href: `${PATH_ADMIN}/product-category/detail/${productCategory.id}` },
     ])
-    div(class="detail")
+    div(class="detail product-category")
         h1(class="title") Thông tin chung
         div(class="general")
             div(class="form-group")
@@ -34,17 +34,13 @@ block main
                     div(class="content")!=productCategory.description
         
         h1(class="title") Hình ảnh
-        div(class="form-group")
-            div(class="image form-item")
-                div(class="image-group", id="image-group")
-                    if productCategory.thumbnails.length > 0
-                        each imgSrc in productCategory.thumbnails 
-                            div(class="image-group__preview")
-                                img(src=imgSrc)
+        div(class="single-image-wrapper", id="single-image-wrapper")
+            div(class="single-image__preview")
+                img(src=productCategory.thumbnail,alt=productCategory.name) 
         div(class="form-group__btn")
             a(href=`/admin/${deleted ? "category-trash":"product-category"}` class="btn btn-primary") Quay lại
             if(!deleted)
-                a(href=`/admin/product-category/edit/${productCategory._id}` class="btn btn-primary") Sửa Sản Phẩm 
+                a(href=`/admin/product-category/edit/${productCategory.id}` class="btn btn-primary") Sửa Sản Phẩm 
 
 
             

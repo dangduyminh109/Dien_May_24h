@@ -1,7 +1,7 @@
 
 include ./category_tree.pug
 include ./deletion_warning.pug
-mixin toolbarHandle({handle,path,categoryTree,trash=false,product=false,category=false,role=false,account=false,Update=false,Delete=false})
+mixin toolbarHandle({handle,path,categoryTree,trash=false,product=false,category=false,role=false,account=false,Update=false,Delete=false,title=""})
     div(id="toolbar__advanced-handle-box", class="toolbar__advanced-box")
         form(id="handle-update-form" class="toolbar__advanced-form", action=`${PATH_ADMIN}/${path}/update-more?_method=PATCH`,method="POST") 
             input(type="text" class="list-id" name="list-id" value="[]" style="display:none")
@@ -77,11 +77,11 @@ mixin toolbarHandle({handle,path,categoryTree,trash=false,product=false,category
                                     button(type="button" class="btn  btn-danger" data-bs-toggle="modal", data-bs-target="#warningDeleteMultipleModal") Xoá
         
     if trash
-        +formWarning("warningDeleteMultipleModal","Bạn có chắc chắn muốn <b class='warning-text'>Xóa Vĩnh Viễn</b> các sản phẩm đã chọn?<span class='warning-text'> Hành động này không thể hoàn tác!!!</span>","Xóa sản phẩm","warning-delete-multiple-modal-btn","Xóa Vĩnh Viễn")
-        +formWarning("warningRestoreMultipleModal","Bạn có chắc chắn muốn <b class='warning-text'>Khôi Phục</b> các sản phẩm này không?<span class='warning-text'>","Khôi phục sản phẩm","warning-restore-multiple-modal-btn","Khôi Phục")
+        +formWarning("warningDeleteMultipleModal",`Bạn có chắc chắn muốn <b class='warning-text'>Xóa Vĩnh Viễn</b> các ${title} đã chọn?<span class='warning-text'> Hành động này không thể hoàn tác!!!</span>`,`Xóa ${title}`,"warning-delete-multiple-modal-btn","Xóa Vĩnh Viễn")
+        +formWarning("warningRestoreMultipleModal",`Bạn có chắc chắn muốn <b class='warning-text'>Khôi Phục</b> các ${title} này không?<span class='warning-text'>`,`Khôi phục ${title}`,"warning-restore-multiple-modal-btn","Khôi Phục")
     else
-        +formWarning("warningDeleteMultipleModal","Bạn có chắc chắn muốn <b class='warning-text'>Xóa</b> các sản phẩm đã chọn?","Xóa sản phẩm","warning-delete-multiple-modal-btn","Xóa")
-    +formWarning("warningUpdateMultipleModal","Bạn có chắc chắn muốn <b class='warning-text'>Cập Nhật</b> các sản phẩm đã chọn?","Cập nhật sản phẩm","warning-update-multiple-modal-btn")
+        +formWarning("warningDeleteMultipleModal",`Bạn có chắc chắn muốn <b class='warning-text'>Xóa</b> các ${title} đã chọn?`,`Xóa ${title}`,"warning-delete-multiple-modal-btn","Xóa")
+    +formWarning("warningUpdateMultipleModal",`Bạn có chắc chắn muốn <b class='warning-text'>Cập Nhật</b> các ${title} đã chọn?`,`Cập nhật ${title}`,"warning-update-multiple-modal-btn")
     //- hidden form
     if trash
         form(id="handle-delete-form" class="toolbar__advanced-form", action=`${PATH_ADMIN}/${path}/destroy-more?_method=DELETE`,method="POST") 

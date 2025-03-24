@@ -5,6 +5,11 @@ const accountTrashController = require("../../controller/admin/Account-trash.con
 const authorization = require("../../middlewares/authorization.middleware");
 
 router.get("/", authorization("view-account"), accountTrashController.show);
+router.get(
+    "/detail/:id",
+    authorization("view-account"),
+    accountTrashController.detail
+);
 
 router.patch(
     "/restore-account/:id",

@@ -11,7 +11,7 @@
         gap: 10px;
         .permissions-block__title {
             color: $text-color-3;
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             flex: 1;
         }
         .btn-permissions {
@@ -31,11 +31,13 @@
                 border: 1px solid $text-color;
                 position: relative;
                 cursor: pointer;
+
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
                 &::before {
                     content: "L";
                     position: absolute;
-                    top: -4px;
-                    left: 5px;
                     transform: rotate(45deg) scaleX(-1);
                     display: none;
                 }
@@ -70,7 +72,7 @@
         .row-title {
             background-color: $text-color;
             color: $text-color-3;
-            font-size: 1.2rem;
+            font-size: 1.8rem;
         }
     }
 }

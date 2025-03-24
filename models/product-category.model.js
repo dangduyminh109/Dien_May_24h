@@ -11,7 +11,7 @@ const productCategorySchema = new mongoose.Schema(
         },
         status: String,
         description: String,
-        thumbnails: Array,
+        thumbnail: String,
     },
     {
         timestamps: true,

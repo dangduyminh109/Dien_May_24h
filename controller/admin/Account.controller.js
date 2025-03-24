@@ -61,7 +61,7 @@ class roleController {
             });
             const role = await Role.findOne({ _id: account.roleId });
             res.render("./admin/page/accounts/detail", {
-                pageTitle: "Detail account",
+                pageTitle: "Account detail",
                 PATH_ADMIN: system.PATH_ADMIN,
                 account,
                 role,

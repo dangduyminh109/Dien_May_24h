@@ -5,6 +5,11 @@ const rolesTrashController = require("../../controller/admin/Role-trash.controll
 const authorization = require("../../middlewares/authorization.middleware");
 
 router.get("/", authorization("view-role"), rolesTrashController.show);
+router.get(
+    "/detail/:id",
+    authorization("view-role"),
+    rolesTrashController.detail
+);
 
 router.patch(
     "/restore-roles/:id",

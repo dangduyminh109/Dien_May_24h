@@ -34,7 +34,7 @@ block main
                     a(href=`${PATH_ADMIN}/roles`,class="btn btn-primary") Quản lí quyền
             if permission.includes("delete-role")
                 -var Delete = permission.includes("delete-role")
-                +toolbarHandle({handle,path: "roles-trash",role:true,trash:true,Delete:Delete})
+                +toolbarHandle({handle,path: "roles-trash",role:true,trash:true,Delete:Delete,title:"Quyền"})
 
         div(class="list-roles list-table")
             table(class="list-roles__table")
@@ -58,11 +58,14 @@ block main
                                     h4(class="table-item__title") #{roles.name}
                                 td 
                                     |   !{roles.description}
-                                td 
+                                td(style="text-align: center")
                                     if permission.includes("update-role")
-                                        form(method="POST", action=`${PATH_ADMIN}/roles-trash/restore-roles/${roles._id}?_method=PATCH`)
+                                        form(method="POST", action=`${PATH_ADMIN}/roles-trash/restore-roles/${roles.id}?_method=PATCH`)
                                             button(type="submit", class="btn-primary btn") Khôi phục  
-                                td 
+                                td(style="text-align: center")
+                                    if permission.includes("view-role")
+                                        a(href=`${PATH_ADMIN}/roles-trash/detail/${roles.id}`, class="btn-warning btn") Chi tiết
+                                td(style="text-align: center")
                                     if permission.includes("delete-role")
                                         button(type="button", class="btn-delete btn btn-danger", data-bs-id = roles._id ,data-bs-toggle="modal", data-bs-target="#warningDeleteModal",path="roles-trash/destroy-roles") Xóa 
                     else  

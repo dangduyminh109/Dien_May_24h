@@ -3,7 +3,7 @@
     color: $text-color;
     background-color: $primary;
     margin-right: 0;
-    font-size: 1.4rem;
+    font-size: 1.8rem;
     ul {
         padding: 0;
     }
@@ -81,7 +81,7 @@
             top: 100%;
             left: auto;
             color: $text-color-2;
-            font-size: 1.4rem;
+            font-size: 1.8rem;
             background-color: #fff;
             z-index: 10;
             display: block;
@@ -105,7 +105,7 @@
                         height: 0px;
                         background-color: $color-hover;
                         transition: height 0.3s ease;
-                        transform: translateY(-50%); 
+                        transform: translateY(-50%);
                     }
                 }
                 &:hover {
@@ -195,7 +195,7 @@
     }
 
     .promotion__title {
-        font-size: 1rem;
+        font-size: 1.2rem;
         color: $color-hover;
         font-weight: 600;
         line-height: 1;

@@ -29,6 +29,26 @@ class AccountTrashController {
             currentPath,
         });
     }
+    // [GET] /admin/accounts/detail:id
+    async detail(req, res) {
+        try {
+            const account = await Account.findOneDeleted({
+                _id: req.params.id,
+            });
+            const role = await Role.findOne({ _id: account.roleId });
+            res.render("./admin/page/accounts/detail", {
+                pageTitle: "Account detail",
+                PATH_ADMIN: system.PATH_ADMIN,
+                account,
+                role,
+                deleted: true,
+            });
+        } catch (error) {
+            req.flash("error", "Có lỗi sảy ra!");
+            console.error("Error:", error);
+            res.redirect("/admin/accounts");
+        }
+    }
 
     // [PATCH] /admin/accounts-trash/restore-account
     async restore(req, res) {

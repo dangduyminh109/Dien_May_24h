@@ -23,7 +23,7 @@
         padding: 5px;
     }
     .product-category__filter__item {
-        font-size: 1.2rem;
+        font-size: 1.8rem;
     }
     .product-category__filter__select {
         cursor: pointer;
@@ -68,7 +68,7 @@
     }
     .product-item__title {
         color: $text-color-2;
-        font-size: 1.4rem;
+        font-size: 1.8rem;
         text-wrap: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -81,14 +81,14 @@
         margin: 0;
     }
     .product-item__price-original {
-        font-size: 1.2rem;
+        font-size: 1.8rem;
         text-decoration: line-through;
         color: #ccc;
     }
 
     .product-item__price-discount-percent {
         color: red;
-        font-size: 1.2rem;
+        font-size: 1.8rem;
         text-decoration: none;
         margin-left: 5px;
     }
@@ -181,7 +181,7 @@
         text-overflow: ellipsis;
     }
     .product-detail__code {
-        font-size: 1.4rem;
+        font-size: 1.8rem;
         margin: 0;
     }
     .product-detail__price-discounted {
@@ -190,14 +190,14 @@
         color: $primary;
     }
     .product-detail__price-original {
-        font-size: 1.6rem;
+        font-size: 1.8rem;
         margin: 0;
         color: #ccc;
         text-decoration: line-through;
         display: inline-block;
     }
     .product-detail__price-discount-percent {
-        font-size: 1.6rem;
+        font-size: 1.8rem;
         margin: 0;
         color: red;
     }
@@ -214,7 +214,7 @@
         width: 35px;
         height: 35px;
         color: $primary;
-        font-size: 1rem;
+        font-size: 1.8rem;
         display: block;
         &:hover {
             border: 1px solid $color-hover;
@@ -243,7 +243,7 @@
         background-color: transparent;
         border-radius: 5px;
         margin: 10px 10px 0 0;
-        font-size: 1.4rem;
+        font-size: 1.8rem;
         color: $primary;
         &:hover {
             background-color: $color-hover;

@@ -44,7 +44,7 @@ block main
             if permission.includes("update-category") || permission.includes("delete-category")
                 -var Update = permission.includes("update-category");
                 -var Delete = permission.includes("delete-category");
-                +toolbarHandle({handle,path: "product-category",categoryTree,category:true,Update: Update,Delete: Delete})
+                +toolbarHandle({handle,path: "product-category",categoryTree,category:true,Update: Update,Delete: Delete,title: "Danh mục"})
 
         div(class="overview-block") 
                 div(class="overview-item total-products")
@@ -72,7 +72,7 @@ block main
                                     input(type="checkbox" class="table-item__select" name="sort" value="1" _id=ProductCategory._id)
                                 td  
                                     div(class="table-item__name")
-                                        - var thumbnail = ProductCategory.thumbnails?.[0] || "/uploads/default-image.jpg"
+                                        - var thumbnail = ProductCategory.thumbnail|| "/uploads/default-image.jpg"
                                         img(class="table-item__img", src=thumbnail, alt=ProductCategory.name)
                                         h4(class="table-item__title") #{ProductCategory.name}
                                 td 
@@ -88,9 +88,10 @@ block main
 
                                 td(style="text-align: center")
                                     if permission.includes("update-category")
-                                        a(href=`${PATH_ADMIN}/product-category/edit/${ProductCategory._id}`, class="btn-primary btn") Sửa   
+                                        a(href=`${PATH_ADMIN}/product-category/edit/${ProductCategory.id}`, class="btn-primary btn") Sửa   
                                 td(style="text-align: center")
-                                    a(href=`${PATH_ADMIN}/product-category/detail/${ProductCategory._id}`, class="btn-warning btn") Chi tiết    
+                                    if permission.includes("view-category")
+                                        a(href=`${PATH_ADMIN}/product-category/detail/${ProductCategory.id}`, class="btn-warning btn") Chi tiết    
                                 td(style="text-align: center")
                                     if permission.includes("delete-category") 
                                         button(type="button", class="btn-delete btn btn-danger", data-bs-id = ProductCategory._id ,data-bs-toggle="modal", data-bs-target="#warningDeleteModal",path="product-category/delete-category") Xóa 
