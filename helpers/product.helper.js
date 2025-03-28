@@ -69,12 +69,16 @@ async function filterAndSort(query, findDelete = false) {
                 case "category":
                 case "status":
                 case "code":
-                    obj[key] = value; 
+                    obj[key] = value;
+                case "featured":
+                    if (value != "") {
+                        obj[key] = value == "on" ? true : false;
+                    }
+                    break;
             }
         }
         return obj;
     }, {});
-
 
     if (findDelete) filter.deleted = true;
     const queryMethod = findDelete ? "findWithDeleted" : "find";
@@ -116,12 +120,14 @@ async function handleForm(req, edit = false) {
     formData.inventory = isNaN(parseInt(formData.inventory))
         ? 0
         : parseInt(formData.inventory);
+    formData.featured = formData.featured == "on" ? true : false;
     if (edit) {
         formData.thumbnailDeleted =
             formData.thumbnailDeleted != ""
                 ? JSON.parse(formData.thumbnailDeleted)
                 : [];
         formData.status = formData.status ? "on" : "off";
+        formData.featured = formData.featured ? true : false;
         let product = await Product.findOne({ _id: req.params.id });
         formData.thumbnails = urls?.length
             ? urls.concat(product.thumbnails)

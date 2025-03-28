@@ -13,6 +13,7 @@ const productSchema = new mongoose.Schema(
         supplier: String,
         category: String,
         status: String,
+        featured: Boolean,
         description: String,
         thumbnails: Array,
     },

@@ -124,7 +124,7 @@ block main
                                         input(class="table-item__input", type="number", value=product.price, field="price",_id=product._id)
                                         form(action="", method="post") 
                                     else
-                                        div(class="btn-status")
+                                        div(class="btn-toggle")
                                             p(class="product-item__price") #{product.price.toLocaleString('vi-VN')}đ
 
                                 td 
@@ -135,15 +135,24 @@ block main
                                 
                                 td 
                                     if permission.includes("update-product")
-                                        div(class="btn-status")
+                                        div(class="btn-toggle")
                                             div(class="btn-status-toggle")
                                                     div(class="form-check form-switch")
                                                         input(class="form-check-input btn-status__input", type="checkbox", role="switch",value=product.status,_id=product._id,path="product-trash/update-status")
                                             p(class="btn-status__desc") Hoạt động     
                                     else 
-                                        div(class="btn-status")
+                                        div(class="btn-toggle")
                                             p(class="btn-status__desc") #{product.status =="on" ? "Hoạt động" : "Không hoạt động"}  
-
+                                td 
+                                    if permission.includes("update-product")
+                                        div(class="btn-toggle")
+                                            div(class="btn-toggle")
+                                                    div(class="form-check form-switch")
+                                                        input(class="form-check-input btn-featured__input", type="checkbox", role="switch",value=product.featured ? "on" : "off",_id=product._id , path="product-trash/update-featured")
+                                            p(class="btn-featured__desc") Có  
+                                    else 
+                                        div(class="btn-toggle")
+                                            p(class="btn-featured__desc") #{product.featured ? "Có" : "Không"}
                                 td(style="text-align: center")
                                     if permission.includes("update-product")
                                         form(method="POST", action=`${PATH_ADMIN}/product-trash/restore-product/${product.id}?_method=PATCH`)

@@ -133,6 +133,24 @@ class productController {
         }
     }
 
+    // [PATCH] /admin/products/update-featured
+    async updateFeaturedPatch(req, res) {
+        const featuredUpdate = req.body;
+        try {
+            await Product.updateOne(
+                { _id: featuredUpdate._id },
+                { featured: featuredUpdate.value == "on" ? true : false }
+            );
+            res.json({ success: true, message: "Cập nhật thành công!" });
+        } catch (error) {
+            res.json({
+                error: true,
+                message: "Cập nhật không thành công!",
+                err: error,
+            });
+        }
+    }
+
     // [PATCH] /admin/products/update-more
     async updateMore(req, res) {
         try {
@@ -142,6 +160,10 @@ class productController {
                 if (value != "") return [key, value];
             });
             dataUpdate = Object.fromEntries(dataUpdate);
+            if (dataUpdate.featured) {
+                dataUpdate.featured =
+                    dataUpdate.featured == "on" ? true : false;
+            }
             await Product.updateMany(
                 { _id: { $in: listIds } },
                 { $set: dataUpdate }

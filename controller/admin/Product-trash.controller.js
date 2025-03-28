@@ -30,7 +30,7 @@ class productTrashController {
             categoryTree,
         });
     }
-    
+
     // [GET] /admin/product-trash/detail:id
     async detail(req, res) {
         const product = await Product.findOneDeleted({
@@ -97,6 +97,24 @@ class productTrashController {
         }
     }
 
+    // [PATCH] /admin/products/update-featured
+    async updateFeaturedPatch(req, res) {
+        const featuredUpdate = req.body;
+        try {
+            await Product.updateOneDeleted(
+                { _id: featuredUpdate._id },
+                { featured: featuredUpdate.value == "on" ? true : false }
+            );
+            res.json({ success: true, message: "Cập nhật thành công!" });
+        } catch (error) {
+            res.json({
+                error: true,
+                message: "Cập nhật không thành công!",
+                err: error,
+            });
+        }
+    }
+
     // [PATCH] /admin/product-trash/update-more
     async updateMore(req, res) {
         try {
@@ -106,6 +124,10 @@ class productTrashController {
                 if (value != "") return [key, value];
             });
             dataUpdate = Object.fromEntries(dataUpdate);
+            if (dataUpdate.featured) {
+                dataUpdate.featured =
+                    dataUpdate.featured == "on" ? true : false;
+            }
             await Product.updateManyDeleted(
                 { _id: { $in: listIds } },
                 { $set: dataUpdate }

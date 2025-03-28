@@ -56,21 +56,30 @@ mixin toolbarFilter({filter,path,categoryTree,product=false,category=false,accou
                         label(for="status_3") Không Hoạt Động
                 if(product)
                     div(class="advanced__item") 
+                        h3(class="advanced__title") Nổi bật
+                        div(class="advanced__radio-group")
+                            input(type="radio" name="featured" id="featured_1" value="" checked = filter.featured === "" ? true:false) 
+                            label(for="featured_1") Mặc Định
+                            input(type="radio" name="featured" id="featured_2" value="on" checked = filter.featured === "on" ? true:false)
+                            label(for="featured_2") Nổi Bật
+                            input(type="radio" name="featured" id="featured_3" value="off" checked = filter.featured === "off" ? true:false)
+                            label(for="featured_3") Không Nổi Bật
+                    div(class="advanced__item-2") 
                         h3(class="advanced__title") Giá gốc
                         div(class="advanced__number-group")
                             input(type="number" class="advanced__input" name="min-original-price" placeholder="Tối thiểu" min=0 value=filter["min-original-price"]) 
                             input(type="number" class="advanced__input" name="max-original-price" placeholder="Tối đa" min=0 value=filter["max-original-price"])
-                    div(class="advanced__item-2") 
+                    div(class="advanced__item") 
                         h3(class="advanced__title") Giá bán
                         div(class="advanced__number-group")
                             input(type="number" class="advanced__input" name="min-price" placeholder="Tối thiểu" min=0 value=filter["min-price"])
                             input(type="number" class="advanced__input" name="max-price" placeholder="Tối đa" min=0 value=filter["max-price"])
-                    div(class="advanced__item") 
+                    div(class="advanced__item-2") 
                         h3(class="advanced__title") Giảm giá
                         div(class="advanced__number-group")
                             input(type="number" class="advanced__input" name="min-discount" placeholder="Tối thiểu" min=0 value=filter["min-discount"]) 
                             input(type="number" class="advanced__input" name="max-discount" placeholder="Tối đa" min=0 max=100 value=filter["max-discount"])
-                    div(class="advanced__item-2") 
+                    div(class="advanced__item") 
                         h3(class="advanced__title") Tồn kho
                         div(class="advanced__number-group")
                             input(type="number" class="advanced__input" name="min-inventory" placeholder="Tối thiểu" min=0 value=filter["min-inventory"]) 

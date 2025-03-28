@@ -47,6 +47,11 @@ router.patch(
     productController.updateStatusPatch
 );
 router.patch(
+    "/update-featured",
+    authorization("update-product"),
+    productController.updateFeaturedPatch
+);
+router.patch(
     "/update-more",
     authorization("update-product"),
     productController.updateMore

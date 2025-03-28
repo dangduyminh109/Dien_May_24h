@@ -66,13 +66,14 @@ label {
     }
 }
 
-.btn-status {
+.form-check {
+    min-height: auto;
+}
+
+.btn-toggle {
     display: flex;
     align-items: center;
     gap: 5px;
-    .btn-status__desc {
-        margin: 0;
-    }
     .form-check-input {
         cursor: pointer;
         transition: 0.2s;

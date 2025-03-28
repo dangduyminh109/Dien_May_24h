@@ -32,6 +32,11 @@ router.patch(
     productTrashController.updateStatusPatch
 );
 router.patch(
+    "/update-featured",
+    authorization("update-product"),
+    productTrashController.updateFeaturedPatch
+);
+router.patch(
     "/restore-more",
     authorization("update-product"),
     productTrashController.restoreMore

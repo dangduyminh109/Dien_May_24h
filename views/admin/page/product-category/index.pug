@@ -77,15 +77,15 @@ block main
                                         h4(class="table-item__title") #{ProductCategory.name}
                                 td 
                                     if permission.includes("update-category")
-                                        div(class="btn-status")
+                                        div(class="btn-toggle")
                                             div(class="btn-status-toggle")
                                                     div(class="form-check form-switch")
                                                         input(class="form-check-input btn-status__input", type="checkbox", role="switch",value=ProductCategory.status,_id=ProductCategory._id, path="product-category/update-status")
                                             p(class="btn-status__desc") Hoạt động          
                                     else
-                                        div(class="btn-status")
+                                        div(class="btn-toggle")
                                             p(class="btn-status__desc") #{ProductCategory.status == "on" ? "Hoạt động" : "Không hoạt động"}
-
+                
                                 td(style="text-align: center")
                                     if permission.includes("update-category")
                                         a(href=`${PATH_ADMIN}/product-category/edit/${ProductCategory.id}`, class="btn-primary btn") Sửa   

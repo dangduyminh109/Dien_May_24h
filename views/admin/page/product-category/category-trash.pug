@@ -74,13 +74,13 @@ block main
                                         h4(class="table-item__title") #{category.name}
                                 td 
                                     if permission.includes("update-category")
-                                        div(class="btn-status")
+                                        div(class="btn-toggle")
                                             div(class="btn-status-toggle")
                                                     div(class="form-check form-switch")
                                                         input(class="form-check-input btn-status__input", type="checkbox", role="switch",value=category.status,_id=category._id,path="category-trash/update-status")
                                             p(class="btn-status__desc") Hoạt động          
                                     else
-                                        div(class="btn-status")
+                                        div(class="btn-toggle")
                                             p(class="btn-status__desc") #{category.status == "on" ? "Hoạt động" : "Không hoạt động"}
                                 td(style="text-align: center")
                                     if permission.includes("update-category")

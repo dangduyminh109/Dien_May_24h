@@ -41,11 +41,11 @@ block main
                             span(class="icon-btn")
                                 i(class="fa-solid fa-plus")
                             | Thêm mới sản phẩm
-            +toolbarFilter({filter,path: "product-trash",categoryTree,product:true})
+            +toolbarFilter({filter,path: "product",categoryTree,product:true})
             if permission.includes("update-product") || permission.includes("delete-product")
                 -var Update = permission.includes("update-product");
                 -var Delete = permission.includes("delete-product");
-                +toolbarHandle({handle,path: "product-trash",categoryTree,product:true,Update: Update,Delete: Delete,title: "Sản phẩm"})
+                +toolbarHandle({handle,path: "product",categoryTree,product:true,Update: Update,Delete: Delete,title: "Sản phẩm"})
 
         div(class="overview-block") 
             div(class="overview-item total-products")
@@ -87,6 +87,7 @@ block main
                             |   Tồn kho 
                             !=pugHepper.sort("inventory", _sort,pagination.page)
                         th(scope="col") Trạng thái 
+                        th(scope="col") Nổi bật 
                 tbody
                     if listProduct.length > 0
                         each product in listProduct
@@ -135,15 +136,24 @@ block main
                                 
                                 td 
                                     if permission.includes("update-product")
-                                        div(class="btn-status")
+                                        div(class="btn-toggle")
                                             div(class="btn-status-toggle")
                                                     div(class="form-check form-switch")
                                                         input(class="form-check-input btn-status__input", type="checkbox", role="switch",value=product.status,_id=product._id , path="product/update-status")
                                             p(class="btn-status__desc") Hoạt động  
                                     else 
-                                        div(class="btn-status")
+                                        div(class="btn-toggle")
                                             p(class="btn-status__desc") #{product.status =="on" ? "Hoạt động" : "Không hoạt động"}
-
+                                td 
+                                    if permission.includes("update-product")
+                                        div(class="btn-toggle")
+                                            div(class="btn-toggle")
+                                                    div(class="form-check form-switch")
+                                                        input(class="form-check-input btn-featured__input", type="checkbox", role="switch",value=product.featured ? "on" : "off",_id=product._id , path="product/update-featured")
+                                            p(class="btn-featured__desc") Có  
+                                    else 
+                                        div(class="btn-toggle")
+                                            p(class="btn-featured__desc") #{product.featured ? "Có" : "Không"}
                                 td(style="text-align: center")
                                     if permission.includes("update-product")
                                         a(href=`${PATH_ADMIN}/product/edit/${product.id}`, class="btn-primary btn") Sửa      

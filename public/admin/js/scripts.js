@@ -338,18 +338,6 @@ function handleProductItemChange() {
 function handleStatusInput() {
     const btnStatusInput = document.querySelectorAll(".btn-status__input");
     if (btnStatusInput) {
-        window.onload = () => {
-            btnStatusInput.forEach((element) => {
-                let btnStatusDesc = element.parentNode.parentNode.nextSibling;
-                if (element.value == "on") {
-                    element.checked = true;
-                    btnStatusDesc.textContent = "Hoạt động";
-                } else {
-                    element.checked = false;
-                    btnStatusDesc.textContent = "Không hoạt động";
-                }
-            });
-        };
         btnStatusInput.forEach((element) => {
             element.onchange = debounce(() => {
                 let btnStatusDesc = element.parentNode.parentNode.nextSibling;
@@ -360,6 +348,49 @@ function handleStatusInput() {
                 } else {
                     element.value = "off";
                     btnStatusDesc.textContent = "Không hoạt động";
+                }
+                fetch(`${PATH_ADMIN}/${path}?_method=PATCH`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        value: element.value,
+                        _id: element.getAttribute("_id"),
+                    }),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.success && !data.error) {
+                            alert("success", data.message);
+                        } else {
+                            alert("error", data.message || "Có lỗi xảy ra!");
+                        }
+                    })
+                    .catch((err) => {
+                        alert("error", "Không thể kết nối đến server!");
+                        console.log("Lỗi Fetch API:", err);
+                    });
+            }, 300);
+        });
+    }
+}
+
+/* ============ handle featured =========== */
+function handleFeaturedInput() {
+    const btnFeaturedInput = document.querySelectorAll(".btn-featured__input");
+    if (btnFeaturedInput) {
+        btnFeaturedInput.forEach((element) => {
+            element.onchange = debounce(() => {
+                let btnStatusFeatured =
+                    element.parentNode.parentNode.nextSibling;
+                let path = element.getAttribute("path");
+                if (element.checked) {
+                    element.value = "on";
+                    btnStatusFeatured.textContent = "Có";
+                } else {
+                    element.value = "off";
+                    btnStatusFeatured.textContent = "Không";
                 }
                 fetch(`${PATH_ADMIN}/${path}?_method=PATCH`, {
                     method: "POST",
@@ -454,24 +485,6 @@ function handleWarningFormProduct() {
     if (warningPermissionModalBtn) {
         warningPermissionModalBtn.onclick = () => {
             document.getElementById("handle-permission-form").submit();
-        };
-    }
-}
-
-/* ============ handle status form =========== */
-function handleStatusForm() {
-    const btnStatusInFrom = document.querySelector(".btn-status-form");
-    const btnStatusDesc = document.querySelector(".btn-status__desc");
-
-    if (btnStatusInFrom && btnStatusDesc) {
-        btnStatusInFrom.onchange = () => {
-            if (btnStatusInFrom.checked) {
-                btnStatusInFrom.value = "on";
-                btnStatusDesc.textContent = "Hoạt động";
-            } else {
-                btnStatusInFrom.value = "off";
-                btnStatusDesc.textContent = "Không hoạt động";
-            }
         };
     }
 }
@@ -809,6 +822,31 @@ function handleWindowOnload() {
             }
         });
     }
+
+    // btn status
+    const btnStatusInput = document.querySelectorAll(".btn-status__input");
+    btnStatusInput.forEach((element) => {
+        let btnStatusDesc = element.parentNode.parentNode.nextSibling;
+        if (element.value == "on") {
+            element.checked = true;
+            btnStatusDesc.textContent = "Hoạt động";
+        } else {
+            element.checked = false;
+            btnStatusDesc.textContent = "Không hoạt động";
+        }
+    });
+    // btn featured
+    const btnFeaturedInput = document.querySelectorAll(".btn-featured__input");
+    btnFeaturedInput.forEach((element) => {
+        let btnStatusFeatured = element.parentNode.parentNode.nextSibling;
+        if (element.value == "on") {
+            element.checked = true;
+            btnStatusFeatured.textContent = "Có";
+        } else {
+            element.checked = false;
+            btnStatusFeatured.textContent = "Không";
+        }
+    });
 }
 
 // Initialize all handlers
@@ -823,7 +861,7 @@ function init() {
     handleFileUpload();
     handleProductItemChange();
     handleStatusInput();
-    handleStatusForm();
+    handleFeaturedInput();
     handleEditForm();
     handleResponsiveNav();
     handleWarningFormProduct();

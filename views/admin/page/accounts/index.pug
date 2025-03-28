@@ -86,13 +86,13 @@ block main
                                     +getPermission(listRoles,account.roleId)
                                 td 
                                     if permission.includes("update-account")
-                                        div(class="btn-status")
+                                        div(class="btn-toggle")
                                             div(class="btn-status-toggle")
                                                     div(class="form-check form-switch")
                                                         input(class="form-check-input btn-status__input", type="checkbox", role="switch",value=account.status,_id=account._id , path="accounts/update-status")
                                             p(class="btn-status__desc") Hoạt động 
                                     else
-                                        div(class="btn-status")
+                                        div(class="btn-toggle")
                                             p(class="btn-status__desc") #{account.status =="on" ? "Hoạt động" : "Không hoạt động"}
                                 td(style="text-align: center")
                                     if permission.includes("update-account")
