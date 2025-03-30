@@ -37,11 +37,10 @@ $bg-color-navbar-hover: #1d2531;
             color: $color-hover;
             background-color: $bg-color-navbar-hover;
         }
-
         &:focus {
             box-shadow: none;
-            background-color: $bg-color-navbar-hover;
-            color: $color-hover;
+            outline: none;
+            border: none;
         }
         &.active {
             background-color: $bg-color-navbar-hover;

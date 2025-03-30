@@ -285,24 +285,36 @@ function handleFileUpload() {
 /* ============ product change =========== */
 function handleProductItemChange() {
     const productItemIcon = document.querySelectorAll(".table-item__icon");
-
     if (productItemIcon) {
         productItemIcon.forEach((item) => {
-            item.onclick = () => {
+            item.onclick = debounce(() => {
                 let parent = item.parentNode;
                 let ProductItemInput = parent.nextSibling;
+                let currentValue = ProductItemInput.value;
                 let path = item.getAttribute("path");
                 parent.style.display = "none";
                 ProductItemInput.style.display = "block";
                 ProductItemInput.focus();
-
-                ProductItemInput.onblur = debounce(() => {
-                    parent.firstChild.textContent = `${parseFloat(
-                        ProductItemInput.value
-                    ).toLocaleString("vi-VN")}đ`;
+                ProductItemInput.onblur = () => {
+                    if (path != "product/update-order") {
+                        parent.firstChild.textContent = `${parseFloat(
+                            ProductItemInput.value
+                        ).toLocaleString("vi-VN")}đ`;
+                    } else {
+                        parent.firstChild.textContent = ProductItemInput.value;
+                    }
                     parent.style.display = "block";
                     ProductItemInput.style.display = "none";
-                    fetch(`${PATH_ADMIN}/${path}/update-price?_method=PATCH`, {
+                    if (currentValue === ProductItemInput.value) {
+                        return;
+                    }
+                    item.style.pointerEvents = "none";
+                    if (path != "product/update-order") {
+                        setTimeout(() => {
+                            item.style.pointerEvents = "auto";
+                        }, 1500);
+                    }
+                    fetch(`${PATH_ADMIN}/${path}?_method=PATCH`, {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
@@ -323,14 +335,20 @@ function handleProductItemChange() {
                                     data.message || "Có lỗi xảy ra!"
                                 );
                             }
+                            return data;
+                        })
+                        .then((data) => {
+                            if (data.reload) {
+                                window.location.reload();
+                            }
                         })
                         .catch((err) => {
                             alert("error", "Không thể kết nối đến server!");
                             console.log("Lỗi Fetch API:", err);
                         });
-                }, 300);
-            };
-        });
+                };
+            });
+        }, 3000);
     }
 }
 

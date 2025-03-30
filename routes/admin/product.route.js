@@ -42,6 +42,11 @@ router.patch(
     productController.updatePricePatch
 );
 router.patch(
+    "/update-order",
+    authorization("update-product"),
+    productController.updateOrderPatch
+);
+router.patch(
     "/update-status",
     authorization("update-product"),
     productController.updateStatusPatch

@@ -115,6 +115,55 @@ class productController {
         }
     }
 
+    // [PATCH] /admin/products/update-order
+    async updateOrderPatch(req, res) {
+        const orderUpdate = req.body;
+        let updateValue =
+            parseInt(orderUpdate.value) < 1 ? 1 : parseInt(orderUpdate.value);
+        try {
+            let products = await Product.find(
+                {},
+                { _id: 1, [orderUpdate.field]: 1 }
+            ).sort({ [orderUpdate.field]: 1 });
+            if (products.length === 0) {
+                return res.json({
+                    success: false,
+                    message: "Không có sản phẩm nào!",
+                });
+            }
+            let currentIndex = products.findIndex(
+                (p) => p._id.toString() === orderUpdate._id
+            );
+            if (currentIndex !== -1) {
+                products.splice(currentIndex, 1);
+            }
+
+            products.splice(updateValue - 1, 0, {
+                _id: orderUpdate._id,
+                order: updateValue,
+            });
+            let bulkOps = products.map((p, index) => ({
+                updateOne: {
+                    filter: { _id: p._id },
+                    update: { [orderUpdate.field]: index + 1 },
+                },
+            }));
+            await Product.bulkWrite(bulkOps);
+            res.json({
+                success: true,
+                message: "Cập nhật thành công!",
+                reload: true,
+            });
+        } catch (error) {
+            res.json({
+                error: true,
+                message: "Cập nhật không thành công!" + error,
+                err: error,
+                reload: true,
+            });
+        }
+    }
+
     // [PATCH] /admin/products/update-status
     async updateStatusPatch(req, res) {
         const statusUpdate = req.body;

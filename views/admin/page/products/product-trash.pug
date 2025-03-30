@@ -108,7 +108,7 @@ block main
                                     if permission.includes("update-product")
                                         p(class="product-item__original_price")
                                             |   #{product.original_price.toLocaleString('vi-VN')}đ
-                                            span(class="table-item__icon table-item__icon-pen" path="product-trash")
+                                            span(class="table-item__icon table-item__icon-pen" path="product-trash/update-price")
                                                 i(class="fa-solid fa-pen")
                                         input(class="table-item__input", type="number", value=product.original_price,field="original_price",_id=product._id)
                                         form(action="", method="post") 
@@ -119,7 +119,7 @@ block main
                                     if permission.includes("update-product")
                                         p(class="product-item__price")
                                             |   #{product.price.toLocaleString('vi-VN')}đ
-                                            span(class="table-item__icon table-item__icon-pen" path="product-trash")
+                                            span(class="table-item__icon table-item__icon-pen" path="product-trash/update-price")
                                                 i(class="fa-solid fa-pen")
                                         input(class="table-item__input", type="number", value=product.price, field="price",_id=product._id)
                                         form(action="", method="post") 

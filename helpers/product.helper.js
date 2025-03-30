@@ -88,8 +88,7 @@ async function filterAndSort(query, findDelete = false) {
     const sortOption =
         query.type === "asc" || query.type === "desc"
             ? { [query.filed]: query.type === "asc" ? 1 : -1 }
-            : {};
-
+            : { order: 1 };
     listProduct = await Product[queryMethod](filter)
         .skip((page - 1) * limit)
         .limit(limit)
