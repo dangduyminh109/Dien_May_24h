@@ -6,7 +6,10 @@ const paginationHelper = require("../../helpers/pagination.helper.js");
 class homeController {
     async show(req, res) {
         const categoryTree = await getCategoryTree();
-        const listProduct = await Product.find({});
+        const listProduct = await Product.find({}).sort({
+            order: 1,
+        });
+
         res.render("./client/page/home/", {
             pageTitle: "Điện Máy 24h",
             categoryTree,
@@ -15,14 +18,20 @@ class homeController {
     }
 
     async showProductByCategory(req, res) {
+        let isFeatured = req.params.slug == "featured";
         const categoryTree = await getCategoryTree();
-        const currentPath = paginationHelper(req);
-        const category = await ProductCategory.findOne({
-            slug: req.params.slug,
-        });
+        let currentPath = "";
+        let category = {};
+
+        if (!isFeatured) {
+            currentPath = paginationHelper(req);
+            category = await ProductCategory.findOne({
+                slug: req.params.slug,
+            });
+        }
         const { listProduct, pagination } = await filterAndSort(
             req.query,
-            category
+            (category = isFeatured ? null : category)
         );
         res.render("./client/page/products/", {
             pageTitle: `${req.params.slug}`,

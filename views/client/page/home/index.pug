@@ -1,5 +1,6 @@
 extends ../../layout/default.pug
 include ../../mixins/pagination.pug
+include ../../mixins/productCard.pug
 
 block main 
     main(class="home")
@@ -30,8 +31,20 @@ block main
                         img(class="banner__img", src="../../../client/images/slider_2.webp", alt="")
                     a(class="banner__link",href="")
                         img(class="banner__img", src="../../../client/images/slider_3.webp", alt="")
+           
+            //- =================================== sản phẩm nổi bật =================================
+            - const featuredProducts = utils.shuffleArray(listProduct).filter(p => p.featured).slice(0, 8)
+            if(featuredProducts)
+                section(class="product")
+                    div(class="product-header")
+                        div(class="product-title")
+                            a(class="product-title__link",href=`category/featured`) Sản phẩm nổi bật
+                    div(class="product-list row")
+                        each product in featuredProducts
+                            div(class="col-md-3 col-sm-4 col-6")
+                                +productCard(product)   
 
-            each category in categoryTree
+            each category in categoryTree                
                 section(class="product")
                     div(class="product-header")
                         div(class="product-title")
@@ -47,16 +60,5 @@ block main
                         - const filteredProducts = listProduct.filter(p => p.category == category._id || category.children.some(child => child.id == p.category)).slice(0, 12)
                         each product in filteredProducts
                             div(class="col-md-3 col-sm-4 col-6")
-                                div(class="product-item")
-                                    a(class="product-item__link",href=`/product/detail/${product.slug}`)
-                                        div(class="product-item__img-wrapper")
-                                            img(class="product-item__img", src=product.thumbnails[0], alt="") 
-                                    div(class="product-item__desc") 
-                                        a(href=`product/detail/${product.slug}`, class="product-item__link") 
-                                            h3(class="product-item__title") #{product.name}
-                                        p(class="product-item__price-discounted") #{product.price.toLocaleString('vi-VN')}đ
-                                        span(class="product-item__price-original") #{product.original_price.toLocaleString('vi-VN')}đ
-                                        span(class="product-item__price-discount-percent")  (-#{product.discount}%)   
-                    
-
+                                +productCard(product)
                                 

@@ -1,6 +1,9 @@
 const Product = require("../models/product.model");
 const { uploadMultipleImages } = require("../helpers/upload.helper.js");
 const slugify = require("slugify");
+const ProductCategory = require("../models/product-category.model.js");
+const getCategoryTree = require("./get-category-tree.helper.js");
+const mongoose = require("mongoose");
 
 async function generalHelper(deleted = false) {
     let listProduct = [];
@@ -31,35 +34,33 @@ async function filterAndSort(query, findDelete = false) {
     const limit = 5;
     let totalPage = 0;
     let page = query.page ? parseInt(query.page) : 1;
-    const filter = Object.entries(query).reduce((obj, [key, value]) => {
-        if (value !== "") {
+    const filterEntries = await Promise.all(
+        Object.entries(query).map(async ([key, value]) => {
+            if (value === "") return null;
             const numValue = Number(value);
+            let obj = {};
             switch (key) {
                 case "min-original-price":
                 case "max-original-price":
                     obj["original_price"] = {
-                        ...obj["original_price"],
                         [key.includes("min") ? "$gte" : "$lte"]: numValue,
                     };
                     break;
                 case "min-price":
                 case "max-price":
                     obj.price = {
-                        ...obj.price,
                         [key.includes("min") ? "$gte" : "$lte"]: numValue,
                     };
                     break;
                 case "min-discount":
                 case "max-discount":
                     obj.discount = {
-                        ...obj.discount,
                         [key.includes("min") ? "$gte" : "$lte"]: numValue,
                     };
                     break;
                 case "min-inventory":
                 case "max-inventory":
                     obj.inventory = {
-                        ...obj.inventory,
                         [key.includes("min") ? "$gte" : "$lte"]: numValue,
                     };
                     break;
@@ -67,18 +68,28 @@ async function filterAndSort(query, findDelete = false) {
                     obj.name = { $regex: value, $options: "i" };
                     break;
                 case "category":
+                    const listSubCategory = await getCategoryTree(value);
+                    obj.category = {
+                        $in: [
+                            new mongoose.Types.ObjectId(value),
+                            ...listSubCategory.map(
+                                (item) => new mongoose.Types.ObjectId(item._id)
+                            ),
+                        ],
+                    };
+                    break;
                 case "status":
                 case "code":
                     obj[key] = value;
+                    break;
                 case "featured":
-                    if (value != "") {
-                        obj[key] = value == "on" ? true : false;
-                    }
+                    obj[key] = value === "on";
                     break;
             }
-        }
-        return obj;
-    }, {});
+            return obj;
+        })
+    );
+    const filter = Object.assign({}, ...filterEntries.filter(Boolean));
 
     if (findDelete) filter.deleted = true;
     const queryMethod = findDelete ? "findWithDeleted" : "find";

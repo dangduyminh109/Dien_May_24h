@@ -25,7 +25,7 @@ mixin toolbarFilter({filter,path,categoryTree,product=false,category=false,accou
                         select(name="category", id="category") 
                             option(value="" selected disabled) -- chọn danh mục -- 
                                 if(categoryTree.length > 0)
-                                    +categoryTree(categoryTree)
+                                    +categoryTree(categoryTree,filter.category)
                                 else 
                                     option(value="" selected disabled) -- Chưa có danh mục nào! -- 
                     else if(category)

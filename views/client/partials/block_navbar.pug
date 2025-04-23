@@ -19,7 +19,11 @@ nav(class="nav-bar d-none d-lg-block")
                             else 
                                 li(class="category-item")
                                     a(class="category-item__name category-item__label" href=`/category/${category.slug}`) #{category.name}
-                                    
+                        li(class="category-item")
+                            a(class="category-item__name category-item__label" href=`/category/featured`)
+                                p(class="category-item__name") Sản Phẩm Nổi Bật
+
+
                 div(class="category-group-btn" id="category-group-btn")
                     span(class="category-btn", id="category-btn__prev")
                         i(class="fa-solid fa-caret-left")

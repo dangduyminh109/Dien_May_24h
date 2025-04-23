@@ -1,0 +1,15 @@
+mixin productCard(product)
+    div(class="product-item")
+        if(product.featured)
+            div(class="product-item__featured")
+                span(class="product-item__featured-icon")
+                    i(class="fa-solid fa-star")
+        a(class="product-item__link",href=`/product/detail/${product.slug}`)
+            div(class="product-item__img-wrapper")
+                img(class="product-item__img", src=product.thumbnails[0], alt="") 
+        div(class="product-item__desc") 
+            a(href=`product/detail/${product.slug}`, class="product-item__link") 
+                h3(class="product-item__title") #{product.name}
+            p(class="product-item__price-discounted") #{product.price.toLocaleString('vi-VN')}đ
+            span(class="product-item__price-original") #{product.original_price.toLocaleString('vi-VN')}đ
+            span(class="product-item__price-discount-percent")  (-#{product.discount}%)  

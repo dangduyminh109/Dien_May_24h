@@ -45,4 +45,7 @@ module.exports.index = (app) => {
         accountsTrashRouter
     );
     app.use(`${system.PATH_ADMIN}/auth`, authTrashRouter);
+    app.get(`${system.PATH_ADMIN}`, authMiddleware, (req, res) => {
+        return res.redirect(`${system.PATH_ADMIN}/dashboard`);
+    });
 };

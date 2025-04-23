@@ -11,21 +11,34 @@ async function filterAndSort(query, category) {
     } else if (query.filter === "price-desc") {
         sortOption.price = -1;
     }
-    const listCategory = await ProductCategory.find({
-        parentId: category._id,
-    }).select("_id");
+    let listIdCategory = {};
+    if (category) {
+        const listCategory = await ProductCategory.find({
+            parentId: category._id,
+        }).select("_id");
 
-    const listIdCategory = listCategory.map((category) => category._id);
+        listIdCategory = listCategory.map((category) => category._id);
+    }
 
-    const listProduct = await Product.find({
-        category: { $in: [category._id, ...listIdCategory] },
-    })
+    let findOption = {};
+    if (category) {
+        findOption.category = { $in: [category._id, ...listIdCategory] };
+    } else {
+        findOption.featured = true;
+    }
+
+    const listProduct = await Product.find(findOption)
         .sort(sortOption)
         .skip((page - 1) * limit)
         .limit(limit);
-    totalPage = await Product.countDocuments({
-        category: { $in: [category._id, ...listIdCategory] },
-    });
+
+    let countOption = {};
+    if (category) {
+        countOption.category = { $in: [category._id, ...listIdCategory] };
+    } else {
+        countOption.featured = true;
+    }
+    totalPage = await Product.countDocuments(countOption);
     return {
         listProduct,
         pagination: {

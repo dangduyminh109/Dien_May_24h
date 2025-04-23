@@ -10,6 +10,9 @@ class ProductController {
     async detail(req, res) {
         const categoryTree = await getCategoryTree();
         const product = await Product.findOne({ slug: req.params.slug });
+        const relatedProducts = await Product.find({
+            category: product.category,
+        });
         const category = await ProductCategory.findOne({
             _id: product.category,
         });
@@ -18,6 +21,7 @@ class ProductController {
             product,
             category,
             categoryTree,
+            relatedProducts,
         });
     }
 }

@@ -1,14 +1,15 @@
 extends ../../layout/default.pug
 include ../../mixins/breadcrumbs.pug
+include ../../mixins/productCard.pug
+
 block main 
     div(class="breadcrumb-nav")
         div(class="container-xl")
             +breadcrumb("Sản phẩm", [
                 { name: `Home`, href: `/` },
-                { name: `${category.name}`, href: `/product/category/${product.category}` },
-                { name: `${product.name}`, href: `product/detail/${product.slug}` },
+                { name: `${category.name}`, href: `/category/${category.slug}` },
+                { name: `${product.name}`, href: `/product/detail/${product.slug}` },
             ])
-
     div(class="product-detail")
         div(class="container-xl")
             div(class="row product-detail__content")
@@ -55,3 +56,11 @@ block main
                 h2(class="desc__title") Mô tả sản phẩm
                 div(class="desc__content")
                     |   !{product.description}
+    if relatedProducts.length > 0
+        div(class="product-related")
+            div(class="container-xl")
+                h2(class="desc__title") Sản phẩm liên quan
+                div(class="product-list row")
+                    each relatedProduct in relatedProducts
+                        div(class="col-md-2 col-sm-4 col-4")
+                            +productCard(relatedProduct)

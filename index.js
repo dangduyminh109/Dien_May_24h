@@ -11,6 +11,7 @@ const routeAdmin = require("./routes/admin/index.route");
 const database = require("./config/database.config");
 const sortMiddleware = require("./middlewares/sort.middleware");
 const pugHelperMiddleware = require("./middlewares/pugHelper.middleware");
+const utils = require("./utils");
 
 database.connect();
 
@@ -31,6 +32,8 @@ app.use(sortMiddleware);
 
 // pug Helper Middleware
 app.use(pugHelperMiddleware);
+
+app.locals.utils = utils;
 
 // tinymce
 app.use(
