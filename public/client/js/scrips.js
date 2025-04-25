@@ -175,11 +175,131 @@ function handlePaginationBtn() {
     }
 }
 
+function handleSearch() {
+    const searchBoxInput = document.getElementById("search-box__input");
+    if (searchBoxInput) {
+        const suggestBox = document.getElementById("search-box__suggest");
+        const searchResetBtn = document.getElementById(
+            "search-box__btn--reset"
+        );
+        let debouncedTimeout = null;
+        document.addEventListener("click", (e) => {
+            if (
+                !searchBoxInput.contains(e.target) &&
+                !suggestBox.contains(e.target)
+            ) {
+                suggestBox.style.display = "none";
+            }
+        });
+        searchBoxInput.onfocus = () => {
+            const suggestList = suggestBox.getElementsByTagName("ul")[0];
+            if (suggestList.children.length !== 0) {
+                suggestBox.style.display = "block";
+            }
+        };
+        searchResetBtn.onclick = () => {
+            searchBoxInput.value = "";
+            suggestBox.style.display = "none";
+            const suggestList = suggestBox.getElementsByTagName("ul")[0];
+            suggestList.innerHTML = "";
+            searchBoxInput.focus();
+        };
+
+        searchBoxInput.onkeyup = (e) => {
+            if (debouncedTimeout) {
+                clearTimeout(debouncedTimeout);
+            }
+            if (e.key === "Enter" || searchBoxInput.value.trim() === "") {
+                suggestBox.style.display = "none";
+                return;
+            }
+            debouncedTimeout = setTimeout(async () => {
+                searchResetBtn.firstChild.innerHTML =
+                    "<i class='fa-solid fa-spinner'></i>";
+                searchResetBtn.classList.add("active");
+                searchResetBtn.disabled = true;
+
+                await fetch(
+                    `/product/suggest?keyword=${searchBoxInput.value}`,
+                    {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    }
+                )
+                    .then((res) => res.json())
+                    .then((data) => {
+                        const suggestList =
+                            suggestBox.getElementsByTagName("ul")[0];
+                        suggestList.innerHTML = "";
+                        if (data.length === 0) {
+                            suggestBox.firstChild.textContent =
+                                "Không có sản phẩm nào";
+                            suggestList.style.display = "none";
+                        } else {
+                            data.forEach((item) => {
+                                suggestList.innerHTML += `
+                                    <li class="suggest-item">
+                                        <a href="/product/detail/${
+                                            item.slug
+                                        }" class="suggest-item__link">
+                                            <div class="suggest-item__wrapper">
+                                                <div class="suggest-item__thumbnail">
+                                                    <img class="suggest-item__img" src="${
+                                                        item.thumbnails[0]
+                                                    }" alt="${item.name}">
+                                                </div>
+                                                <div class="suggest-item__desc">
+                                                    <h4 class="suggest-item__title">
+                                                        ${item.name}
+                                                    </h4>
+                                                    <div class="suggest-item__price-group">
+                                                        <span class="suggest-item__price">${item.price.toLocaleString(
+                                                            "vi-VN"
+                                                        )}</span>
+                                                        <span class="suggest-item__original-price">${item.price.toLocaleString(
+                                                            "vi-VN"
+                                                        )}</span>
+                                                        <strong class="suggest-item__discount">(-${
+                                                            item.discount
+                                                        }%)</strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                `;
+                                suggestBox.firstChild.textContent =
+                                    "Gợi ý tìm kiếm";
+                                suggestBox.style.display = "block";
+                                suggestBox.firstChild.style.display = "block";
+                                suggestList.style.display = "block";
+                            });
+                        }
+                    });
+                searchResetBtn.firstChild.innerHTML =
+                    "<i class='fa-solid fa-xmark'></i>";
+                searchResetBtn.classList.remove("active");
+                searchResetBtn.disabled = false;
+            }, 500);
+        };
+    }
+}
+
+function handleDOMContentLoaded() {
+    const searchBoxInput = document.getElementById("search-box__input");
+    if (searchBoxInput) {
+        searchBoxInput.value = searchBoxInput.getAttribute("searchValue");
+    }
+}
 // Initialize all handlers
 function init() {
+    handleDOMContentLoaded();
     handleNavbar();
     handleImgProduct();
     handleProductFilter();
     handlePaginationBtn();
+    handleSearch();
 }
 document.addEventListener("DOMContentLoaded", init);

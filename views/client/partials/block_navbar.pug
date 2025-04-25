@@ -9,7 +9,7 @@ nav(class="nav-bar d-none d-lg-block")
                         each category,index in categoryTree
                             if category.children.length > 0
                                 li(class="category-item")
-                                    a(class="category-item__name category-item__label" href=`/category/${category.slug}`)
+                                    a(class="category-item__name category-item__label" href=`/product/${category.slug}`)
                                         p(class="category-item__name") #{category.name}
                                         if category.children.length > 0
                                             span(class="category-item__btn")
@@ -18,9 +18,9 @@ nav(class="nav-bar d-none d-lg-block")
                                         +categoryTree(category.children)
                             else 
                                 li(class="category-item")
-                                    a(class="category-item__name category-item__label" href=`/category/${category.slug}`) #{category.name}
+                                    a(class="category-item__name category-item__label" href=`/product/${category.slug}`) #{category.name}
                         li(class="category-item")
-                            a(class="category-item__name category-item__label" href=`/category/featured`)
+                            a(class="category-item__name category-item__label" href=`/product/featured`)
                                 p(class="category-item__name") Sản Phẩm Nổi Bật
 
 

@@ -38,7 +38,7 @@ block main
                 section(class="product")
                     div(class="product-header")
                         div(class="product-title")
-                            a(class="product-title__link",href=`category/featured`) Sản phẩm nổi bật
+                            a(class="product-title__link",href=`/product/feature`) Sản phẩm nổi bật
                     div(class="product-list row")
                         each product in featuredProducts
                             div(class="col-md-3 col-sm-4 col-6")
@@ -48,12 +48,12 @@ block main
                 section(class="product")
                     div(class="product-header")
                         div(class="product-title")
-                            a(class="product-title__link",href=`category/${category.slug}`) #{category.name}
+                            a(class="product-title__link",href=`product/${category.slug}`) #{category.name}
                         div(class="product-category")
                             each subCategory in category.children
-                                a(class="product-category__btn",href=`category/${subCategory.slug}`) #{subCategory.name}
+                                a(class="product-category__btn",href=`product/${subCategory.slug}`) #{subCategory.name}
                     div(class="product-banner")
-                        a(class="product-banner__link",href=`category/${category.slug}`)
+                        a(class="product-banner__link",href=`product/${category.slug}`)
                             img(class="product-banner__img",src=category.thumbnail, alt=category.name)
 
                     div(class="product-list row")

@@ -1,6 +1,8 @@
 /* ======================================= general ======================================= */
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 html {
     font-size: 62.5%;
@@ -52,6 +54,9 @@ li {
 }
 
 /* ============ pagination =========== */
+.pagination {
+    justify-content: center;
+}
 .pagination-btn {
     margin-top: 20px;
 
@@ -96,6 +101,12 @@ li {
     margin: 0;
     padding: 10px 0;
     row-gap: 15px;
+    .no-product {
+        color: $color-hover;
+        padding: 0;
+        font-size: 1.8rem;
+        margin: 0;
+    }
     .product-item {
         box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 4px 0px,
             rgba(0, 0, 0, 0.1) 0px 0px 1px 0px;

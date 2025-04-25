@@ -1,12 +1,27 @@
 const Product = require("../../models/product.model");
 const ProductCategory = require("../../models/product-category.model");
 const getCategoryTree = require("../../helpers/get-category-tree.helper.js");
+const { filterAndSort } = require("../../helpers/product-client.helper.js");
+const paginationHelper = require("../../helpers/pagination.helper.js");
 class ProductController {
-    show(req, res) {
+    async show(req, res) {
+        const currentPath = paginationHelper(req);
+        const categoryTree = await getCategoryTree();
+        const { listProduct, category, pageTitle, pagination } =
+            await filterAndSort(req);
         res.render("./client/page/products/", {
-            pageTitle: "products",
+            pageTitle,
+            category,
+            categoryTree,
+            listProduct,
+            pagination,
+            currentPath,
+            searchKeyWord: req.query.keyword || "",
+            currentHref: req.originalUrl,
+            query: req.query,
         });
     }
+
     async detail(req, res) {
         const categoryTree = await getCategoryTree();
         const product = await Product.findOne({ slug: req.params.slug });
@@ -23,6 +38,14 @@ class ProductController {
             categoryTree,
             relatedProducts,
         });
+    }
+
+    async suggest(req, res) {
+        let keyword = req.query.keyword || "";
+        const result = await Product.find({
+            name: { $regex: keyword, $options: "i" },
+        }).limit(5);
+        res.json(result);
     }
 }
 

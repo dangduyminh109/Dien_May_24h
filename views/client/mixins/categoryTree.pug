@@ -3,11 +3,11 @@ mixin categoryTree(subcategory,classChild="")
         each category,index in subcategory
             if(category.children.length > 0)
                 li(class="subcategory-item")
-                    a(class="subcategory-item__label" href=`/category/${category.slug}`) #{category.name}
+                    a(class="subcategory-item__label" href=`/product/${category.slug}`) #{category.name}
                     +categoryTree(category.children,"subcategory__list--child")
             else
                 li(class="subcategory-item")
-                    a(class="subcategory-item__label" href=`/category/${category.slug}`) #{category.name}
+                    a(class="subcategory-item__label" href=`/product/${category.slug}`) #{category.name}
                         
                                    
                 

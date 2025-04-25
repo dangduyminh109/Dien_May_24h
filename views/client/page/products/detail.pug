@@ -7,7 +7,7 @@ block main
         div(class="container-xl")
             +breadcrumb("Sản phẩm", [
                 { name: `Home`, href: `/` },
-                { name: `${category.name}`, href: `/category/${category.slug}` },
+                { name: `${category.name}`, href: `/product?category=${category.slug}` },
                 { name: `${product.name}`, href: `/product/detail/${product.slug}` },
             ])
     div(class="product-detail")

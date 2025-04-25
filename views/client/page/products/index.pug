@@ -8,28 +8,29 @@ block main
         div(class="container-xl")
             +breadcrumb("Sản phẩm", [
                 { name: `Home`, href: `/` },
-                { name: `${category ? category.name : "Sản Phẩm Nổi Bật"}`, href: `/category/${category ? category.slug : "featured"}` },
+                { name: `${pageTitle}`, href: `${currentHref}` },
             ])
     div(class="product-category-wrapper")
         div(class="container-xl")
             section(class="product-category")
                 div(class="product-category__header")
-                    h1(class="product-category__title") #{category ? category.name : "Sản Phẩm Nổi Bật"}
+                    h1(class="product-category__title") #{pageTitle}
                     div(class="product-category__filter")
-                        form(action=`/category/${category ? category.slug : "featured"}`, method="get") 
+                        form(action=currentHref, method="get") 
+                            input(type="text", name="keyword", value=searchKeyWord || "",class="d-none")
                             div(class="product-category__filter__item")
                                 span(class="product-category__filter__label") 
                                     i(class="fa-solid fa-sort")
                                     |   Sắp xếp:
-                                select(class="product-category__filter__select", id="product-category__filter__select",name="filter")
-                                    option(value="newest" selected=query.filter == "newest") Mới nhất
-                                    option(value="price-asc" selected=query.filter == "price-asc") Giá: Thấp đến cao
+                                select(class="product-category__filter__select", id="product-category__filter__select",name="filter",search-key=searchKeyWord)
+                                    option(value=`newest` selected=query.filter == "newest") Mới nhất
+                                    option(value=`price-asc` selected=query.filter == "price-asc") Giá: Thấp đến cao
                                     option(value="price-desc" selected=query.filter == "price-desc") Giá: Cao đến thấp
                 
                 div(class="product-list row")
                     if listProduct.length === 0
-                        div(class="no-product col-12 p-0")
-                            p(class="no-product-content") Không có sản phẩm nào
+                        div(class="no-product col-12")
+                            p(class="no-product__content") Không có sản phẩm nào
                     else
                         each product in listProduct
                             div(class="col-md-3 col-sm-4 col-6")
