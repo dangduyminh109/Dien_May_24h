@@ -1,0 +1,39 @@
+extends ../../layout/default.pug
+include ../../mixins/breadcrumbs.pug
+include ../../mixins/alert.pug
+
+block main
+    +alert(messages)
+    div(class="breadcrumb-nav")
+        div(class="container-xl")
+            +breadcrumb("Sản phẩm", [
+                { name: `Home`, href: `/` },
+                { name: `User`, href: `/user/profile` },
+                { name: `Hồ sơ`, href: `/user/profile` },
+            ])
+    
+    section(class="profile")
+        div(class="container-xl")
+            div(class="wrapper")
+                div(class="left-block")
+                    div(class="avatar")
+                        img(src="",class="avatar__img", alt="avatar")
+                    nav(class="menu")
+                        ul(class="list")
+                            li 
+                                a(class="dropdown-item",href="/admin/profile") 
+                                    span(class="dropdown-item__icon")
+                                        i(class="fa-solid fa-bell")
+                                    h3(class="dropdown-item__title") Thông báo
+                            li 
+                                a(class="dropdown-item",href="/admin/message") 
+                                    span(class="dropdown-item__icon")
+                                        i(class="fa-solid fa-receipt")
+                                    h3(class="dropdown-item__title") Đơn mua
+                div(class="right-block")
+                    h1(class="title") Hồ sơ của tôi
+                    hr
+                    table
+                        tr
+                            td 
+

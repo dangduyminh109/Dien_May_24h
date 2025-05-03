@@ -5,6 +5,7 @@ const { filterAndSort } = require("../../helpers/product-client.helper.js");
 const paginationHelper = require("../../helpers/pagination.helper.js");
 class ProductController {
     async show(req, res) {
+        const user = req.session.user || req.user || null;
         const currentPath = paginationHelper(req);
         const categoryTree = await getCategoryTree();
         const { listProduct, category, pageTitle, pagination } =
@@ -16,6 +17,7 @@ class ProductController {
             listProduct,
             pagination,
             currentPath,
+            user,
             searchKeyWord: req.query.keyword || "",
             currentHref: req.originalUrl,
             query: req.query,
@@ -23,6 +25,7 @@ class ProductController {
     }
 
     async detail(req, res) {
+        const user = req.session.user || req.user || null;
         const categoryTree = await getCategoryTree();
         const product = await Product.findOne({ slug: req.params.slug });
         const relatedProducts = await Product.find({
@@ -35,6 +38,7 @@ class ProductController {
             pageTitle: "product detail",
             product,
             category,
+            user,
             categoryTree,
             relatedProducts,
         });

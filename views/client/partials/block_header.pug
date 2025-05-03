@@ -1,13 +1,10 @@
 header(class="header")
     div(class="container-xl")
-        div(class="wrapper row")
-            div(class="left-box col-lg-2 col-md-3 col-sm-4 col-5")
+        div(class="wrapper")
+            div(class="left-box")
                 a(class="logo__link" href="/") 
                     img(class="logo__img",src="https://bizweb.dktcdn.net/100/488/001/themes/910675/assets/logo.png?1735792319782", alt="logo") 
-            div(class="middle-box col-lg-6 col-md-12")
-                button(class="store-system-btn d-lg-block d-none")
-                    small(class="store-system-btn__title") Hệ thống cửa hàng
-                    b(class="store-system-btn__desc") (8 chi nhánh)
+            div(class="middle-box")
                 div(class="search-wrapper d-md-flex")
                     form(class="search-box",action="/product", method="get") 
                         input(class="search-box__input",id="search-box__input",type="text",name="keyword", placeholder="Bạn muốn tìm gì?", value="", autocomplete="off",searchValue=`${searchKeyWord || ""}`)
@@ -21,13 +18,7 @@ header(class="header")
                         p(class="suggest__title") Gợi ý tìm kiếm
                         ul(class="suggest-list")
                                             
-            div(class="right-box col-lg-4 col-md-3 col-sm-8 col-7")
-                div(class="hotline d-none d-lg-flex")
-                    div(class="hotline__icon")
-                        i(class="fa-solid fa-phone-volume")
-                    div(class="hotline__desc")
-                        p(class="hotline__title") Hotline
-                        a(class="hotline__number", href="/") 1900 2345
+            div(class="right-box")
                 a(href="/",class="favorite-products")
                     div(class="favorite-products__icon")
                         i(class="fa-regular fa-heart")
@@ -36,10 +27,146 @@ header(class="header")
                         p(class="favorite-products__detail") 
                             span(class="favorite-products__quantity") 0 
                             | sản phẩm
+                if (user)
+                    div(class="user-wrapper")
+                        button(type="button",class="btn-user btn btn-danger dropdown-toggle",data-bs-toggle="dropdown",aria-expanded="false") 
+                            div(class="user__thumbnail")
+                                img(class="user__img",src=user.avatar || "/uploads/default-image.jpg", alt="avatar")
+                            h2(class="user__name d-none d-md-block") #{user.name}
+                            span(class="user__icon d-none d-md-block") 
+                                i(class="fa-solid fa-caret-down")
+                        ul(class="dropdown-menu")
+                            li 
+                                a(class="dropdown-item",href="/user/profile") 
+                                    span(class="dropdown-item__icon")
+                                        i(class="fa-regular fa-user")
+                                    h3(class="dropdown-item__title") Hồ sơ
+                            li 
+                                a(class="dropdown-item",href="/admin/profile") 
+                                    span(class="dropdown-item__icon")
+                                        i(class="fa-solid fa-bell")
+                                    h3(class="dropdown-item__title") Thông báo
+                            li 
+                                a(class="dropdown-item",href="/message") 
+                                    span(class="dropdown-item__icon")
+                                        i(class="fa-solid fa-receipt")
+                                    h3(class="dropdown-item__title") Đơn mua
+                            li 
+                                hr(class="dropdown-divider")
+                            li 
+                                a(class="dropdown-item",href="/auth/logout", id="logout") 
+                                    span(class="dropdown-item__icon")
+                                        i(class="fa-solid fa-arrow-right-from-bracket")
+                                    h3(class="dropdown-item__title") Đăng xuất
+                        
+                if(!user)
+                    button(type="button", class="user", data-bs-toggle="modal" data-bs-target="#loginModal")
+                        i(class="fa-regular fa-user")
+                    div(class="modal fade modal-login", id="loginModal", tabindex="-1", aria-labelledby="loginModalLabel", aria-hidden="true")
+                        div(class="modal-dialog modal-md")
+                            div(class="modal-content")
+                                div(class="modal-header")
+                                    div(class="login__logo")
+                                        img(class="logo__img",src="https://bizweb.dktcdn.net/100/488/001/themes/910675/assets/logo.png?1735792319782", alt="logo") 
+                                    button(class="btn-close", type="button", data-bs-dismiss="modal", aria-label="Close")
+                                div(class="modal-body")
+                                    div(class="auth",id="auth")
+                                        div(class="block__forgot")
+                                            h1(class="modal-title") Quên mật khẩu
+                                            form(action="/auth/forgot", method="post",class="authForm") 
+                                                div(class="form-group")
+                                                    input(type="email", class="email", class="form-control",name="email", placeholder="Email",required="true",isForgot="true")
+                                                    small(class="form-text") Vui lòng nhập email
+                                                div(class="form-group row")
+                                                    div(class="col-8")
+                                                        input(type="text",name="confirm", class="confirm", class="form-control", placeholder="Mã xác nhận",autocomplete="off",required="true")
+                                                        small(class="form-text") Vui lòng nhập mã xác nhận
+                                                    div(class="col-4")
+                                                        button(type="button", class="btn btn-primary btn-confirm") Gửi mã
+                                                div(class="form-group")
+                                                    div(class="password__group")
+                                                        input(type="password",class="form-control",name="password",placeholder="Mật khẩu",autocomplete="off",required="true")
+                                                        span(class="password__icon")
+                                                            i(class="fa-solid fa-eye-slash")
+                                                    small(class="form-text") Vui lòng nhập mật khẩu
+                                                div(class="form-group")
+                                                    div(class="password__group")    
+                                                        input(type="password",class="form-control",name="passwordConfirm",placeholder="Xác nhận mật khẩu",autocomplete="off",required="true")
+                                                        span(class="password__icon")
+                                                            i(class="fa-solid fa-eye-slash")
+                                                    small(class="form-text") Vui lòng xác nhận mật khẩu
+                                                button(type="submit", class="btn btn-primary btn-login btn-submit-auth") Đổi mật khẩu
+                                                div(class="auth-link") Bạn đã nhớ mật khẩu? 
+                                                    p(class="auth-link__btn",id="forgot-link__btn") Đăng nhập
+                                                
+                                        div(class="block__login")
+                                            h1(class="modal-title") Đăng nhập
+                                            form(action="/auth/login", method="post", class="authForm") 
+                                                div(class="form-group")
+                                                    input(type="email", class="email", class="form-control", id="email", placeholder="Email",required="true",name="email")
+                                                    small(class="form-text") Vui lòng nhập email
+                                                div(class="form-group")
+                                                    div(class="password__group")
+                                                        input(type="password",class="form-control",name="password",placeholder="Mật khẩu",autocomplete="off",required="true")
+                                                        span(class="password__icon")
+                                                            i(class="fa-solid fa-eye-slash")
+                                                    small(class="form-text") Vui lòng nhập mật khẩu
+                                                button(type="submit", class="btn btn-primary btn-login btn-submit-auth") Đăng nhập
+                                                p(class="forgot-password" id="login-link__btn--forgot") Quên mật khẩu?
+                                                div(class="line-or")
+                                                    div(class="line-or__line")
+                                                    span(class="line-or__text") Hoặc
+                                                    div(class="line-or__line")
+                                                div(class="social-login")
+                                                    a(href="/auth/google",class="social-login__item google")
+                                                        span(class="social-login__icon")
+                                                            i(class="fa-brands fa-google")
+                                                        | Google
+                                                    a(href="/auth/facebook",class="social-login__item facebook")
+                                                        span(class="social-login__icon")
+                                                            i(class="fa-brands fa-facebook-f")
+                                                        | Facebook
+                                                div(class="auth-link") Bạn chưa có tài khoản? 
+                                                    p(class="auth-link__btn", id="login-link__btn--register") Đăng ký
 
-                a(href="/", class="user")
-                    i(class="fa-regular fa-user")
-
+                                        div(class="block__register")
+                                            h1(class="modal-title") Đăng kí
+                                            form(action="/auth/register", method="post",class="authForm") 
+                                                div(class="form-group")
+                                                    input(type="name", class="name", class="form-control", id="name",name="name", placeholder="Họ tên",autocomplete="off",required="true")
+                                                    small(class="form-text") Vui lòng nhập họ tên
+                                                div(class="form-group row")
+                                                    div(class="col-6")
+                                                        input(type="email", class="email", class="form-control",name="email", placeholder="Email",required="true")
+                                                        small(class="form-text") Vui lòng nhập email
+                                                    div(class="col-6")
+                                                        div(class="password__group")
+                                                            input(type="password",class="form-control",name="password",placeholder="Mật khẩu",autocomplete="off",required="true")
+                                                            span(class="password__icon")
+                                                                i(class="fa-solid fa-eye-slash")
+                                                        small(class="form-text") Vui lòng nhập mật khẩu
+                                                div(class="form-group row")
+                                                    div(class="col-8")
+                                                        input(type="text",name="confirm", class="confirm", class="form-control", placeholder="Mã xác nhận",autocomplete="off",required="true")
+                                                        small(class="form-text") Vui lòng nhập mã xác nhận
+                                                    div(class="col-4")
+                                                        button(type="button", class="btn btn-primary btn-confirm") Gửi mã
+                                                button(type="submit", class="btn btn-primary btn-login btn-submit-auth") Đăng Kí
+                                                div(class="line-or")
+                                                    div(class="line-or__line")
+                                                    span(class="line-or__text") Hoặc
+                                                    div(class="line-or__line")
+                                                div(class="social-login")
+                                                    a(href="/auth/google",class="social-login__item google")
+                                                        span(class="social-login__icon")
+                                                            i(class="fa-brands fa-google")
+                                                        | Google
+                                                    a(href="/auth/facebook",class="social-login__item facebook")
+                                                        span(class="social-login__icon")
+                                                            i(class="fa-brands fa-facebook-f")
+                                                        | Facebook
+                                                div(class="auth-link") Bạn đã có tài khoản? 
+                                                    p(class="auth-link__btn",id="register-link__btn") Đăng nhập
                 a(href="/",class="cart")
                     span(class="cart__quantity") 0
                     i(class="fa-solid fa-cart-shopping")

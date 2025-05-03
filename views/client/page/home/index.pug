@@ -1,8 +1,10 @@
 extends ../../layout/default.pug
 include ../../mixins/pagination.pug
 include ../../mixins/productCard.pug
+include ../../mixins/alert.pug
 
 block main 
+    +alert(messages)
     main(class="home")
         div(class="container-xl")
             div(class="row slide-banner")

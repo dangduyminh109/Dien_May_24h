@@ -2,8 +2,10 @@ extends ../../layout/default.pug
 include ../../mixins/breadcrumbs.pug
 include ../../mixins/pagination.pug
 include ../../mixins/productCard.pug
+include ../../mixins/alert.pug
 
-block main 
+block main
+    +alert(messages)
     div(class="breadcrumb-nav")
         div(class="container-xl")
             +breadcrumb("Sản phẩm", [

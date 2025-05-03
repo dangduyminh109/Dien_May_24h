@@ -52,8 +52,8 @@ header(class="header")
                 i(class="fa-regular fa-message")
 
             //- btn dropdown
-            button(type="button",class="admin btn btn-danger dropdown-toggle",data-bs-toggle="dropdown",aria-expanded="false") 
-                img(class="admin__img",src=user.avatar, alt="avatar")
+            button(type="button",class="btn-admin btn btn-danger dropdown-toggle",data-bs-toggle="dropdown",aria-expanded="false") 
+                img(class="admin__img",src=user.avatar || "/uploads/default-image.jpg", alt="avatar")
                 h2(class="admin__name") #{user.fullName}
                 span(class="admin__icon") 
                     i(class="fa-solid fa-caret-down")
@@ -84,4 +84,4 @@ header(class="header")
                     a(class="dropdown-item",href="/admin/auth/logout", id="logout") 
                         span(class="dropdown-item__icon")
                             i(class="fa-solid fa-arrow-right-from-bracket")
-                        h3(class="dropdown-item__title") Logout
+                        h3(class="dropdown-item__title") Đăng xuất

@@ -1,20 +1,17 @@
-const Product = require("../../models/product.model");
+const User = require("../../models/user.model.js");
+
 const getCategoryTree = require("../../helpers/get-category-tree.helper");
 
-class homeController {
+class UserController {
     async show(req, res) {
         const categoryTree = await getCategoryTree();
-        const listProduct = await Product.find({}).sort({
-            order: 1,
-        });
         const user = req.session.user || req.user || null;
-        res.render("./client/page/home/", {
+        res.render("./client/page/user/", {
             pageTitle: "Điện Máy 24h",
             categoryTree,
-            listProduct,
             user,
         });
     }
 }
 
-module.exports = new homeController();
+module.exports = new UserController();
