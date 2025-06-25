@@ -36,6 +36,16 @@
             height: 100%;
         }
     }
+    .offer__item {
+        padding: 5px;
+    }
+
+    .shopping-cart {
+        .right-box,
+        .left-box {
+            padding: 5px;
+        }
+    }
 }
 
 /* ipad */
@@ -81,6 +91,24 @@
         }
         .logo__img {
             height: 40px;
+        }
+    }
+    .offer__item {
+        flex-shrink: 0;
+    }
+
+    .special-item {
+        padding: 10px;
+    }
+
+    .shopping-cart {
+        .order-item__img {
+            height: 50px !important;
+            width: 50px !important;
+        }
+
+        .order-item {
+            gap: 15px !important;
         }
     }
 }
@@ -159,6 +187,16 @@
         }
         .desc__content {
             font-size: 1.8rem;
+        }
+    }
+    .order-item__img {
+        height: 40px;
+        width: 40px;
+    }
+    .shopping-cart {
+        .order-item__content--right {
+            flex: 1;
+            justify-content: end !important;
         }
     }
 }

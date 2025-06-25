@@ -1,0 +1,276 @@
+/* ============================================= empty-cart ============================================= */
+.empty-cart {
+    margin: 20px 0;
+    color: $text-color-2;
+    .empty-cart__text {
+        padding: 10px;
+        border: 1px dashed $primary;
+        color: $primary;
+    }
+
+    .empty-cart__content {
+        text-align: center;
+    }
+
+    .empty-cart__icon-1 {
+        font-size: 15rem;
+        text-align: center;
+        position: relative;
+        color: #000;
+    }
+
+    .empty-cart__icon-2 {
+        position: absolute;
+        top: -16%;
+        right: -12%;
+        font-size: 8rem;
+        color: crimson;
+    }
+
+    .empty-cart__title {
+        font-weight: 600;
+    }
+
+    .empty-cart__desc {
+        color: $text-color-2;
+    }
+
+    .empty-cart__btn {
+        border: 1px solid $primary;
+        padding: 5px 10px;
+        border-radius: 2px;
+        transition: 0.3s;
+        &:hover {
+            background-color: $color-hover;
+            border: 1px solid $color-hover;
+            color: #fff;
+        }
+    }
+}
+
+.shopping-cart {
+    .shopping-cart__wrapper {
+        padding: 20px 0 50px;
+    }
+    .shopping-cart__title {
+        font-size: 1.8rem;
+        background-color: #2e80ce;
+        border-radius: 0 20px 20px 0;
+        padding: 5px 25px 5px 10px;
+        text-transform: uppercase;
+        display: inline-block;
+        color: #fff;
+        margin: 0 0 10px 0;
+    }
+
+    .left-box {
+        padding-right: 20px;
+        color: $text-color-2;
+    }
+
+    .shopping-cart__process-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .shopping-cart__process {
+        flex: 1;
+        height: 5px;
+        background-color: $primary;
+        border-radius: 999px;
+    }
+
+    .shopping-cart__voucher {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: $primary;
+        padding: 10px;
+
+        .shopping-cart__voucher-text {
+            text-transform: uppercase;
+            color: $text-color;
+            margin: 0;
+        }
+
+        small {
+            font-weight: 600;
+            color: $text-color;
+        }
+    }
+
+    .btn-copy {
+        border-radius: 999px;
+        background-color: #fff;
+        color: $text-color-2;
+        padding: 2px 10px;
+        box-shadow: $box-shadow 0px 3px 8px;
+        transition: 0.2s;
+
+        &:hover {
+            background-color: $color-hover;
+            color: $text-color;
+        }
+    }
+
+    .order-list {
+        margin-top: 20px;
+
+        .order-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+            flex-wrap: wrap;
+            &:last-child {
+                border-bottom: none;
+            }
+
+            .order-item__icon {
+                color: $text-color-2;
+                cursor: pointer;
+                padding: 5px 10px;
+            }
+
+            .order-item__img {
+                height: 60px;
+                width: 60px;
+                object-fit: contain;
+            }
+
+            .order-item__info {
+                flex: 1;
+
+                small {
+                    color: $text-color-2;
+                }
+            }
+
+            .order-item__name {
+                font-size: 1.6rem;
+                color: $text-color-2;
+                font-weight: 600;
+                margin: 0;
+                display: block;
+                transition: 0.2s;
+
+                &:hover {
+                    color: $color-hover;
+                }
+            }
+
+            .order-item__price {
+                color: $primary;
+                margin: 0;
+            }
+
+            .order-item__content {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+        .order-item__label {
+            margin-top: 20px;
+        }
+
+        .order-item__note {
+            display: block;
+            width: 100%;
+            height: 40px;
+        }
+        .quantity-control {
+            height: 35px;
+        }
+    }
+
+    .right-box {
+        background-color: #f5f5f5;
+        padding: 20px;
+        color: #000;
+
+        .right-box__title {
+            color: $primary;
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.6rem;
+            text-transform: uppercase;
+        }
+
+        .total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+
+            .total__text {
+                text-transform: uppercase;
+            }
+
+            .total__price {
+                color: $primary;
+                text-align: end;
+                line-height: 1;
+            }
+
+            .total__detail small {
+                color: $text-color-2;
+                font-weight: 400;
+            }
+        }
+
+        .discount {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .discount__code {
+                .btn-discount {
+                    border: none;
+                    background-color: transparent;
+                    font-weight: 600;
+                    color: $primary;
+                }
+            }
+        }
+
+        .pay-btn {
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            transition: 0.3s;
+            padding: 5px 30px;
+            text-align: center;
+            background-color: $primary;
+            color: $text-color;
+            border: 1px solid $primary;
+
+            &:hover {
+                background-color: $color-hover;
+                color: $text-color;
+                border: 1px solid $color-hover;
+            }
+        }
+    }
+}
+
+/* -------- offcanvas -------- */
+.offcanvas-header {
+    justify-content: inherit;
+    border-bottom: 1px solid #ccc;
+    padding: 5px 10px;
+}
+
+.offcanvas-title {
+    flex: 1;
+    text-align: center;
+    font-weight: 600;
+    color: $text-color-2;
+}
+
+.voucher__list {
+    flex-wrap: wrap;
+}

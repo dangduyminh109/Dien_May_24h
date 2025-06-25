@@ -12,28 +12,42 @@ block main
                 { name: `Hồ sơ`, href: `/user/profile` },
             ])
     
-    section(class="profile")
+    main(class="profile")
         div(class="container-xl")
-            div(class="wrapper")
-                div(class="left-block")
-                    div(class="avatar")
-                        img(src="",class="avatar__img", alt="avatar")
-                    nav(class="menu")
-                        ul(class="list")
+            div(class="wrapper row")
+                div(class="left-box col-12 col-md-4 col-lg-3")                       
+                    div(class="profile-box")
+                        div(class="profile-box__avatar")
+                            img(src=user.avatar || "/uploads/default-image.jpg", alt='Avatar')
+                        div(class="profile-box__text")
+                            h2(class="profile-box__name") #{user.name || 'Chưa cập nhật'}
+                            a(href="/user/profile/edit", class="profile-box__link") 
+                                span(class="icon icon-edit") 
+                                    i(class="fas fa-edit")
+                                | Chỉnh sửa hồ sơ
+                    hr
+                    div(class="profile-sidebar")
+                        ul(class="profile-sidebar__list")
                             li 
-                                a(class="dropdown-item",href="/admin/profile") 
+                                a(class="dropdown-item",href="/user/profile") 
+                                    span(class="dropdown-item__icon")
+                                        i(class="fa-regular fa-user")
+                                    p(class="dropdown-item__title") Hồ sơ
+                            li 
+                                a(class="dropdown-item",href="/user/message") 
                                     span(class="dropdown-item__icon")
                                         i(class="fa-solid fa-bell")
-                                    h3(class="dropdown-item__title") Thông báo
+                                    p(class="dropdown-item__title") Thông báo
                             li 
-                                a(class="dropdown-item",href="/admin/message") 
+                                a(class="dropdown-item",href="/cart") 
                                     span(class="dropdown-item__icon")
                                         i(class="fa-solid fa-receipt")
-                                    h3(class="dropdown-item__title") Đơn mua
-                div(class="right-block")
-                    h1(class="title") Hồ sơ của tôi
-                    hr
-                    table
-                        tr
-                            td 
-
+                                    p(class="dropdown-item__title") Đơn mua
+                            li 
+                                hr(class="dropdown-divider")
+                            li 
+                                a(class="dropdown-item",href="/auth/logout", id="logout") 
+                                    span(class="dropdown-item__icon")
+                                        i(class="fa-solid fa-arrow-right-from-bracket")
+                                    p(class="dropdown-item__title") Đăng xuất
+                div(class="right-box col-12 col-md-8 col-lg-9")

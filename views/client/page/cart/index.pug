@@ -1,0 +1,88 @@
+extends ../../layout/default.pug
+include ../../mixins/breadcrumbs.pug
+include ../../mixins/alert.pug
+
+block main
+    +alert(messages)
+    div(class="breadcrumb-nav")
+        div(class="container-xl")
+            +breadcrumb("Giỏ hàng", [
+                { name: `Home`, href: `/` },
+                { name: `Giỏ Hàng`, href: `/cart` },
+            ])
+    if ((!user || !user.cart || user.cart.length < 1) && cart.length < 1)
+        main(class="empty-cart")
+            div(class="container")
+                p(class="empty-cart__text")
+                    span(class="empty-cart__text-icon")
+                        i(class="fa-solid fa-tag")
+                        | Freeship với đơn hàng trên 5.000.000đ. Mua sắm ngay nào!!!
+                div(class="empty-cart__content")
+                    span(class="empty-cart__icon-1")
+                        i(class="fa-solid fa-cart-shopping")
+                        span(class="empty-cart__icon-2")
+                            i(class="fa-solid fa-circle-xmark")
+                    h2(class="empty-cart__title") “Hổng” có gì trong giỏ hết
+                    p(class="empty-cart__desc") Về trang cửa hàng để chọn mua sản phẩm bạn nhé!!
+                    a(class="primary-btn empty-cart__btn" href="/") Mua sắm ngay
+    else 
+        main(class="shopping-cart")
+            div(class="container-xl")
+                div(class="shopping-cart__wrapper")
+                    h1(class="shopping-cart__title") Giỏ hàng
+                    div(class="row")
+                        div(class="left-box col-12 col-lg-8")
+                            div(class="shopping-cart__process-wrapper")
+                                div(class="shopping-cart__process")
+                                span 100%
+                            div(class="shopping-cart__voucher")
+                                p(class="shopping-cart__voucher-text")
+                                    span(class="shopping-cart__voucher-icon")
+                                        i(class="fa-solid fa-tag")
+                                    | EGAFREESHIP
+                                button(class="btn-copy") Sao chép
+                            small Chúc mừng! Đơn hàng của bạn đã đủ điều kiện được Freeship 🎉
+                            div(class="order-list")
+                                - let listItemCart = [];
+                                if(user)
+                                    - listItemCart = user.cart || [];
+                                else if(cart)
+                                    - listItemCart = cart;
+                                each item in listItemCart
+                                    - quantity = item.quantity || 1;
+                                    if(user)
+                                        - item = item.productId;
+                                    else 
+                                        - item = item.product;
+                                    div(class="order-item")
+                                        div(class="order-item__content")
+                                            a(href=`/cart/delete/${item._id}`)
+                                                span(class="order-item__icon")
+                                                    i(class="fa-solid fa-xmark")
+                                            a(href=`/product/detail/${item.slug}`)
+                                                img(class="order-item__img" src=item.thumbnails[0] || "/uploads/default-image.jpg" alt=item.name)
+                                            div(class="order-item__info")
+                                                a(class="order-item__name" href=`/product/detail/${item.slug}`) #{item.name}
+                                        div(class="order-item__content order-item__content--right")
+                                            p(class="order-item__price" , data-price=item.price) #{item.price.toLocaleString('vi-VN')}đ
+                                            div(class="quantity-control")
+                                                button(class="quantity-control__btn quantity-control__btn--decrease")
+                                                    span
+                                                        i(class="fa-solid fa-minus")
+                                                input(class="quantity-control__input" type="text" value=quantity name="quantity-item")
+                                                button(class="quantity-control__btn quantity-control__btn--increase")
+                                                    span
+                                                        i(class="fa-solid fa-plus")
+                                label(class="order-item__label" for="note") Ghi chú đơn hàng
+                                input(class="order-item__note" id="note" type="text")
+                        div(class="right-box col-12 col-lg-4")
+                            h4(class="right-box__title") HÓA ĐƠN
+                            div(class="total")
+                                p(class="total__text") Tổng cộng
+                                div(class="total__detail")
+                                    if(user)
+                                        p(class="total__price", id="total__price") #{listItemCart.reduce((total, item) => total + item.productId.price * item.quantity, 0).toLocaleString('vi-VN')}
+                                    else 
+                                        p(class="total__price", id="total__price") #{listItemCart.reduce((total, item) => total + item.product.price * item.quantity, 0).toLocaleString('vi-VN')}
+                                    small (Đã bao gồm VAT nếu có)
+                            a(class="primary-btn pay-btn" href="/payment.html") thanh toán

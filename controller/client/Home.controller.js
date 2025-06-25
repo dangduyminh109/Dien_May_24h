@@ -13,6 +13,7 @@ class homeController {
             categoryTree,
             listProduct,
             user,
+            cart: req.session.cart || [],
         });
     }
 }

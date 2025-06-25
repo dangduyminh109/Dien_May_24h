@@ -18,6 +18,7 @@ class ProductController {
             pagination,
             currentPath,
             user,
+            cart: req.session.cart || [],
             searchKeyWord: req.query.keyword || "",
             currentHref: req.originalUrl,
             query: req.query,
@@ -39,6 +40,7 @@ class ProductController {
             product,
             category,
             user,
+            cart: req.session.cart || [],
             categoryTree,
             relatedProducts,
         });

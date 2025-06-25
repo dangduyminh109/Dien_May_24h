@@ -55,12 +55,6 @@ function handleNavbar() {
 
 function handleImgProduct() {
     const thumbnails = document.querySelectorAll(".product-detail__thumb");
-    const productDetailQuantityBtnPrev = document.getElementById(
-        "product-detail__quantity-btn-prev"
-    );
-    const productDetailQuantityBtnNext = document.getElementById(
-        "product-detail__quantity-btn-next"
-    );
     const carouselItem = document.querySelectorAll(".carousel-item");
     const carousel = document.querySelector(
         "#product-detail__img-preview-carousel"
@@ -88,27 +82,6 @@ function handleImgProduct() {
         });
     }
 
-    if (productDetailQuantityBtnPrev) {
-        productDetailQuantityBtnPrev.onclick = () => {
-            const productDetail__quantity = document.getElementById(
-                "product-detail__quantity-input"
-            );
-            if (productDetail__quantity.value > 1) {
-                productDetail__quantity.value--;
-            }
-        };
-    }
-    if (productDetailQuantityBtnNext) {
-        productDetailQuantityBtnNext.onclick = () => {
-            const productDetail__quantity = document.getElementById(
-                "product-detail__quantity-input"
-            );
-            const max = productDetail__quantity.getAttribute("max");
-            if (parseInt(productDetail__quantity.value) < max) {
-                productDetail__quantity.value++;
-            }
-        };
-    }
     if (carousel) {
         carousel.addEventListener("slid.bs.carousel", () => {
             carouselItem.forEach((item) => {
@@ -128,6 +101,81 @@ function handleImgProduct() {
         });
     }
 }
+
+/* ============ handle quantity control =========== */
+function handleQuantityControl() {
+    const quantityControls = document.querySelectorAll(".quantity-control");
+    if (quantityControls) {
+        quantityControls.forEach((item) => {
+            const quantityControlBtnDecrease = item.querySelector(
+                ".quantity-control__btn--decrease"
+            );
+            const quantityControlBtnIncrease = item.querySelector(
+                ".quantity-control__btn--increase"
+            );
+            const quantityControlInput = item.querySelector(
+                ".quantity-control__input"
+            );
+            quantityControlBtnDecrease.onclick = () => {
+                if (quantityControlInput.value > 1) {
+                    quantityControlInput.value--;
+                }
+                const parentNode = item.closest(".order-item__content");
+                if (parentNode) {
+                    const priceText =
+                        parentNode.querySelector(".order-item__price");
+                    priceText.innerHTML = `${(
+                        parseInt(priceText.getAttribute("data-price")) *
+                        quantityControlInput.value
+                    ).toLocaleString("vi-VN")}đ`;
+                    // Update total price
+                    const total = document.getElementById("total__price");
+                    const priceItems =
+                        document.querySelectorAll(".order-item__price");
+                    let totalPrice = 0;
+                    priceItems.forEach((price) => {
+                        const quantity = price
+                            .closest(".order-item__content")
+                            .querySelector(".quantity-control__input");
+                        totalPrice +=
+                            parseInt(price.getAttribute("data-price")) *
+                            quantity.value;
+                    });
+                    total.innerHTML = `${totalPrice.toLocaleString("vi-VN")}đ`;
+                }
+            };
+            quantityControlBtnIncrease.onclick = () => {
+                quantityControlInput.value++;
+                const parentNode = item.closest(".order-item__content");
+                if (parentNode) {
+                    const priceText =
+                        parentNode.querySelector(".order-item__price");
+                    priceText.innerHTML = `${(
+                        parseInt(priceText.getAttribute("data-price")) *
+                        quantityControlInput.value
+                    ).toLocaleString("vi-VN")}đ`;
+
+                    // Update total price
+                    const total = document.getElementById("total__price");
+                    const priceItems =
+                        document.querySelectorAll(".order-item__price");
+                    let totalPrice = 0;
+                    priceItems.forEach((price) => {
+                        const quantity = price
+                            .closest(".order-item__content")
+                            .querySelector(".quantity-control__input");
+                        totalPrice +=
+                            parseInt(price.getAttribute("data-price")) *
+                            quantity.value;
+                    });
+                    total.innerHTML = `${totalPrice.toLocaleString("vi-VN")}đ`;
+                }
+            };
+        });
+    }
+}
+
+/* ============ handle Product Filter =========== */
 
 function handleProductFilter() {
     const productCategoryFilterSelect = document.getElementById(
@@ -491,7 +539,25 @@ async function handleAuth() {
         });
     }
 }
-
+/* ============ handle Add Quantity =========== */
+function handleAddQuantity() {
+    const submitBtn = document.querySelectorAll(".product-detail__btn");
+    submitBtn.forEach((element) => {
+        element.onclick = (e) => {
+            e.preventDefault();
+            const quantity = document.getElementById("quantity-control__input");
+            const form = e.target.closest("form");
+            const quantityInput = form.querySelector("input[name='quantity']");
+            const quantityValue = parseInt(quantity.value);
+            if (quantityValue < 1) {
+                quantityInput.value = 1;
+            } else {
+                quantityInput.value = quantityValue;
+            }
+            form.submit();
+        };
+    });
+}
 /* ============ alert =========== */
 function alert(type = "success", message) {
     const alertDiv = document.createElement("div");
@@ -544,5 +610,7 @@ function init() {
     handlePaginationBtn();
     handleSearch();
     handleAuth();
+    handleQuantityControl();
+    handleAddQuantity();
 }
 document.addEventListener("DOMContentLoaded", init);

@@ -24,7 +24,7 @@ header(class="header")
                         i(class="fa-regular fa-heart")
                     div(class="favorite-products__desc d-none d-lg-block")
                         p(class="favorite-products__title") Yêu thích
-                        p(class="favorite-products__detail") 
+                        p(class="favorite-products__detail")                             
                             span(class="favorite-products__quantity") 0 
                             | sản phẩm
                 if (user)
@@ -42,12 +42,12 @@ header(class="header")
                                         i(class="fa-regular fa-user")
                                     h3(class="dropdown-item__title") Hồ sơ
                             li 
-                                a(class="dropdown-item",href="/admin/profile") 
+                                a(class="dropdown-item",href="/user/message") 
                                     span(class="dropdown-item__icon")
                                         i(class="fa-solid fa-bell")
                                     h3(class="dropdown-item__title") Thông báo
                             li 
-                                a(class="dropdown-item",href="/message") 
+                                a(class="dropdown-item",href="/cart") 
                                     span(class="dropdown-item__icon")
                                         i(class="fa-solid fa-receipt")
                                     h3(class="dropdown-item__title") Đơn mua
@@ -167,6 +167,11 @@ header(class="header")
                                                         | Facebook
                                                 div(class="auth-link") Bạn đã có tài khoản? 
                                                     p(class="auth-link__btn",id="register-link__btn") Đăng nhập
-                a(href="/",class="cart")
-                    span(class="cart__quantity") 0
+                - quantityCartItem = 0
+                if (user && user.cart.length > 0) 
+                    - quantityCartItem = user.cart.length;
+                else if (cart && cart.length > 0) 
+                    - quantityCartItem = cart.length;
+                a(href="/cart",class="cart")
+                    span(class="cart__quantity") #{quantityCartItem}
                     i(class="fa-solid fa-cart-shopping")

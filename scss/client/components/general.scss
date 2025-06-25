@@ -251,4 +251,40 @@ li {
     }
 }
 
+/* ============================================= quantity control =============================================*/
+main {
+    min-height: 40vh;
+}
+
+.quantity-control {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    border: 1px solid $primary;
+}
+
+.quantity-control__btn {
+    height: 100%;
+    aspect-ratio: 1/1;
+    border: none;
+    background-color: transparent;
+    font-size: 1.4rem;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000;
+}
+
+.quantity-control__input {
+    height: 100%;
+    width: 50px;
+    text-align: center;
+    border: none;
+}
+
+.dropdown-item:active {
+    background-color: $color-hover;
+}
 /* ======================================= end general ======================================= */

@@ -10,6 +10,7 @@ class UserController {
             pageTitle: "Điện Máy 24h",
             categoryTree,
             user,
+            cart: req.session.cart || [],
         });
     }
 }

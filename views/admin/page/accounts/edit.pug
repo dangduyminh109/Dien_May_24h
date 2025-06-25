@@ -7,7 +7,7 @@ block main
         { name: "Danh sách tài khoản", href: `${PATH_ADMIN}/accounts` },
         { name: "Sửa đổi tài khoản", href: `${PATH_ADMIN}/accounts/edit/${account.id}` },
     ])
-    div(class="create account")
+    div(class="edit account")
         form(action=`${PATH_ADMIN}/accounts/edit/${account.id}?_method=PATCH`, method="post",enctype="multipart/form-data")
             h1(class="title") Thông tin chung
             div(class="general")

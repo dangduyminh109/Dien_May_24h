@@ -12,7 +12,7 @@ block main
                 { name: `${category.name}`, href: `/product?category=${category.slug}` },
                 { name: `${product.name}`, href: `/product/detail/${product.slug}` },
             ])
-    div(class="product-detail")
+    main(class="product-detail")
         div(class="container-xl")
             div(class="row product-detail__content")
                 div(class="col-lg-7 col-12 row left-box")
@@ -42,16 +42,25 @@ block main
                     p(class="product-detail__code") Mã SP: #{product.code}
                     p(class="product-detail__price-discounted") #{product.price.toLocaleString('vi-VN')}đ
                     p(class="product-detail__price-original") #{product.original_price.toLocaleString('vi-VN')}đ
-                    span(class="product-detail__price-discount-percent")  (-#{product.discount}%)   
-                    div(class="product-detail__quantity")
-                        button(class="product-detail__quantity-btn-prev", id="product-detail__quantity-btn-prev") 
-                            i(class="fa-solid fa-minus")
-                        input(class="product-detail__quantity-input", id="product-detail__quantity-input",type="number", value="1",min="1",max=`${product.inventory}`)
-                        button(class="product-detail__quantity-btn-next",id="product-detail__quantity-btn-next")
-                            i(class="fa-solid fa-plus")
+                    span(class="product-detail__price-discount-percent")  (-#{product.discount}%) 
+                    br  
+                    div(class="quantity-control")
+                        button(class="quantity-control__btn quantity-control__btn--decrease")
+                            span
+                                i(class="fa-solid fa-minus")
+                        input(class="quantity-control__input" type="text" value="1" name="quantity" id="quantity-control__input")
+                        button(class="quantity-control__btn quantity-control__btn--increase")
+                            span
+                                i(class="fa-solid fa-plus")
                     div(class="product-detail__btn-wrapper")
-                        button(class="product-detail__btn") Thêm vào giỏ hàng
-                        button(class="product-detail__btn") Mua ngay
+                        form(action="/cart/add", method="post")
+                            input(type="hidden", name="productId", value=product._id)
+                            input(type="hidden", name="quantity", value="1")
+                            button(class="product-detail__btn",type="submit") Thêm vào giỏ hàng
+                        form(action="/checkout", method="post")
+                            input(type="hidden", name="productId", value=product._id)
+                            input(type="hidden", name="quantity", value="1")
+                            button(class="product-detail__btn",type="submit") Mua ngay
     div(class="description")
         div(class="container-xl")
             div(class="desc")

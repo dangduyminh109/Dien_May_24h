@@ -8,7 +8,7 @@ mixin productCard(product)
             div(class="product-item__img-wrapper")
                 img(class="product-item__img", src=product.thumbnails[0], alt="") 
         div(class="product-item__desc") 
-            a(href=`product/detail/${product.slug}`, class="product-item__link") 
+            a(href=`/product/detail/${product.slug}`, class="product-item__link") 
                 h3(class="product-item__title") #{product.name}
             p(class="product-item__price-discounted") #{product.price.toLocaleString('vi-VN')}đ
             span(class="product-item__price-original") #{product.original_price.toLocaleString('vi-VN')}đ
