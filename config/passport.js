@@ -24,6 +24,8 @@ module.exports = (passport) => {
                     googleId: profile.id,
                     name: profile.displayName,
                     email: profile.emails[0].value,
+                    avatar:
+                        profile.photos[0].value || "/uploads/default-image.jpg",
                 });
                 return done(null, newUser);
             }
@@ -45,6 +47,8 @@ module.exports = (passport) => {
                 const newUser = await User.create({
                     facebookId: profile.id,
                     name: profile.displayName,
+                    avatar:
+                        profile.photos[0].value || "/uploads/default-image.jpg",
                 });
                 return done(null, newUser);
             }

@@ -1,0 +1,52 @@
+extends ../../layout/default.pug
+include ../../mixins/breadcrumbs.pug
+include ../../mixins/alert.pug
+
+block main
+    +alert(messages)
+    div(class="breadcrumb-nav")
+        div(class="container-xl")
+            +breadcrumb("Sản phẩm", [
+                { name: `Home`, href: `/` },
+                { name: `User`, href: `/user/profile` },
+                { name: `Sửa hồ sơ`, href: `/user/edit-profile` },
+            ])
+    
+    main(class="profile")
+        div(class="container-xl")
+            div(class="profile__wrapper row")
+                div(class="left-box col-12 col-md-4 col-lg-3")                       
+                    include ../../partials/profile-sidebar.pug
+                div(class="right-box col-12 col-md-8 col-lg-9")
+                    if(user)
+                        form(action=`/user/edit-profile`, method="post",enctype="multipart/form-data")
+                            div(class="right-box__wrapper")
+                                div(class="avatar")
+                                    if(user)
+                                        img(src=user.avatar || "/uploads/default-image.jpg",onerror="this.src='/uploads/default-image.jpg'", alt='Avatar', class="avatar__img",id="avatar-img") 
+                                    else 
+                                        img(src="/uploads/default-image.jpg", alt='Avatar', class="avatar__img")
+                                    label(for="avatar-input", class="avatar__label")
+                                        | Chọn ảnh đại diện
+                                        input(type="file" id="avatar-input" name="avatar" accept="image/*" class="d-none")
+                                div(class="info")
+                                    h1(class="info__title") Cập nhật hồ sơ
+                                    hr
+                                    div(class="info-wrapper")
+                                        div(class="info__item")    
+                                            p(class="info__field") 
+                                                | Họ Tên: 
+                                            input(type="text" value=user.name || '' class="form-control" name="name")
+                                            p(class="info__field") 
+                                                | Email: 
+                                            input(type="email" value=user.email || '' class="form-control" name="email")
+                                            p(class="info__field") 
+                                                | Số điện thoại: 
+                                            input(type="tel" value=user.phone || '' class="form-control" name="phone")
+                                            p(class="info__field") 
+                                                | Địa chỉ: 
+                                            input(type="text" value=user.address || '' class="form-control" name="address")
+                            div(class="right-box__actions")
+                                button(type="submit" class="btn btn-primary btn-update") Lưu hồ sơ
+                    else 
+                        p(class="text-center") Không tìm thấy thông tin người dùng. Vui lòng đăng nhập

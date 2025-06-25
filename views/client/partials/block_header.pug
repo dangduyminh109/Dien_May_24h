@@ -31,7 +31,7 @@ header(class="header")
                     div(class="user-wrapper")
                         button(type="button",class="btn-user btn btn-danger dropdown-toggle",data-bs-toggle="dropdown",aria-expanded="false") 
                             div(class="user__thumbnail")
-                                img(class="user__img",src=user.avatar || "/uploads/default-image.jpg", alt="avatar")
+                                img(class="user__img",src=user.avatar || "/uploads/default-image.jpg",onerror="this.src='/uploads/default-image.jpg'", alt="avatar")
                             h2(class="user__name d-none d-md-block") #{user.name}
                             span(class="user__icon d-none d-md-block") 
                                 i(class="fa-solid fa-caret-down")

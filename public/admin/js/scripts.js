@@ -243,7 +243,7 @@ function handleFileUpload() {
 
                 thumbnailPreview.append(imgPreview, closeIcon);
                 thumbnailPreview.classList.add("image-group__preview");
-
+                // Giải phóng bộ nhớ sau khi ảnh đã load xong từ URL.createObjectURL.
                 imgPreview.onload = () => URL.revokeObjectURL(imgPreview.src);
 
                 imageGroup.prepend(thumbnailPreview);

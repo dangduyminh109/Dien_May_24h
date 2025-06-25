@@ -4,6 +4,7 @@
     margin: 20px 0;
     .left-box {
         padding-right: 10px;
+        margin-bottom: 10px;
     }
     .profile-box {
         display: flex;
@@ -51,5 +52,68 @@
         padding: 10px;
         background-color: #ccc;
         border-radius: 10px;
+    }
+
+    .right-box__wrapper {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+    .avatar {
+        text-align: center;
+    }
+
+    .avatar__img {
+        width: 80%;
+        max-width: 200px;
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    .avatar__label {
+        display: block;
+        cursor: pointer;
+        margin-top: 10px;
+        color: $primary;
+
+        &:hover {
+            color: $color-hover;
+        }
+    }
+
+    .info {
+        flex: 1;
+    }
+
+    .info__title {
+        margin: 0;
+        color: $text-color-2;
+    }
+
+    .info-wrapper {
+        display: flex;
+        justify-content: space-between;
+        font-size: 1.8rem;
+        gap: 20px;
+    }
+
+    .info__item {
+        flex: 1;
+    }
+
+    .info__field {
+        white-space: nowrap;
+        margin: 10px 0 0 0;
+    }
+    .form-control {
+        font-size: 1.6rem;
+    }
+    .right-box__actions {
+        margin: 10px 0;
+        text-align: end;
+
+        button {
+            font-size: 1.6rem;
+        }
     }
 }

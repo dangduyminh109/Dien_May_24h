@@ -1,0 +1,37 @@
+div(class="profile-box")
+    div(class="profile-box__avatar")
+        if(user)
+            img(src=user.avatar || "/uploads/default-image.jpg",onerror="this.src='/uploads/default-image.jpg'", alt='Avatar')
+        else 
+            img(src="/uploads/default-image.jpg", alt='Avatar')
+    div(class="profile-box__text")
+        h2(class="profile-box__name") #{user ? user.name : 'Chưa cập nhật'}
+        a(href="/user/edit-profile", class="profile-box__link") 
+            span(class="icon icon-edit") 
+                i(class="fas fa-edit")
+            | Chỉnh sửa hồ sơ
+hr
+div(class="profile-sidebar")
+    ul(class="profile-sidebar__list")
+        li 
+            a(class="dropdown-item",href="/user/profile") 
+                span(class="dropdown-item__icon")
+                    i(class="fa-regular fa-user")
+                p(class="dropdown-item__title") Hồ sơ
+        li 
+            a(class="dropdown-item",href="/user/message") 
+                span(class="dropdown-item__icon")
+                    i(class="fa-solid fa-bell")
+                p(class="dropdown-item__title") Thông báo
+        li 
+            a(class="dropdown-item",href="/cart") 
+                span(class="dropdown-item__icon")
+                    i(class="fa-solid fa-receipt")
+                p(class="dropdown-item__title") Đơn mua
+        li 
+            hr(class="dropdown-divider")
+        li 
+            a(class="dropdown-item",href="/auth/logout", id="logout") 
+                span(class="dropdown-item__icon")
+                    i(class="fa-solid fa-arrow-right-from-bracket")
+                p(class="dropdown-item__title") Đăng xuất

@@ -558,6 +558,22 @@ function handleAddQuantity() {
         };
     });
 }
+/* ============ handle avatar input =========== */
+function handleAvatarInput() {
+    const avatarInput = document.getElementById("avatar-input");
+    const avatarPreview = document.getElementById("avatar-img");
+    if (avatarInput && avatarPreview) {
+        avatarInput.onchange = () => {
+            const file = avatarInput.files[0];
+            if (file) {
+                avatarPreview.src = URL.createObjectURL(file);
+                //Giải phóng bộ nhớ sau khi ảnh đã load xong từ URL.createObjectURL.
+                avatarPreview.onload = () =>
+                    URL.revokeObjectURL(avatarPreview.src);
+            }
+        };
+    }
+}
 /* ============ alert =========== */
 function alert(type = "success", message) {
     const alertDiv = document.createElement("div");
@@ -612,5 +628,6 @@ function init() {
     handleAuth();
     handleQuantityControl();
     handleAddQuantity();
+    handleAvatarInput();
 }
 document.addEventListener("DOMContentLoaded", init);

@@ -28,6 +28,7 @@ class AuthController {
                     name: formData.name,
                     email: formData.email,
                     password: formData.password,
+                    avatar: "/uploads/default-image.jpg",
                 });
                 await user.save();
                 req.flash("openModal", true);
@@ -125,6 +126,7 @@ class AuthController {
                 _id: user._id,
                 name: user.name,
                 email: user.email,
+                avatar: user.avatar || "/uploads/default-image.jpg",
             };
             req.flash("success", "Đăng nhập thành công!");
             res.redirect("/");
