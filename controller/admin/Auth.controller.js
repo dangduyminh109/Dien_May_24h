@@ -2,7 +2,7 @@ const md5 = require("md5");
 const system = require("../../config/system.js");
 const Account = require("../../models/account.model.js");
 
-class roleController {
+class authController {
     // [GET] /admin/auth/login
     show(req, res) {
         res.render("./admin/page/auth/login.pug", {
@@ -37,4 +37,4 @@ class roleController {
     }
 }
 
-module.exports = new roleController();
+module.exports = new authController();

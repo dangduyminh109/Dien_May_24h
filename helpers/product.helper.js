@@ -1,7 +1,6 @@
 const Product = require("../models/product.model");
 const { uploadMultipleImages } = require("../helpers/upload.helper.js");
 const slugify = require("slugify");
-const ProductCategory = require("../models/product-category.model.js");
 const getCategoryTree = require("./get-category-tree.helper.js");
 const mongoose = require("mongoose");
 

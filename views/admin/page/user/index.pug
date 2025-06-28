@@ -1,0 +1,112 @@
+extends ../../layout/default.pug
+include ../../mixins/page_header.pug
+include ../../mixins/pagination.pug
+include ../../mixins/alert.pug
+include ../../mixins/deletion_warning.pug
+include ../../mixins/toolbar_filter.pug
+include ../../mixins/toolbar_handle.pug
+include ../../mixins/get_permission.pug
+
+
+block main 
+    +alert(messages)
+    if permission.includes("view-user")
+        +page_header("Danh sách khách hàng", [
+            { name: "Danh sách khách hàng", href: `${PATH_ADMIN}/user` },
+        ])
+        div(class="toolbar")
+            div(class="toolbar__box")
+                div(class="toolbar__left-box")
+                    form(action=`${PATH_ADMIN}/user`, method="GET") 
+                        div(class="search")
+                            input(class="search__input", type="text", name="name",placeholder="Nhập từ khóa tìm kiếm", spellcheck="false",value=filter.name)
+                            button(type="submit" class="search__toolbar-icon")
+                                i(class="fa-solid fa-magnifying-glass")
+                    button(id="advanced-filter-btn", class="advanced-filter-btn btn btn-primary", type="button")
+                        span(class="icon-btn")
+                            i(class="fa-solid fa-filter")
+                        | Bộ Lọc
+                    if permission.includes("update-user") || permission.includes("delete-user")
+                        button(id="advanced-handle-btn", class="advanced-handle-btn btn btn-primary", type="button")
+                            span(class="icon-btn")
+                                i(class="fa-solid fa-sliders")
+                            | Nâng cao
+                    a(href=`${PATH_ADMIN}/user-trash`,id="btn btn-primary", class=" btn btn-primary")
+                        span(class="icon-btn")
+                            i(class="fa-solid fa-trash-can")
+                        | Thùng rác
+            +toolbarFilter({filter,path: "user",user:true})
+            if permission.includes("update-user") || permission.includes("delete-user")
+                -var Update = permission.includes("update-user");
+                -var Delete = permission.includes("delete-user");
+                +toolbarHandle({handle,path: "user",user: true,Update:Update,Delete:Delete,title: "Khách hàng"})
+        
+        div(class="overview-block") 
+            div(class="overview-item total-products")
+                h3(class="overview-item__title total-products__title") Tổng số khách hàng
+                p(class="overview-item__detail total-products__detail") #{general.totalUser}
+
+        div(class="list-user list-table")
+            table(class="list-user__table")
+                thead
+                    tr
+                        th(scope="col") 
+                            input(type="checkbox" id="table-item__select-all" name="sort")
+                        th(scope="col") 
+                            |   Họ Tên
+                            !=pugHepper.sort("name", _sort,pagination.page)
+                        th(scope="col") Email 
+                        th(scope="col") Số điện thoại
+                        th(scope="col") Địa chỉ
+                        th(scope="col") Trạng thái 
+                        th(scope="col")  
+                        th(scope="col")  
+                tbody
+                    if listUser.length > 0
+                        each user in listUser
+                            tr
+                                td 
+                                    input(type="checkbox" class="table-item__select" name="sort" value="1" _id=user._id)
+                                td  
+                                    div(class="table-item__name")
+                                        - var avatar = user.avatar || "/uploads/default-image.jpg"
+                                        img(class="table-item__img", src=avatar, alt=user.name)
+                                        h4(class="table-item__title") #{user.name}
+                                td 
+                                    p(class="user-item__discount") #{user.email}
+                                td 
+                                    p(class="user-item__inventory") #{user.phone}
+                                td 
+                                    p(class="user-item__address") #{user.address}
+                                td 
+                                    if permission.includes("update-user")
+                                        div(class="btn-toggle")
+                                            div(class="btn-status-toggle")
+                                                    div(class="form-check form-switch")
+                                                        input(class="form-check-input btn-status__input", type="checkbox", role="switch",value=user.status,_id=user._id , path="user/update-status")
+                                            p(class="btn-status__desc") Hoạt động 
+                                    else
+                                        div(class="btn-toggle")
+                                            p(class="btn-status__desc") #{user.status =="on" ? "Hoạt động" : "Không hoạt động"}
+                                td(style="text-align: center")
+                                    if permission.includes("update-user")
+                                        a(href=`${PATH_ADMIN}/user/edit/${user.id}`, class="btn-primary btn") Sửa      
+                                td(style="text-align: center")
+                                    if permission.includes("view-user")
+                                        a(href=`${PATH_ADMIN}/user/detail/${user.id}`, class="btn-warning btn") Chi tiết 
+                                td(style="text-align: center")
+                                    if permission.includes("delete-user")
+                                        button(type="button", class="btn-delete btn btn-danger", data-bs-id = user._id ,data-bs-toggle="modal", data-bs-target="#warningDeleteModal",path="user/delete-user") Xóa 
+                    else  
+                        tr 
+                            td(colspan="9")
+                                p(class="noProducts") Không có khách hàng nào!   
+                                a(class="noProducts__link", href=`${PATH_ADMIN}/user`) Danh sách khách hàng.
+    
+        +pagination(pagination,currentPath)
+        if permission.includes("delete-user")
+            form(method="POST", type="hidden",id="form-product-delete" ,action=``)
+            <!-- Modal -->
+            +formWarning("warningDeleteModal","Bạn có chắc chắn muốn <b class='warning-text'>Xóa khách hàng</b> này không?","Xóa khách hàng","warning-delete-modal-btn","Xóa")
+    else 
+        h1 Bạn không có quyền truy cập trang này 

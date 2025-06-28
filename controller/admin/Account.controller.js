@@ -8,7 +8,7 @@ const {
     filterAndSort,
 } = require("../../helpers/account.helper.js");
 
-class roleController {
+class accountController {
     // [GET] /admin/accounts
     async show(req, res) {
         const currentPath = paginationHelper(req);
@@ -67,7 +67,7 @@ class roleController {
                 role,
             });
         } catch (error) {
-            req.flash("error", "Có lỗi sảy ra!");
+            req.flash("error", "Có lỗi xảy ra!");
             console.error("Error:", error);
             res.redirect("/admin/accounts");
         }
@@ -170,4 +170,4 @@ class roleController {
     }
 }
 
-module.exports = new roleController();
+module.exports = new accountController();

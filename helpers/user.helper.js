@@ -1,46 +1,37 @@
-const Role = require("../models/role.model.js");
 const md5 = require("md5");
 const { uploadSingleImages } = require("./upload.helper.js");
-const Account = require("../models/account.model.js");
+const User = require("../models/user.model.js");
 
 async function generalHelper(deleted = false) {
-    const countMethod = deleted
-        ? "countDocumentsWithDeleted"
-        : "countDocuments";
-    const obj = {};
-
-    const listRoles = await Role.find({});
+    let listUser = [];
     if (deleted) {
-        for (const role of listRoles) {
-            obj[role.name] = await Account[countMethod]({
-                roleId: role.id,
-                deleted: true,
-            });
-        }
+        listUser = await User.findWithDeleted({ deleted: true });
     } else {
-        for (const role of listRoles) {
-            obj[role.name] = await Account[countMethod]({
-                roleId: role.id,
-            });
-        }
+        listUser = await User.find({});
     }
-    return obj;
+    return {
+        totalUser: listUser.length,
+    };
 }
 
 async function filterAndSort(query, findDelete = false) {
-    var listAccounts = [];
+    var listUser = [];
     const limit = 5;
     let totalPage = 0;
     let page = query.page ? parseInt(query.page) : 1;
     const filter = Object.entries(query).reduce((obj, [key, value]) => {
         if (value !== "") {
             switch (key) {
-                case "fullName":
-                case "roleId":
+                case "name":
+                    obj.name = { $regex: value, $options: "i" };
+                    break;
                 case "email":
                 case "phone":
-                case "status":
+                case "address":
                     obj[key] = value;
+                    break;
+                case "status":
+                    obj[key] = value === "on";
                     break;
             }
         }
@@ -52,13 +43,18 @@ async function filterAndSort(query, findDelete = false) {
     const countMethod = findDelete
         ? "countDocumentsWithDeleted"
         : "countDocuments";
-    listAccounts = await Account[queryMethod](filter)
+    const sortOption =
+        query.type === "asc" || query.type === "desc"
+            ? { [query.filed]: query.type === "asc" ? 1 : -1 }
+            : { order: 1 };
+    listUser = await User[queryMethod](filter)
         .skip((page - 1) * limit)
         .limit(limit)
-        .select("-password -token");
-    totalPage = await Account[countMethod](filter);
+        .sort(sortOption)
+        .select("-password -googleId -facebookId");
+    totalPage = await User[countMethod](filter);
     return {
-        listAccounts,
+        listUser,
         pagination: {
             page,
             limit,

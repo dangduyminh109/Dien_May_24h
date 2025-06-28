@@ -33,7 +33,7 @@ class roleTrashController {
                 deleted: true,
             });
         } catch (error) {
-            req.flash("error", "Có lỗi sảy ra!");
+            req.flash("error", "Có lỗi xảy ra!");
             console.error("Error:", error);
             res.redirect("/admin/accounts");
         }

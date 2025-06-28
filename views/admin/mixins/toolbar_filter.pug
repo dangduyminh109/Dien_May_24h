@@ -1,5 +1,5 @@
 include ./category_tree.pug
-mixin toolbarFilter({filter,path,categoryTree,product=false,category=false,account=false})
+mixin toolbarFilter({filter,path,categoryTree,product=false,category=false,account=false,user=false})
     div(id="toolbar__advanced-filter-box", class="toolbar__advanced-box" )
         form(id="filter-form" class="toolbar__advanced-form", action=`${PATH_ADMIN}/${path}`,method="GET")
             div(class="block-advanced")
@@ -9,52 +9,31 @@ mixin toolbarFilter({filter,path,categoryTree,product=false,category=false,accou
                             div(class="toolbar__advanced-group-btn")
                                 button(type="reset" class="btn btn-primary") Đặt lại
                                 button(type="submit" class=" btn btn-primary") Gửi
-                div(class=product ?"advanced__item":"advanced__item-2")
-                    h3(class="advanced__title")=product ? "Tên sản phẩm" : "Tên danh mục"
-                    if(account)
-                        input(type="text" class="advanced__input" name="fullName" placeholder="Nhập tên tài khoản" value=filter.fullName|| "")
-                    else
-                        input(type="text" class="advanced__input" name="name" placeholder=product ? "Nhập tên sản phẩm" : "Nhập tên danh mục" value=filter.name|| "")
+
                 if(product)
+                    div(class="advanced__item")
+                        h3(class="advanced__title") Tên sản phẩm
+                        input(type="text" class="advanced__input" name="name" placeholder="Nhập tên sản phẩm" value=filter.name|| "")
                     div(class="advanced__item-2") 
                         h3(class="advanced__title") Mã sản phẩm
                         input(type="text" class="advanced__input" name="code" placeholder="Nhập Mã sản phẩm" value=filter.code|| "")
-                div(class="advanced__item")
-                    if(product)
+                    div(class="advanced__item")
                         h3(class="advanced__title") Danh mục
                         select(name="category", id="category") 
-                            option(value="" selected disabled) -- chọn danh mục -- 
-                                if(categoryTree.length > 0)
-                                    +categoryTree(categoryTree,filter.category)
-                                else 
-                                    option(value="" selected disabled) -- Chưa có danh mục nào! -- 
-                    else if(category)
-                        h3(class="advanced__title") Danh mục cha
-                        select(name="parentId", id="category") 
-                            option(value="" selected disabled) -- chọn danh mục cha-- 
-                                if(categoryTree.length > 0)
-                                    +categoryTree(categoryTree)
-                                else 
-                                    option(value="" selected disabled) -- Chưa có danh mục nào! -- 
-                    else if(account)
-                        h3(class="advanced__title") Phân quyền
-                        select(name="roleId", id="roleId") 
-                            option(value="" selected disabled) -- chọn quyền -- 
-                            if(listRoles.length > 0)
-                                each role in listRoles
-                                    option(value=role.id, selected=role.id === filter.roleId) #{role.name} 
+                            if(categoryTree.length > 0)
+                                option(value="" selected) -- Tất cả --
+                                +categoryTree(categoryTree,filter.category)
                             else 
-                                option(value="" selected disabled) -- Chưa có phân quền nào! -- 
-                div(class="advanced__item-2") 
-                    h3(class="advanced__title") Trạng thái
-                    div(class="advanced__radio-group")
-                        input(type="radio" name="status" id="status_1" value="" checked = filter.status === "" ? true:false) 
-                        label(for="status_1") Mặc định
-                        input(type="radio" name="status" id="status_2" value="on" checked = filter.status === "on" ? true:false)
-                        label(for="status_2") Hoạt Động
-                        input(type="radio" name="status" id="status_3" value="off" checked = filter.status === "off" ? true:false)
-                        label(for="status_3") Không Hoạt Động
-                if(product)
+                                option(value="" selected disabled) -- Chưa có danh mục nào! -- 
+                    div(class="advanced__item-2") 
+                        h3(class="advanced__title") Trạng thái
+                        div(class="advanced__radio-group")
+                            input(type="radio" name="status" id="status_1" value="" checked = filter.status === "" ? true:false) 
+                            label(for="status_1") Mặc định
+                            input(type="radio" name="status" id="status_2" value="on" checked = filter.status === "on" ? true:false)
+                            label(for="status_2") Hoạt Động
+                            input(type="radio" name="status" id="status_3" value="off" checked = filter.status === "off" ? true:false)
+                            label(for="status_3") Không Hoạt Động
                     div(class="advanced__item") 
                         h3(class="advanced__title") Nổi bật
                         div(class="advanced__radio-group")
@@ -84,3 +63,77 @@ mixin toolbarFilter({filter,path,categoryTree,product=false,category=false,accou
                         div(class="advanced__number-group")
                             input(type="number" class="advanced__input" name="min-inventory" placeholder="Tối thiểu" min=0 value=filter["min-inventory"]) 
                             input(type="number" class="advanced__input" name="max-inventory" placeholder="Tối đa" min=0 value=filter["max-inventory"])
+
+                else if(category)
+                    div(class="advanced__item-2")
+                        h3(class="advanced__title") Tên danh mục
+                        input(type="text" class="advanced__input" name="name" placeholder="Nhập tên danh mục" value=filter.name|| "")
+                    div(class="advanced__item")
+                        h3(class="advanced__title") Danh mục cha
+                        select(name="parentId", id="category") 
+                            if(categoryTree.length > 0)
+                                option(value="") -- Tất cả -- 
+                                +categoryTree(categoryTree,filter.category)
+                            else 
+                                option(value="" selected disabled) -- Chưa có danh mục nào! -- 
+                    div(class="advanced__item-2") 
+                        h3(class="advanced__title") Trạng thái
+                        div(class="advanced__radio-group")
+                            input(type="radio" name="status" id="status_1" value="" checked = filter.status === "" ? true:false) 
+                            label(for="status_1") Mặc định
+                            input(type="radio" name="status" id="status_2" value="on" checked = filter.status === "on" ? true:false)
+                            label(for="status_2") Hoạt Động
+                            input(type="radio" name="status" id="status_3" value="off" checked = filter.status === "off" ? true:false)
+                            label(for="status_3") Không Hoạt Động
+                      
+                else if(account)
+                    div(class="advanced__item-2")
+                        h3(class="advanced__title") Tên tài khoản
+                        input(type="text" class="advanced__input" name="fullName" placeholder="Nhập tên tài khoản" value=filter.fullName|| "")
+                    div(class="advanced__item")
+                        h3(class="advanced__title") Phân quyền
+                        select(name="roleId", id="roleId") 
+                            if(listRoles.length > 0)
+                                option(value="" selected) -- Tất cả -- 
+                                each role in listRoles
+                                    option(value=role.id, selected=role.id === filter.roleId) #{role.name} 
+                            else 
+                                option(value="" selected disabled) -- Chưa có phân quền nào! -- 
+                    div(class="advanced__item-2")
+                        h3(class="advanced__title") Email
+                        input(type="text" class="advanced__input" name="email" placeholder="Nhập Email" value=filter.email|| "")
+                    div(class="advanced__item")
+                        h3(class="advanced__title") Số điện thoại
+                        input(type="text" class="advanced__input" name="phone" placeholder="Số điện thoại" value=filter.phone|| "")
+                    div(class="advanced__item-2") 
+                        h3(class="advanced__title") Trạng thái
+                        div(class="advanced__radio-group")
+                            input(type="radio" name="status" id="status_1" value="" checked = filter.status === "" ? true:false) 
+                            label(for="status_1") Mặc định
+                            input(type="radio" name="status" id="status_2" value="on" checked = filter.status === "on" ? true:false)
+                            label(for="status_2") Hoạt Động
+                            input(type="radio" name="status" id="status_3" value="off" checked = filter.status === "off" ? true:false)
+                            label(for="status_3") Không Hoạt Động
+
+                else if(user)
+                    div(class="advanced__item-2")
+                        h3(class="advanced__title") Tên khách hàng
+                        input(type="text" class="advanced__input" name="fullName" placeholder="Nhập tên khách hàng" value=filter.fullName|| "")
+                    div(class="advanced__item")
+                        h3(class="advanced__title") Email
+                        input(type="text" class="advanced__input" name="email" placeholder="Nhập Email" value=filter.email|| "")
+                    div(class="advanced__item-2")
+                        h3(class="advanced__title") Số điện thoại
+                        input(type="text" class="advanced__input" name="phone" placeholder="Nhập số điện thoại" value=filter.phone|| "")
+                    div(class="advanced__item")
+                        h3(class="advanced__title") Địa chỉ
+                        input(type="text" class="advanced__input" name="address" placeholder="Nhập địa chỉ" value=filter.phone|| "")
+                    div(class="advanced__item-2") 
+                        h3(class="advanced__title") Trạng thái
+                        div(class="advanced__radio-group")
+                            input(type="radio" name="status" id="status_1" value="" checked = filter.status === "" ? true:false) 
+                            label(for="status_1") Mặc định
+                            input(type="radio" name="status" id="status_2" value="on" checked = filter.status === "on" ? true:false)
+                            label(for="status_2") Hoạt Động
+                            input(type="radio" name="status" id="status_3" value="off" checked = filter.status === "off" ? true:false)
+                            label(for="status_3") Không Hoạt Động

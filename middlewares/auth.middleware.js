@@ -9,10 +9,10 @@ module.exports = async function authMiddleware(req, res, next) {
     );
     if (!account) return res.redirect("/admin/auth/login");
 
-    res.locals.user = account;
-    const userRole = await Role.findOne({ _id: account.roleId }).select(
+    res.locals.account = account;
+    const accountRole = await Role.findOne({ _id: account.roleId }).select(
         "permission"
     );
-    res.locals.permission = userRole.permission;
+    res.locals.permission = accountRole.permission;
     next();
 };

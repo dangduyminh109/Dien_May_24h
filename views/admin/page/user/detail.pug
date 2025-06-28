@@ -1,0 +1,41 @@
+extends ../../layout/default.pug
+include ../../mixins/alert.pug
+include ../../mixins/page_header.pug
+block main 
+    +alert(messages)
+    +page_header("Chi tiết khách hàng", [
+        { name: "Danh sách khách hàng", href: `${PATH_ADMIN}/user` },
+        { name: "Chi tiết khách hàng", href: `${PATH_ADMIN}/user/detail/${user.id}` },
+    ])
+    div(class="detail account")
+        h1(class="title") Thông tin chung
+        div(class="general")
+            div(class="form-group")
+                div(class="fullName form-item")
+                    p(class="label")
+                        b Họ và tên
+                    p(class="content") #{user.name}
+                div(class="email form-item")
+                    p(class="label") 
+                        b Email 
+                    p(class="content") #{user.email}
+            div(class="form-group")
+                div(class="phone form-item")
+                    p(class="label") 
+                        b Số điện thoại
+                    p(class="content") #{user.phone}
+                div(class="address form-item")
+                    p(class="label") 
+                        b Số điện thoại
+                    p(class="content") #{user.address}
+            p(class="label") 
+                b Trạng thái 
+            p(class=`status ${user.status == "on" ? "active" : ""}`) #{user.status == "on" ? "Hoạt động" : "Không hoạt động"}       
+        h1(class="title") Avatar
+        div(class="single-image-wrapper", id="single-image-wrapper")
+            div(class="single-image__preview")
+                img(src=user.avatar ||"/uploads/default-image.jpg" ,alt=user.fullName) 
+        div(class="form-group__btn")
+            a(href=`/admin/${deleted ? "user-trash":"user"}` class="btn btn-primary") Quay lại
+            if(!deleted)
+                a(href=`/admin/user/edit/${user.id}` class="btn btn-primary") Sửa tài khoản

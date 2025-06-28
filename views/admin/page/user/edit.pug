@@ -1,0 +1,57 @@
+extends ../../layout/default.pug
+include ../../mixins/alert.pug
+include ../../mixins/page_header.pug
+block main 
+    +alert(messages)
+    +page_header("Sửa đổi tài khoản", [
+        { name: "Danh sách tài khoản", href: `${PATH_ADMIN}/user` },
+        { name: "Sửa đổi tài khoản", href: `${PATH_ADMIN}/user/edit/${user.id}` },
+    ])
+    div(class="edit account")
+        form(action=`${PATH_ADMIN}/user/edit/${user.id}?_method=PATCH`, method="post",enctype="multipart/form-data")
+            h1(class="title") Thông tin chung
+            div(class="general")
+                div(class="form-group")
+                    div(class="name form-item")
+                        label(for="name") 
+                            | Họ và tên (
+                            span(class="important-item") *
+                            | )
+                        input(class="form-control",id="name",name="name",type="text",value=user.name,required)
+                    div(class="email form-item")
+                        label(for="email ") Email
+                        input(class="form-control",id="email",name="email",type="email",value=user.email)  
+                div(class="form-group")
+                    div(class="phone form-item")
+                        label(for="phone") Số điện thoại
+                        input(class="form-control",id="phone",name="phone",type="tel",value=user.phone)  
+                    div(class="address form-item")
+                        label(for="address") Địa chỉ
+                        input(class="form-control",id="address",name="address",type="text",value=user.address)  
+                div(class="form-group")
+                    div(class="password form-item")
+                        label(for="password") Mật khẩu mới
+                        input(class="form-control",id="password",name="password",type="password")   
+                label(for="check") Trạng thái 
+                div(class="btn-toggle")
+                    div(class="btn-status-toggle")
+                            div(class="form-check form-switch")
+                                input(class="form-check-input btn-status-form",name="status",type="checkbox",id="check", role="switch",checked=user.status == "on" ? true:false)
+                    p(class="btn-status__desc") Hoạt động          
+            h1(class="title") Hình ảnh
+            div(class="single-image-wrapper", id="image-wrapper")
+                if(user.avatar == null || user.avatar == "")
+                    label(class="single-image__upload" for="image") 
+                        span(class="single-image__upload-icon")
+                            i(class="fa-solid fa-upload")
+                        |   upload
+                        input(id="image",name="thumbnails",type="file",accept="image/*")
+                else 
+                    div(class="single-image__preview")
+                        img(src=user.avatar,alt=user.name) 
+                        span(class="image__close-icon")
+                            i(class="fa-solid fa-circle-xmark", style="background-color: #fff; border-radius: 50%; display: block;")
+            input(type="hidden",name="thumbnailDeleted",id="thumbnail-deleted")
+            div(class="form-group__btn")
+                a(href="/admin/user" class="btn btn-primary") Quay lại
+                button(type="submit" class="btn btn-primary") Sửa tài khoản

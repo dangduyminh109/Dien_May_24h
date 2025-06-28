@@ -19,7 +19,7 @@ block main
                 div(class="toolbar__left-box")
                     form(action=`${PATH_ADMIN}/accounts`, method="GET") 
                         div(class="search")
-                            input(class="search__input", type="text", name="fullName",placeholder="Nhập từ khóa tìm kiếm", spellcheck="false")
+                            input(class="search__input", type="text", name="fullName",placeholder="Nhập từ khóa tìm kiếm", spellcheck="false",value=filter.fullName)
                             button(type="submit" class="search__toolbar-icon")
                                 i(class="fa-solid fa-magnifying-glass")
                     button(id="advanced-filter-btn", class="advanced-filter-btn btn btn-primary", type="button")

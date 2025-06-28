@@ -510,9 +510,6 @@
         display: flex;
         align-items: center;
         transition: 0.1s;
-        &:hover {
-            color: $color-hover;
-        }
     }
 
     .dropdown-item__title {

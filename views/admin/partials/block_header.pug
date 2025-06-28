@@ -50,11 +50,10 @@ header(class="header")
             div(class="message")
                 span(class="message__quantity") 0
                 i(class="fa-regular fa-message")
-
             //- btn dropdown
             button(type="button",class="btn-admin btn btn-danger dropdown-toggle",data-bs-toggle="dropdown",aria-expanded="false") 
-                img(class="admin__img",src=user.avatar || "/uploads/default-image.jpg", alt="avatar")
-                h2(class="admin__name") #{user.fullName}
+                img(class="admin__img",src=account.avatar || "/uploads/default-image.jpg", alt="avatar")
+                h2(class="admin__name") #{account.fullName}
                 span(class="admin__icon") 
                     i(class="fa-solid fa-caret-down")
             ul(class="dropdown-menu")

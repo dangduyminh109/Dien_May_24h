@@ -34,7 +34,7 @@ block main
         h1(class="title") Avatar
         div(class="single-image-wrapper", id="single-image-wrapper")
             div(class="single-image__preview")
-                img(src=account.avatar,alt=account.fullName) 
+                img(src=account.avatar ||"/uploads/default-image.jpg" ,alt=account.fullName) 
         div(class="form-group__btn")
             a(href=`/admin/${deleted ? "accounts-trash":"accounts"}` class="btn btn-primary") Quay lại
             if(!deleted)

@@ -53,4 +53,21 @@ nav(class="navbar", id="navbar")
                         span(class="navigation-item__icon-btn")
                             i(class="fa-solid fa-user")
                         | Danh sách tài khoản
+              
+            if permission.includes("view-order")
+                li(class="navigation-item")
+                    a(href="/admin/order", class="navigation-item__btn btn single", data-menu="list-order") 
+                        span(class="navigation-item__icon-btn")
+                            i(class="fa-solid fa-list-ul")
+                        | Đơn hàng
+            
+            if permission.includes("view-user")
+                li(class="navigation-user")
+                    a(href="/admin/user", class="navigation-item__btn btn single", data-menu="list-user") 
+                        span(class="navigation-item__icon-btn")
+                            i(class="fa-solid fa-solid fa-person")
+                        | Khách hàng
+              
+          
+
 </nav>

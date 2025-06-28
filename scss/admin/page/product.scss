@@ -44,6 +44,9 @@
     padding-top: 30px;
     overflow: auto;
     color: $text-color-3;
+    table {
+        width: 100%;
+    }
     // scrollbar
     &::-webkit-scrollbar {
         height: 5px;

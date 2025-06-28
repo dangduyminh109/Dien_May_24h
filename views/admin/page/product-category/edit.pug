@@ -43,15 +43,17 @@ block main
            
             h1(class="title") Hình ảnh
             div(class="single-image-wrapper", id="image-wrapper")
-                label(class="single-image__upload" for="image" style="display:none") 
-                    span(class="single-image__upload-icon")
-                        i(class="fa-solid fa-upload")
-                    |   upload
-                    input(id="image",name="thumbnails",type="file",accept="image/*")
-                div(class="single-image__preview")
-                    img(src=productCategory.thumbnail,alt=productCategory.name) 
-                    span(class="image__close-icon")
-                        i(class="fa-solid fa-circle-xmark", style="background-color: #fff; border-radius: 50%; display: block;")
+                if(productCategory.thumbnail == null || productCategory.thumbnail == "")
+                    label(class="single-image__upload" for="image") 
+                        span(class="single-image__upload-icon")
+                            i(class="fa-solid fa-upload")
+                        |   upload
+                        input(id="image",name="thumbnails",type="file",accept="image/*")
+                else 
+                    div(class="single-image__preview")
+                        img(src=productCategory.thumbnail,alt=productCategory.name) 
+                        span(class="image__close-icon")
+                            i(class="fa-solid fa-circle-xmark", style="background-color: #fff; border-radius: 50%; display: block;")
             input(type="hidden",name="thumbnailDeleted",id="thumbnail-deleted")
             div(class="form-group__btn")
                 a(href="/admin/product-category" class="btn btn-primary") Quay lại
