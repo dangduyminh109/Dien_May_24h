@@ -102,12 +102,12 @@ block main
                     else  
                         tr 
                             td(colspan="9")
-                                p(class="noProducts") Không có khách hàng nào đã xóa!   
-                                a(class="noProducts__link", href=`${PATH_ADMIN}/user-trash`) Danh sách khách hàng đã xóa.
+                                p(class="noItem") Không có khách hàng nào đã xóa!   
+                                a(class="noItem__link", href=`${PATH_ADMIN}/user-trash`) Danh sách khách hàng đã xóa.
         
         +pagination(pagination,currentPath)
         if permission.includes("delete-user")
-            form(method="POST", type="hidden",id="form-product-delete" ,action=``)
+            form(method="POST", type="hidden",id="form-delete" ,action=``)
             <!-- Modal -->
             +formWarning("warningDeleteModal","Bạn có chắc chắn muốn <b class='warning-text'>Xóa Vĩnh Viễn Khách Hàng</b> này không?<span class='warning-text'> Hành động này không thể hoàn tác!!!</span>","Xóa Khách Hàng","warning-delete-modal-btn","Xóa Vĩnh Viễn")
     else 

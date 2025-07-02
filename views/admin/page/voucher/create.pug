@@ -1,0 +1,79 @@
+extends ../../layout/default.pug
+include ../../mixins/alert.pug
+include ../../mixins/page_header.pug
+block main 
+    +alert(messages)
+    +page_header("Tạo mới voucher", [
+        { name: "Voucher", href: `${PATH_ADMIN}/voucher` },
+        { name: "Danh sách voucher", href: `${PATH_ADMIN}/voucher` },
+        { name: "Tạo mới voucher", href: `${PATH_ADMIN}/voucher/create` },
+    ])
+    div(class="create")
+        form(action=`${PATH_ADMIN}/voucher/create`, method="post")
+            h1(class="title") Thông tin chung
+            div(class="general")
+                div(class="form-group")
+                    div(class="name form-item")
+                        label(for="name") 
+                            | Tên voucher (
+                            span(class="important-item") *
+                            | )
+                        input(class="form-control",id="name",name="name",type="text",required)
+                    div(class="code form-item")
+                        label(for="code") 
+                            | Mã voucher (
+                            span(class="important-item") *
+                            | )
+                        input(class="form-control",id="code",name="code",type="text",required)   
+                    div(class="discountType form-item")
+                        label(for="discountType") 
+                            | Loại giảm giá (
+                            span(class="important-item") *
+                            | )
+                        select(name="discountType", id="discountType" ,required) 
+                            option(value="fixed" selected) Giảm giá cố định
+                            option(value="percent") Giảm theo phần trăm(0 - 100%) 
+                div(class="form-group")
+                    div(class="discountValue form-item")
+                        label(for="discountValue")
+                            | Trị giá (
+                            span(class="important-item") *
+                            | )
+                        input(class="form-control",id="discountValue",name="discountValue",type="number",value="0",min="0",required)  
+                    div(class="maxDiscount form-item")
+                        label(for="maxDiscount") Giảm tối đa
+                        input(class="form-control",id="maxDiscount",name="maxDiscount",type="number",value="0",min="0")
+                    div(class="minOrderValue form-item")
+                        label(for="minOrderValue") Giá trị đơn hàng tối thiểu
+                        input(class="form-control",id="minOrderValue",name="minOrderValue",type="number",value="0",min="0")           
+                div(class="form-group")
+                    div(class="quantity form-item")
+                        label(for="quantity") 
+                            | Số lượng (
+                            span(class="important-item") *
+                            | )
+                        input(class="form-control",id="quantity",name="quantity",type="number",value="1",min="1",required) 
+                    div(class="startDate form-item")
+                        label(for="startDate") 
+                            | Ngày áp dụng (
+                            span(class="important-item") *
+                            | )
+                        input(type="date", id="startDate",name="startDate",required) 
+                    div(class="expiredAt form-item")
+                        label(for="expiredAt") Ngày hết hạn
+                        input(type="date", id="expiredAt",name="expiredAt") 
+
+                label(for="check-status") Trạng thái 
+                div(class="btn-toggle")
+                    div(class="btn-status-toggle")
+                            div(class="form-check form-switch")
+                                input(class="form-check-input btn-status-form",name="status",type="checkbox",id="check-status", role="switch",checked=true)
+                    p(class="btn-status__desc") Hoạt động          
+                label(for="description") Mô tả voucher
+                textarea(class="textarea-mce",name="description",id="description") 
+            div(class="form-group__btn")
+                a(href="/admin/voucher" class="btn btn-primary") Quay lại
+                button(type="submit" class="btn btn-primary") Tạo Voucher
+
+
+            

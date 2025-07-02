@@ -60,6 +60,13 @@ nav(class="navbar", id="navbar")
                         span(class="navigation-item__icon-btn")
                             i(class="fa-solid fa-list-ul")
                         | Đơn hàng
+
+            if permission.includes("view-voucher")
+                li(class="navigation-item")
+                    a(href="/admin/voucher", class="navigation-item__btn btn single", data-menu="list-voucher") 
+                        span(class="navigation-item__icon-btn")
+                            i(class="fa-solid fa-ticket")
+                        | Voucher
             
             if permission.includes("view-user")
                 li(class="navigation-user")

@@ -14,6 +14,8 @@ const authTrashRouter = require("./auth.route");
 const profileRouter = require("./profile.route");
 const userRouter = require("./user.route");
 const userTrashRouter = require("./user-trash.route");
+const voucherRouter = require("./voucher.route");
+const voucherTrashRouter = require("./voucher-trash.route");
 
 module.exports.index = (app) => {
     app.use(`${system.PATH_ADMIN}/dashboard`, authMiddleware, dashboardRouter);
@@ -48,6 +50,8 @@ module.exports.index = (app) => {
     );
     app.use(`${system.PATH_ADMIN}/user`, authMiddleware, userRouter);
     app.use(`${system.PATH_ADMIN}/user-trash`, authMiddleware, userTrashRouter);
+    app.use(`${system.PATH_ADMIN}/voucher`, authMiddleware, voucherRouter);
+    app.use(`${system.PATH_ADMIN}/voucher-trash`, authMiddleware, voucherTrashRouter);
 
     app.use(`${system.PATH_ADMIN}/auth`, authTrashRouter);
 

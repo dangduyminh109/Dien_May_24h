@@ -9,7 +9,10 @@ const productCategorySchema = new mongoose.Schema(
             type: "String",
             default: "",
         },
-        status: String,
+        status: {
+            type: String,
+            default: "on",
+        },
         description: String,
         thumbnail: String,
     },

@@ -10,14 +10,14 @@ class userTrashController {
     async show(req, res) {
         const currentPath = paginationHelper(req);
         const { listUser, pagination } = await filterAndSort(req.query, true);
-        const handle = req.session.backData || {};
+        const handleData = req.session.backData || {};
         const general = await generalHelper(true);
         res.render("./admin/page/user/user-trash", {
             pageTitle: "User trash",
             PATH_ADMIN: system.PATH_ADMIN,
             listDeletedUser: listUser,
             general,
-            handle,
+            handle: handleData.formData,
             filter: req.query,
             pagination,
             currentPath,

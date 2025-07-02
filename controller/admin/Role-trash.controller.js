@@ -8,14 +8,12 @@ class roleTrashController {
     async show(req, res) {
         const currentPath = paginationHelper(req);
         const { listRoles, pagination } = await roleHelper(req.query, true);
-        const handle = req.session.backData || {};
         res.render("./admin/page/roles/role-trash", {
             pageTitle: "Roles Trash",
             PATH_ADMIN: system.PATH_ADMIN,
             currentPath,
             listRoles,
             filter: req.query,
-            handle,
             pagination,
         });
     }

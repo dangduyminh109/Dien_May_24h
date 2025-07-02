@@ -11,7 +11,10 @@ const accountSchema = new mongoose.Schema(
         token: { type: String, default: generateString() },
         avatar: String,
         roleId: String,
-        status: String,
+        status: {
+            type: String,
+            default: "on",
+        },
     },
     {
         timestamps: true,

@@ -1,7 +1,7 @@
 
 include ./category_tree.pug
 include ./deletion_warning.pug
-mixin toolbarHandle({handle,path,categoryTree,trash=false,product=false,category=false,role=false,account=false,user=false,Update=false,Delete=false,title=""})
+mixin toolbarHandle({handle,path,categoryTree,trash=false,product=false,category=false,role=false,account=false,user=false,voucher=false,Update=false,Delete=false,title=""})
     div(id="toolbar__advanced-handle-box", class="toolbar__advanced-box")
         form(id="handle-update-form" class="toolbar__advanced-form", action=`${PATH_ADMIN}/${path}/update-more?_method=PATCH`,method="POST") 
             input(type="text" class="list-id" name="list-id" value="[]" style="display:none")
@@ -15,13 +15,7 @@ mixin toolbarHandle({handle,path,categoryTree,trash=false,product=false,category
                                 button(type="button" class=" btn btn-primary" data-bs-toggle="modal", data-bs-target="#warningUpdateMultipleModal") Cập nhật
 
                         if product
-                            div(class="advanced__item") 
-                                h3(class="advanced__title")=product ? "Tên sản phẩm" : "Tên danh mục"
-                                input(type="text" class="advanced__input" name="name" placeholder=product ? "Nhập tên sản phẩm" : "Nhập tên danh mục" value=handle.name)
-                            div(class="advanced__item-2") 
-                                h3(class="advanced__title") Mã sản phẩm
-                                input(type="text" class="advanced__input" name="code" placeholder="Nhập Mã sản phẩm" value=handle.code)
-                            div(class="advanced__item")
+                            div(class="advanced__item-2")
                                 h3(class="advanced__title") Danh mục
                                 select(name="category", id="category") 
                                     option(value="" selected disabled) -- chọn danh mục -- 
@@ -29,47 +23,47 @@ mixin toolbarHandle({handle,path,categoryTree,trash=false,product=false,category
                                         +categoryTree(categoryTree)
                                     else 
                                         option(value="" selected disabled) -- Chưa có danh mục nào! -- 
-                            div(class="advanced__item-2") 
+                            div(class="advanced__item") 
                                 h3(class="advanced__title") Trạng thái
                                 div(class="advanced__radio-group")
-                                    input(type="radio" name="status" id="status-advanced_1" value="on" checked = handle.status === "on" ? true:false)
+                                    input(type="radio" name="status" id="status-advanced_1" value="on" checked = handle && handle.status === "on" ? true:false)
                                     label(for="status-advanced_1") Hoạt Động
-                                    input(type="radio" name="status" id="status-advanced_2" value="off" checked = handle.status === "off" ? true:false)
+                                    input(type="radio" name="status" id="status-advanced_2" value="off" checked = handle && handle.status === "off" ? true:false)
                                     label(for="status-advanced_2") Không Hoạt Động
-                            div(class="advanced__item") 
+                            div(class="advanced__item-2") 
                                 h3(class="advanced__title") Nổi bật
                                 div(class="advanced__radio-group")
-                                    input(type="radio" name="featured" id="featured-advanced_1" value="on" checked = handle.featured === true)
+                                    input(type="radio" name="featured" id="featured-advanced_1" value="on" checked = handle && handle.featured === true)
                                     label(for="featured-advanced_1") Nổi Bật
-                                    input(type="radio" name="featured" id="featured-advanced_2" value="off" checked = handle.featured === false)
+                                    input(type="radio" name="featured" id="featured-advanced_2" value="off" checked = handle && handle.featured === false)
                                     label(for="featured-advanced_2") Không Nổi Bật
-                            div(class="advanced__item-2")
+                            div(class="advanced__item")
                                 h3(class="advanced__title") Giá gốc
                                 div(class="advanced__number-group")
-                                    input(type="number" class="advanced__input" name="original-price" placeholder="0" min=0 value=handle["original-price"])
-                            div(class="advanced__item")
+                                    input(type="number" class="advanced__input" name="original-price" placeholder="0" min=0 value= handle ? handle["original-price"]: 0)
+                            div(class="advanced__item-2")
                                 h3(class="advanced__title") Giá bán
                                 div(class="advanced__number-group")
-                                    input(type="number" class="advanced__input" name="price" placeholder="0" min=0 value=handle.price) 
-                            div(class="advanced__item-2") 
+                                    input(type="number" class="advanced__input" name="price" placeholder="0" min=0 value=handle ? handle.price: "") 
+                            div(class="advanced__item") 
                                 h3(class="advanced__title") Giảm giá
                                 div(class="advanced__number-group")
-                                    input(type="number" class="advanced__input" name="discount" placeholder="0" min=0 max=100 value=handle.discount)
-                            div(class="advanced__item")
+                                    input(type="number" class="advanced__input" name="discount" placeholder="0" min=0 max=100 value=handle ? handle.discount: "")
+                            div(class="advanced__item-2")
                                 h3(class="advanced__title") Tồn kho
                                 div(class="advanced__number-group")
-                                    input(type="number" class="advanced__input" name="inventory" placeholder="0" min=0 value=handle.inventory)
+                                    input(type="number" class="advanced__input" name="inventory" placeholder="0" min=0 value=handle ? handle.inventory: "")
                    
-                        if category 
+                        else if category 
                             div(class="advanced__item-2") 
                                 h3(class="advanced__title") Trạng thái
                                 div(class="advanced__radio-group")
-                                    input(type="radio" name="status" id="status-advanced_1" value="on" checked = handle.status === "on" ? true:false)
+                                    input(type="radio" name="status" id="status-advanced_1" value="on" checked = handle && handle.status === "on" ? true:false)
                                     label(for="status-advanced_1") Hoạt Động
-                                    input(type="radio" name="status" id="status-advanced_2" value="off" checked = handle.status === "off" ? true:false)
+                                    input(type="radio" name="status" id="status-advanced_2" value="off" checked = handle && handle.status === "off" ? true:false)
                                     label(for="status-advanced_2") Không Hoạt Động
 
-                        if account 
+                        else if account 
                             div(class="advanced__item")
                                 h3(class="advanced__title") Phân quyền
                                 select(name="roleId", id="roleId") 
@@ -82,20 +76,62 @@ mixin toolbarHandle({handle,path,categoryTree,trash=false,product=false,category
                             div(class="advanced__item-2") 
                                 h3(class="advanced__title") Trạng thái
                                 div(class="advanced__radio-group")
-                                    input(type="radio" name="status" id="status-advanced_1" value="on" checked = handle.status === "on" ? true:false)
+                                    input(type="radio" name="status" id="status-advanced_1" value="on" checked = handle && handle.status === "on" ? true:false)
                                     label(for="status-advanced_1") Hoạt Động
-                                    input(type="radio" name="status" id="status-advanced_2" value="off" checked = handle.status === "off" ? true:false)
+                                    input(type="radio" name="status" id="status-advanced_2" value="off" checked = handle && handle.status === "off" ? true:false)
                                     label(for="status-advanced_2") Không Hoạt Động
-                        if user 
+                        else if user 
                             div(class="advanced__item-2") 
                                 h3(class="advanced__title") Trạng thái
                                 div(class="advanced__radio-group")
-                                    input(type="radio" name="status" id="status-advanced_1" value="on" checked = handle.status === "on" ? true:false)
+                                    input(type="radio" name="status" id="status-advanced_1" value="on" checked = handle && handle.status === "on" ? true:false)
                                     label(for="status-advanced_1") Hoạt Động
-                                    input(type="radio" name="status" id="status-advanced_2" value="off" checked = handle.status === "off" ? true:false)
+                                    input(type="radio" name="status" id="status-advanced_2" value="off" checked = handle && handle.status === "off" ? true:false)
                                     label(for="status-advanced_2") Không Hoạt Động
                             
-                    if (product || category || role || account || user) && (trash && Update || Delete)
+                        else if voucher
+                            div(class="advanced__item")
+                                h3(class="advanced__title") Loại giảm giá
+                                select(name="discountType", id="discountType") 
+                                    option(value="") -- Tất cả --
+                                    option(value="fixed" selected=(handle && handle.discountType == "fixed")) Giảm giá cố định
+                                    option(value="percent" selected=(handle && handle.discountType == "percent")) Giảm theo phần trăm(0 - 100%) 
+                            div(class="advanced__item-2") 
+                                h3(class="advanced__title") Trạng thái
+                                div(class="advanced__radio-group")
+                                    input(type="radio" name="status" id="status-advanced_1" value="on" checked = handle && handle.status === "on" ? true:false)
+                                    label(for="status-advanced_1") Hoạt Động
+                                    input(type="radio" name="status" id="status-advanced_2" value="off" checked = handle && handle.status === "off" ? true:false)
+                                    label(for="status-advanced_2") Không Hoạt Động
+                            div(class="advanced__item") 
+                                h3(class="advanced__title") Trị giá
+                                div(class="advanced__number-group")
+                                    input(type="number" class="advanced__input" name="discountValue" placeholder="0" min=0 value=filter["discountValue"]) 
+                            div(class="advanced__item-2") 
+                                h3(class="advanced__title") Giảm tối đa
+                                div(class="advanced__number-group")
+                                    input(type="number" class="advanced__input" name="maxDiscount" placeholder="0" min=0 value=filter["maxDiscount"])
+                            div(class="advanced__item") 
+                                h3(class="advanced__title") Giá trị đơn
+                                div(class="advanced__number-group")
+                                    input(type="number" class="advanced__input" name="minOrderValue" placeholder="0" min=0 value=filter["minOrderValue"]) 
+                            div(class="advanced__item-2") 
+                                h3(class="advanced__title") Số lượng
+                                div(class="advanced__number-group")
+                                    input(type="number" class="advanced__input" name="quantity" placeholder="0" min=0 value=filter["quantity"]) 
+                           
+                            - const startDate = filter.startDate ? new Date(filter.startDate).toISOString().split('T')[0]:"";
+                            - const expiredAt = filter.expiredAt ? new Date(filter.expiredAt).toISOString().split('T')[0]:"";
+                            div(class="advanced__item") 
+                                h3(class="advanced__title") Ngày áp dụng
+                                div(class="advanced__number-group")
+                                    input(type="date" class="advanced__input" name="startDate" value=startDate|| "") 
+                            div(class="advanced__item-2") 
+                                h3(class="advanced__title") Ngày hết hạn
+                                div(class="advanced__number-group")
+                                    input(type="date" class="advanced__input" name="expiredAt" value=expiredAt|| "") 
+                            
+                    if (trash && Update || Delete)
                         div(class="advanced__item-header") 
                             h2(class="block-advanced__title") Xử Lí
                             div(class="toolbar__advanced-group-btn")

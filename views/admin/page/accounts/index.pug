@@ -106,12 +106,12 @@ block main
                     else  
                         tr 
                             td(colspan="9")
-                                p(class="noProducts") Không có tài khoản nào!   
-                                a(class="noProducts__link", href=`${PATH_ADMIN}/accounts/create`) Tạo tài khoản.
+                                p(class="noItem") Không có tài khoản nào!   
+                                a(class="noItem__link", href=`${PATH_ADMIN}/accounts/create`) Tạo tài khoản.
     
         +pagination(pagination,currentPath)
         if permission.includes("delete-account")
-            form(method="POST", type="hidden",id="form-product-delete" ,action=``)
+            form(method="POST", type="hidden",id="form-delete" ,action=``)
             <!-- Modal -->
             +formWarning("warningDeleteModal","Bạn có chắc chắn muốn <b class='warning-text'>Xóa tài khoản</b> này không?","Xóa tài khoản","warning-delete-modal-btn","Xóa")
     else 

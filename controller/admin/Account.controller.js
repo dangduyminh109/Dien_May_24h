@@ -14,7 +14,7 @@ class accountController {
         const currentPath = paginationHelper(req);
         const { listAccounts, pagination } = await filterAndSort(req.query);
         const listRoles = await Role.find().select("name");
-        const handle = req.session.backData || {};
+        const handleData = req.session.backData || {};
         const general = await generalHelper();
         res.render("./admin/page/accounts/", {
             pageTitle: "Điện Máy 24h - Tài Khoản",
@@ -24,7 +24,7 @@ class accountController {
             listRoles,
             pagination,
             general,
-            handle,
+            handle: handleData.formData,
             filter: req.query,
         });
     }
@@ -129,6 +129,9 @@ class accountController {
                 if (value != "") return [key, value];
             });
             dataUpdate = Object.fromEntries(dataUpdate);
+            req.session.backData = {
+                formData: req.body,
+            };
             await Account.updateMany(
                 { _id: { $in: listIds } },
                 { $set: dataUpdate }

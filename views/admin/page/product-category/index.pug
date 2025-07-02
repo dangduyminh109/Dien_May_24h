@@ -98,12 +98,12 @@ block main
                     else  
                         tr 
                             td(colspan="9")
-                                p(class="noProductCategory") Không có danh mục nào!   
-                                a(class="noProductCategory__link", href=`${PATH_ADMIN}/product-category/create`) Tạo danh mục.
+                                p(class="noItem") Không có danh mục nào!   
+                                a(class="noItem__link", href=`${PATH_ADMIN}/product-category/create`) Tạo danh mục.
     
         +pagination(pagination,currentPath)
         if permission.includes("delete-category")
-            form(method="POST", type="hidden",id="form-product-delete" ,action=``)
+            form(method="POST", type="hidden",id="form-delete" ,action=``)
             <!-- Modal -->
             +formWarning("warningDeleteModal","Bạn có chắc chắn muốn <b class='warning-text'>Xóa</b> danh mục này không?","Xóa danh mục","warning-delete-modal-btn","Xóa")
     

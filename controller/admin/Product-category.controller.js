@@ -15,7 +15,7 @@ class productCategoryController {
         const { listProductCategory, pagination } = await filterAndSort(
             req.query
         );
-        const handle = req.session.backData || {};
+        const handleData = req.session.backData || {};
         const general = await generalHelper();
         const categoryTree = await getCategoryTree();
         res.render("./admin/page/product-category", {
@@ -24,7 +24,7 @@ class productCategoryController {
             listProductCategory,
             general,
             filter: req.query,
-            handle,
+            handle: handleData.formData,
             pagination,
             currentPath,
             categoryTree,

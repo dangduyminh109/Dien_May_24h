@@ -13,7 +13,10 @@ const productSchema = new mongoose.Schema(
         order: { type: Number, default: 0 },
         supplier: String,
         category: String,
-        status: String,
+        status: {
+            type: String,
+            default: "on",
+        },
         featured: Boolean,
         description: String,
         thumbnails: Array,

@@ -15,7 +15,7 @@ class accountTrashController {
             true
         );
         const listRoles = await Role.find().select("name");
-        const handle = req.session.backData || {};
+        const handleData = req.session.backData || {};
         const general = await generalHelper(true);
         res.render("./admin/page/accounts/account-trash", {
             pageTitle: "Account trash",
@@ -23,7 +23,7 @@ class accountTrashController {
             listDeletedAccounts: listAccounts,
             general,
             listRoles,
-            handle,
+            handle: handleData.formData,
             filter: req.query,
             pagination,
             currentPath,

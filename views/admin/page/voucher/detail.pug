@@ -1,0 +1,74 @@
+extends ../../layout/default.pug
+include ../../mixins/page_header.pug
+include ../../mixins/alert.pug
+
+block main 
+    +alert(messages)
+    +page_header("Chi tiết voucher", [
+        { name: "Voucher", href: `${PATH_ADMIN}/voucher` },
+        { name: "Danh sách voucher", href: `${PATH_ADMIN}/voucher` },
+        { name: "Chi tiết voucher", href: `${PATH_ADMIN}/voucher/detail` },
+    ])
+    - const startDate = new Date(voucher.startDate).toLocaleDateString("vi-VN");
+    - const expiredAt = new Date(voucher.expiredAt).toLocaleDateString("vi-VN");
+    div(class="detail")
+        h1(class="title") Thông tin chung
+        div(class="general")
+            div(class="form-group")
+                div(class="form-item")
+                    p(class="label")
+                        b Tên voucher
+                    p(class="content") #{voucher.name}
+                div(class="form-item")
+                    p(class="label")
+                        b Mã voucher 
+                    p(class="content") #{voucher.code}
+                div(class="form-item")
+                    p(class="label")
+                        b Loại giảm giá
+                    p(class="content") #{voucher.discountType}
+            div(class="form-group")
+                div(class="form-item")
+                    p(class="label")
+                        b Trị giá
+                    p(class="content") #{voucher.discountValue}
+                div(class="form-item")
+                    p(class="label")
+                        b Giảm tối đa
+                    p(class="content") #{voucher.maxDiscount}
+                div(class="form-item")
+                    p(class="label")
+                        b Giá trị đơn hàng tối thiểu
+                    p(class="content") #{voucher.minOrderValue}
+            div(class="form-group")
+                div(class="form-item")
+                    p(class="label")
+                        b Số lượng
+                    p(class="content") #{voucher.quantity}
+                div(class="form-item")
+                    p(class="label")
+                        b Ngày áp dụng
+                    p(class="content") #{startDate}
+                div(class="form-item")
+                    p(class="label")
+                        b Ngày hết hạn
+                    p(class="content") #{expiredAt}
+            div(class="form-group")
+                div(class="form-item")
+                    p(class="label") 
+                        b Trạng thái 
+                    p(class=`status ${voucher.status == "on" ? "active" : ""}`) #{voucher.status == "on" ? "Hoạt động" : "Không hoạt động"}     
+            div(class="form-group")
+                div(class="form-item")
+                    p(class="label") 
+                        b Mô tả
+                    div(class="content")!=voucher.description
+            
+       
+        div(class="form-group__btn")
+            a(href=`/admin/${deleted ? "voucher-trash":"voucher"}` class="btn btn-primary") Quay lại
+            if(!deleted)
+                a(href=`/admin/voucher/edit/${voucher.id}` class="btn btn-primary") Sửa Voucher
+    
+
+        

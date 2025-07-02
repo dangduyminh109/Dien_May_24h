@@ -441,7 +441,7 @@ function handleFeaturedInput() {
 function handleWarningFormProduct() {
     const btnDelete = document.querySelectorAll(".btn-delete");
     const btnDestroy = document.querySelectorAll(".btn-destroy");
-    const formProductDelete = document.getElementById("form-product-delete");
+    const formProductDelete = document.getElementById("form-delete");
     const warningDeleteModalBtn = document.getElementById(
         "warning-delete-modal-btn"
     );

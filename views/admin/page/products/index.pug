@@ -179,13 +179,13 @@ block main
                     else  
                         tr 
                             td(colspan="9")
-                                p(class="noProducts") Không có sản phẩm nào!   
-                                a(class="noProducts__link", href=`${PATH_ADMIN}/product/create`) Tạo sản phẩm.
+                                p(class="noItem") Không có sản phẩm nào!   
+                                a(class="noItem__link", href=`${PATH_ADMIN}/product/create`) Tạo sản phẩm.
     
         +pagination(pagination,currentPath)
 
         if permission.includes("delete-product")
-            form(method="POST", type="hidden",id="form-product-delete" ,action=``)
+            form(method="POST", type="hidden",id="form-delete" ,action=``)
             <!-- Modal -->
             +formWarning("warningDeleteModal","Bạn có chắc chắn muốn <b class='warning-text'>Xóa</b> sản phẩm này không?","Xóa sản phẩm","warning-delete-modal-btn","Xóa")
     

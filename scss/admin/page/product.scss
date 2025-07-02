@@ -166,14 +166,12 @@
         }
     }
 
-    .noProductCategory,
-    .noProducts {
+    .noItem {
         display: inline-block;
         font-size: 1.8rem;
         margin-right: 3px;
     }
-    .noProductCategory__link,
-    .noProducts__link {
+    .noItem__link {
         font-size: 1.8rem;
         color: $color-hover;
         text-decoration: underline solid;

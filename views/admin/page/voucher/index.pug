@@ -1,0 +1,151 @@
+extends ../../layout/default.pug
+include ../../mixins/page_header.pug
+include ../../mixins/toolbar_filter.pug
+include ../../mixins/toolbar_handle.pug
+include ../../mixins/deletion_warning.pug
+include ../../mixins/pagination.pug
+include ../../mixins/alert.pug
+
+block main 
+    +alert(messages)
+    if permission.includes("view-voucher")
+        +page_header("Danh sách voucher", [
+            { name: "Voucher", href: `${PATH_ADMIN}/voucher` },
+            { name: "Danh sách voucher", href: `${PATH_ADMIN}/voucher` },
+        ])
+        div(class="toolbar")
+            div(class="toolbar__box")
+                div(class="toolbar__left-box")
+                    form(action=`${PATH_ADMIN}/voucher`, method="GET") 
+                        div(class="search")
+                            input(class="search__input", type="text", name="name",placeholder="Nhập từ khóa tìm kiếm", spellcheck="false",value=filter.name)
+                            button(type="submit" class="search__toolbar-icon")
+                                i(class="fa-solid fa-magnifying-glass")
+                    button(id="advanced-filter-btn", class="advanced-filter-btn btn btn-primary", type="button")
+                        span(class="icon-btn")
+                            i(class="fa-solid fa-filter")
+                        | Bộ Lọc
+                    if permission.includes("update-voucher") || permission.includes("delete-voucher")
+                        button(id="advanced-handle-btn", class="advanced-handle-btn btn btn-primary", type="button")
+                            span(class="icon-btn")
+                                i(class="fa-solid fa-sliders")
+                            | Nâng cao
+                    a(href=`${PATH_ADMIN}/voucher-trash`,id="btn btn-primary", class=" btn btn-primary")
+                        span(class="icon-btn")
+                            i(class="fa-solid fa-trash-can")
+                        | Thùng rác
+                if permission.includes("add-voucher")
+                    div(class="toolbar__right-box")
+                        a(href=`${PATH_ADMIN}/voucher/create`,class="btn btn-primary")
+                            span(class="icon-btn")
+                                i(class="fa-solid fa-plus")
+                            | Thêm mới voucher
+            +toolbarFilter({filter,path: "voucher",voucher:true})
+            if permission.includes("update-voucher") || permission.includes("delete-voucher")
+                -var Update = permission.includes("update-voucher");
+                -var Delete = permission.includes("delete-voucher");
+                +toolbarHandle({handle,path: "voucher",voucher:true,Update: Update,Delete: Delete,title: "Voucher"})
+
+        div(class="overview-block") 
+                div(class="overview-item total-products")
+                    h3(class="overview-item__title total-products__title") Tổng số voucher
+                    p(class="overview-item__detail total-products__detail") #{general.totalVoucher}
+        
+        div(class="list-voucher list-table")
+            table(class="list-voucher__table")
+                thead
+                    tr
+                        th(scope="col") 
+                            input(type="checkbox" id="table-item__select-all" name="sort")
+                        th(scope="col") 
+                            |   Tên voucher
+                            !=pugHepper.sort("name", _sort,pagination.page)
+                        th(scope="col") 
+                            |   Mã voucher
+                            !=pugHepper.sort("code", _sort,pagination.page)
+                        th(scope="col") 
+                            |   Trị giá
+                            !=pugHepper.sort("discountValue", _sort,pagination.page)
+                        th(scope="col") Loại giảm giá
+                        th(scope="col") 
+                            |   Giảm tối đa
+                            !=pugHepper.sort("maxDiscount", _sort,pagination.page)
+                        th(scope="col") 
+                            |   Giá trị đơn tối thiểu
+                            !=pugHepper.sort("minOrderValue", _sort,pagination.page)
+                        th(scope="col") 
+                            |   số lượng
+                            !=pugHepper.sort("quantity", _sort,pagination.page)
+                        th(scope="col") 
+                            |   Ngày áp dụng
+                            !=pugHepper.sort("startDate", _sort,pagination.page)
+                        th(scope="col") 
+                            |   Ngày hết hạn
+                            !=pugHepper.sort("expiredAt", _sort,pagination.page)
+                        th(scope="col") Trạng thái 
+                        th(scope="col")
+                        th(scope="col")  
+                        
+                tbody
+                    if listVoucher.length > 0
+                        each Voucher in listVoucher
+                            tr
+                                td 
+                                    input(type="checkbox" class="table-item__select" name="sort" value="1" _id=Voucher._id)
+                                td  
+                                    h4(class="table-item__title") #{Voucher.name}
+                                td  
+                                    p 
+                                        span(class="table-item__icon")
+                                            i(class="fa-solid fa-tag" style="transform: scaleX(-1)")
+                                        | #{Voucher.code}
+                                td  
+                                    p #{Voucher.discountValue}
+                                td  
+                                    p #{Voucher.discountType == "fixed" ? "Giảm giá cố định" : "Giảm theo phần trăm"}
+                                td  
+                                    p #{Voucher.maxDiscount}
+                                td  
+                                    p #{Voucher.minOrderValue}
+                                td  
+                                    p #{Voucher.quantity}
+                                td  
+                                    - const startDate = new Date(Voucher.startDate).toLocaleDateString("vi-VN");
+                                    p #{startDate}
+                                td  
+                                    - const expiredAt = new Date(Voucher.expiredAt).toLocaleDateString("vi-VN");
+                                    p #{expiredAt}
+                                td 
+                                    if permission.includes("update-voucher")
+                                        div(class="btn-toggle")
+                                            div(class="btn-status-toggle")
+                                                    div(class="form-check form-switch")
+                                                        input(class="form-check-input btn-status__input", type="checkbox", role="switch",value=Voucher.status,_id=Voucher._id, path="voucher/update-status")
+                                            p(class="btn-status__desc") Hoạt động          
+                                    else
+                                        div(class="btn-toggle")
+                                            p(class="btn-status__desc") #{Voucher.status == "on" ? "Hoạt động" : "Không hoạt động"}
+                
+                                td(style="text-align: center")
+                                    if permission.includes("update-voucher")
+                                        a(href=`${PATH_ADMIN}/voucher/edit/${Voucher.id}`, class="btn-primary btn") Sửa   
+                                td(style="text-align: center")
+                                    if permission.includes("view-voucher")
+                                        a(href=`${PATH_ADMIN}/voucher/detail/${Voucher.id}`, class="btn-warning btn") Chi tiết    
+                                td(style="text-align: center")
+                                    if permission.includes("delete-voucher") 
+                                        button(type="button", class="btn-delete btn btn-danger", data-bs-id = Voucher._id ,data-bs-toggle="modal", data-bs-target="#warningDeleteModal",path="voucher/delete-voucher") Xóa 
+                    else  
+                        tr 
+                            td(colspan="9")
+                                p(class="noItem") Không có voucher nào!   
+                                a(class="noItem__link", href=`${PATH_ADMIN}/voucher/create`) Tạo voucher.
+    
+        +pagination(pagination,currentPath)
+        if permission.includes("delete-voucher")
+            form(method="POST", type="hidden",id="form-delete" ,action=``)
+            <!-- Modal -->
+            +formWarning("warningDeleteModal","Bạn có chắc chắn muốn <b class='warning-text'>Xóa</b> voucher này không?","Xóa voucher","warning-delete-modal-btn","Xóa")
+    
+    else
+        h1 Bạn không có quyền truy cập trang này    

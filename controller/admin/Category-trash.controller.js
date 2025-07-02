@@ -14,7 +14,7 @@ class categoryTrashController {
             req.query,
             true
         );
-        const handle = req.session.backData || {};
+        const handleData = req.session.backData || {};
         const categoryTree = await getCategoryTree();
         const general = await generalHelper(true);
         res.render("./admin/page/product-category/category-trash", {
@@ -23,7 +23,7 @@ class categoryTrashController {
             listDeletedCategory: listProductCategory,
             general,
             filter: req.query,
-            handle,
+            handle: handleData.formData,
             pagination,
             currentPath,
             categoryTree,

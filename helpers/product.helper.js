@@ -33,62 +33,66 @@ async function filterAndSort(query, findDelete = false) {
     const limit = 5;
     let totalPage = 0;
     let page = query.page ? parseInt(query.page) : 1;
-    const filterEntries = await Promise.all(
-        Object.entries(query).map(async ([key, value]) => {
-            if (value === "") return null;
-            const numValue = Number(value);
-            let obj = {};
-            switch (key) {
-                case "min-original-price":
-                case "max-original-price":
-                    obj["original_price"] = {
-                        [key.includes("min") ? "$gte" : "$lte"]: numValue,
-                    };
-                    break;
-                case "min-price":
-                case "max-price":
-                    obj.price = {
-                        [key.includes("min") ? "$gte" : "$lte"]: numValue,
-                    };
-                    break;
-                case "min-discount":
-                case "max-discount":
-                    obj.discount = {
-                        [key.includes("min") ? "$gte" : "$lte"]: numValue,
-                    };
-                    break;
-                case "min-inventory":
-                case "max-inventory":
-                    obj.inventory = {
-                        [key.includes("min") ? "$gte" : "$lte"]: numValue,
-                    };
-                    break;
-                case "name":
-                    obj.name = { $regex: value, $options: "i" };
-                    break;
-                case "category":
-                    const listSubCategory = await getCategoryTree(value);
-                    obj.category = {
-                        $in: [
-                            new mongoose.Types.ObjectId(value),
-                            ...listSubCategory.map(
-                                (item) => new mongoose.Types.ObjectId(item._id)
-                            ),
-                        ],
-                    };
-                    break;
-                case "status":
-                case "code":
-                    obj[key] = value;
-                    break;
-                case "featured":
-                    obj[key] = value === "on";
-                    break;
-            }
-            return obj;
-        })
-    );
-    const filter = Object.assign({}, ...filterEntries.filter(Boolean));
+    const filter = {};
+    for (const [key, value] of Object.entries(query)) {
+        if (value === "") continue;
+
+        const numValue = Number(value);
+
+        switch (key) {
+            case "min-original-price":
+            case "max-original-price":
+                filter.original_price = filter.original_price || {};
+                filter.original_price[key.includes("min") ? "$gte" : "$lte"] =
+                    numValue;
+                break;
+
+            case "min-price":
+            case "max-price":
+                filter.price = filter.price || {};
+                filter.price[key.includes("min") ? "$gte" : "$lte"] = numValue;
+                break;
+
+            case "min-discount":
+            case "max-discount":
+                filter.discount = filter.discount || {};
+                filter.discount[key.includes("min") ? "$gte" : "$lte"] =
+                    numValue;
+                break;
+
+            case "min-inventory":
+            case "max-inventory":
+                filter.inventory = filter.inventory || {};
+                filter.inventory[key.includes("min") ? "$gte" : "$lte"] =
+                    numValue;
+                break;
+
+            case "name":
+                filter.name = { $regex: value, $options: "i" };
+                break;
+
+            case "category":
+                const listSubCategory = await getCategoryTree(value);
+                filter.category = {
+                    $in: [
+                        new mongoose.Types.ObjectId(value),
+                        ...listSubCategory.map(
+                            (item) => new mongoose.Types.ObjectId(item._id)
+                        ),
+                    ],
+                };
+                break;
+
+            case "status":
+            case "code":
+                filter[key] = value;
+                break;
+
+            case "featured":
+                filter[key] = value === "on";
+                break;
+        }
+    }
 
     if (findDelete) filter.deleted = true;
     const queryMethod = findDelete ? "findWithDeleted" : "find";

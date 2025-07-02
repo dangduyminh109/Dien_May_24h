@@ -233,6 +233,39 @@ block main
                         tr
                             td
 
+                        tr(class="row-title")  
+                            td(colspan=`${listRoles.length+1}`) Voucher
+                        tr 
+                            td Xem 
+                            each role,index in listRoles
+                                td 
+                                    - var check = role.permission.includes("view-voucher")
+                                    input(type="checkbox" class="table-item__select" value="view-voucher" id=`table-voucher-view-${index}` checked=check)
+                                    label(for=`table-voucher-view-${index}` class="table-item__label" _id=`${role.id}`)
+                        tr
+                            td Thêm mới
+                            each role,index in listRoles
+                                td 
+                                    - var check = role.permission.includes("add-voucher")
+                                    input(type="checkbox" class="table-item__select" value="add-voucher" id=`table-voucher-add-${index}` checked=check)
+                                    label(for=`table-voucher-add-${index}` class="table-item__label" _id=`${role.id}`)
+                        tr
+                            td Cập nhật 
+                            each role,index in listRoles
+                                td 
+                                    - var check = role.permission.includes("update-voucher")
+                                    input(type="checkbox" class="table-item__select" value="update-voucher" id=`table-voucher-update-${index}` checked=check)
+                                    label(for=`table-voucher-update-${index}` class="table-item__label" _id=`${role.id}`)
+                        tr 
+                            td Xóa
+                            each role,index in listRoles
+                                td 
+                                    - var check = role.permission.includes("delete-voucher")
+                                    input(type="checkbox" class="table-item__select" value="delete-voucher" id=`table-voucher-delete-${index}` checked=check)
+                                    label(for=`table-voucher-delete-${index}` class="table-item__label" _id=`${role.id}`)
+                        tr
+                            td
+
 
                         tr(class="row-title")  
                             td(colspan=`${listRoles.length+1}`) Khách Hàng

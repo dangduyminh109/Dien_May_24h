@@ -14,7 +14,7 @@ class productController {
     async show(req, res) {
         const currentPath = paginationHelper(req);
         const { listProduct, pagination } = await filterAndSort(req.query);
-        const handle = req.session.backData || {};
+        const handleData = req.session.backData || {};
         const general = await generalHelper();
         const categoryTree = await getCategoryTree();
         res.render("./admin/page/products", {
@@ -23,7 +23,7 @@ class productController {
             listProduct,
             general,
             filter: req.query,
-            handle,
+            handle: handleData.formData,
             pagination,
             currentPath,
             categoryTree,
@@ -213,6 +213,9 @@ class productController {
                 dataUpdate.featured =
                     dataUpdate.featured == "on" ? true : false;
             }
+            req.session.backData = {
+                formData: req.body,
+            };
             await Product.updateMany(
                 { _id: { $in: listIds } },
                 { $set: dataUpdate }

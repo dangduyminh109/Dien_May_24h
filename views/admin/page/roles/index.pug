@@ -40,7 +40,7 @@ block main
 
             if permission.includes("delete-role")
                 -var Delete = permission.includes("delete-role")
-                +toolbarHandle({handle,path: "roles",categoryTree,role:true,Delete: Delete,title:"Quyền"})
+                +toolbarHandle({handle,path: "roles",role:true,Delete: Delete,title:"Quyền"})
         
         div(class="list-roles list-table")
             table(class="list-roles__table")
@@ -76,13 +76,13 @@ block main
                     else  
                         tr 
                             td(colspan="9")
-                                p(class="noProducts") Không có nhóm quyền nào!   
-                                a(class="noProducts__link", href=`${PATH_ADMIN}/roles/create`) Tạo quyền mới.
+                                p(class="noItem") Không có nhóm quyền nào!   
+                                a(class="noItem__link", href=`${PATH_ADMIN}/roles/create`) Tạo quyền mới.
 
         +pagination(pagination,currentPath)
         
         if permission.includes("delete-role")
-            form(method="POST", type="hidden",id="form-product-delete" ,action=``)
+            form(method="POST", type="hidden",id="form-delete" ,action=``)
             <!-- Modal -->
             +formWarning("warningDeleteModal","Bạn có chắc chắn muốn <b class='warning-text'>Xóa</b> quyền này không?","Xóa quyền","warning-delete-modal-btn","Xóa")
         

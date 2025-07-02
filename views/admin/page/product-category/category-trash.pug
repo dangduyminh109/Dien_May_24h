@@ -95,12 +95,12 @@ block main
                     else  
                         tr 
                             td(colspan="9")
-                                p(class="noProducts") Không có danh mục nào đã xóa!   
-                                a(class="noProducts__link", href=`${PATH_ADMIN}/product-category`) Danh mục sản phẩm.
+                                p(class="noItem") Không có danh mục nào đã xóa!   
+                                a(class="noItem__link", href=`${PATH_ADMIN}/product-category`) Danh mục sản phẩm.
         
         +pagination(pagination,currentPath)
         if permission.includes("delete-category")
-            form(method="POST", type="hidden",id="form-product-delete" ,action=``)
+            form(method="POST", type="hidden",id="form-delete" ,action=``)
             <!-- Modal -->
             +formWarning("warningDeleteModal","Bạn có chắc chắn muốn <b class='warning-text'>Xóa Vĩnh Viễn</b> danh mục này không?<span class='warning-text'> Hành động này không thể hoàn tác!!!</span>","Xóa danh mục","warning-delete-modal-btn","Xóa Vĩnh Viễn")
     else
