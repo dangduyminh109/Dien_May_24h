@@ -67,6 +67,17 @@ block main
                     div(class="expiredAt form-item")
                         label(for="expiredAt") Ngày hết hạn
                         input(type="date", id="expiredAt",name="expiredAt",value=expiredAt) 
+                div(class="form-group")
+                    div(class="applyFor form-item")
+                        label(for="applyFor") 
+                            | Áp dụng cho (
+                            span(class="important-item") *
+                            | )
+                        select(name="applyFor", id="applyFor" ,required) 
+                            option(value="all" selected=(voucher.applyFor == "all")) Tất cả
+                            option(value="purchased" selected=(voucher.applyFor == "purchased")) Đã mua
+                            option(value="not-purchased" selected=(voucher.applyFor == "not-purchased")) Chưa mua
+                            option(value="new-user" selected=(voucher.applyFor == "new-user")) Người mới
                 label(for="check") Trạng thái 
                 div(class="btn-toggle")
                     div(class="btn-status-toggle")

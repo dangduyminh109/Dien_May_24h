@@ -9,7 +9,7 @@ class userTrashController {
     // [GET] /admin/user-trash
     async show(req, res) {
         const currentPath = paginationHelper(req);
-        const { listUser, pagination } = await filterAndSort(req.query, true);
+        const { listUser, pagination } = await filterAndSort(req, true);
         const handleData = req.session.backData || {};
         const general = await generalHelper(true);
         res.render("./admin/page/user/user-trash", {

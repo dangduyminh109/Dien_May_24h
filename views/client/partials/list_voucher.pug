@@ -1,0 +1,65 @@
+div(class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasVoucherLabel")
+        div(class="offcanvas-header")
+            button(type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close")
+            h2(class="offcanvas-title" id="offcanvasVoucherLabel") Mã giảm giá
+        div(class="offcanvas-body")
+            div(class="voucher__list")
+                if(!user)
+                    p(class="voucher-info__none") Bạn cần đăng nhâp để sử dụng voucher. 
+                        button(class="btn btn-link btn-none" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="offcanvas" aria-label="Close") Đăng nhập ngay !!!
+                else 
+                    if(listVoucher.length < 1)
+                        p(class="voucher-info__none") Không tìm thấy voucher nào
+                    else 
+                        each voucher in listVoucher
+                            - const expiredAt = new Date(voucher.expiredAt).toLocaleDateString("vi-VN");
+                            div(class="voucher-item left")
+                                div(class="voucher-item__thumb")
+                                    img(src="/uploads/voucher-icon.png" alt="voucher" class="voucher-item__img")
+                                div(class="voucher-item__content")
+                                    div(class="voucher-item__top-content")
+                                        div(class="voucher-item__text")
+                                            h4(class="voucher-item__name") #{voucher.name}
+                                        div(class="voucher-item__detail")
+                                            span(class="voucher-item__icon")
+                                                i(class="fa-solid fa-info")
+                                            div(class="voucher-info")
+                                                h4(class="voucher-info__name") SUMMER - 5%
+                                                div(class="voucher-info__content")
+                                                    table
+                                                        tr
+                                                            td(colspan="1") Mã:
+                                                            td(colspan="5")
+                                                                | #{voucher.code}
+                                                                span(class="voucher-info__copy-icon")
+                                                                    i(class="fa-solid fa-copy")
+                                                        tr
+                                                            td(colspan="1") HSD:
+                                                            td(colspan="3") #{expiredAt}
+                                                        tr
+                                                            td(colspan="1") Giá trị:
+                                                            td(colspan="3") 
+                                                                if(voucher.discountType == "fixed")
+                                                                    | #{voucher.discountValue.toLocaleString('vi-VN')}đ
+                                                                else 
+                                                                    | #{voucher.discountValue}%
+                                                        tr
+                                                            td(colspan="1") Giảm tối đa: 
+                                                            td(colspan="3") #{voucher.maxDiscount.toLocaleString('vi-VN')}đ
+                                                        tr
+                                                            td(colspan="1") Đơn tối thiểu:
+                                                            td(colspan="3") #{voucher.minOrderValue.toLocaleString('vi-VN')}đ
+                                                        tr
+                                                            td(colspan="1") Còn lại:
+                                                            td(colspan="3") #{voucher.quantity - voucher.usedBy.length}
+                                                    div(class="voucher-info__desc")
+                                                        p(class="voucher-info__description") !{voucher.description} 
+                                    div(class="voucher-item__bottom-content")
+                                        div(class="voucher-item__text")
+                                            p(class="voucher-item__code")
+                                                | Mã: 
+                                                strong #{voucher.code}
+                                            p(class="voucher-item__expiry") HSD: #{expiredAt}
+                                        div(class="voucher-item__expired")
+                                            - const dataVoucher = {id: voucher._id, code: voucher.code,discountType: voucher.discountType, discountValue: voucher.discountValue, maxDiscount: voucher.maxDiscount}
+                                            button(class="btn btn-voucher" data-bs-dismiss="offcanvas" aria-label="Close" data-voucher=dataVoucher) Sử dụng

@@ -1,7 +1,14 @@
 const Role = require("../models/role.model");
 
-async function roleHelper(query, findDelete = false) {
-    const limit = 5;
+async function roleHelper(req, findDelete = false) {
+    let limit = 5;
+    let query = req.query;
+    if (query.show) {
+        limit = parseInt(query.show);
+        req.session.limit = limit;
+    } else if (req.session.limit) {
+        limit = req.session.limit;
+    }
     let totalPage = 0;
     let page = query.page ? parseInt(query.page) : 1;
     const filter = Object.entries(query).reduce((obj, [key, value]) => {

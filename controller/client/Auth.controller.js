@@ -3,6 +3,7 @@ const User = require("../../models/user.model.js");
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
 const { sendOTP } = require("../../utils");
+const { mergeSessionCartToUser } = require("../../helpers/cart.helper.js");
 
 class AuthController {
     async register(req, res) {
@@ -122,12 +123,16 @@ class AuthController {
                 req.flash("openModal", true);
                 return res.redirect("/");
             }
+            let cart = req.session.cart || [];
+            await mergeSessionCartToUser(cart, user);
             req.session.user = {
                 _id: user._id,
                 name: user.name,
                 email: user.email,
+                cart: user.cart,
                 avatar: user.avatar || "/uploads/default-image.jpg",
             };
+
             req.flash("success", "Đăng nhập thành công!");
             res.redirect("/");
         } catch (error) {
@@ -196,12 +201,15 @@ class AuthController {
                 req.flash("openModal", true);
                 return res.redirect("/");
             }
-            req.logIn(user, (err) => {
+            let cart = req.session.cart || [];
+            req.logIn(user, async (err) => {
                 if (err) {
                     req.flash("error", "Đăng nhập không thành công!");
                     req.flash("openModal", true);
                     return res.redirect("/");
                 }
+                await mergeSessionCartToUser(cart, user);
+
                 req.flash("success", "Đăng nhập thành công!");
                 return res.redirect("/");
             });
@@ -215,12 +223,14 @@ class AuthController {
                 req.flash("openModal", true);
                 return res.redirect("/");
             }
-            req.logIn(user, (err) => {
+            let cart = req.session.cart || [];
+            req.logIn(user, async (err) => {
                 if (err) {
                     req.flash("error", "Đăng nhập không thành công!");
                     req.flash("openModal", true);
                     return res.redirect("/");
                 }
+                await mergeSessionCartToUser(cart, user);
                 req.flash("success", "Đăng nhập thành công!");
                 return res.redirect("/");
             });

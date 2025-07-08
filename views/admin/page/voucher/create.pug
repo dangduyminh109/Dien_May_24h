@@ -41,10 +41,10 @@ block main
                             | )
                         input(class="form-control",id="discountValue",name="discountValue",type="number",value="0",min="0",required)  
                     div(class="maxDiscount form-item")
-                        label(for="maxDiscount") Giảm tối đa
+                        label(for="maxDiscount") Giảm tối đa(VND)
                         input(class="form-control",id="maxDiscount",name="maxDiscount",type="number",value="0",min="0")
                     div(class="minOrderValue form-item")
-                        label(for="minOrderValue") Giá trị đơn hàng tối thiểu
+                        label(for="minOrderValue") Giá trị đơn hàng tối thiểu(VND)
                         input(class="form-control",id="minOrderValue",name="minOrderValue",type="number",value="0",min="0")           
                 div(class="form-group")
                     div(class="quantity form-item")
@@ -62,7 +62,17 @@ block main
                     div(class="expiredAt form-item")
                         label(for="expiredAt") Ngày hết hạn
                         input(type="date", id="expiredAt",name="expiredAt") 
-
+                div(class="form-group")
+                    div(class="applyFor form-item")
+                        label(for="applyFor") 
+                            | Áp dụng cho (
+                            span(class="important-item") *
+                            | )
+                        select(name="applyFor", id="applyFor" ,required) 
+                            option(value="all" selected) Tất cả
+                            option(value="purchased") Đã mua
+                            option(value="not-purchased") Chưa mua
+                            option(value="new-user") Người mới
                 label(for="check-status") Trạng thái 
                 div(class="btn-toggle")
                     div(class="btn-status-toggle")

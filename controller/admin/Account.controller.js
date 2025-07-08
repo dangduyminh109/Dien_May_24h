@@ -12,7 +12,7 @@ class accountController {
     // [GET] /admin/accounts
     async show(req, res) {
         const currentPath = paginationHelper(req);
-        const { listAccounts, pagination } = await filterAndSort(req.query);
+        const { listAccounts, pagination } = await filterAndSort(req);
         const listRoles = await Role.find().select("name");
         const handleData = req.session.backData || {};
         const general = await generalHelper();

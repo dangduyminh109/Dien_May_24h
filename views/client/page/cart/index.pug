@@ -10,7 +10,7 @@ block main
                 { name: `Home`, href: `/` },
                 { name: `Giỏ Hàng`, href: `/cart` },
             ])
-    if ((!user || !user.cart || user.cart.length < 1) && cart.length < 1)
+    if ((!user || !user.listItemCart || user.listItemCart.length < 1) && listItemCart.length < 1)
         main(class="empty-cart")
             div(class="container")
                 p(class="empty-cart__text")
@@ -40,20 +40,11 @@ block main
                                     span(class="shopping-cart__voucher-icon")
                                         i(class="fa-solid fa-tag")
                                     | EGAFREESHIP
-                                button(class="btn-copy") Sao chép
                             small Chúc mừng! Đơn hàng của bạn đã đủ điều kiện được Freeship 🎉
                             div(class="order-list")
-                                - let listItemCart = [];
-                                if(user)
-                                    - listItemCart = user.cart || [];
-                                else if(cart)
-                                    - listItemCart = cart;
                                 each item in listItemCart
                                     - quantity = item.quantity || 1;
-                                    if(user)
-                                        - item = item.productId;
-                                    else 
-                                        - item = item.product;
+                                    - item = item.product;
                                     div(class="order-item")
                                         div(class="order-item__content")
                                             a(href=`/cart/delete/${item._id}`)
@@ -69,20 +60,48 @@ block main
                                                 button(class="quantity-control__btn quantity-control__btn--decrease")
                                                     span
                                                         i(class="fa-solid fa-minus")
-                                                input(class="quantity-control__input" type="text" value=quantity name="quantity-item")
+                                                input(class="quantity-control__input" type="number" value=quantity name="quantity-item" min=1 max=item.inventory data-id=item._id)
                                                 button(class="quantity-control__btn quantity-control__btn--increase")
                                                     span
                                                         i(class="fa-solid fa-plus")
                                 label(class="order-item__label" for="note") Ghi chú đơn hàng
-                                input(class="order-item__note" id="note" type="text")
+                                textarea(name="note" class="order-item__note" id="note")
+                         
                         div(class="right-box col-12 col-lg-4")
                             h4(class="right-box__title") HÓA ĐƠN
+                            table(class="bill")
+                                tr
+                                    td Tạm tính
+                                    td(class="bill__price", id="bill__price", data-price=totalPriceAndDiscount.totalPrice) #{totalPriceAndDiscount.totalPrice.toLocaleString('vi-VN')}đ
+                                tr(id="bill-discount", style="display: none")
+                                tr
+                                    td Phí vận chuyển
+                                    td(class="bill__discount") Miễn phí
+                            hr
+                            div(class="discount")
+                                div(class="discount__text")
+                                    span(class="discount__icon")
+                                        i(class="fa-solid fa-tag")
+                                    | Mã giảm giá
+                                div(class="discount__code")
+                                    button(class="btn-discount",
+                                        type="button",
+                                        data-bs-toggle="offcanvas",
+                                        data-bs-target="#offcanvasExample",
+                                        aria-controls="offcanvasExample"
+                                    )
+                                        | Chọn mã giảm giá
+                                        span
+                                            i(class="fa-solid.fa-chevron-right")
+                            div(class="product__discount" id="product__discount")
+
+                            hr
                             div(class="total")
-                                p(class="total__text") Tổng cộng
+                                p(class="total__text") Tổng Thanh toán
                                 div(class="total__detail")
-                                    if(user)
-                                        p(class="total__price", id="total__price") #{listItemCart.reduce((total, item) => total + item.productId.price * item.quantity, 0).toLocaleString('vi-VN')}
-                                    else 
-                                        p(class="total__price", id="total__price") #{listItemCart.reduce((total, item) => total + item.product.price * item.quantity, 0).toLocaleString('vi-VN')}
+                                    p(class="total__price", id="total__price") #{(totalPriceAndDiscount.totalPrice).toLocaleString('vi-VN')}đ
                                     small (Đã bao gồm VAT nếu có)
-                            a(class="primary-btn pay-btn" href="/payment.html") thanh toán
+                            form(action="/checkout/cart", method="post") 
+                                input(type="hidden", name="vc", value="" id="vc-input")
+                                button(class="primary-btn pay-btn" type="submit") thanh toán
+    include ../../partials/list_voucher.pug

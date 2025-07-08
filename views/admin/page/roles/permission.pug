@@ -39,8 +39,6 @@ block main
                                 td 
                                     input(type="checkbox" class="table-item__select-all" value="all" id=`table-all-${index}`)
                                     label(for=`table-all-${index}` class="table-item__label-all" _id=`${role.id}`)
-                        tr 
-                            td
 
                         tr(class="row-title")
                             td(colspan=`${listRoles.length+1}`) Sản Phẩm
@@ -75,10 +73,6 @@ block main
                                     input(type="checkbox" class="table-item__select" value="delete-product" id=`table-product-delete-${index}` checked=check)
                                     label(for=`table-product-delete-${index}` class="table-item__label" _id=`${role.id}`)
                         
-                        tr
-                            td
-
-                        
                         tr(class="row-title")  
                             td(colspan=`${listRoles.length+1}`) Danh mục 
                         tr 
@@ -111,8 +105,6 @@ block main
                                     - var check = role.permission.includes("delete-category")
                                     input(type="checkbox" class="table-item__select" value="delete-category" id=`table-category-delete-${index}` checked=check)
                                     label(for=`table-category-delete-${index}` class="table-item__label" _id=`${role.id}`)
-                        tr
-                            td
                         
                         tr(class="row-title")  
                             td(colspan=`${listRoles.length+1}`) Nhóm Quyền
@@ -145,9 +137,6 @@ block main
                                     input(type="checkbox" class="table-item__select" value="delete-role" id=`table-role-delete-${index}` checked=check)
                                     label(for=`table-role-delete-${index}` class="table-item__label" _id=`${role.id}`)
                     
-                        tr
-                            td
-                        
                         tr(class="row-title")  
                             td(colspan=`${listRoles.length+1}`) Phân Quyền
                         tr 
@@ -164,8 +153,6 @@ block main
                                     - var check = role.permission.includes("update-permission")
                                     input(type="checkbox" class="table-item__select" value="update-permission" id=`table-permissions-update-${index}` checked=check)
                                     label(for=`table-permissions-update-${index}` class="table-item__label" _id=`${role.id}`)
-                        tr
-                            td
 
                         tr(class="row-title")  
                             td(colspan=`${listRoles.length+1}`) Tài Khoản
@@ -197,8 +184,6 @@ block main
                                     - var check = role.permission.includes("delete-account")
                                     input(type="checkbox" class="table-item__select" value="delete-account" id=`table-account-delete-${index}` checked=check)
                                     label(for=`table-account-delete-${index}` class="table-item__label" _id=`${role.id}`)
-                        tr
-                            td
                         
                         tr(class="row-title")  
                             td(colspan=`${listRoles.length+1}`) Đơn Hàng
@@ -230,9 +215,7 @@ block main
                                     - var check = role.permission.includes("delete-order")
                                     input(type="checkbox" class="table-item__select" value="delete-order" id=`table-order-delete-${index}` checked=check)
                                     label(for=`table-order-delete-${index}` class="table-item__label" _id=`${role.id}`)
-                        tr
-                            td
-
+        
                         tr(class="row-title")  
                             td(colspan=`${listRoles.length+1}`) Voucher
                         tr 
@@ -263,9 +246,6 @@ block main
                                     - var check = role.permission.includes("delete-voucher")
                                     input(type="checkbox" class="table-item__select" value="delete-voucher" id=`table-voucher-delete-${index}` checked=check)
                                     label(for=`table-voucher-delete-${index}` class="table-item__label" _id=`${role.id}`)
-                        tr
-                            td
-
 
                         tr(class="row-title")  
                             td(colspan=`${listRoles.length+1}`) Khách Hàng
@@ -290,8 +270,6 @@ block main
                                     - var check = role.permission.includes("delete-user")
                                     input(type="checkbox" class="table-item__select" value="delete-user" id=`table-user-delete-${index}` checked=check)
                                     label(for=`table-user-delete-${index}` class="table-item__label" _id=`${role.id}`)
-                        tr
-                            td
         if permission.includes("update-permission")
             <!-- Modal -->
             +formWarning("warningPermissionModal","Bạn có chắc chắn muốn <b class='warning-text'>Thiết Lập Phân Quyền</b> không?<span class='warning-text'>","Thiết Lập Phân Quyền","warning-permission-modal-btn","Có")

@@ -32,11 +32,11 @@ block main
                     p(class="label") 
                         b Mô tả
                     div(class="content")!=productCategory.description
-        if(productCategory.thumbnail != "")
-            h1(class="title") Hình ảnh
-            div(class="single-image-wrapper", id="single-image-wrapper")
-                div(class="single-image__preview")
-                    img(src=productCategory.thumbnail,alt=productCategory.name)
+        h1(class="title") Hình ảnh
+        div(class="single-image-wrapper", id="single-image-wrapper")
+            div(class="single-image__preview")
+                - var thumbnail = productCategory && productCategory.thumbnail ? productCategory.thumbnail : "/uploads/default-image.jpg"
+                img(src=thumbnail ,alt=productCategory.name)
         div(class="form-group__btn")
             a(href=`/admin/${deleted ? "category-trash":"product-category"}` class="btn btn-primary") Quay lại
             if(!deleted)

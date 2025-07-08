@@ -1,3 +1,5 @@
+let currentVoucherValue = 0;
+
 function handleNavbar() {
     const category_btn__prev = document.getElementById("category-btn__prev");
     const category_btn__next = document.getElementById("category-btn__next");
@@ -103,6 +105,56 @@ function handleImgProduct() {
 }
 
 /* ============ handle quantity control =========== */
+function updatePrice() {
+    const total = document.getElementById("total__price");
+    const priceItems = document.querySelectorAll(".order-item__price");
+    let totalPrice = 0;
+    priceItems.forEach((price) => {
+        const quantity = price
+            .closest(".order-item__content")
+            .querySelector(".quantity-control__input");
+        totalPrice +=
+            parseInt(price.getAttribute("data-price")) * quantity.value;
+    });
+    const totalBill = document.getElementById("bill__price");
+    totalBill.setAttribute("data-price", totalPrice);
+    totalBill.innerHTML = `${totalPrice.toLocaleString("vi-VN")}đ`;
+    total.innerHTML = `${(totalPrice - currentVoucherValue).toLocaleString(
+        "vi-VN"
+    )}đ`;
+}
+function updateQuantity(id, quantity, btnDecrease, btnIncrease) {
+    let timeout = setTimeout(() => {
+        btnDecrease.disabled = true;
+        btnIncrease.disabled = true;
+        fetch("/cart/update?_method=PATCH", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                productId: id,
+                quantity: quantity,
+            }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.error && data.error == true) {
+                    alert("error", data.message);
+                }
+            })
+            .catch((err) => {
+                alert("error", "Không thể kết nối đến server!");
+                console.log("Lỗi Fetch API:", err);
+            })
+            .finally(() => {
+                btnDecrease.disabled = false;
+                btnIncrease.disabled = false;
+            });
+    }, 600);
+
+    return timeout;
+}
 function handleQuantityControl() {
     const quantityControls = document.querySelectorAll(".quantity-control");
     if (quantityControls) {
@@ -116,59 +168,37 @@ function handleQuantityControl() {
             const quantityControlInput = item.querySelector(
                 ".quantity-control__input"
             );
+
+            let timeout = null;
             quantityControlBtnDecrease.onclick = () => {
+                let id = quantityControlInput.getAttribute("data-id");
+                clearTimeout(timeout);
                 if (quantityControlInput.value > 1) {
                     quantityControlInput.value--;
-                }
-                const parentNode = item.closest(".order-item__content");
-                if (parentNode) {
-                    const priceText =
-                        parentNode.querySelector(".order-item__price");
-                    priceText.innerHTML = `${(
-                        parseInt(priceText.getAttribute("data-price")) *
-                        quantityControlInput.value
-                    ).toLocaleString("vi-VN")}đ`;
-                    // Update total price
-                    const total = document.getElementById("total__price");
-                    const priceItems =
-                        document.querySelectorAll(".order-item__price");
-                    let totalPrice = 0;
-                    priceItems.forEach((price) => {
-                        const quantity = price
-                            .closest(".order-item__content")
-                            .querySelector(".quantity-control__input");
-                        totalPrice +=
-                            parseInt(price.getAttribute("data-price")) *
-                            quantity.value;
-                    });
-                    total.innerHTML = `${totalPrice.toLocaleString("vi-VN")}đ`;
+                    updatePrice();
+                    timeout = updateQuantity(
+                        id,
+                        quantityControlInput.value,
+                        quantityControlBtnDecrease,
+                        quantityControlBtnIncrease
+                    );
                 }
             };
             quantityControlBtnIncrease.onclick = () => {
-                quantityControlInput.value++;
-                const parentNode = item.closest(".order-item__content");
-                if (parentNode) {
-                    const priceText =
-                        parentNode.querySelector(".order-item__price");
-                    priceText.innerHTML = `${(
-                        parseInt(priceText.getAttribute("data-price")) *
-                        quantityControlInput.value
-                    ).toLocaleString("vi-VN")}đ`;
-
-                    // Update total price
-                    const total = document.getElementById("total__price");
-                    const priceItems =
-                        document.querySelectorAll(".order-item__price");
-                    let totalPrice = 0;
-                    priceItems.forEach((price) => {
-                        const quantity = price
-                            .closest(".order-item__content")
-                            .querySelector(".quantity-control__input");
-                        totalPrice +=
-                            parseInt(price.getAttribute("data-price")) *
-                            quantity.value;
-                    });
-                    total.innerHTML = `${totalPrice.toLocaleString("vi-VN")}đ`;
+                clearTimeout(timeout);
+                let id = quantityControlInput.getAttribute("data-id");
+                if (
+                    quantityControlInput.value <
+                    parseInt(quantityControlInput.getAttribute("max"))
+                ) {
+                    quantityControlInput.value++;
+                    updatePrice();
+                    timeout = updateQuantity(
+                        id,
+                        quantityControlInput.value,
+                        quantityControlBtnDecrease,
+                        quantityControlBtnIncrease
+                    );
                 }
             };
         });
@@ -574,6 +604,89 @@ function handleAvatarInput() {
         };
     }
 }
+
+/* ============ handle Apply Voucher =========== */
+function renderVoucher(dataVoucher) {
+    const productDiscount = document.getElementById("product__discount");
+    const voucherInput = document.getElementById("vc-input");
+    productDiscount.style.display = "block";
+    productDiscount.innerHTML = `
+        <p class="code__selected">Đã chọn</p>
+        <div class="product-code">
+            <div class="product-code__item">
+                <p>${dataVoucher.code}</p>
+            </div>
+            <span class="product-code__icon" id="product-code__icon">
+                <i class="fa-solid fa-circle-xmark"></i>
+            </span>
+        </div>
+    `;
+    voucherInput.value = dataVoucher.id;
+
+    // uncheck voucher
+    const productCodeIcon = document.getElementById("product-code__icon");
+    if (productCodeIcon) {
+        const billDiscount = document.getElementById("bill-discount");
+        productCodeIcon.onclick = () => {
+            voucherInput.value = "";
+            currentVoucherValue = 0;
+            billDiscount.style.display = "none";
+            productDiscount.style.display = "none";
+            billDiscount.innerHTML = ``;
+            productDiscount.innerHTML = ``;
+            // Update total price
+            let totalPrice = document
+                .getElementById("bill__price")
+                .getAttribute("data-price");
+            totalPrice = parseInt(totalPrice);
+            const total = document.getElementById("total__price");
+            total.innerHTML = `${totalPrice.toLocaleString("vi-VN")}đ`;
+        };
+    }
+}
+function applyVoucher(dataVoucher) {
+    let totalPrice = document
+        .getElementById("bill__price")
+        .getAttribute("data-price");
+    totalPrice = parseInt(totalPrice);
+    let discountPrice =
+        dataVoucher.discountType === "fixed"
+            ? dataVoucher.discountValue
+            : (dataVoucher.discountValue * totalPrice) / 100;
+    if (discountPrice > dataVoucher.maxDiscount) {
+        discountPrice = dataVoucher.maxDiscount;
+    }
+    currentVoucherValue = discountPrice;
+    // update bill
+    const billDiscount = document.getElementById("bill-discount");
+    billDiscount.style.display = "table-row";
+    billDiscount.innerHTML = `
+        <td>Mã giảm giá</td>
+        <td class="bill__discount">- ${discountPrice.toLocaleString(
+            "vi-VN"
+        )}đ</td>
+    `;
+    // Update total price
+    const total = document.getElementById("total__price");
+    total.innerHTML = `${(totalPrice - discountPrice).toLocaleString(
+        "vi-VN"
+    )}đ`;
+}
+function handleApplyVoucher() {
+    const listBtnVoucher = document.querySelectorAll(".btn-voucher");
+    if (listBtnVoucher.length > 0) {
+        listBtnVoucher.forEach((btn) => {
+            btn.onclick = () => {
+                const dataVoucher = JSON.parse(
+                    btn.getAttribute("data-voucher")
+                );
+                applyVoucher(dataVoucher);
+                renderVoucher(dataVoucher);
+            };
+        });
+    }
+}
+
 /* ============ alert =========== */
 function alert(type = "success", message) {
     const alertDiv = document.createElement("div");
@@ -629,5 +742,6 @@ function init() {
     handleQuantityControl();
     handleAddQuantity();
     handleAvatarInput();
+    handleApplyVoucher();
 }
 document.addEventListener("DOMContentLoaded", init);

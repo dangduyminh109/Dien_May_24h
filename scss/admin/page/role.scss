@@ -20,6 +20,7 @@
     }
     .list-permissions {
         padding: 10px 0 0;
+
         .list-permissions__table {
             min-width: 450px;
             overflow: auto;
@@ -60,8 +61,8 @@
         table {
             th,
             td {
-                padding: 10px 5px;
                 text-align: center;
+                font-size: 1.4rem;
             }
             td {
                 &:first-child {
@@ -69,8 +70,12 @@
                 }
             }
         }
+        tr:nth-child(odd) {
+            background-color: initial;
+        }
         .row-title {
-            background-color: $text-color;
+            background-color: $text-color !important;
+            color: #fff;
             color: $text-color-3;
             font-size: 1.8rem;
         }

@@ -41,7 +41,15 @@ block main
             if permission.includes("delete-role")
                 -var Delete = permission.includes("delete-role")
                 +toolbarHandle({handle,path: "roles",role:true,Delete: Delete,title:"Quyền"})
-        
+        div(class="show")
+            form(action="/admin/roles", method="get") 
+                label(for="show" class="form-label") Hiển thị
+                select(name="show" id="show" class="form-select") 
+                    option(value="5" selected = pagination.limit == 5) 5
+                    option(value="10" selected = pagination.limit == 10) 10
+                    option(value="20" selected = pagination.limit == 20) 20
+                    option(value="50" selected = pagination.limit == 50) 50
+                    option(value="100" selected = pagination.limit == 100) 100 
         div(class="list-roles list-table")
             table(class="list-roles__table")
                 thead
@@ -52,7 +60,6 @@ block main
                             |   Quyền
                         th(scope="col") 
                             |   Mô tả
-                        th(scope="col")  
                         th(scope="col")  
                 tbody
                     if listRoles.length > 0
@@ -67,10 +74,8 @@ block main
                                 td(style="text-align: center")
                                     if permission.includes("update-role")
                                         a(href=`${PATH_ADMIN}/roles/edit/${roles.id}`, class="btn-primary btn") Sửa      
-                                td(style="text-align: center")
                                     if permission.includes("view-role")
                                         a(href=`${PATH_ADMIN}/roles/detail/${roles.id}`, class="btn-warning btn") Chi tiết 
-                                td(style="text-align: center")
                                     if permission.includes("delete-role")
                                         button(type="button", class="btn-delete btn btn-danger", data-bs-id = roles._id ,data-bs-toggle="modal", data-bs-target="#warningDeleteModal",path="roles/delete-roles") Xóa 
                     else  

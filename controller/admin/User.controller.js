@@ -11,7 +11,7 @@ class userController {
     // [GET] /admin/user
     async show(req, res) {
         const currentPath = paginationHelper(req);
-        const { listUser, pagination } = await filterAndSort(req.query);
+        const { listUser, pagination } = await filterAndSort(req);
         const handleData = req.session.backData || {};
         const general = await generalHelper();
         res.render("./admin/page/user/", {

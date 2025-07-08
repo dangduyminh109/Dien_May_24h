@@ -48,7 +48,7 @@ block main
                         button(class="quantity-control__btn quantity-control__btn--decrease")
                             span
                                 i(class="fa-solid fa-minus")
-                        input(class="quantity-control__input" type="text" value="1" name="quantity" id="quantity-control__input")
+                        input(class="quantity-control__input" type="number" value="1" max=product.inventory data-id=product._id name="quantity" id="quantity-control__input")
                         button(class="quantity-control__btn quantity-control__btn--increase")
                             span
                                 i(class="fa-solid fa-plus")
@@ -57,7 +57,7 @@ block main
                             input(type="hidden", name="productId", value=product._id)
                             input(type="hidden", name="quantity", value="1")
                             button(class="product-detail__btn",type="submit") Thêm vào giỏ hàng
-                        form(action="/checkout", method="post")
+                        form(action=`/checkout/buy-now`, method="post")
                             input(type="hidden", name="productId", value=product._id)
                             input(type="hidden", name="quantity", value="1")
                             button(class="product-detail__btn",type="submit") Mua ngay

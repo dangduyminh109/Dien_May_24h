@@ -10,10 +10,7 @@ class accountTrashController {
     // [GET] /admin/account-trash
     async show(req, res) {
         const currentPath = paginationHelper(req);
-        const { listAccounts, pagination } = await filterAndSort(
-            req.query,
-            true
-        );
+        const { listAccounts, pagination } = await filterAndSort(req, true);
         const listRoles = await Role.find().select("name");
         const handleData = req.session.backData || {};
         const general = await generalHelper(true);

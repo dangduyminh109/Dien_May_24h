@@ -295,7 +295,7 @@ label {
             border: none;
             padding: 5px;
             caret-color: $text-color;
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             background-color: #fff;
             width: 300px;
         }
@@ -391,12 +391,7 @@ label {
             height: 40px;
             padding: 0 10px;
         }
-        .advanced__item-2 {
-            display: flex;
-            gap: 5px;
-            align-items: center;
-            height: 40px;
-            padding: 0 10px;
+        .advanced__item:nth-child(even) {
             background-color: $text-color;
         }
         .advanced__radio-group {
@@ -482,6 +477,10 @@ label {
 }
 .alert-container.warning {
     background-color: #ffcc00;
+    color: #000;
+}
+.alert-container.info {
+    background-color: #27b2d1;
 }
 .alert-container.active {
     transform: translateX(0);

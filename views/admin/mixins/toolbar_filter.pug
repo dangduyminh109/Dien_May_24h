@@ -7,17 +7,17 @@ mixin toolbarFilter({filter,path,categoryTree,product=false,category=false,accou
                     div(class="advanced__item-header") 
                             h2(class="block-advanced__title") Bộ Lọc 
                             div(class="toolbar__advanced-group-btn")
-                                button(type="reset" class="btn btn-primary") Đặt lại
+                                button(type="button" class="btn btn-primary reset-btn") Đặt lại
                                 button(type="submit" class=" btn btn-primary") Gửi
 
                 if(product)
-                    div(class="advanced__item-2")
+                    div(class="advanced__item")
                         h3(class="advanced__title") Tên sản phẩm
                         input(type="text" class="advanced__input" name="name" placeholder="Nhập tên sản phẩm" value=filter.name|| "")
                     div(class="advanced__item") 
                         h3(class="advanced__title") Mã sản phẩm
                         input(type="text" class="advanced__input" name="code" placeholder="Nhập Mã sản phẩm" value=filter.code|| "")
-                    div(class="advanced__item-2")
+                    div(class="advanced__item")
                         h3(class="advanced__title") Danh mục
                         select(name="category", id="category") 
                             if(categoryTree.length > 0)
@@ -34,7 +34,7 @@ mixin toolbarFilter({filter,path,categoryTree,product=false,category=false,accou
                             label(for="status_2") Hoạt Động
                             input(type="radio" name="status" id="status_3" value="off" checked = filter.status === "off" ? true:false)
                             label(for="status_3") Không Hoạt Động
-                    div(class="advanced__item-2") 
+                    div(class="advanced__item") 
                         h3(class="advanced__title") Nổi bật
                         div(class="advanced__radio-group")
                             input(type="radio" name="featured" id="featured_1" value="" checked = filter.featured === "" ? true:false) 
@@ -48,7 +48,7 @@ mixin toolbarFilter({filter,path,categoryTree,product=false,category=false,accou
                         div(class="advanced__number-group")
                             input(type="number" class="advanced__input" name="min-original-price" placeholder="Tối thiểu" min=0 value=filter["min-original-price"]) 
                             input(type="number" class="advanced__input" name="max-original-price" placeholder="Tối đa" min=0 value=filter["max-original-price"])
-                    div(class="advanced__item-2") 
+                    div(class="advanced__item") 
                         h3(class="advanced__title") Giá bán
                         div(class="advanced__number-group")
                             input(type="number" class="advanced__input" name="min-price" placeholder="Tối thiểu" min=0 value=filter["min-price"])
@@ -58,14 +58,14 @@ mixin toolbarFilter({filter,path,categoryTree,product=false,category=false,accou
                         div(class="advanced__number-group")
                             input(type="number" class="advanced__input" name="min-discount" placeholder="Tối thiểu" min=0 value=filter["min-discount"]) 
                             input(type="number" class="advanced__input" name="max-discount" placeholder="Tối đa" min=0 max=100 value=filter["max-discount"])
-                    div(class="advanced__item-2") 
+                    div(class="advanced__item") 
                         h3(class="advanced__title") Tồn kho
                         div(class="advanced__number-group")
                             input(type="number" class="advanced__input" name="min-inventory" placeholder="Tối thiểu" min=0 value=filter["min-inventory"]) 
                             input(type="number" class="advanced__input" name="max-inventory" placeholder="Tối đa" min=0 value=filter["max-inventory"])
 
                 else if(category)
-                    div(class="advanced__item-2")
+                    div(class="advanced__item")
                         h3(class="advanced__title") Tên danh mục
                         input(type="text" class="advanced__input" name="name" placeholder="Nhập tên danh mục" value=filter.name|| "")
                     div(class="advanced__item")
@@ -76,7 +76,7 @@ mixin toolbarFilter({filter,path,categoryTree,product=false,category=false,accou
                                 +categoryTree(categoryTree,filter.category)
                             else 
                                 option(value="" selected disabled) -- Chưa có danh mục nào! -- 
-                    div(class="advanced__item-2") 
+                    div(class="advanced__item") 
                         h3(class="advanced__title") Trạng thái
                         div(class="advanced__radio-group")
                             input(type="radio" name="status" id="status_1" value="" checked = filter.status === "" ? true:false) 
@@ -87,7 +87,7 @@ mixin toolbarFilter({filter,path,categoryTree,product=false,category=false,accou
                             label(for="status_3") Không Hoạt Động
                       
                 else if(account)
-                    div(class="advanced__item-2")
+                    div(class="advanced__item")
                         h3(class="advanced__title") Tên tài khoản
                         input(type="text" class="advanced__input" name="fullName" placeholder="Nhập tên tài khoản" value=filter.fullName|| "")
                     div(class="advanced__item")
@@ -99,13 +99,13 @@ mixin toolbarFilter({filter,path,categoryTree,product=false,category=false,accou
                                     option(value=role.id, selected=role.id === filter.roleId) #{role.name} 
                             else 
                                 option(value="" selected disabled) -- Chưa có phân quền nào! -- 
-                    div(class="advanced__item-2")
+                    div(class="advanced__item")
                         h3(class="advanced__title") Email
                         input(type="text" class="advanced__input" name="email" placeholder="Nhập Email" value=filter.email|| "")
                     div(class="advanced__item")
                         h3(class="advanced__title") Số điện thoại
                         input(type="text" class="advanced__input" name="phone" placeholder="Số điện thoại" value=filter.phone|| "")
-                    div(class="advanced__item-2") 
+                    div(class="advanced__item") 
                         h3(class="advanced__title") Trạng thái
                         div(class="advanced__radio-group")
                             input(type="radio" name="status" id="status_1" value="" checked = filter.status === "" ? true:false) 
@@ -116,19 +116,19 @@ mixin toolbarFilter({filter,path,categoryTree,product=false,category=false,accou
                             label(for="status_3") Không Hoạt Động
 
                 else if(user)
-                    div(class="advanced__item-2")
+                    div(class="advanced__item")
                         h3(class="advanced__title") Tên khách hàng
                         input(type="text" class="advanced__input" name="fullName" placeholder="Nhập tên khách hàng" value=filter.fullName|| "")
                     div(class="advanced__item")
                         h3(class="advanced__title") Email
                         input(type="text" class="advanced__input" name="email" placeholder="Nhập Email" value=filter.email|| "")
-                    div(class="advanced__item-2")
+                    div(class="advanced__item")
                         h3(class="advanced__title") Số điện thoại
                         input(type="text" class="advanced__input" name="phone" placeholder="Nhập số điện thoại" value=filter.phone|| "")
                     div(class="advanced__item")
                         h3(class="advanced__title") Địa chỉ
                         input(type="text" class="advanced__input" name="address" placeholder="Nhập địa chỉ" value=filter.phone|| "")
-                    div(class="advanced__item-2") 
+                    div(class="advanced__item") 
                         h3(class="advanced__title") Trạng thái
                         div(class="advanced__radio-group")
                             input(type="radio" name="status" id="status_1" value="" checked = filter.status === "" ? true:false) 
@@ -142,7 +142,7 @@ mixin toolbarFilter({filter,path,categoryTree,product=false,category=false,accou
                     div(class="advanced__item")
                         h3(class="advanced__title") Tên voucher
                         input(type="text" class="advanced__input" name="name" placeholder="Nhập tên voucher" value=filter.name|| "")
-                    div(class="advanced__item-2") 
+                    div(class="advanced__item") 
                         h3(class="advanced__title") Mã voucher
                         input(type="text" class="advanced__input" name="code" placeholder="Nhập Mã voucher" value=filter.code|| "")
                     div(class="advanced__item")
@@ -151,7 +151,14 @@ mixin toolbarFilter({filter,path,categoryTree,product=false,category=false,accou
                             option(value="") -- Tất cả --
                             option(value="fixed" selected=(filter.discountType == "fixed")) Giảm giá cố định
                             option(value="percent" selected=(filter.discountType == "percent")) Giảm theo phần trăm(0 - 100%) 
-                    div(class="advanced__item-2") 
+                    div(class="advanced__item")
+                        h3(class="advanced__title") Áp dụng cho
+                        select(name="applyFor", id="applyFor") 
+                            option(value="all" selected=(filter.applyFor == "all")) -- Tất cả --
+                            option(value="purchased" selected=(filter.applyFor == "purchased")) Đã mua
+                            option(value="not-purchased" selected=(filter.applyFor == "not-purchased")) Chưa mua
+                            option(value="new-user" selected=(filter.applyFor == "new-user")) Người mới
+                    div(class="advanced__item") 
                         h3(class="advanced__title") Trạng thái
                         div(class="advanced__radio-group")
                             input(type="radio" name="status" id="status_1" value="" checked = filter.status === "" ? true:false) 
@@ -165,7 +172,7 @@ mixin toolbarFilter({filter,path,categoryTree,product=false,category=false,accou
                         div(class="advanced__number-group")
                             input(type="number" class="advanced__input" name="min-discountValue" placeholder="Tối thiểu" min=0 value=filter["min-discountValue"]) 
                             input(type="number" class="advanced__input" name="max-discountValue" placeholder="Tối đa" min=0 value=filter["max-discountValue"])
-                    div(class="advanced__item-2") 
+                    div(class="advanced__item") 
                         h3(class="advanced__title") Giảm tối đa
                         div(class="advanced__number-group")
                             input(type="number" class="advanced__input" name="min-maxDiscount" placeholder="Tối thiểu" min=0 value=filter["min-maxDiscount"])
@@ -175,7 +182,7 @@ mixin toolbarFilter({filter,path,categoryTree,product=false,category=false,accou
                         div(class="advanced__number-group")
                             input(type="number" class="advanced__input" name="min-OrderValue" placeholder="Tối thiểu" min=0 value=filter["min-OrderValue"]) 
                             input(type="number" class="advanced__input" name="max-OrderValue" placeholder="Tối đa" min=0 value=filter["max-OrderValue"])
-                    div(class="advanced__item-2") 
+                    div(class="advanced__item") 
                         h3(class="advanced__title") Số lượng
                         div(class="advanced__number-group")
                             input(type="number" class="advanced__input" name="min-quantity" placeholder="Tối thiểu" min=0 value=filter["min-quantity"]) 
@@ -186,6 +193,6 @@ mixin toolbarFilter({filter,path,categoryTree,product=false,category=false,accou
                     div(class="advanced__item") 
                         h3(class="advanced__title") Ngày áp dụng
                         input(type="date" class="advanced__input" name="startDate" value=startDate|| "") 
-                    div(class="advanced__item-2") 
+                    div(class="advanced__item") 
                         h3(class="advanced__title") Ngày hết hạn
                         input(type="date" class="advanced__input" name="expiredAt" value=expiredAt|| "") 

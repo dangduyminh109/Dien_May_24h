@@ -35,7 +35,15 @@ block main
             if permission.includes("delete-role")
                 -var Delete = permission.includes("delete-role")
                 +toolbarHandle({handle,path: "roles-trash",role:true,trash:true,Delete:Delete,title:"Quyền"})
-
+        div(class="show")
+            form(action="/admin/roles-trash", method="get") 
+                label(for="show" class="form-label") Hiển thị
+                select(name="show" id="show" class="form-select") 
+                    option(value="5" selected = pagination.limit == 5) 5
+                    option(value="10" selected = pagination.limit == 10) 10
+                    option(value="20" selected = pagination.limit == 20) 20
+                    option(value="50" selected = pagination.limit == 50) 50
+                    option(value="100" selected = pagination.limit == 100) 100 
         div(class="list-roles list-table")
             table(class="list-roles__table")
                 thead

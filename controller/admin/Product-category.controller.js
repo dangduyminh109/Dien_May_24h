@@ -12,9 +12,7 @@ class productCategoryController {
     // [GET] /admin/product-category
     async show(req, res) {
         const currentPath = paginationHelper(req);
-        const { listProductCategory, pagination } = await filterAndSort(
-            req.query
-        );
+        const { listProductCategory, pagination } = await filterAndSort(req);
         const handleData = req.session.backData || {};
         const general = await generalHelper();
         const categoryTree = await getCategoryTree();

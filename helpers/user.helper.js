@@ -1,6 +1,6 @@
-const md5 = require("md5");
 const { uploadSingleImages } = require("./upload.helper.js");
 const User = require("../models/user.model.js");
+const bcrypt = require("bcryptjs");
 
 async function generalHelper(deleted = false) {
     let listUser = [];
@@ -14,9 +14,16 @@ async function generalHelper(deleted = false) {
     };
 }
 
-async function filterAndSort(query, findDelete = false) {
+async function filterAndSort(req, findDelete = false) {
     var listUser = [];
-    const limit = 5;
+    let limit = 5;
+    let query = req.query;
+    if (query.show) {
+        limit = parseInt(query.show);
+        req.session.limit = limit;
+    } else if (req.session.limit) {
+        limit = req.session.limit;
+    }
     let totalPage = 0;
     let page = query.page ? parseInt(query.page) : 1;
     const filter = Object.entries(query).reduce((obj, [key, value]) => {
@@ -75,10 +82,10 @@ async function handleForm(req, edit = false) {
         if (formData.password == "") {
             delete formData.password;
         } else {
-            formData.password = md5(req.body.password);
+            formData.password = await bcrypt.hash(formData.password, 10);
         }
     } else {
-        formData.password = md5(req.body.password);
+        formData.password = await bcrypt.hash(formData.password, 10);
     }
     return formData;
 }

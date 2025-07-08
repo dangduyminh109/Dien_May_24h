@@ -3,6 +3,7 @@ const productRouter = require("./product.route");
 const authRouter = require("./auth.route");
 const userRouter = require("./user.route");
 const cartRouter = require("./cart.route");
+const checkoutRouter = require("./checkout.route");
 
 module.exports.index = (app) => {
     app.use("/", homeRouter);
@@ -10,4 +11,5 @@ module.exports.index = (app) => {
     app.use("/auth", authRouter);
     app.use("/user", userRouter);
     app.use("/cart", cartRouter);
+    app.use("/checkout", checkoutRouter);
 };

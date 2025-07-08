@@ -54,9 +54,10 @@ block main
                         div(class="product-category")
                             each subCategory in category.children
                                 a(class="product-category__btn",href=`product/${subCategory.slug}`) #{subCategory.name}
-                    div(class="product-banner")
-                        a(class="product-banner__link",href=`product/${category.slug}`)
-                            img(class="product-banner__img",src=category.thumbnail, alt=category.name)
+                    if(category.thumbnail && category.thumbnail != "")
+                        div(class="product-banner")
+                            a(class="product-banner__link",href=`product/${category.slug}`)
+                                img(class="product-banner__img",src=category.thumbnail, alt=category.name)
 
                     div(class="product-list row")
                         - const filteredProducts = listProduct.filter(p => p.category == category._id || category.children.some(child => child.id == p.category)).slice(0, 12)

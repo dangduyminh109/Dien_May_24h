@@ -60,8 +60,16 @@ block main
             div(class="overview-item inventory-value")
                 h3(class="overview-item__title inventory-value__title") Giá trị hàng tồn
                 p(class="overview-item__detail inventory-value__detail") #{general.inventoryTotalValue.toLocaleString('vi-VN')}đ
-        
-        div(class="list-product list-table")
+        div(class="show")
+            form(action="/admin/product", method="get") 
+                label(for="show" class="form-label") Hiển thị
+                select(name="show" id="show" class="form-select") 
+                    option(value="5" selected = pagination.limit == 5) 5
+                    option(value="10" selected = pagination.limit == 10) 10
+                    option(value="20" selected = pagination.limit == 20) 20
+                    option(value="50" selected = pagination.limit == 50) 50
+                    option(value="100" selected = pagination.limit == 100) 100 
+        div(class="list-product list-table")    
             table(class="list-product__table")
                 thead
                     tr
@@ -91,6 +99,7 @@ block main
                             !=pugHepper.sort("inventory", _sort,pagination.page)
                         th(scope="col") Trạng thái 
                         th(scope="col") Nổi bật 
+                        th(scope="col") 
                 tbody
                     if listProduct.length > 0
                         each product in listProduct
@@ -170,10 +179,8 @@ block main
                                 td(style="text-align: center")
                                     if permission.includes("update-product")
                                         a(href=`${PATH_ADMIN}/product/edit/${product.id}`, class="btn-primary btn") Sửa      
-                                td(style="text-align: center")
                                     if permission.includes("view-product")
                                         a(href=`${PATH_ADMIN}/product/detail/${product.id}`, class="btn-warning btn") Chi tiết 
-                                td(style="text-align: center")
                                     if permission.includes("delete-product")
                                         button(type="button", class="btn-delete btn btn-danger", data-bs-id = product._id ,data-bs-toggle="modal", data-bs-target="#warningDeleteModal",path="product/delete-product") Xóa 
                     else  

@@ -1,0 +1,14 @@
+mixin applyFor(voucher)
+    if !voucher || !voucher.applyFor
+        p Tất cả
+    else if voucher.applyFor === "all"
+        p Tất cả
+    else if voucher.applyFor === "purchased"
+        p Đã mua
+    else if voucher.applyFor === "not-purchased"
+        p Chưa mua
+    else if voucher.applyFor === "new-user"
+        p Người mới
+    else
+        p Tất cả
+

@@ -26,6 +26,9 @@ block main
                             span(class="important-item") *
                             | )
                         input(class="form-control",id="code",name="code",type="text",required)    
+                    div(class="supplier form-item")
+                        label(for="supplier") Nhà cung cấp
+                        input(type="text", id="supplier",name="supplier") 
                 div(class="form-group")
                     div(class="original_price form-item")
                         label(for="original_price") Giá gốc(VND)
@@ -39,13 +42,10 @@ block main
                     div(class="discount form-item")
                         label(for="discount") Giảm giá(%)
                         input(class="form-control",id="discount",name="discount",type="number",placeholder="0",min="0")
+                div(class="form-group")
                     div(class="inventory form-item")
                         label(for="inventory") Tồn kho
-                        input(class="form-control",id="inventory",name="inventory",type="number",placeholder="0",min="0")           
-                div(class="form-group")
-                    div(class="supplier form-item")
-                        label(for="supplier") Nhà cung cấp
-                        input(type="text", id="supplier",name="supplier") 
+                        input(class="form-control",id="inventory",name="inventory",type="number",placeholder="0",min="0")   
                     div(class="category form-item")
                         label(for="category")  
                             | Danh mục (
@@ -73,7 +73,7 @@ block main
                     div(class="btn-featured-toggle")
                             div(class="form-check form-switch")
                                 input(class="form-check-input btn-featured-form",name="featured",type="checkbox",id="check-featured", role="switch",checked=true)
-                    p(class="btn-featured__desc") Có
+                    p(class="btn-status__desc") Có
                 label(for="description") Mô tả sản phẩm
                 textarea(class="textarea-mce",name="description",id="description") 
             h1(class="title") Hình ảnh

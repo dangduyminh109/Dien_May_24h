@@ -46,7 +46,15 @@ block main
             div(class="overview-item total-products")
                 h3(class="overview-item__title total-products__title") Khách hàng đã xóa
                 p(class="overview-item__detail total-products__detail") #{general.totalUser}
-
+        div(class="show")
+            form(action="/admin/user-trash", method="get") 
+                label(for="show" class="form-label") Hiển thị
+                select(name="show" id="show" class="form-select") 
+                    option(value="5" selected = pagination.limit == 5) 5
+                    option(value="10" selected = pagination.limit == 10) 10
+                    option(value="20" selected = pagination.limit == 20) 20
+                    option(value="50" selected = pagination.limit == 50) 50
+                    option(value="100" selected = pagination.limit == 100) 100 
         div(class="list-account list-table")
             table(class="list-account__table")
                 thead
@@ -60,7 +68,6 @@ block main
                         th(scope="col") Số điện thoại
                         th(scope="col") Địa chỉ
                         th(scope="col") Trạng thái 
-                        th(scope="col")  
                         th(scope="col")  
                 tbody
                     if listDeletedUser.length > 0
@@ -93,10 +100,8 @@ block main
                                     if permission.includes("update-user")
                                         form(method="POST", action=`${PATH_ADMIN}/user-trash/restore-user/${user.id}?_method=PATCH`)
                                             button(type="submit", class="btn-primary btn") Khôi phục  
-                                td(style="text-align: center")
                                     if permission.includes("view-user")
                                         a(href=`${PATH_ADMIN}/user-trash/detail/${user.id}`, class="btn-warning btn") Chi tiết
-                                td(style="text-align: center")
                                     if permission.includes("delete-user")
                                         button(type="button", class="btn-destroy btn btn-danger",data-bs-toggle="modal",data-bs-id = user._id, data-bs-target="#warningDeleteModal",path="user-trash/destroy-user") Xóa vĩnh viễn  
                     else  

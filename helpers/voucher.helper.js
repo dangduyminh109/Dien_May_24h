@@ -14,9 +14,16 @@ async function generalHelper(deleted = false) {
     };
 }
 
-async function filterAndSort(query, findDelete = false) {
+async function filterAndSort(req, findDelete = false) {
     var listVoucher = [];
-    const limit = 5;
+    let limit = 5;
+    let query = req.query;
+    if (query.show) {
+        limit = parseInt(query.show);
+        req.session.limit = limit;
+    } else if (req.session.limit) {
+        limit = req.session.limit;
+    }
     let totalPage = 0;
     let page = query.page ? parseInt(query.page) : 1;
     const filter = {};
@@ -53,6 +60,7 @@ async function filterAndSort(query, findDelete = false) {
                 break;
             case "code":
             case "discountType":
+            case "applyFor":
             case "startDate":
             case "expiredAt":
             case "status":

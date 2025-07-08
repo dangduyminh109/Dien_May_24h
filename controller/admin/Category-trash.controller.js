@@ -11,7 +11,7 @@ class categoryTrashController {
     async show(req, res) {
         const currentPath = paginationHelper(req);
         const { listProductCategory, pagination } = await filterAndSort(
-            req.query,
+            req,
             true
         );
         const handleData = req.session.backData || {};

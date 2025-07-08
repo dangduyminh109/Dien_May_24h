@@ -27,6 +27,12 @@ router.post(
 router.patch("/edit/:id", validate, voucherController.editPatch);
 
 router.patch(
+    "/quick-update",
+    authorization("update-voucher"),
+    voucherController.quickUpdate
+);
+
+router.patch(
     "/update-status",
     authorization("update-voucher"),
     voucherController.updateStatusPatch

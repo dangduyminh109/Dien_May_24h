@@ -5,6 +5,7 @@ include ../../mixins/toolbar_handle.pug
 include ../../mixins/deletion_warning.pug
 include ../../mixins/pagination.pug
 include ../../mixins/alert.pug
+include ../../mixins/applyFor.pug
 
 block main 
     +alert(messages)
@@ -50,7 +51,15 @@ block main
                 div(class="overview-item total-products")
                     h3(class="overview-item__title total-products__title") Tổng số voucher
                     p(class="overview-item__detail total-products__detail") #{general.totalVoucher}
-        
+        div(class="show")
+            form(action="/admin/voucher", method="get") 
+                label(for="show" class="form-label") Hiển thị
+                select(name="show" id="show" class="form-select") 
+                    option(value="5" selected = pagination.limit == 5) 5
+                    option(value="10" selected = pagination.limit == 10) 10
+                    option(value="20" selected = pagination.limit == 20) 20
+                    option(value="50" selected = pagination.limit == 50) 50
+                    option(value="100" selected = pagination.limit == 100) 100 
         div(class="list-voucher list-table")
             table(class="list-voucher__table")
                 thead
@@ -67,6 +76,7 @@ block main
                             |   Trị giá
                             !=pugHepper.sort("discountValue", _sort,pagination.page)
                         th(scope="col") Loại giảm giá
+                        th(scope="col") Áp dụng cho
                         th(scope="col") 
                             |   Giảm tối đa
                             !=pugHepper.sort("maxDiscount", _sort,pagination.page)
@@ -83,61 +93,93 @@ block main
                             |   Ngày hết hạn
                             !=pugHepper.sort("expiredAt", _sort,pagination.page)
                         th(scope="col") Trạng thái 
-                        th(scope="col")
                         th(scope="col")  
                         
                 tbody
                     if listVoucher.length > 0
-                        each Voucher in listVoucher
+                        each voucher in listVoucher
                             tr
                                 td 
-                                    input(type="checkbox" class="table-item__select" name="sort" value="1" _id=Voucher._id)
+                                    input(type="checkbox" class="table-item__select" name="sort" value="1" _id=voucher._id)
                                 td  
-                                    h4(class="table-item__title") #{Voucher.name}
+                                    h4(class="table-item__title") #{voucher.name}
                                 td  
                                     p 
                                         span(class="table-item__icon")
                                             i(class="fa-solid fa-tag" style="transform: scaleX(-1)")
-                                        | #{Voucher.code}
+                                        | #{voucher.code}
                                 td  
-                                    p #{Voucher.discountValue}
+                                    if permission.includes("update-voucher")
+                                        p(class="voucher-item__discountValue")
+                                            - const isCurrency = voucher.discountType == "fixed";
+                                            |   #{isCurrency ? `${voucher.discountValue.toLocaleString("vi-VN")}đ` : voucher.discountValue}
+                                            span(class="table-item__icon table-item__icon-pen" path="voucher/quick-update",data-currency=`${isCurrency}`)
+                                                i(class="fa-solid fa-pen")
+                                        input(class="table-item__input", type="number", value=voucher.discountValue, field="discountValue",_id=voucher._id)
+                                        form(action="", method="post") 
+                                    else
+                                        p(class="voucher-item__discountValue") #{isCurrency ? `${voucher.discountValue.toLocaleString("vi-VN")}đ` : voucher.discountValue}
                                 td  
-                                    p #{Voucher.discountType == "fixed" ? "Giảm giá cố định" : "Giảm theo phần trăm"}
+                                    p #{voucher.discountType == "fixed" ? "Giảm giá cố định" : "Giảm theo phần trăm"}
                                 td  
-                                    p #{Voucher.maxDiscount}
+                                    +applyFor(voucher)
                                 td  
-                                    p #{Voucher.minOrderValue}
+                                    if permission.includes("update-voucher")
+                                        p(class="voucher-item__discountValue")
+                                            |   #{voucher.maxDiscount.toLocaleString("vi-VN")}đ
+                                            span(class="table-item__icon table-item__icon-pen" path="voucher/quick-update",data-currency="true")
+                                                i(class="fa-solid fa-pen")
+                                        input(class="table-item__input", type="number", value=voucher.maxDiscount, field="maxDiscount",_id=voucher._id)
+                                        form(action="", method="post") 
+                                    else
+                                        p(class="voucher-item__maxDiscount") #{voucher.maxDiscount}
                                 td  
-                                    p #{Voucher.quantity}
+                                    if permission.includes("update-voucher")
+                                        p(class="voucher-item__discountValue")
+                                            |   #{voucher.minOrderValue.toLocaleString("vi-VN")}đ
+                                            span(class="table-item__icon table-item__icon-pen" path="voucher/quick-update",data-currency="true")
+                                                i(class="fa-solid fa-pen")
+                                        input(class="table-item__input", type="number", value=voucher.minOrderValue, field="minOrderValue",_id=voucher._id)
+                                        form(action="", method="post") 
+                                    else
+                                        p(class="voucher-item__minOrderValue") #{voucher.minOrderValue}
                                 td  
-                                    - const startDate = new Date(Voucher.startDate).toLocaleDateString("vi-VN");
+                                    if permission.includes("update-voucher")
+                                        p(class="voucher-item__discountValue")
+                                            |   #{voucher.quantity}
+                                            span(class="table-item__icon table-item__icon-pen" path="voucher/quick-update")
+                                                i(class="fa-solid fa-pen")
+                                        input(class="table-item__input", type="number", value=voucher.quantity, field="quantity",_id=voucher._id)
+                                        form(action="", method="post") 
+                                    else
+                                        p(class="voucher-item__quantity") #{voucher.quantity}
+                                td  
+                                    - const startDate = new Date(voucher.startDate).toLocaleDateString("vi-VN");
                                     p #{startDate}
                                 td  
-                                    - const expiredAt = new Date(Voucher.expiredAt).toLocaleDateString("vi-VN");
+                                    - const expiredAt = new Date(voucher.expiredAt).toLocaleDateString("vi-VN");
                                     p #{expiredAt}
                                 td 
                                     if permission.includes("update-voucher")
                                         div(class="btn-toggle")
                                             div(class="btn-status-toggle")
                                                     div(class="form-check form-switch")
-                                                        input(class="form-check-input btn-status__input", type="checkbox", role="switch",value=Voucher.status,_id=Voucher._id, path="voucher/update-status")
+                                                        input(class="form-check-input btn-status__input", type="checkbox", role="switch",value=voucher.status,_id=voucher._id, path="voucher/update-status")
                                             p(class="btn-status__desc") Hoạt động          
                                     else
                                         div(class="btn-toggle")
-                                            p(class="btn-status__desc") #{Voucher.status == "on" ? "Hoạt động" : "Không hoạt động"}
+                                            p(class="btn-status__desc") #{voucher.status == "on" ? "Hoạt động" : "Không hoạt động"}
                 
                                 td(style="text-align: center")
                                     if permission.includes("update-voucher")
-                                        a(href=`${PATH_ADMIN}/voucher/edit/${Voucher.id}`, class="btn-primary btn") Sửa   
-                                td(style="text-align: center")
+                                        a(href=`${PATH_ADMIN}/voucher/edit/${voucher.id}`, class="btn-primary btn") Sửa   
                                     if permission.includes("view-voucher")
-                                        a(href=`${PATH_ADMIN}/voucher/detail/${Voucher.id}`, class="btn-warning btn") Chi tiết    
-                                td(style="text-align: center")
+                                        a(href=`${PATH_ADMIN}/voucher/detail/${voucher.id}`, class="btn-warning btn") Chi tiết    
                                     if permission.includes("delete-voucher") 
-                                        button(type="button", class="btn-delete btn btn-danger", data-bs-id = Voucher._id ,data-bs-toggle="modal", data-bs-target="#warningDeleteModal",path="voucher/delete-voucher") Xóa 
+                                        button(type="button", class="btn-delete btn btn-danger", data-bs-id = voucher._id ,data-bs-toggle="modal", data-bs-target="#warningDeleteModal",path="voucher/delete-voucher") Xóa 
                     else  
                         tr 
-                            td(colspan="9")
+                            td(colspan="13")
                                 p(class="noItem") Không có voucher nào!   
                                 a(class="noItem__link", href=`${PATH_ADMIN}/voucher/create`) Tạo voucher.
     

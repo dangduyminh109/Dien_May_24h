@@ -9,10 +9,7 @@ class voucherTrashController {
     // [GET] /admin/voucher-trash
     async show(req, res) {
         const currentPath = paginationHelper(req);
-        const { listVoucher, pagination } = await filterAndSort(
-            req.query,
-            true
-        );
+        const { listVoucher, pagination } = await filterAndSort(req, true);
         const handle = req.session.backData || {};
         const general = await generalHelper(true);
         res.render("./admin/page/voucher/voucher-trash", {

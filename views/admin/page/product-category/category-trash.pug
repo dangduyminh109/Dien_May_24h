@@ -48,7 +48,15 @@ block main
                 div(class="overview-item total-products")
                     h3(class="overview-item__title total-products__title") Tổng số danh mục
                     p(class="overview-item__detail total-products__detail") #{general.totalProductCategory}
-        
+        div(class="show")
+            form(action="/admin/category-trash", method="get") 
+                label(for="show" class="form-label") Hiển thị
+                select(name="show" id="show" class="form-select") 
+                    option(value="5" selected = pagination.limit == 5) 5
+                    option(value="10" selected = pagination.limit == 10) 10
+                    option(value="20" selected = pagination.limit == 20) 20
+                    option(value="50" selected = pagination.limit == 50) 50
+                    option(value="100" selected = pagination.limit == 100) 100 
         div(class="list-category list-table")
             table(class="list-category__table")
                 thead
@@ -60,7 +68,6 @@ block main
                             !=pugHepper.sort("name", _sort,pagination.page)
                         th(scope="col") Trạng thái 
                         th(scope="col")
-                        th(scope="col")  
                 tbody
                     if listDeletedCategory.length > 0
                         each category in listDeletedCategory
@@ -86,10 +93,8 @@ block main
                                     if permission.includes("update-category")
                                         form(method="POST", action=`${PATH_ADMIN}/category-trash/restore-category/${category.id}?_method=PATCH`)
                                             button(type="submit", class="btn-primary btn") Khôi phục  
-                                td(style="text-align: center")
                                     if permission.includes("view-category")
                                         a(href=`${PATH_ADMIN}/category-trash/detail/${category.id}`, class="btn-warning btn") Chi tiết  
-                                td(style="text-align: center")
                                     if permission.includes("delete-category")
                                         button(type="button", class="btn-destroy btn btn-danger",data-bs-toggle="modal",data-bs-id = category._id, data-bs-target="#warningDeleteModal",path="category-trash/destroy-category") Xóa vĩnh viễn  
                     else  

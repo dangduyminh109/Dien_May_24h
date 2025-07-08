@@ -1,0 +1,123 @@
+extends ../../layout/default.pug
+include ../../mixins/breadcrumbs.pug
+include ../../mixins/alert.pug
+
+block main
+    +alert(messages)
+    div(class="breadcrumb-nav")
+        div(class="container-xl")
+            +breadcrumb("Thanh Toán", [
+                { name: `Home`, href: `/` },
+                { name: `Thanh Toán`, href: `/checkout` },
+            ])
+    section(class="payment")
+        div(class="container")
+            div(class="payment__header")
+                span(class="payment__icon")
+                    i(class="fa-regular fa-credit-card")
+                h1(class="payment__title") THANH TOÁN
+                p(class="payment__desc") Vui lòng kiểm tra lại thông tin đơn hàng trước khi thanh toán
+            div(class="payment__wrapper row")
+                div(class="payment-info col-12 col-lg-7")
+                    h2(class="payment-info__title") Thông Tin Giao hàng
+                    if(user == null)
+                        p(class="payment-info__account")
+                            | Bạn đã có tài khoản?
+                            button(type="button", class="payment-info__account-btn", data-bs-toggle="modal", data-bs-target="#loginModal") Đăng nhập
+
+                    form(action="/", class="payment-info__form")
+                        div(class="mb-3")
+                            input(type="email", class="form-control", id="Name", placeholder="Họ và tên",value=(user?user.name:""))
+                        div(class="mb-3 row")
+                            div(class="col-8")
+                                input(type="email", class="form-control", id="Email", placeholder="email",value=(user?user.email:""))
+                            div(class="col-4")
+                                input(type="tel", class="form-control", id="Phone", placeholder="số điện thoại",value=(user?user.phone:""))
+                            div(class="mt-3")
+                                input(type="text", class="form-control", id="Address", placeholder="Địa chỉ",value=(user?user.address:""))
+
+                    label(for="brand-1", class="payment-info__label") Phương thức vận chuyển
+                    label(class="radio")
+                        input(type="radio", id="brand-1", name="brand-1", checked)
+                        label(for="brand-1", class="radio__shape")
+                        label(for="brand-1", class="radio__label") Giao hàng tận nơi
+                        span(class="radio__price") 0đ
+
+                    label(for="payment-1", class="payment-info__label") Phương thức thanh toán
+                    label(class="radio")
+                        input(type="radio", id="payment-1", name="payment", checked)
+                        label(for="payment-1", class="radio__shape")
+                        label(for="payment-1", class="radio__label")
+                            span(class="radio__icon")
+                                i(class="fa-solid fa-money-bill-wave")
+                            | Thanh toán khi nhận hàng (COD)
+
+                    label(class="radio")
+                        input(type="radio", id="payment-2", name="payment")
+                        label(for="payment-2", class="radio__shape")
+                        label(for="payment-2", class="radio__label")
+                            span(class="radio__icon")
+                                i(class="fa-solid fa-building-columns")
+                            | Chuyển khoản qua ngân hàng
+                    input(type="hidden" name="vc" value="" id="vc-input")
+                    div(class="mt-3 row radio__btn")
+                        a(href="/cart", class="link-btn") Giỏ hàng
+                        button(type="submit", class="pay-btn") Hoàn tất đơn hàng
+
+                div(class="payment-order col-12 col-lg-5")
+                    h2(class="payment-order__title") Giỏ hàng
+                    div(class="order-list")
+                        each item in listItemCart
+                            - quantity = item.quantity || 1;
+                            - item = item.product;
+                            div(class="order-item")
+                                a(href=`/detail/${item.id}`, class="order-item__link")
+                                    img(src=item.thumbnails[0] || "/uploads/default-image.jpg", alt=item.name, class="order-item__img")
+                                    span #{quantity}
+                                div(class="order-item__info")
+                                    a(href="/detail/${item.id}", class="order-item__name") #{item.name}
+                                p(class="order-item__price") #{item.price.toLocaleString('vi-VN')}đ
+
+                    div(class="discount")
+                        div(class="discount__text")
+                            span(class="discount__icon")
+                                i(class="fa-solid fa-tag")
+                            | Mã giảm giá
+                        div(class="discount__code")
+                            button(class="btn-discount",
+                                type="button",
+                                data-bs-toggle="offcanvas",
+                                data-bs-target="#offcanvasExample",
+                                aria-controls="offcanvasExample"
+                            )
+                                | Chọn mã giảm giá
+                                span
+                                    i(class="fa-solid.fa-chevron-right")
+                    
+                    if(voucher)
+                        div(class="product__discount" id="product__discount")
+                            p(class="code__selected") Đã chọn
+                            div(class="product-code")
+                                div(class="product-code__item")
+                                    p #{voucher.code}
+                    else 
+                        div(class="product__discount" id="product__discount")
+                    hr
+                    table(class="payment-order__table")
+                        tr
+                            td Tạm tính
+                            td(class="bill__price", id="bill__price", data-price=totalPriceAndDiscount.totalPrice) #{totalPriceAndDiscount.totalPrice.toLocaleString('vi-VN')}đ
+                        - hasVoucher = totalPriceAndDiscount.discount > 0;
+                        if(hasVoucher)
+                            tr(id="bill-discount")
+                                td Mã giảm giá
+                                td(id="bill-discount") #{totalPriceAndDiscount.discount.toLocaleString('vi-VN')}đ
+                        else 
+                             tr(id="bill-discount", style="display: none")
+                        tr
+                            td Phí vận chuyển
+                            td Miễn phí
+                    div(class="payment-order__total")
+                        p(class="payment-order__total-text") Tổng cộng
+                        strong(class="payment-order__total-value" id="total__price") #{(totalPriceAndDiscount.totalPrice - totalPriceAndDiscount.discount).toLocaleString('vi-VN')}đ
+    include ../../partials/list_voucher.pug

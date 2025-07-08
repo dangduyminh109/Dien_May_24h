@@ -46,6 +46,15 @@
             padding: 5px;
         }
     }
+    .payment {
+        .payment-info {
+            padding: 10px;
+        }
+        .payment-order {
+            padding: 10px;
+            border: none;
+        }
+    }
 }
 
 /* ipad */
@@ -197,6 +206,23 @@
         .order-item__content--right {
             flex: 1;
             justify-content: end !important;
+        }
+    }
+
+    .payment {
+        .payment__wrapper {
+            margin-top: 20px;
+        }
+        .payment-info__title {
+            margin: 10px 0;
+        }
+
+        .order-item__img {
+            height: 40px;
+            width: 40px;
+        }
+        .order-item {
+            gap: 10px;
         }
     }
 }

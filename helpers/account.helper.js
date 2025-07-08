@@ -27,9 +27,16 @@ async function generalHelper(deleted = false) {
     return obj;
 }
 
-async function filterAndSort(query, findDelete = false) {
+async function filterAndSort(req, findDelete = false) {
     var listAccounts = [];
-    const limit = 5;
+    let limit = 5;
+    let query = req.query;
+    if (query.show) {
+        limit = parseInt(query.show);
+        req.session.limit = limit;
+    } else if (req.session.limit) {
+        limit = req.session.limit;
+    }
     let totalPage = 0;
     let page = query.page ? parseInt(query.page) : 1;
     const filter = Object.entries(query).reduce((obj, [key, value]) => {

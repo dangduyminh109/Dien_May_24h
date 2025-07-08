@@ -7,7 +7,7 @@ class roleTrashController {
     // [GET] /admin/roles-trash
     async show(req, res) {
         const currentPath = paginationHelper(req);
-        const { listRoles, pagination } = await roleHelper(req.query, true);
+        const { listRoles, pagination } = await roleHelper(req, true);
         res.render("./admin/page/roles/role-trash", {
             pageTitle: "Roles Trash",
             PATH_ADMIN: system.PATH_ADMIN,

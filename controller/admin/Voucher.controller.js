@@ -11,7 +11,7 @@ class voucherController {
     // [GET] /admin/voucher
     async show(req, res) {
         const currentPath = paginationHelper(req);
-        const { listVoucher, pagination } = await filterAndSort(req.query);
+        const { listVoucher, pagination } = await filterAndSort(req);
         const handleData = req.session.backData || {};
         const general = await generalHelper();
         res.render("./admin/page/voucher", {
@@ -84,6 +84,24 @@ class voucherController {
             console.error("Error saving product:", error);
             req.flash("error", "Sửa voucher không thành công!");
             res.redirect("/admin/voucher");
+        }
+    }
+
+    // [PATCH] /admin/voucher/update-discountValue
+    async quickUpdate(req, res) {
+        const dataUpdate = req.body;
+        try {
+            await Voucher.updateOne(
+                { _id: dataUpdate._id },
+                { [dataUpdate.field]: parseInt(dataUpdate.value) }
+            );
+            res.json({ success: true, message: "Cập nhật thành công!" });
+        } catch (error) {
+            res.json({
+                error: true,
+                message: "Cập nhật không thành công!",
+                err: error,
+            });
         }
     }
 

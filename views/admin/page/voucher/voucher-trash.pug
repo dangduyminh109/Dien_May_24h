@@ -6,6 +6,8 @@ include ../../mixins/deletion_warning.pug
 include ../../mixins/get_category.pug
 include ../../mixins/pagination.pug
 include ../../mixins/alert.pug
+include ../../mixins/applyFor.pug
+
 
 block main 
     +alert(messages)
@@ -50,7 +52,15 @@ block main
             div(class="overview-item total-voucher")
                 h3(class="overview-item__title total-voucher__title") Tổng số voucher
                 p(class="overview-item__detail total-voucher__detail") #{general.totalVoucher}
-
+        div(class="show")
+            form(action="/admin/voucher-trash", method="get") 
+                label(for="show" class="form-label") Hiển thị
+                select(name="show" id="show" class="form-select") 
+                    option(value="5" selected = pagination.limit == 5) 5
+                    option(value="10" selected = pagination.limit == 10) 10
+                    option(value="20" selected = pagination.limit == 20) 20
+                    option(value="50" selected = pagination.limit == 50) 50
+                    option(value="100" selected = pagination.limit == 100) 100 
         div(class="list-voucher list-table")
             table(class="list-voucher__table")
                 thead
@@ -64,6 +74,7 @@ block main
                             |   Mã voucher
                             !=pugHepper.sort("code", _sort)
                         th(scope="col") Danh mục
+                        th(scope="col") Áp dụng cho
                         th(scope="col") 
                             |   Giá gốc
                             !=pugHepper.sort("original_price", _sort)
@@ -77,6 +88,7 @@ block main
                             |   Tồn kho 
                             !=pugHepper.sort("inventory", _sort)
                         th(scope="col") Trạng thái 
+                        th(scope="col") 
                 tbody
                     if listDeletedVoucher.length > 0
                         each voucher in listDeletedVoucher
@@ -94,6 +106,8 @@ block main
                                     p #{voucher.discountValue}
                                 td  
                                     p #{voucher.discountType == "fixed" ? "Giảm giá cố định" : "Giảm theo phần trăm"}
+                                td  
+                                    +applyFor(voucher)
                                 td  
                                     p #{voucher.maxDiscount}
                                 td  
@@ -121,10 +135,8 @@ block main
                                     if permission.includes("update-voucher")
                                         form(method="POST", action=`${PATH_ADMIN}/voucher-trash/restore-voucher/${voucher.id}?_method=PATCH`)
                                             button(type="submit", class="btn-primary btn") Khôi phục  
-                                td(style="text-align: center")
                                     if permission.includes("view-voucher")
                                         a(href=`${PATH_ADMIN}/voucher-trash/detail/${voucher.id}`, class="btn-warning btn") Chi tiết 
-                                td(style="text-align: center")
                                     if permission.includes("delete-voucher")
                                         button(type="button", class="btn-destroy btn btn-danger",data-bs-toggle="modal",data-bs-id = voucher._id, data-bs-target="#warningDeleteModal",path="voucher-trash/destroy-voucher") Xóa vĩnh viễn   
                     else  

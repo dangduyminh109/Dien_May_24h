@@ -49,6 +49,9 @@
 }
 
 .shopping-cart {
+    p {
+        margin: 0;
+    }
     .shopping-cart__wrapper {
         padding: 20px 0 50px;
     }
@@ -195,7 +198,7 @@
         .right-box__title {
             color: $primary;
             font-weight: 600;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             font-size: 1.6rem;
             text-transform: uppercase;
         }
@@ -212,6 +215,7 @@
             .total__price {
                 color: $primary;
                 text-align: end;
+                margin: 0;
                 line-height: 1;
             }
 
@@ -253,6 +257,96 @@
                 color: $text-color;
                 border: 1px solid $color-hover;
             }
+        }
+
+        /* -------- bill -------- */
+        .bill {
+            font-weight: 400;
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .bill tr td:first-child {
+            text-align: start;
+            vertical-align: middle;
+            color: var(--text-color-2);
+        }
+
+        .bill tr td:last-child {
+            text-align: end;
+            vertical-align: middle;
+        }
+        .bill__discount {
+            color: $color-hover;
+        }
+
+        /* -------- bill -------- */
+        .code__selected {
+            color: var(--text-color-2);
+            margin-top: 10px;
+            line-height: 1;
+            font-weight: 600;
+            color: #aaa;
+        }
+
+        /* -------- product discount -------- */
+        .product__discount {
+            margin-top: 10px;
+            overflow: auto;
+        }
+        .product-code {
+            display: inline-block;
+            padding: 0;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .product-code__item {
+            position: relative;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .product-code__item p {
+            color: $primary;
+            padding: 3px 15px;
+            border-radius: 6px;
+            border: 1px solid $primary;
+            font-size: 1.4rem;
+        }
+
+        .product-code__item::before {
+            content: "";
+            display: inline-block;
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            border-radius: 50% 50%;
+            background-color: #fff;
+            border: 1px solid $primary;
+        }
+
+        .product-code__item::after {
+            content: "";
+            display: inline-block;
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translate(50%, -50%);
+            width: 10px;
+            height: 10px;
+            border-radius: 50% 50%;
+            background-color: #fff;
+            border: 1px solid $primary;
+        }
+        .product-code__icon {
+            position: absolute;
+            top: -1px;
+            right: -10px;
+            color: $color-hover;
+            cursor: pointer;
         }
     }
 }

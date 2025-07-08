@@ -48,6 +48,15 @@ block main
                 div(class="overview-item total-accounts")
                     h3(class="overview-item__title total-accounts__title") #{key}
                     p(class="overview-item__detail total-accounts__detail") #{general[key]}
+        div(class="show")
+            form(action="/admin/accounts-trash", method="get") 
+                label(for="show" class="form-label") Hiển thị
+                select(name="show" id="show" class="form-select") 
+                    option(value="5" selected = pagination.limit == 5) 5
+                    option(value="10" selected = pagination.limit == 10) 10
+                    option(value="20" selected = pagination.limit == 20) 20
+                    option(value="50" selected = pagination.limit == 50) 50
+                    option(value="100" selected = pagination.limit == 100) 100 
         div(class="list-account list-table")
             table(class="list-account__table")
                 thead
@@ -59,7 +68,6 @@ block main
                         th(scope="col") Số điện thoại
                         th(scope="col") Phân tài khoản
                         th(scope="col") Trạng thái 
-                        th(scope="col")  
                         th(scope="col")  
                 tbody
                     if listDeletedAccounts.length > 0
@@ -93,10 +101,8 @@ block main
                                     if permission.includes("update-account")
                                         form(method="POST", action=`${PATH_ADMIN}/accounts-trash/restore-account/${account.id}?_method=PATCH`)
                                             button(type="submit", class="btn-primary btn") Khôi phục  
-                                td(style="text-align: center")
                                     if permission.includes("view-account")
                                         a(href=`${PATH_ADMIN}/accounts-trash/detail/${account.id}`, class="btn-warning btn") Chi tiết
-                                td(style="text-align: center")
                                     if permission.includes("delete-account")
                                         button(type="button", class="btn-destroy btn btn-danger",data-bs-toggle="modal",data-bs-id = account._id, data-bs-target="#warningDeleteModal",path="accounts-trash/destroy-account") Xóa vĩnh viễn  
                     else  

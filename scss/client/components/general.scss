@@ -32,6 +32,12 @@ li {
     list-style: none;
 }
 
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 // page header
 .breadcrumb-nav {
     width: 100%;
@@ -225,6 +231,10 @@ li {
 }
 .alert-container.warning {
     background-color: #ffcc00;
+    color: #000;
+}
+.alert-container.info {
+    background-color: #27b2d1;
 }
 .alert-container.active {
     transform: translateX(0);
@@ -286,5 +296,190 @@ main {
 
 .dropdown-item:active {
     background-color: $color-hover;
+}
+
+/* ============================================= voucher ============================================= */
+.voucher {
+    margin-top: 80px;
+}
+.voucher__list {
+    display: flex;
+    align-items: stretch;
+    gap: 20px;
+    padding: 5px;
+}
+
+.voucher-item {
+    display: flex;
+    padding: 10px;
+    width: 100%;
+    gap: 10px;
+    align-items: center;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+    .voucher-item__img {
+        max-width: 50px;
+        aspect-ratio: 1/1;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+    .voucher-item__thumb {
+        width: 15%;
+    }
+    .voucher-item__expiry {
+        margin: 0;
+    }
+    .voucher-item__code {
+        margin: 0;
+    }
+    .voucher-item__content {
+        color: #000;
+        font-weight: 600;
+        flex: 1;
+        line-height: 1.4;
+        font-size: 1.4rem;
+    }
+
+    .voucher-item__top-content {
+        display: flex;
+        margin-bottom: 5px;
+        align-items: center;
+    }
+
+    .voucher-item__text {
+        flex: 1;
+    }
+
+    .voucher-item__name {
+        font-size: 1.6rem;
+        color: var(--text-color);
+        margin: 0;
+        font-weight: 600;
+    }
+
+    .voucher-item__detail {
+        position: relative;
+
+        &:hover {
+            .voucher-info {
+                display: block;
+            }
+        }
+
+        .voucher-item__icon {
+            height: 25px;
+            width: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #000;
+            border-radius: 50%;
+            color: #000;
+            cursor: pointer;
+        }
+    }
+
+    &.left {
+        .voucher-info {
+            top: 10px;
+            left: -297px;
+        }
+    }
+
+    .voucher-item__bottom-content {
+        display: flex;
+        align-items: end;
+    }
+
+    .voucher-item__code {
+        strong {
+            color: #000;
+            font-weight: 600;
+        }
+    }
+
+    .voucher-item__expired {
+        height: auto;
+        max-height: 100%;
+        object-fit: cover;
+
+        .btn-voucher {
+            background-color: $primary;
+            font-size: 1.4rem;
+            color: #fff;
+
+            &:hover {
+                background-color: $color-hover;
+            }
+        }
+    }
+}
+
+.voucher-info {
+    position: absolute;
+    display: none;
+    top: 10px;
+    left: 97%;
+    z-index: 150;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 300px;
+
+    .voucher-info__name {
+        background-color: $color-hover;
+        padding: 10px;
+        color: #fff;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    .voucher-info__content {
+        color: #000;
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            td,
+            th {
+                vertical-align: middle;
+                padding: 5px;
+                text-align: start;
+            }
+        }
+    }
+
+    .voucher-info__copy-icon {
+        cursor: pointer;
+        margin-left: 3px;
+    }
+
+    .voucher-info__desc {
+        padding: 0 5px 10px;
+    }
+
+    .voucher-info__description {
+        color: #000;
+        font-weight: 600;
+        font-size: 1.6rem;
+        margin: 0 0 5px 0;
+        overflow: hidden;
+    }
+}
+.voucher-info__none {
+    color: #000;
+}
+.btn-none {
+    font-size: 1.6rem;
+    color: $color-hover;
+    padding: 0;
+    &:focus {
+        outline: none;
+        box-shadow: none;
+    }
+    &:hover {
+        color: $color-hover;
+    }
 }
 /* ======================================= end general ======================================= */

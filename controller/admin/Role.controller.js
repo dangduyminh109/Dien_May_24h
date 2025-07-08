@@ -7,7 +7,7 @@ class roleController {
     // [GET] /admin/roles
     async show(req, res) {
         const currentPath = paginationHelper(req);
-        const { listRoles, pagination } = await roleHelper(req.query);
+        const { listRoles, pagination } = await roleHelper(req);
         res.render("./admin/page/roles/", {
             pageTitle: "Điện Máy 24h - Nhóm Quyền",
             PATH_ADMIN: system.PATH_ADMIN,
@@ -40,7 +40,7 @@ class roleController {
 
     // [GET] /admin/roles/permissions
     async showPermissions(req, res) {
-        const { listRoles } = await roleHelper(req.query);
+        const { listRoles } = await roleHelper(req);
         res.render("./admin/page/roles/permission", {
             pageTitle: "Điện Máy 24h - Phân Quyền",
             PATH_ADMIN: system.PATH_ADMIN,

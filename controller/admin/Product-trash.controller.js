@@ -11,10 +11,7 @@ class productTrashController {
     // [GET] /admin/product-trash
     async show(req, res) {
         const currentPath = paginationHelper(req);
-        const { listProduct, pagination } = await filterAndSort(
-            req.query,
-            true
-        );
+        const { listProduct, pagination } = await filterAndSort(req, true);
         const handleData = req.session.backData || {};
         const general = await generalHelper(true);
         const categoryTree = await getCategoryTree();

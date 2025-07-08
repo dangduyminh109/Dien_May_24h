@@ -8,4 +8,6 @@ router.get("/delete/:id", CartController.delete);
 
 router.post("/add", CartController.add);
 
+router.patch("/update", CartController.update);
+
 module.exports = router;
