@@ -8,27 +8,27 @@ block main
         div(class="container-xl")
             +breadcrumb("Giỏ hàng", [
                 { name: `Home`, href: `/` },
-                { name: `Giỏ Hàng`, href: `/cart` },
+                { name: `Giỏ hàng`, href: `/cart` },
             ])
     if ((!user || !user.listItemCart || user.listItemCart.length < 1) && listItemCart.length < 1)
-        main(class="empty-cart")
+        main(class="page-status")
             div(class="container")
-                p(class="empty-cart__text")
-                    span(class="empty-cart__text-icon")
+                p(class="page-status__text")
+                    span(class="page-status__text-icon")
                         i(class="fa-solid fa-tag")
                         | Freeship với đơn hàng trên 5.000.000đ. Mua sắm ngay nào!!!
-                div(class="empty-cart__content")
-                    span(class="empty-cart__icon-1")
+                div(class="page-status__content")
+                    span(class="page-status__icon-1")
                         i(class="fa-solid fa-cart-shopping")
-                        span(class="empty-cart__icon-2")
+                        span(class="page-status__icon-2 error")
                             i(class="fa-solid fa-circle-xmark")
-                    h2(class="empty-cart__title") “Hổng” có gì trong giỏ hết
-                    p(class="empty-cart__desc") Về trang cửa hàng để chọn mua sản phẩm bạn nhé!!
-                    a(class="primary-btn empty-cart__btn" href="/") Mua sắm ngay
+                    h2(class="page-status__title") “Hổng” có gì trong giỏ hết
+                    p(class="page-status__desc") Về trang cửa hàng để chọn mua sản phẩm bạn nhé!!
+                    a(class="primary-btn page-status__btn" href="/") Mua sắm ngay
     else 
         main(class="shopping-cart")
             div(class="container-xl")
-                div(class="shopping-cart__wrapper")
+                form(action="/checkout/cart", method="post", class="shopping-cart__wrapper")
                     h1(class="shopping-cart__title") Giỏ hàng
                     div(class="row")
                         div(class="left-box col-12 col-lg-8")
@@ -57,15 +57,15 @@ block main
                                         div(class="order-item__content order-item__content--right")
                                             p(class="order-item__price" , data-price=item.price) #{item.price.toLocaleString('vi-VN')}đ
                                             div(class="quantity-control")
-                                                button(class="quantity-control__btn quantity-control__btn--decrease")
+                                                button(type="button",class="quantity-control__btn quantity-control__btn--decrease")
                                                     span
                                                         i(class="fa-solid fa-minus")
                                                 input(class="quantity-control__input" type="number" value=quantity name="quantity-item" min=1 max=item.inventory data-id=item._id)
-                                                button(class="quantity-control__btn quantity-control__btn--increase")
+                                                button(type="button",class="quantity-control__btn quantity-control__btn--increase")
                                                     span
                                                         i(class="fa-solid fa-plus")
                                 label(class="order-item__label" for="note") Ghi chú đơn hàng
-                                textarea(name="note" class="order-item__note" id="note")
+                                textarea(name="note" class="form-control" rows="3" id="note" style="font-size: 1.6rem")
                          
                         div(class="right-box col-12 col-lg-4")
                             h4(class="right-box__title") HÓA ĐƠN
@@ -101,7 +101,6 @@ block main
                                 div(class="total__detail")
                                     p(class="total__price", id="total__price") #{(totalPriceAndDiscount.totalPrice).toLocaleString('vi-VN')}đ
                                     small (Đã bao gồm VAT nếu có)
-                            form(action="/checkout/cart", method="post") 
-                                input(type="hidden", name="vc", value="" id="vc-input")
-                                button(class="primary-btn pay-btn" type="submit") thanh toán
+                            input(type="hidden", name="vc", value="" id="vc-input")
+                            button(class="primary-btn pay-btn" type="submit") thanh toán
     include ../../partials/list_voucher.pug

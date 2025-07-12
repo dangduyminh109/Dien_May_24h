@@ -5,20 +5,15 @@ const { filterAndSort } = require("../../helpers/product-client.helper.js");
 const paginationHelper = require("../../helpers/pagination.helper.js");
 class ProductController {
     async show(req, res) {
-        const user = req.session.user || req.user || null;
         const currentPath = paginationHelper(req);
-        const categoryTree = await getCategoryTree();
         const { listProduct, category, pageTitle, pagination } =
             await filterAndSort(req);
         res.render("./client/page/products/", {
             pageTitle,
             category,
-            categoryTree,
             listProduct,
             pagination,
             currentPath,
-            user,
-            cart: req.session.cart || [],
             searchKeyWord: req.query.keyword || "",
             currentHref: req.originalUrl,
             query: req.query,
@@ -26,24 +21,25 @@ class ProductController {
     }
 
     async detail(req, res) {
-        const user = req.session.user || req.user || null;
-        const categoryTree = await getCategoryTree();
-        const product = await Product.findOne({ slug: req.params.slug });
-        const relatedProducts = await Product.find({
-            category: product.category,
-        });
-        const category = await ProductCategory.findOne({
-            _id: product.category,
-        });
-        res.render("./client/page/products/detail", {
-            pageTitle: "product detail",
-            product,
-            category,
-            user,
-            cart: req.session.cart || [],
-            categoryTree,
-            relatedProducts,
-        });
+        try {
+            const product = await Product.findOne({ slug: req.params.slug });
+            const relatedProducts = await Product.find({
+                category: product.category,
+            });
+            const category = await ProductCategory.findOne({
+                _id: product.category,
+            });
+            res.render("./client/page/products/detail", {
+                pageTitle: "product detail",
+                product,
+                category,
+                relatedProducts,
+            });
+        } catch (error) {
+            console.error("Error:", error);
+            req.flash("error", "có lỗi xảy ra!");
+            res.redirect("/");
+        }
     }
 
     async suggest(req, res) {

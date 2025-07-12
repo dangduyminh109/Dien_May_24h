@@ -1,13 +1,11 @@
 const User = require("../../models/user.model");
 const Product = require("../../models/product.model");
-const getCategoryTree = require("../../helpers/get-category-tree.helper.js");
 const {
     TotalPriceAndDiscount,
     getListVoucher,
 } = require("../../helpers/checkout.helper.js");
 class CartController {
     async show(req, res) {
-        const categoryTree = await getCategoryTree();
         const sessionUser = req.session.user || req.user || null;
         let user = null;
         let cart = req.session.cart || [];
@@ -43,7 +41,6 @@ class CartController {
         const totalPriceAndDiscount = TotalPriceAndDiscount(cart);
         res.render("./client/page/cart/", {
             pageTitle: "Điện Máy 24h",
-            categoryTree,
             listVoucher,
             user,
             listItemCart: cart,

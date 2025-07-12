@@ -1,5 +1,4 @@
-const Voucher = require("../models/Voucher.model.js");
-
+const Voucher = require("../models/voucher.model.js");
 function TotalPriceAndDiscount(cart, voucher = null) {
     const totalPrice = cart.reduce(
         (total, item) => total + item.product.price * item.quantity,

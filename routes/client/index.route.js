@@ -5,11 +5,13 @@ const userRouter = require("./user.route");
 const cartRouter = require("./cart.route");
 const checkoutRouter = require("./checkout.route");
 
+const attachContextMiddleware = require("../../middlewares/attachContext.middleware");
+
 module.exports.index = (app) => {
-    app.use("/", homeRouter);
-    app.use("/product", productRouter);
+    app.use("/", attachContextMiddleware, homeRouter);
+    app.use("/product", attachContextMiddleware, productRouter);
+    app.use("/user", attachContextMiddleware, userRouter);
+    app.use("/cart", attachContextMiddleware, cartRouter);
+    app.use("/checkout", attachContextMiddleware, checkoutRouter);
     app.use("/auth", authRouter);
-    app.use("/user", userRouter);
-    app.use("/cart", cartRouter);
-    app.use("/checkout", checkoutRouter);
 };

@@ -1,0 +1,28 @@
+extends ../../layout/default.pug
+include ../../mixins/breadcrumbs.pug
+include ../../mixins/alert.pug
+
+block main
+    +alert(messages)
+    div(class="breadcrumb-nav")
+        div(class="container-xl")
+            +breadcrumb("", [
+                { name: `Home`, href: `/` },
+                { name: `Hoàn tất`, href: `/checkout/success` },
+            ])
+    main(class="page-status")
+        div(class="container")
+            div(class="page-status__content")
+                span(class="page-status__icon-1")
+                    i(class="fa-solid fa-cart-shopping")
+                    if status == "success"
+                        span(class="page-status__icon-2 success")
+                            i(class="fa-solid fa-circle-check")
+                    else 
+                        span(class="page-status__icon-2 error")
+                            i(class="fa-solid fa-circle-xmark")
+                h2(class="page-status__title") #{status == "success" ? "ĐẶT HÀNG THÀNH CÔNG" : "ĐẶT HÀNG KHÔNG THÀNH CÔNG"}
+                p(class="page-status__desc") #{message}
+                div(class="page-status__btn-wrapper")   
+                    a(class="primary-btn page-status__btn" href="/") Xem đơn hàng 
+                    a(class="primary-btn page-status__btn solid" href="/") Trang chủ  

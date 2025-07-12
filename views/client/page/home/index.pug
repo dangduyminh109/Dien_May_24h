@@ -52,15 +52,17 @@ block main
                         div(class="product-title")
                             a(class="product-title__link",href=`product/${category.slug}`) #{category.name}
                         div(class="product-category")
-                            each subCategory in category.children
-                                a(class="product-category__btn",href=`product/${subCategory.slug}`) #{subCategory.name}
+                            if category.children && category.children.length > 0
+                                ul(class="product-category__list")
+                                each subCategory in category.children
+                                    a(class="product-category__btn",href=`product/${subCategory.slug}`) #{subCategory.name}
                     if(category.thumbnail && category.thumbnail != "")
                         div(class="product-banner")
                             a(class="product-banner__link",href=`product/${category.slug}`)
                                 img(class="product-banner__img",src=category.thumbnail, alt=category.name)
 
                     div(class="product-list row")
-                        - const filteredProducts = listProduct.filter(p => p.category == category._id || category.children.some(child => child.id == p.category)).slice(0, 12)
+                        - const filteredProducts = listProduct.filter(p => p.category == category._id || category.children && category.children.some(child => child.id == p.category)).slice(0, 12)
                         each product in filteredProducts
                             div(class="col-md-3 col-sm-4 col-6")
                                 +productCard(product)

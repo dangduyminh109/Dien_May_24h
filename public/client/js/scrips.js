@@ -363,6 +363,16 @@ function handleSearch() {
             }, 500);
         };
     }
+
+    // kiểm tra value input trước khi search
+    const searchBoxBtn = document.getElementById("search-box__btn");
+    if (searchBoxBtn) {
+        searchBoxBtn.onclick = () => {
+            if (searchBoxInput.value.trim() != "") {
+                searchBoxBtn.closest("form").submit();
+            }
+        };
+    }
 }
 
 async function handleAuth() {
@@ -687,6 +697,53 @@ function handleApplyVoucher() {
     }
 }
 
+/* ============ handle from checkout =========== */
+function handleFormCheckOut() {
+    const formData = document.getElementById("checkout-form");
+    if (formData) {
+        formData.onsubmit = async (e) => {
+            e.preventDefault();
+
+            const form = e.target;
+            const formData = new FormData(form);
+            const payload = Object.fromEntries(formData.entries());
+            // Gán lại đúng mảng productId
+            const listProductId = formData.getAll("productId");
+            const listQuantity = formData.getAll("quantity");
+            const product = listProductId.map((item, index) => {
+                return {
+                    productId: item,
+                    quantity: listQuantity[index],
+                };
+            });
+            payload.product = product;
+            delete payload.productId;
+            delete payload.quantity;
+            try {
+                const res = await fetch(form.action, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(payload),
+                });
+
+                const result = await res.json();
+                if (result.error) {
+                    alert("error", result.message);
+                } else if (result.redirect) {
+                    window.location.href = result.redirect;
+                } else {
+                    alert("success", `${result.message}`);
+                }
+            } catch (err) {
+                console.log(err);
+                alert("error", "có lỗi xãy ra!!!");
+            }
+        };
+    }
+}
+
 /* ============ alert =========== */
 function alert(type = "success", message) {
     const alertDiv = document.createElement("div");
@@ -743,5 +800,6 @@ function init() {
     handleAddQuantity();
     handleAvatarInput();
     handleApplyVoucher();
+    handleFormCheckOut();
 }
 document.addEventListener("DOMContentLoaded", init);

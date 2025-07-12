@@ -11,7 +11,7 @@ header(class="header")
                         button(type="reset",class="search-box__btn--reset",id="search-box__btn--reset")
                             span(class="search-box__icon")  
                                 i(class="fa-solid fa-xmark")
-                        button(type="submit",class="search-box__btn")
+                        button(type="button",class="search-box__btn",id="search-box__btn")
                             span(class="search-box__icon")  
                                 i(class="fa-solid fa-magnifying-glass")
                     div(class="search-box__suggest",id="search-box__suggest")
@@ -168,7 +168,7 @@ header(class="header")
                                                 div(class="auth-link") Bạn đã có tài khoản? 
                                                     p(class="auth-link__btn",id="register-link__btn") Đăng nhập
                 - quantityCartItem = 0
-                if (user && user.cart.length > 0) 
+                if (user && user.cart && user.cart.length > 0) 
                     - quantityCartItem = user.cart.length;
                 else if (cart && cart.length > 0) 
                     - quantityCartItem = cart.length;

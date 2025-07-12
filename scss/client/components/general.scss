@@ -482,4 +482,80 @@ main {
         color: $color-hover;
     }
 }
+
+/* ============================================= page-status ============================================= */
+.page-status {
+    margin: 20px 0 80px;
+    color: $text-color-2;
+    .page-status__text {
+        padding: 10px;
+        border: 1px dashed $primary;
+        color: $primary;
+    }
+
+    .page-status__content {
+        text-align: center;
+    }
+
+    .page-status__icon-1 {
+        font-size: 15rem;
+        text-align: center;
+        position: relative;
+        color: #000;
+    }
+
+    .page-status__icon-2.error {
+        position: absolute;
+        top: -16%;
+        right: -12%;
+        font-size: 8rem;
+        color: crimson;
+    }
+    .page-status__icon-2.success {
+        position: absolute;
+        top: -15%;
+        right: -10%;
+        font-size: 8rem;
+        color: #14cc76;
+    }
+
+    .page-status__title {
+        font-weight: 600;
+    }
+
+    .page-status__desc {
+        color: $text-color-2;
+        margin-bottom: 20px;
+    }
+
+    .page-status__btn-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        max-width: 350px;
+        margin: 0 auto;
+    }
+    .page-status__btn {
+        color: $primary;
+        border: 2px solid $primary;
+        padding: 10px 15px;
+        flex: 1;
+        border-radius: 999px;
+        transition: 0.3s;
+        &:hover {
+            border: 2px solid $color-hover;
+            color: $color-hover;
+        }
+    }
+    .page-status__btn.solid {
+        background-color: $primary;
+        color: #fff;
+        &:hover {
+            border: 2px solid $color-hover;
+            background-color: $color-hover;
+        }
+    }
+}
+
 /* ======================================= end general ======================================= */
