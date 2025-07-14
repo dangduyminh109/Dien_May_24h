@@ -7,6 +7,7 @@ const {
     handleForm,
 } = require("../../helpers/order.helper.js");
 const paginationHelper = require("../../helpers/pagination.helper.js");
+const { getListVoucher } = require("../../helpers/checkout.helper.js");
 
 class orderController {
     // [GET] /admin/order
@@ -35,18 +36,10 @@ class orderController {
             .populate("user", "name")
             .populate("voucher")
             .populate("product.productId");
-        const listVoucher = await Voucher.aggregate([
-            {
-                $addFields: {
-                    usedCount: { $size: "$usedBy" },
-                },
-            },
-            {
-                $match: {
-                    status: "on",
-                },
-            },
-        ]);
+        let listVoucher = [];
+        if (order.user) {
+            listVoucher = await getListVoucher(order.user);
+        }
         res.render("./admin/page/order/edit", {
             pageTitle: "Edit Order",
             PATH_ADMIN: system.PATH_ADMIN,

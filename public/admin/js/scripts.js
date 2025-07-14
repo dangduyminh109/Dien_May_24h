@@ -805,6 +805,7 @@ function recalculateTotalAmount() {
     const selectedOption = select.selectedOptions[0];
     const discountValue = selectedOption.getAttribute("data-discountValue");
     const type = selectedOption.getAttribute("data-discountType");
+    const maxDiscount = selectedOption.getAttribute("data-maxDiscount");
 
     let totalAmount = 0;
     const listProductQuantity = document.querySelectorAll(".productQuantity");
@@ -817,7 +818,10 @@ function recalculateTotalAmount() {
     if (type === "fixed") {
         totalAmount -= parseInt(discountValue || "0");
     } else {
-        totalAmount -= (totalAmount * parseFloat(discountValue || "0")) / 100;
+        let discount = (totalAmount * parseFloat(discountValue || "0")) / 100;
+        if (discount > parseInt(maxDiscount || "0"))
+            discount = parseInt(maxDiscount || "0");
+        totalAmount -= discount;
     }
     return totalAmount;
 }

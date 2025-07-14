@@ -30,13 +30,15 @@ module.exports = async function orderMiddleware(req, res, next) {
         });
         let voucher = null;
         if (formData.voucher != "" && user) {
-            const vc = await Voucher.findById(formData.voucher);
+            const vc = await Voucher.findOne({ _id: formData.voucher });
             if (
                 !vc.usedBy.some((id) => id.toString() === user._id.toString())
             ) {
                 vc.usedBy = [...vc.usedBy, user._id];
                 vc.save();
                 voucher = vc;
+            } else {
+                formData.voucher = null;
             }
         } else {
             formData.voucher = null;

@@ -38,9 +38,15 @@ block main
                     div(class="form-item")
                         label(for="voucher") Voucher áp dụng
                         select(name="voucher", id="voucher")
-                            option(value="", data-discountValue="0", data-discountType="fixed") Không
-                            each voucher in listVoucher
-                                option(value=voucher._id, selected=(order.voucher && order.voucher.id == voucher.id), data-discountValue=voucher.discountValue, data-discountType=voucher.discountType) #{voucher.code}
+                            option(value="", data-discountValue="0", data-discountType="fixed", data-maxDiscount="0") Không
+                            if(listVoucher)
+                                each voucher in listVoucher
+                                    option(value=voucher._id, 
+                                            selected=(order.voucher && order.voucher.id == voucher._id), 
+                                            data-discountValue=voucher.discountValue, 
+                                            data-discountType=voucher.discountType,
+                                            data-maxDiscount=voucher.maxDiscount
+                                        ) #{voucher.code}
                     div(class="form-item")
                         label(for="paymentMethod") 
                             | Trạng thái (

@@ -82,12 +82,22 @@ async function filterAndSort(req, findDelete = false) {
 
 function handleForm(req, edit = false) {
     let formData = req.body;
-    const listProduct = formData.productId.map((item, index) => {
-        return {
-            productId: item,
-            quantity: formData.quantity[index],
-        };
-    });
+    let listProduct = null;
+    if (Array.isArray(formData.productId)) {
+        listProduct = formData.productId.map((item, index) => {
+            return {
+                productId: item,
+                quantity: formData.quantity[index],
+            };
+        });
+    } else {
+        listProduct = [
+            {
+                productId: formData.productId,
+                quantity: formData.quantity,
+            },
+        ];
+    }
     formData.product = listProduct;
     delete formData.productId;
     delete formData.quantity;

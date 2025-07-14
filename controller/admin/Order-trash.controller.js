@@ -133,11 +133,11 @@ class orderTrashController {
             const listIds = JSON.parse(req.body["list-id"]);
             await Order.deleteMany({ _id: { $in: listIds } });
             req.flash("success", "Xóa đơn hàng thành công!");
-            res.redirect("back");
+            res.redirect("/admin/order-trash");
         } catch (error) {
             console.error("Error saving order:", error);
             req.flash("error", "Xóa đơn hàng không thành công!");
-            res.redirect("back");
+            res.redirect("/admin/order-trash");
         }
     }
 }

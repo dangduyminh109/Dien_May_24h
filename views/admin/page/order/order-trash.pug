@@ -45,7 +45,7 @@ block main
             if permission.includes("update-order") || permission.includes("delete-order")
                 -var Update = permission.includes("update-order");
                 -var Delete = permission.includes("delete-order");
-                +toolbarHandle({handle,path: "order-trash",order:true,trash:true,Update: Update,Delete: Delete,title: "Order"})
+                +toolbarHandle({handle,path: "order-trash",order:true,trash:true,Update: Update,Delete: Delete,title: "Đơn hàng"})
 
         div(class="overview-block") 
             div(class="overview-item total-order")

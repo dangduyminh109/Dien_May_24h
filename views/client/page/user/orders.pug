@@ -1,0 +1,59 @@
+extends ../../layout/default.pug
+include ../../mixins/breadcrumbs.pug
+include ../../mixins/alert.pug
+
+block main
+    +alert(messages)
+    div(class="breadcrumb-nav")
+        div(class="container-xl")
+            +breadcrumb("Sản phẩm", [
+                { name: `Home`, href: `/` },
+                { name: `User`, href: `/user/profile` },
+                { name: `Hồ sơ`, href: `/user/profile` },
+            ])
+    main(class="profile")
+        div(class="container-xl")
+            div(class="profile__wrapper row")
+                div(class="left-box col-12 col-md-4 col-lg-3")                       
+                    include ../../partials/profile-sidebar.pug
+                div(class="right-box col-12 col-md-8 col-lg-9")
+                    div(class="right-box__wrapper")
+                        div(class="info")
+                            h1(class="info__title") Đơn hàng của bạn
+                    div(class="order__list")
+                        each order in orders.reverse()
+                            div(class="order__wrapper")
+                                div(class="order__info")
+                                    p(class="order__content") 
+                                        strong Mã đơn hàng: 
+                                        | #{order.id}
+                                    p(class=`order__content ${order.status}`) 
+                                        strong Trạng thái: 
+                                        if(order.status == "pending")
+                                            span Chờ xử lí                         
+                                        else if(order.status == "confirmed")
+                                            span Đã xác nhận                                    
+                                        else if(order.status == "shipped")
+                                            span Đã gửi                                    
+                                        else if(order.status == "delivered")
+                                            span Đã nhận                                      
+                                        else if(order.status == "cancelled")
+                                            span Đã hủy  
+                                strong Chi tiết đơn hàng: 
+                                each item in order.product
+                                    - quantity = item.quantity;
+                                    - item = item.productId;
+                                    div(class="order-item")
+                                        a(href=`/product/detail/${item.slug}`, class="order-item__link")
+                                            img(src=item.thumbnails[0] || "/uploads/default-image.jpg", alt=item.name, class="order-item__img")
+                                            span #{quantity}
+                                        div(class="order-item__info")
+                                            a(href=`/product/detail/${item.slug}`, class="order-item__name") #{item.name}
+                                        p(class="order-item__price") #{item.price.toLocaleString('vi-VN')}đ
+                                if(order.TotalPriceAndDiscount.discount != 0 )
+                                    p(class="order-item__totalAmount") Tạm tính: 
+                                        strong #{order.TotalPriceAndDiscount.totalPrice.toLocaleString('vi-VN')}đ
+                                    p(class="order-item__totalAmount") Giảm giá: 
+                                        strong - #{order.TotalPriceAndDiscount.discount.toLocaleString('vi-VN')}đ
+                                p(class="order-item__totalAmount") Tổng số tiền: 
+                                    strong #{order.totalAmount.toLocaleString('vi-VN')}đ

@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const Voucher = require("../models/voucher.model.js");
 function TotalPriceAndDiscount(cart, voucher = null) {
     const totalPrice = cart.reduce(
@@ -18,15 +19,14 @@ function TotalPriceAndDiscount(cart, voucher = null) {
         discount,
     };
 }
-
 async function getListVoucher(user) {
-    let discountTypeList = ["all"];
-    let index = 1;
-    if (user.createdAt + 7 * 24 * 60 * 60 * 1000 < Date.now()) {
-        discountTypeList[index] = "new-user";
-        index++;
+    const discountTypeList = ["all"];
+    const sevenDays = 7 * 24 * 60 * 60 * 1000;
+    if (Date.now() - user.createdAt <= sevenDays) {
+        discountTypeList.push("new-user");
     }
-    let listVoucher = await Voucher.aggregate([
+    const userId = new mongoose.Types.ObjectId(user._id);
+    const listVoucher = await Voucher.aggregate([
         {
             $match: {
                 expiredAt: { $gte: new Date() },
@@ -41,10 +41,16 @@ async function getListVoucher(user) {
         },
         {
             $match: {
-                $expr: { $gte: ["$quantity", "$usedCount"] },
+                $expr: {
+                    $and: [
+                        { $gte: ["$quantity", "$usedCount"] },
+                        { $not: [{ $in: [userId, "$usedBy"] }] },
+                    ],
+                },
             },
         },
     ]);
+
     return listVoucher;
 }
 
