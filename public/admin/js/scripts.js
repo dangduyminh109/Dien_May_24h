@@ -365,10 +365,12 @@ function handleStatusInput() {
                 let path = element.getAttribute("path");
                 if (element.checked) {
                     element.value = "on";
-                    btnStatusDesc.textContent = "Hoạt động";
+                    btnStatusDesc.textContent =
+                        btnStatusDesc.getAttribute("isOn");
                 } else {
                     element.value = "off";
-                    btnStatusDesc.textContent = "Không hoạt động";
+                    btnStatusDesc.textContent =
+                        btnStatusDesc.getAttribute("isOff");
                 }
                 fetch(`${PATH_ADMIN}/${path}?_method=PATCH`, {
                     method: "POST",
@@ -403,54 +405,13 @@ function handleStatusInput() {
                 let btnStatusDesc = element.parentNode.parentNode.nextSibling;
                 if (element.checked) {
                     element.value = "on";
-                    btnStatusDesc.textContent = "Hoạt động";
+                    btnStatusDesc.textContent =
+                        btnStatusDesc.getAttribute("isOn");
                 } else {
                     element.value = "off";
-                    btnStatusDesc.textContent = "Không hoạt động";
+                    btnStatusDesc.textContent =
+                        btnStatusDesc.getAttribute("isOff");
                 }
-            }, 300);
-        });
-    }
-}
-
-/* ============ handle featured =========== */
-function handleFeaturedInput() {
-    const btnFeaturedInput = document.querySelectorAll(".btn-featured__input");
-    if (btnFeaturedInput) {
-        btnFeaturedInput.forEach((element) => {
-            element.onchange = debounce(() => {
-                let btnStatusFeatured =
-                    element.parentNode.parentNode.nextSibling;
-                let path = element.getAttribute("path");
-                if (element.checked) {
-                    element.value = "on";
-                    btnStatusFeatured.textContent = "Có";
-                } else {
-                    element.value = "off";
-                    btnStatusFeatured.textContent = "Không";
-                }
-                fetch(`${PATH_ADMIN}/${path}?_method=PATCH`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        value: element.value,
-                        _id: element.getAttribute("_id"),
-                    }),
-                })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        if (data.success && !data.error) {
-                            alert("success", data.message);
-                        } else {
-                            alert("error", data.message || "Có lỗi xảy ra!");
-                        }
-                    })
-                    .catch((err) => {
-                        alert("error", "Không thể kết nối đến server!");
-                        console.log("Lỗi Fetch API:", err);
-                    });
             }, 300);
         });
     }
@@ -788,6 +749,79 @@ function handlePermissionsCheckBox() {
     }
 }
 
+/* ============ handle Pagination Btn =========== */
+function handleFormOrder() {
+    const productDetailItemBtn = document.querySelectorAll(
+        ".product-detail-item-btn"
+    );
+    if (productDetailItemBtn) {
+        productDetailItemBtn.forEach((item) => {
+            item.onclick = () => {
+                const productDetailItemBtn2 = document.querySelectorAll(
+                    ".product-detail-item-btn"
+                );
+                if (productDetailItemBtn2.length > 1) {
+                    const tr = item.closest("tr");
+                    tr.remove();
+                } else {
+                    alert(
+                        "warning",
+                        "Đơn hàng phải có ít nhất một sản phẩm!!!"
+                    );
+                }
+                const totalAmount = document.getElementById("totalAmount");
+                totalAmount.value = recalculateTotalAmount();
+            };
+        });
+    }
+
+    const productQuantity = document.querySelectorAll(".productQuantity");
+    if (productQuantity) {
+        const totalAmount = document.getElementById("totalAmount");
+        productQuantity.forEach((item) => {
+            item.onchange = () => {
+                const tr = item.closest("tr");
+                const tdTotal = tr.querySelector(".td-total");
+                const price = item.getAttribute("data-price");
+                const quantity = item.value;
+                tdTotal.innerText =
+                    (quantity * price).toLocaleString("vi-VN") + "đ";
+                totalAmount.value = recalculateTotalAmount();
+            };
+        });
+    }
+
+    const voucher = document.getElementById("voucher");
+    if (voucher) {
+        voucher.onchange = () => {
+            const totalAmount = document.getElementById("totalAmount");
+            totalAmount.value = recalculateTotalAmount();
+        };
+    }
+}
+
+function recalculateTotalAmount() {
+    const select = document.getElementById("voucher");
+    const selectedOption = select.selectedOptions[0];
+    const discountValue = selectedOption.getAttribute("data-discountValue");
+    const type = selectedOption.getAttribute("data-discountType");
+
+    let totalAmount = 0;
+    const listProductQuantity = document.querySelectorAll(".productQuantity");
+
+    listProductQuantity.forEach((item) => {
+        totalAmount +=
+            parseInt(item.value || "0") *
+            parseInt(item.getAttribute("data-price") || "0");
+    });
+    if (type === "fixed") {
+        totalAmount -= parseInt(discountValue || "0");
+    } else {
+        totalAmount -= (totalAmount * parseFloat(discountValue || "0")) / 100;
+    }
+    return totalAmount;
+}
+
 /* ======================================= handle responsive ======================================= */
 function handleShowLine() {
     const show = document.getElementById("show");
@@ -920,24 +954,12 @@ function handleWindowOnload() {
     const btnStatusInput = document.querySelectorAll(".btn-status__input");
     btnStatusInput.forEach((element) => {
         let btnStatusDesc = element.parentNode.parentNode.nextSibling;
-        if (element.value == "on") {
+        if (element.value == "on" || element.value == true) {
             element.checked = true;
-            btnStatusDesc.textContent = "Hoạt động";
+            btnStatusDesc.textContent = btnStatusDesc.getAttribute("isOn");
         } else {
             element.checked = false;
-            btnStatusDesc.textContent = "Không hoạt động";
-        }
-    });
-    // btn featured
-    const btnFeaturedInput = document.querySelectorAll(".btn-featured__input");
-    btnFeaturedInput.forEach((element) => {
-        let btnStatusFeatured = element.parentNode.parentNode.nextSibling;
-        if (element.value == "on") {
-            element.checked = true;
-            btnStatusFeatured.textContent = "Có";
-        } else {
-            element.checked = false;
-            btnStatusFeatured.textContent = "Không";
+            btnStatusDesc.textContent = btnStatusDesc.getAttribute("isOff");
         }
     });
 }
@@ -954,7 +976,6 @@ function init() {
     handleFileUpload();
     handleProductItemChange();
     handleStatusInput();
-    handleFeaturedInput();
     handleShowLine();
     handleEditForm();
     handleResponsiveNav();
@@ -964,5 +985,6 @@ function init() {
     handleSelectProductItem();
     handlePaginationBtn();
     handlePermissionsCheckBox();
+    handleFormOrder();
 }
 document.addEventListener("DOMContentLoaded", init);

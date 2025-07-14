@@ -1,20 +1,20 @@
 const { validationResult, body } = require("express-validator");
 
 const order = [
-    body("Name")
+    body("name")
         .trim()
         .notEmpty()
         .withMessage("Họ tên không được để trống!"),
-    body("Address")
+    body("address")
         .trim()
         .notEmpty()
         .withMessage("Địa chỉ không được để trống!"),
-    body("Email")
+    body("email")
         .optional({ checkFalsy: true })
         .trim()
         .isEmail()
         .withMessage("Email không hợp lệ!"),
-    body("Phone")
+    body("phone")
         .trim()
         .notEmpty()
         .withMessage("Số điện thoại không được để trống!")

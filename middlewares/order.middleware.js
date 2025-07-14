@@ -38,6 +38,8 @@ module.exports = async function orderMiddleware(req, res, next) {
                 vc.save();
                 voucher = vc;
             }
+        } else {
+            formData.voucher = null;
         }
         const totalPriceAndDiscount = TotalPriceAndDiscount(
             productData,

@@ -71,6 +71,11 @@
     .form-item {
         flex: 1;
     }
+    .form-item.hidden {
+        background-color: none;
+        border-radius: 0;
+        box-shadow: none;
+    }
     .add-more {
         align-self: flex-end;
     }

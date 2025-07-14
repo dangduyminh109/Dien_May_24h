@@ -27,14 +27,14 @@ block main
 
                     div(class="payment-info__form")
                         div(class="mb-3")
-                            input(type="text", class="form-control", name="Name", placeholder="Họ và tên",value=(user?user.name:""))
+                            input(type="text", class="form-control", name="name", placeholder="Họ và tên",value=(user?user.name:""))
                         div(class="mb-3 row")
                             div(class="col-8")
-                                input(type="email", class="form-control", name="Email", placeholder="email",value=(user?user.email:""))
+                                input(type="email", class="form-control", name="email", placeholder="email",value=(user?user.email:""))
                             div(class="col-4")
-                                input(type="tel", class="form-control", name="Phone", placeholder="số điện thoại",value=(user?user.phone:""))
+                                input(type="tel", class="form-control", name="phone", placeholder="số điện thoại",value=(user?user.phone:""))
                             div(class="mt-3")
-                                input(type="text", class="form-control", name="Address", placeholder="Địa chỉ",value=(user?user.address:""))
+                                input(type="text", class="form-control", name="address", placeholder="Địa chỉ",value=(user?user.address:""))
 
                     label(for="payment-1", class="payment-info__label") Phương thức thanh toán
                     label(class="radio")

@@ -1,0 +1,105 @@
+extends ../../layout/default.pug
+include ../../mixins/page_header.pug
+include ../../mixins/category_tree.pug
+include ../../mixins/alert.pug
+
+block main 
+    +alert(messages)
+    +page_header("Chỉnh sửa order", [
+        { name: "Danh sách order", href: `${PATH_ADMIN}/order` },
+        { name: "Chỉnh sửa order", href: `${PATH_ADMIN}/order/edit/${order.id}` },
+    ])
+    div(class="edit")
+        form(action=`${PATH_ADMIN}/order/edit/${order.id}?_method=PATCH`, method="post",id="form-edit form-order")
+            h1(class="title") Thông tin chung
+            div(class="general")
+                div(class="form-group")
+                    div(class="form-item")
+                        label(for="name") Khách hàng
+                        input(class="form-control",id="name",name="name",type="text",value=order.name)    
+                    div(class="form-item")
+                        label(for="totalAmount") 
+                            | Tổng tiền (
+                            span(class="important-item") *
+                            | )
+                        input(class="form-control",id="totalAmount",name="totalAmount",type="text",value=order.totalAmount,required)    
+                    div(class="form-item")
+                        label(for="status") 
+                            | Trạng thái (
+                            span(class="important-item") *
+                            | )
+                        select(name="status", id="status" ,required) 
+                            option(value="pending" selected=(order.status == "pending")) Chờ xử lí
+                            option(value="confirmed" selected=(order.status == "confirmed")) Đã xác nhận
+                            option(value="shipped" selected=(order.status == "shipped")) Đã gửi
+                            option(value="delivered" selected=(order.status == "delivered")) Đã nhận
+                            option(value="cancelled" selected=(order.status == "cancelled")) Đã hủy
+                div(class="form-group")
+                    div(class="form-item")
+                        label(for="voucher") Voucher áp dụng
+                        select(name="voucher", id="voucher")
+                            option(value="", data-discountValue="0", data-discountType="fixed") Không
+                            each voucher in listVoucher
+                                option(value=voucher._id, selected=(order.voucher && order.voucher.id == voucher.id), data-discountValue=voucher.discountValue, data-discountType=voucher.discountType) #{voucher.code}
+                    div(class="form-item")
+                        label(for="paymentMethod") 
+                            | Trạng thái (
+                            span(class="important-item") *
+                            | )
+                        select(name="paymentMethod", id="paymentMethod" ,required) 
+                            option(value="COD" selected=(order.paymentMethod == "COD")) Thanh toán khi nhận hàng
+                            option(value="BANK" selected=(order.paymentMethod == "BANK")) Chuyển khoản ngân hàng
+                    div(class="form-item")
+                        - const paidAtValue = order.paidAt ? new Date(order.paidAt).toISOString().slice(0,16) : '';
+                        label(for="paymentMethod") Thời gian thanh toán
+                        input(type="datetime-local" value=paidAtValue class="form-control" id="paidAt" name="paidAt")
+                div(class="form-group")
+                    div(class="form-item")
+                        label(for="email") Email
+                        input(class="form-control",id="email",name="email",type="email",value=order.email)  
+                    div(class="form-item")
+                        label(for="address") Địa chỉ
+                        input(class="form-control",id="address",name="address",type="text",value=order.address)
+                    div(class="form-item")
+                        label(for="phone") Số điện thoại
+                        input(class="form-control",id="phone",name="phone",type="tel",value=order.phone)
+                label(for="check") thanh toán 
+                div(class="btn-toggle")
+                    div(class="btn-status-toggle")
+                            div(class="form-check form-switch")
+                                input(class="form-check-input btn-status-form",name="isPaid",type="checkbox",id="check", role="switch",checked=order.isPaid)
+                    p(class="btn-status__desc", isOn="Đã thanh toán", isOff="Chưa thanh toán") #{order.isPaid ? "Đã thanh toán" : "Chưa thanh toán"}
+                label(for="note") Ghi chú
+                textarea(class="textarea-mce",name="note",id="note") 
+                    != order.note 
+            div(class="list-order list-table")
+                table(class="list-order__table")
+                    thead
+                        tr
+                            th(scope="col") 
+                                |   Sản phẩm
+                            th(scope="col") 
+                                |   Số lượng
+                            th(scope="col") 
+                                |   Giá Bán
+                            th(scope="col")
+                                |   Thành tiền
+                            th
+                    tbody
+                        if order.product.length > 0
+                            each product in order.product
+                                tr(class="product-detail-item")
+                                    input(type="hidden", value=product.productId._id, name="productId")
+                                    td  #{product.productId.name}
+                                    td 
+                                        input(type="text", class="form-control productQuantity", value=product.quantity, name="quantity", data-price=product.productId.price)
+                                    td #{product.productId.price.toLocaleString("vi-VN")}đ
+                                    td(class="td-total") #{(product.quantity * product.productId.price).toLocaleString("vi-VN")}đ
+                                    td(style="text-align: center")
+                                        button(type="button", class="btn-delete btn btn-danger product-detail-item-btn") X 
+            div(class="form-group__btn")
+                a(href="/admin/order" class="btn btn-primary") Quay lại
+                button(type="submit" class="btn btn-primary") Sửa đơn hàng
+
+
+            

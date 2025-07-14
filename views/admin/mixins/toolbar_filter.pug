@@ -1,5 +1,5 @@
 include ./category_tree.pug
-mixin toolbarFilter({filter,path,categoryTree,product=false,category=false,account=false,user=false,voucher=false})
+mixin toolbarFilter({filter,path,categoryTree,product=false,category=false,account=false,user=false,voucher=false,order=false})
     div(id="toolbar__advanced-filter-box", class="toolbar__advanced-box" )
         form(id="filter-form" class="toolbar__advanced-form", action=`${PATH_ADMIN}/${path}`,method="GET")
             div(class="block-advanced")
@@ -196,3 +196,37 @@ mixin toolbarFilter({filter,path,categoryTree,product=false,category=false,accou
                     div(class="advanced__item") 
                         h3(class="advanced__title") Ngày hết hạn
                         input(type="date" class="advanced__input" name="expiredAt" value=expiredAt|| "") 
+
+                else if(order)
+                    div(class="advanced__item")
+                        h3(class="advanced__title") Tên khách hàng
+                        input(type="text" class="advanced__input" name="name" placeholder="Nhập tên khách hàng" value=filter.name|| "")
+                    div(class="advanced__item") 
+                        h3(class="advanced__title") Tổng tiền
+                        div(class="advanced__number-group")
+                            input(type="number" class="advanced__input" name="min-totalAmount" placeholder="Tối thiểu" min=0 value=filter["min-totalAmount"]) 
+                            input(type="number" class="advanced__input" name="max-totalAmount" placeholder="Tối đa" min=0 value=filter["max-totalAmount"])
+                    div(class="advanced__item")
+                        h3(class="advanced__title") Trạng thái
+                        select(name="status", id="status") 
+                            option(value="") -- Tất cả --
+                            option(value="pending" selected=(filter.status == "pending")) Chờ xử lí
+                            option(value="confirmed" selected=(filter.status == "confirmed")) Đã xác nhận
+                            option(value="shipped" selected=(filter.status == "shipped")) Đã gửi
+                            option(value="delivered" selected=(filter.status == "delivered")) Đã nhận
+                            option(value="cancelled" selected=(filter.status == "cancelled")) Đã hủy
+                    div(class="advanced__item")
+                        h3(class="advanced__title") Phương thức thanh toán
+                        select(name="paymentMethod", id="paymentMethod") 
+                            option(value="" selected=(filter.paymentMethod == "")) -- Tất cả --
+                            option(value="COD" selected=(filter.paymentMethod == "COD")) Thanh toán khi nhận hàng 
+                            option(value="BANK" selected=(filter.paymentMethod == "BANK")) chuyển khoảng nhân hàng 
+                    div(class="advanced__item") 
+                        h3(class="advanced__title") Thanh toán
+                        div(class="advanced__radio-group")
+                            input(type="radio" name="isPaid" id="status_1" value="" checked = filter.isPaid === null ? true:false) 
+                            label(for="status_1") Mặc định
+                            input(type="radio" name="isPaid" id="status_2" value="on" checked = filter.isPaid === "on" ? true:false)
+                            label(for="status_2") Đã thanh toán
+                            input(type="radio" name="isPaid" id="status_3" value="off" checked = filter.isPaid === "off" ? true:false)
+                            label(for="status_3") Chưa thanh toán

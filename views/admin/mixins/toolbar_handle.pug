@@ -1,7 +1,7 @@
 
 include ./category_tree.pug
 include ./deletion_warning.pug
-mixin toolbarHandle({handle,path,categoryTree,trash=false,product=false,category=false,role=false,account=false,user=false,voucher=false,Update=false,Delete=false,title=""})
+mixin toolbarHandle({handle,path,categoryTree,trash=false,product=false,category=false,role=false,account=false,user=false,voucher=false,order=false,Update=false,Delete=false,title=""})
     div(id="toolbar__advanced-handle-box", class="toolbar__advanced-box")
         form(id="handle-update-form" class="toolbar__advanced-form", action=`${PATH_ADMIN}/${path}/update-more?_method=PATCH`,method="POST") 
             input(type="text" class="list-id" name="list-id" value="[]" style="display:none")
@@ -137,6 +137,30 @@ mixin toolbarHandle({handle,path,categoryTree,trash=false,product=false,category
                                 h3(class="advanced__title") Ngày hết hạn
                                 div(class="advanced__number-group")
                                     input(type="date" class="advanced__input" name="expiredAt" value=expiredAt|| "") 
+                        
+                        else if order
+                            div(class="advanced__item")
+                                h3(class="advanced__title") Trạng thái
+                                select(name="status", id="status") 
+                                    option(value="") -- Mặc định --
+                                    option(value="pending" selected=(handle && handle.status == "pending")) Chờ xử lí
+                                    option(value="confirmed" selected=(handle && handle.status == "confirmed")) Đã xác nhận
+                                    option(value="shipped" selected=(handle && handle.status == "shipped")) Đã gửi
+                                    option(value="delivered" selected=(handle && handle.status == "delivered")) Đã nhận
+                                    option(value="cancelled" selected=(handle && handle.status == "cancelled")) Đã hủy
+                            div(class="advanced__item")
+                                h3(class="advanced__title") Phương thức thanh toán
+                                select(name="paymentMethod", id="paymentMethod") 
+                                    option(value="" selected=(handle && handle.paymentMethod == "")) -- Mặc định --
+                                    option(value="COD" selected=(handle && handle.paymentMethod == "COD")) Thanh toán khi nhận hàng 
+                                    option(value="BANK" selected=(handle && handle.paymentMethod == "BANK")) chuyển khoảng nhân hàng 
+                            div(class="advanced__item") 
+                                h3(class="advanced__title") Thanh toán
+                                div(class="advanced__radio-group")
+                                    input(type="radio" name="isPaid" id="isPaid-advanced_1" value="on" checked = handle && handle.status === "on" ? true:false)
+                                    label(for="isPaid-advanced_1") Đã thanh toán
+                                    input(type="radio" name="isPaid" id="isPaid-advanced_2" value="off" checked = handle && handle.status === "off" ? true:false)
+                                    label(for="isPaid-advanced_2") Chưa thanh toán
                             
                     if (trash && Update || Delete)
                         div(class="advanced__item-header") 

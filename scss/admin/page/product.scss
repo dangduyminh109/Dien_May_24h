@@ -40,7 +40,6 @@
     }
 }
 .show {
-    margin: 10px 0;
     label {
         margin: 0;
     }
@@ -156,6 +155,9 @@
     }
     tr:nth-child(odd) {
         background-color: #cfd7e3;
+    }
+    tr:last-child td {
+        border-bottom-width: 1px;
     }
 
     td:last-child a,

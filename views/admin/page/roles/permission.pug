@@ -195,13 +195,6 @@ block main
                                     input(type="checkbox" class="table-item__select" value="view-order" id=`table-order-view-${index}` checked=check)
                                     label(for=`table-order-view-${index}` class="table-item__label" _id=`${role.id}`)
                         tr
-                            td Thêm mới
-                            each role,index in listRoles
-                                td 
-                                    - var check = role.permission.includes("add-order")
-                                    input(type="checkbox" class="table-item__select" value="add-order" id=`table-order-add-${index}` checked=check)
-                                    label(for=`table-order-add-${index}` class="table-item__label" _id=`${role.id}`)
-                        tr
                             td Cập nhật 
                             each role,index in listRoles
                                 td 

@@ -1,0 +1,136 @@
+extends ../../layout/default.pug
+include ../../mixins/page_header.pug
+include ../../mixins/toolbar_filter.pug
+include ../../mixins/toolbar_handle.pug
+include ../../mixins/deletion_warning.pug
+include ../../mixins/get_category.pug
+include ../../mixins/pagination.pug
+include ../../mixins/alert.pug
+include ../../mixins/applyFor.pug
+
+
+block main 
+    +alert(messages)
+    if permission.includes("view-order")
+        +page_header("Danh sách đơn hàng đã xóa", [
+            { name: "Danh sách đơn hàng", href: `${PATH_ADMIN}/order` },
+            { name: "Thùng rác", href: `${PATH_ADMIN}/order-trash` },
+        ])
+        div(class="toolbar")
+            div(class="toolbar__box")
+                div(class="toolbar__left-box")
+                    form(action=`${PATH_ADMIN}/order-trash`, method="GET") 
+                        div(class="search")
+                            input(class="search__input", type="text", name="name",placeholder="Nhập từ khóa tìm kiếm",value=filter.name, spellcheck="false")
+                            button(type="submit" class="search__toolbar-icon")
+                                i(class="fa-solid fa-magnifying-glass")
+                    button(id="advanced-filter-btn", class="advanced-filter-btn btn btn-primary", type="button")
+                        span(class="icon-btn")
+                            i(class="fa-solid fa-filter")
+                        | Bộ Lọc
+                    button(id="advanced-handle-btn", class="advanced-handle-btn btn btn-primary", type="button")
+                        span(class="icon-btn")
+                            i(class="fa-solid fa-sliders")
+                        | Nâng cao
+                    a(href=`${PATH_ADMIN}/order`, class="btn btn-primary")
+                        span(class="icon-btn")
+                            i(class="fa-solid fa-reply")
+                        | Quay lại
+                div(class="toolbar__right-box")
+                    a(href=`${PATH_ADMIN}/order`,class=" btn btn-primary")
+                        span(class="icon-btn")
+                            i(class="fa-regular fa-rectangle-list")
+                        | Danh sách order
+            +toolbarFilter({filter,path: "order-trash",order:true})
+            if permission.includes("update-order") || permission.includes("delete-order")
+                -var Update = permission.includes("update-order");
+                -var Delete = permission.includes("delete-order");
+                +toolbarHandle({handle,path: "order-trash",order:true,trash:true,Update: Update,Delete: Delete,title: "Order"})
+
+        div(class="overview-block") 
+            div(class="overview-item total-order")
+                h3(class="overview-item__title total-order__title") Tổng số order
+                p(class="overview-item__detail total-order__detail") #{general.totalOrder}
+        div(class="show")
+            form(action="/admin/order-trash", method="get") 
+                label(for="show" class="form-label") Hiển thị
+                select(name="show" id="show" class="form-select") 
+                    option(value="5" selected = pagination.limit == 5) 5
+                    option(value="10" selected = pagination.limit == 10) 10
+                    option(value="20" selected = pagination.limit == 20) 20
+                    option(value="50" selected = pagination.limit == 50) 50
+                    option(value="100" selected = pagination.limit == 100) 100 
+        div(class="list-order list-table")
+            table(class="list-order__table")
+                thead
+                    tr
+                        th(scope="col") 
+                            input(type="checkbox" id="table-item__select-all" name="sort")
+                        th(scope="col") 
+                            |   Mã Đơn hàng
+                        th(scope="col") 
+                            |   Khách hàng
+                        th(scope="col") 
+                            |   Tổng tiền
+                            !=pugHepper.sort("totalAmount", _sort,pagination.page)
+                        th(scope="col") 
+                            |   trạng thái
+                        th(scope="col") Voucher
+                        th(scope="col") Phương thức thanh toán
+                        th(scope="col") 
+                            |   Thanh toán
+                        th(scope="col")  
+                tbody
+                    if listDeletedOrder.length > 0
+                        each order in listDeletedOrder
+                            tr
+                                td 
+                                    input(type="checkbox" class="table-item__select" name="sort" value="1" _id=order._id)
+                                td  #{order._id}
+                                td  #{order.name}
+                                td  #{order.totalAmount.toLocaleString("vi-VN")}đ
+                                td  
+                                    if(order.status == "pending")
+                                        p Chờ xử lí                         
+                                    else if(order.status == "confirmed")
+                                        p Đã xác nhận                                    
+                                    else if(order.status == "shipped")
+                                        p Đã gửi                                    
+                                    else if(order.status == "delivered")
+                                        p Đã nhận                                      
+                                    else if(order.status == "cancelled")
+                                        p Đã hủy                                     
+                                td  #{order.voucher ? order.voucher.code : ''}
+                                td  #{order.paymentMethod}
+                                td 
+                                    if permission.includes("update-order")
+                                        div(class="btn-toggle")
+                                            div(class="btn-status-toggle")
+                                                div(class="form-check form-switch")
+                                                    input(class="form-check-input btn-status__input", type="checkbox", role="switch",value=order.isPaid ? "on" : "off", _id=order._id , path="order-trash/update-status")
+                                            p(class="btn-status__desc", isOn="Đã thanh toán", isOff="Chưa thanh toán") #{order.isPaid ? "Đã thanh toán" : "Chưa thanh toán"}
+                                    else 
+                                        div(class="btn-toggle")
+                                            p(class="btn-status__desc") #{order.isPaid ? "Đã thanh toán" : "Chưa thanh toán"}
+
+                                td(style="text-align: center")
+                                    if permission.includes("update-order")
+                                        form(method="POST", action=`${PATH_ADMIN}/order-trash/restore-order/${order.id}?_method=PATCH`)
+                                            button(type="submit", class="btn-primary btn") Khôi phục  
+                                    if permission.includes("view-order")
+                                        a(href=`${PATH_ADMIN}/order-trash/detail/${order.id}`, class="btn-warning btn") Chi tiết 
+                                    if permission.includes("delete-order")
+                                        button(type="button", class="btn-destroy btn btn-danger",data-bs-toggle="modal",data-bs-id = order._id, data-bs-target="#warningDeleteModal",path="order-trash/destroy-order") Xóa vĩnh viễn   
+                    else  
+                        tr 
+                            td(colspan="9")
+                                p(class="noItem") Không có đơn hàng nào!   
+                                a(class="noItem__link", href=`${PATH_ADMIN}/order-trash`) Danh sách đơn hàng đã xóa.
+    
+        +pagination(pagination,currentPath)
+        if permission.includes("delete-order")
+            form(method="POST", type="hidden",id="form-delete" ,action=``)
+            <!-- Modal -->
+            +formWarning("warningDeleteModal","Bạn có chắc chắn muốn <b class='warning-text'>Xóa Vĩnh Viễn</b> đơn hàng này không?<span class='warning-text'> Hành động này không thể hoàn tác!!!</span>","Xóa đơn hàng","warning-delete-modal-btn","Xóa Vĩnh Viễn")
+    else 
+        h1 Bạn không có quyền truy cập trang này 

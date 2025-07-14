@@ -3,7 +3,11 @@ const mongoose_delete = require("mongoose-delete");
 
 const orderSchema = new mongoose.Schema(
     {
-        user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            default: null,
+        },
         product: [
             {
                 _id: false,
@@ -21,7 +25,8 @@ const orderSchema = new mongoose.Schema(
             default: "pending",
         },
         voucher: {
-            type: String,
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Voucher",
             default: null,
         },
         paymentMethod: {
@@ -35,6 +40,22 @@ const orderSchema = new mongoose.Schema(
         },
         paidAt: {
             type: Date,
+            default: null,
+        },
+        name: {
+            type: String,
+            default: null,
+        },
+        address: {
+            type: String,
+            default: null,
+        },
+        phone: {
+            type: String,
+            default: null,
+        },
+        email: {
+            type: String,
             default: null,
         },
         note: {

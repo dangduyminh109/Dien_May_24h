@@ -33,6 +33,10 @@ label {
     font-size: 1.8rem;
 }
 
+.form-control {
+    font-size: 1.6rem;
+}
+
 .main {
     padding: 103px 20px 20px 270px;
     background-color: $page-bg-color;
@@ -381,7 +385,7 @@ label {
         .advanced__title {
             margin: 0;
             color: $text-color-3;
-            min-width: 150px;
+            min-width: 250px;
         }
 
         .advanced__item {

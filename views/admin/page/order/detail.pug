@@ -1,0 +1,106 @@
+extends ../../layout/default.pug
+include ../../mixins/page_header.pug
+include ../../mixins/alert.pug
+
+block main 
+    +alert(messages)
+    +page_header("Chi tiết đơn hàng", [
+        { name: "Danh sách đơn hàng", href: `${PATH_ADMIN}/order` },
+        { name: "Chi tiết đơn hàng", href: `${PATH_ADMIN}/order/detail` },
+    ])
+    - const paidAt = new Date(order.paidAt).toLocaleString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh", hour12: false});
+    div(class="detail")
+        h1(class="title") Thông tin chung
+        div(class="general")
+            div(class="form-group")
+                div(class="form-item")
+                    p(class="label")
+                        b mã đơn hàng
+                    p(class="content") #{order.id}
+                div(class="form-item")
+                    p(class="label")
+                        b Khách hàng
+                    p(class="content") #{order.name}
+                div(class="form-item")
+                    p(class="label")
+                        b Tổng tiền
+                    p(class="content") #{order.totalAmount.toLocaleString("vi-VN")}đ
+            div(class="form-group")
+                div(class="form-item")
+                    p(class="label")
+                        b Trạng thái
+                        if(order.status == "pending")
+                            p(class="content") Chờ xử lí                         
+                        else if(order.status == "confirmed")
+                            p(class="content") Đã xác nhận                                    
+                        else if(order.status == "shipped")
+                            p(class="content") Đã gửi                                    
+                        else if(order.status == "delivered")
+                            p(class="content") Đã nhận                                      
+                        else if(order.status == "cancelled")
+                            p(class="content") Đã hủy                        
+                div(class="form-item")
+                    p(class="label")
+                        b Voucher áp dụng
+                    p(class="content") #{order.voucher ? order.voucher.code : "Không"}
+                div(class="form-item")
+                    p(class="label") 
+                        b Thanh toán
+                    p(class=`status ${order.isPaid ? "active" : ""}`) #{order.isPaid? "Đã thanh toán" : "Chưa thanh toán"} 
+               
+            div(class="form-group")
+                div(class="form-item")
+                    p(class="label")
+                        b Phương thức thanh toán
+                    p(class="content") #{order.paymentMethod}
+                div(class="form-item")
+                    p(class="label")
+                        b Thời gian thanh toán
+                    p(class="content") #{paidAt}
+                div(class="form-item")
+                    p(class="label") 
+                        b Email
+                    p(class="content") #{order.email || ""} 
+            div(class="form-group")
+                div(class="form-item")
+                    p(class="label")
+                        b Địa chỉ
+                    p(class="content") #{order.address}
+                div(class="form-item")
+                    p(class="label") 
+                        b Số điện thoại
+                    p(class="content") #{order.phone}
+                div(class="form-item hidden")
+            if(order.note && order.note != "")
+                div(class="form-group")
+                    div(class="form-item")
+                        p(class="label") 
+                            b Ghi chú
+                        div(class="content")!=order.note
+        div(class="list-order list-table")
+            table(class="list-order__table")
+                thead
+                    tr
+                        th(scope="col") 
+                            |   Sản phẩm
+                        th(scope="col") 
+                            |   Số lượng
+                        th(scope="col") 
+                            |   Giá Bán
+                        th(scope="col")
+                            |   Thành tiền
+                tbody
+                    if order.product.length > 0
+                        each product in order.product
+                            tr
+                                td  #{product.productId.name}
+                                td  #{product.quantity}
+                                td  #{product.productId.price.toLocaleString("vi-VN")}đ
+                                td  #{(product.quantity * product.productId.price).toLocaleString("vi-VN")}đ
+        div(class="form-group__btn")
+            a(href=`/admin/${deleted ? "order-trash":"order"}` class="btn btn-primary") Quay lại
+            if(!deleted)
+                a(href=`/admin/order/edit/${order.id}` class="btn btn-primary") Sửa đơn hàng
+    
+
+        

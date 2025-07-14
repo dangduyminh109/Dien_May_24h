@@ -74,7 +74,13 @@ nav(class="navbar", id="navbar")
                         span(class="navigation-item__icon-btn")
                             i(class="fa-solid fa-solid fa-person")
                         | Khách hàng
-              
+
+            if permission.includes("view-posts")
+                li(class="navigation-posts")
+                    a(href="/admin/posts", class="navigation-item__btn btn single", data-menu="list-posts") 
+                        span(class="navigation-item__icon-btn")
+                            i(class="fas fa-file-lines")
+                        | Bài viết 
           
 
 </nav>

@@ -108,6 +108,11 @@
             display: block;
         }
     }
+    .toolbar {
+        .toolbar__advanced-box .advanced__title {
+            min-width: 150px;
+        }
+    }
 }
 
 /* mobile */
