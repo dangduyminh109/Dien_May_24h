@@ -140,6 +140,10 @@
         background-color: $text-color-3;
         color: #fff;
     }
+    tr td:first-child,
+    tr th:first-child {
+        text-align: center;
+    }
 
     th,
     td {

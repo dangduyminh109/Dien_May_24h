@@ -14,7 +14,7 @@ class productTrashController {
         const { listProduct, pagination } = await filterAndSort(req, true);
         const handleData = req.session.backData || {};
         const general = await generalHelper(true);
-        const categoryTree = await getCategoryTree();
+        const categoryTree = await getCategoryTree(ProductCategory);
         res.render("./admin/page/products/product-trash", {
             pageTitle: "Product Trash",
             PATH_ADMIN: system.PATH_ADMIN,
@@ -33,9 +33,13 @@ class productTrashController {
         const product = await Product.findOneDeleted({
             _id: req.params.id,
         });
-        const category = await ProductCategory.findOne({
-            _id: product.category,
-        });
+        let category = null;
+        if (product.category && product.category != null) {
+            category = await ProductCategory.findOne({
+                _id: product.category,
+            });
+        }
+
         res.render("./admin/page/products/detail", {
             pageTitle: "Product detail",
             PATH_ADMIN: system.PATH_ADMIN,
@@ -82,7 +86,7 @@ class productTrashController {
         try {
             await Product.updateOneDeleted(
                 { _id: statusUpdate._id },
-                { status: statusUpdate.value }
+                { status: statusUpdate.value == "on" ? true : false }
             );
             res.json({ success: true, message: "Cập nhật thành công!" });
         } catch (error) {
@@ -121,6 +125,9 @@ class productTrashController {
                 if (value != "") return [key, value];
             });
             dataUpdate = Object.fromEntries(dataUpdate);
+            if (dataUpdate.status) {
+                dataUpdate.status = dataUpdate.status == "on" ? true : false;
+            }
             if (dataUpdate.featured) {
                 dataUpdate.featured =
                     dataUpdate.featured == "on" ? true : false;

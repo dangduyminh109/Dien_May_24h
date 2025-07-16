@@ -73,7 +73,7 @@ mixin toolbarFilter({filter,path,categoryTree,product=false,category=false,accou
                         select(name="parentId", id="category") 
                             if(categoryTree.length > 0)
                                 option(value="") -- Tất cả -- 
-                                +categoryTree(categoryTree,filter.category)
+                                +categoryTree(categoryTree,filter.parentId)
                             else 
                                 option(value="" selected disabled) -- Chưa có danh mục nào! -- 
                     div(class="advanced__item") 

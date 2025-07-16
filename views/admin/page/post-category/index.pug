@@ -8,15 +8,15 @@ include ../../mixins/alert.pug
 
 block main 
     +alert(messages)
-    if permission.includes("view-category")
-        +page_header("Danh mục sản phẩm", [
-            { name: "Sản phẩm", href: `${PATH_ADMIN}/product-category` },
-            { name: "Danh mục sản phẩm", href: `${PATH_ADMIN}/product-category` },
+    if permission.includes("view-post-category")
+        +page_header("Danh mục bài viết", [
+            { name: "Bài viết", href: `${PATH_ADMIN}/post-category` },
+            { name: "Danh mục bài viết", href: `${PATH_ADMIN}/post-category` },
         ])
         div(class="toolbar")
             div(class="toolbar__box")
                 div(class="toolbar__left-box")
-                    form(action=`${PATH_ADMIN}/product-category`, method="GET") 
+                    form(action=`${PATH_ADMIN}/post-category`, method="GET") 
                         div(class="search")
                             input(class="search__input", type="text", name="name",placeholder="Nhập từ khóa tìm kiếm", spellcheck="false",value=filter.name)
                             button(type="submit" class="search__toolbar-icon")
@@ -25,33 +25,33 @@ block main
                         span(class="icon-btn")
                             i(class="fa-solid fa-filter")
                         | Bộ Lọc
-                    if permission.includes("update-category") || permission.includes("delete-category")
+                    if permission.includes("update-post-category") || permission.includes("delete-post-category")
                         button(id="advanced-handle-btn", class="advanced-handle-btn btn btn-primary", type="button")
                             span(class="icon-btn")
                                 i(class="fa-solid fa-sliders")
                             | Nâng cao
-                    a(href=`${PATH_ADMIN}/category-trash`,id="btn btn-primary", class=" btn btn-primary")
+                    a(href=`${PATH_ADMIN}/post-category-trash`,id="btn btn-primary", class=" btn btn-primary")
                         span(class="icon-btn")
                             i(class="fa-solid fa-trash-can")
                         | Thùng rác
-                if permission.includes("add-category")
+                if permission.includes("add-post-category")
                     div(class="toolbar__right-box")
-                        a(href=`${PATH_ADMIN}/product-category/create`,class="btn btn-primary")
+                        a(href=`${PATH_ADMIN}/post-category/create`,class="btn btn-primary")
                             span(class="icon-btn")
                                 i(class="fa-solid fa-plus")
                             | Thêm mới danh mục
-            +toolbarFilter({filter,path: "product-category",categoryTree,category:true})
-            if permission.includes("update-category") || permission.includes("delete-category")
-                -var Update = permission.includes("update-category");
-                -var Delete = permission.includes("delete-category");
-                +toolbarHandle({handle,path: "product-category",categoryTree,category:true,Update: Update,Delete: Delete,title: "Danh mục"})
+            +toolbarFilter({filter,path: "post-category",categoryTree,category:true})
+            if permission.includes("update-post-category") || permission.includes("delete-post-category")
+                -var Update = permission.includes("update-post-category");
+                -var Delete = permission.includes("delete-post-category");
+                +toolbarHandle({handle,path: "post-category",categoryTree,category:true,Update: Update,Delete: Delete,title: "Danh mục"})
 
         div(class="overview-block") 
-                div(class="overview-item total-products")
-                    h3(class="overview-item__title total-products__title") Tổng số danh mục
-                    p(class="overview-item__detail total-products__detail") #{general.totalProductCategory}
+                div(class="overview-item total-posts")
+                    h3(class="overview-item__title total-posts__title") Tổng số danh mục
+                    p(class="overview-item__detail total-posts__detail") #{general.totalPostCategory}
         div(class="show")
-            form(action="/admin/product-category", method="get") 
+            form(action="/admin/post-category", method="get") 
                 label(for="show" class="form-label") Hiển thị
                 select(name="show" id="show" class="form-select") 
                     option(value="5" selected = pagination.limit == 5) 5
@@ -72,42 +72,39 @@ block main
                         th(scope="col")
                         
                 tbody
-                    if listProductCategory.length > 0
-                        each productCategory in listProductCategory
+                    if listPostCategory.length > 0
+                        each postCategory in listPostCategory
                             tr
                                 td 
-                                    input(type="checkbox" class="table-item__select" name="sort" value="1" _id=productCategory._id)
+                                    input(type="checkbox" class="table-item__select" name="sort" value="1" _id=postCategory._id)
                                 td  
-                                    div(class="table-item__name")
-                                        - var thumbnail = productCategory.thumbnail|| "/uploads/default-image.jpg"
-                                        img(class="table-item__img", src=thumbnail, alt=productCategory.name)
-                                        h4(class="table-item__title") #{productCategory.name}
+                                    div(class="table-item__name") #{postCategory.name}
                                 td 
-                                    if permission.includes("update-category")
+                                    if permission.includes("update-post-category")
                                         div(class="btn-toggle")
                                             div(class="btn-status-toggle")
                                                     div(class="form-check form-switch")
-                                                        input(class="form-check-input btn-status__input", type="checkbox", role="switch",value=productCategory.status ? "on" : "off",_id=productCategory._id,path="product-category/update-status")
-                                            p(class="btn-status__desc", isOn="Hoạt động", isOff="Không hoạt động") #{productCategory.status ? "Hoạt động" : "Không hoạt động"}
+                                                        input(class="form-check-input btn-status__input", type="checkbox", role="switch",value=postCategory.status ? "on" : "off",_id=postCategory._id,path="post-category/update-status")
+                                            p(class="btn-status__desc", isOn="Hoạt động", isOff="Không hoạt động") #{postCategory.status ? "Hoạt động" : "Không hoạt động"}
                                     else 
                                         div(class="btn-toggle")
-                                            p(class="btn-status__desc") #{productCategory.status ? "Hoạt động" : "Không hoạt động"}
+                                            p(class="btn-status__desc") #{postCategory.status ? "Hoạt động" : "Không hoạt động"}
                 
                                 td(style="text-align: center")
-                                    if permission.includes("update-category")
-                                        a(href=`${PATH_ADMIN}/product-category/edit/${productCategory.id}`, class="btn-primary btn") Sửa   
-                                    if permission.includes("view-category")
-                                        a(href=`${PATH_ADMIN}/product-category/detail/${productCategory.id}`, class="btn-warning btn") Chi tiết    
-                                    if permission.includes("delete-category") 
-                                        button(type="button", class="btn-delete btn btn-danger", data-bs-id = productCategory._id ,data-bs-toggle="modal", data-bs-target="#warningDeleteModal",path="product-category/delete-category") Xóa 
+                                    if permission.includes("update-post-category")
+                                        a(href=`${PATH_ADMIN}/post-category/edit/${postCategory.id}`, class="btn-primary btn") Sửa   
+                                    if permission.includes("view-post-category")
+                                        a(href=`${PATH_ADMIN}/post-category/detail/${postCategory.id}`, class="btn-warning btn") Chi tiết    
+                                    if permission.includes("delete-post-category") 
+                                        button(type="button", class="btn-delete btn btn-danger", data-bs-id = postCategory._id ,data-bs-toggle="modal", data-bs-target="#warningDeleteModal",path="post-category/delete-post-category") Xóa 
                     else  
                         tr 
                             td(colspan="9")
                                 p(class="noItem") Không có danh mục nào!   
-                                a(class="noItem__link", href=`${PATH_ADMIN}/product-category/create`) Tạo danh mục.
+                                a(class="noItem__link", href=`${PATH_ADMIN}/post-category/create`) Tạo danh mục.
     
         +pagination(pagination,currentPath)
-        if permission.includes("delete-category")
+        if permission.includes("delete-post-category")
             form(method="POST", type="hidden",id="form-delete" ,action=``)
             <!-- Modal -->
             +formWarning("warningDeleteModal","Bạn có chắc chắn muốn <b class='warning-text'>Xóa</b> danh mục này không?","Xóa danh mục","warning-delete-modal-btn","Xóa")

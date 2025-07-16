@@ -111,7 +111,7 @@ class voucherController {
         try {
             await Voucher.updateOne(
                 { _id: statusUpdate._id },
-                { status: statusUpdate.value }
+                { status: statusUpdate.value == "on" ? true : false }
             );
             res.json({
                 success: true,
@@ -135,6 +135,9 @@ class voucherController {
                 if (value != "") return [key, value];
             });
             dataUpdate = Object.fromEntries(dataUpdate);
+            if (dataUpdate.status) {
+                dataUpdate.status = dataUpdate.status == "on" ? true : false;
+            }
             await Voucher.updateMany(
                 { _id: { $in: listIds } },
                 { $set: dataUpdate }

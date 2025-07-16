@@ -64,6 +64,9 @@ class userTrashController {
                 if (value != "") return [key, value];
             });
             dataUpdate = Object.fromEntries(dataUpdate);
+            if (dataUpdate.status) {
+                dataUpdate.status = dataUpdate.status == "on" ? true : false;
+            }
             await User.updateManyDeleted(
                 { _id: { $in: listIds } },
                 { $set: dataUpdate }
@@ -100,7 +103,7 @@ class userTrashController {
         try {
             await User.updateOneDeleted(
                 { _id: statusUpdate._id },
-                { status: statusUpdate.value }
+                { status: statusUpdate.value == "on" ? true : false }
             );
             res.json({ success: true, message: "Cập nhật thành công!" });
         } catch (error) {

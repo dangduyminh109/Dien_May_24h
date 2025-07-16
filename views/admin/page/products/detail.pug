@@ -47,26 +47,32 @@ block main
                 div(class="category form-item")
                     p(class="label")
                         b Danh mục
-                    p(class="content") #{category.name}
+                    p(class="content") #{category ? category.name : "Chưa chọn danh mục"}
             div(class="form-group")
                 div(class="form-item")
                     p(class="label") 
                         b Trạng thái 
-                    p(class=`status ${product.status == "on" ? "active" : ""}`) #{product.status == "on" ? "Hoạt động" : "Không hoạt động"}     
-            div(class="form-group")
+                    p(class=`status ${product.status ? "active" : ""}`) #{product.status ? "Hoạt động" : "Không hoạt động"}   
                 div(class="form-item")
                     p(class="label") 
-                        b Mô tả sản phẩm
-                    div(class="content")!=product.description
-            
-        h1(class="title") Hình ảnh
-        div(class="form-group")
-            div(class="image form-item")
-                div(class="image-group", id="image-group")
-                    if product.thumbnails.length > 0
-                        each imgSrc in product.thumbnails 
-                            div(class="image-group__preview")
-                                img(src=imgSrc)
+                        b Sản phẩm nổi bật
+                    p(class=`status ${product.featured ? "active" : ""}`) #{product.featured ? "Có" : "Không"}    
+            if(product.description && product.description.trim() != "" > 0)
+                div(class="form-group")
+                    div(class="form-item")
+                        p(class="label") 
+                            b Mô tả sản phẩm
+                        div(class="content")!=product.description
+        
+        if(product.thumbnails && product.thumbnails.length > 0)
+            h1(class="title") Hình ảnh
+            div(class="form-group")
+                div(class="image form-item")
+                    div(class="image-group", id="image-group")
+                        if product.thumbnails.length > 0
+                            each imgSrc in product.thumbnails 
+                                div(class="image-group__preview")
+                                    img(src=imgSrc)
         div(class="form-group__btn")
             a(href=`/admin/${deleted ? "product-trash":"product"}` class="btn btn-primary") Quay lại
             if(!deleted)

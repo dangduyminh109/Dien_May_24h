@@ -56,7 +56,7 @@ class voucherTrashController {
         try {
             await Voucher.updateOneDeleted(
                 { _id: statusUpdate._id },
-                { status: statusUpdate.value }
+                { status: statusUpdate.value == "on" ? true : false }
             );
             res.json({ success: true, message: "Cập nhật thành công!" });
         } catch (error) {
@@ -77,6 +77,9 @@ class voucherTrashController {
                 if (value != "") return [key, value];
             });
             dataUpdate = Object.fromEntries(dataUpdate);
+            if (dataUpdate.status) {
+                dataUpdate.status = dataUpdate.status == "on" ? true : false;
+            }
             await Voucher.updateManyDeleted(
                 { _id: { $in: listIds } },
                 { $set: dataUpdate }

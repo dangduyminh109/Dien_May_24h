@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const mongoose_delete = require("mongoose-delete");
 
-const productCategorySchema = new mongoose.Schema(
+const postCategorySchema = new mongoose.Schema(
     {
         name: String,
         slug: { type: String, unique: true },
@@ -11,24 +11,19 @@ const productCategorySchema = new mongoose.Schema(
         },
         status: { type: Boolean, default: true },
         description: String,
-        thumbnail: String,
     },
     {
         timestamps: true,
     }
 );
 
-productCategorySchema.plugin(mongoose_delete, {
+postCategorySchema.plugin(mongoose_delete, {
     overrideMethods: "all",
     deletedAt: true,
 });
 
-const ProductCategory =
-    mongoose.models.ProductCategory ||
-    mongoose.model(
-        "ProductCategory",
-        productCategorySchema,
-        "product-category"
-    );
+const PostCategory =
+    mongoose.models.PostCategory ||
+    mongoose.model("PostCategory", postCategorySchema, "post-category");
 
-module.exports = ProductCategory;
+module.exports = PostCategory;

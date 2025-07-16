@@ -6,13 +6,13 @@ include ../../mixins/alert.pug
 block main 
     +alert(messages)
     +page_header("Tạo mới danh mục", [
-        { name: "Sản phẩm", href: `${PATH_ADMIN}/product-category` },
-        { name: "Danh mục sản phẩm", href: `${PATH_ADMIN}/product-category` },
-        { name: "Tạo mới danh mục", href: `${PATH_ADMIN}/product-category/create` },
+        { name: "Bài viết", href: `${PATH_ADMIN}/post-category` },
+        { name: "Danh mục bài viết", href: `${PATH_ADMIN}/post-category` },
+        { name: "Tạo mới danh mục", href: `${PATH_ADMIN}/post-category/create` },
     ])
 
-    div(class="create product-category")
-        form(action=`${PATH_ADMIN}/product-category/create`, method="post",enctype="multipart/form-data")
+    div(class="create post-category")
+        form(action=`${PATH_ADMIN}/post-category/create`, method="post")
             h1(class="title") Thông tin chung
             div(class="general")
                 div(class="form-group")
@@ -37,20 +37,9 @@ block main
                     div(class="btn-status-toggle")
                             div(class="form-check form-switch")
                                 input(class="form-check-input btn-status-form",name="status",type="checkbox",id="check-status", role="switch",checked=true,value="on")
-                    p(class="btn-status__desc", isOn="Hoạt động", isOff="Không hoạt động") Hoạt động        
+                    p(class="btn-status__desc", isOn="Hoạt động", isOff="Không hoạt động") Hoạt động       
                 label(for="description") Mô tả
                 textarea(class="textarea-mce",name="description",id="description") 
-
-            h1(class="title") Hình ảnh
-            div(class="single-image-wrapper", id="image-wrapper")
-                label(class="single-image__upload" for="image") 
-                    span(class="single-image__upload-icon")
-                        i(class="fa-solid fa-upload")
-                    |   upload
-                    input(id="image",name="thumbnails",type="file",accept="image/*")
             div(class="form-group__btn")
-                a(href="/admin/product-category" class="btn btn-primary") Quay lại
+                a(href="/admin/post-category" class="btn btn-primary") Quay lại
                 button(type="submit" class="btn btn-primary") Tạo danh mục
-
-
-            

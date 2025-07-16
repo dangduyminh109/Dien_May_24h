@@ -67,8 +67,14 @@ block main
                 div(class="btn-toggle")
                     div(class="btn-status-toggle")
                             div(class="form-check form-switch")
-                                input(class="form-check-input btn-status-form",name="status",type="checkbox",id="check", role="switch",checked=product.status == "on" ? true:false)
-                    p(class="btn-status__desc") Hoạt động          
+                                input(class="form-check-input btn-status-form",name="status",type="checkbox",id="check", role="switch",checked=product.status)
+                    p(class="btn-status__desc", isOn="Hoạt động", isOff="Không hoạt động") #{product.status ? "Hoạt động" : "Không hoạt động"}
+                label(for="check-featured") Sản phẩm nổi bật 
+                div(class="btn-toggle")
+                    div(class="btn-status-toggle")
+                            div(class="form-check form-switch")
+                                input(class="form-check-input btn-status-form",name="featured",type="checkbox",id="check-featured", role="switch",checked=product.featured)
+                    p(class="btn-status__desc", isOn="Có", isOff="Không") #{product.featured ? "Có" : "Không"} 
                 label(for="description") Mô tả sản phẩm
                 textarea(class="textarea-mce",name="description",id="description") 
                     != product.description 
@@ -90,7 +96,7 @@ block main
                                 i(class="fa-solid fa-upload")
                             |   upload
                             input(id="image",name="thumbnails",type="file",accept="image/*",multiple)
-            
+            input(type="hidden",name="thumbnailDeleted",id="thumbnail-deleted")
             div(class="form-group__btn")
                 a(href="/admin/product" class="btn btn-primary") Quay lại
                 button(type="submit" class="btn btn-primary") Sửa Sản Phẩm 

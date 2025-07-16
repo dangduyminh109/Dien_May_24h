@@ -1,3 +1,4 @@
+const flash = require("express-flash");
 const mongoose = require("mongoose");
 const mongoose_delete = require("mongoose-delete");
 
@@ -13,11 +14,8 @@ const productSchema = new mongoose.Schema(
         order: { type: Number, default: 0 },
         supplier: String,
         category: String,
-        status: {
-            type: String,
-            default: "on",
-        },
-        featured: Boolean,
+        status: { type: Boolean, default: true },
+        featured: { type: Boolean, default: false },
         description: String,
         thumbnails: Array,
     },

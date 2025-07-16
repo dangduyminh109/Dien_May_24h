@@ -263,6 +263,69 @@ block main
                                     - var check = role.permission.includes("delete-user")
                                     input(type="checkbox" class="table-item__select" value="delete-user" id=`table-user-delete-${index}` checked=check)
                                     label(for=`table-user-delete-${index}` class="table-item__label" _id=`${role.id}`)
+                        
+                        tr(class="row-title")  
+                            td(colspan=`${listRoles.length+1}`) Bài Viết
+                        tr 
+                            td Xem 
+                            each role,index in listRoles
+                                td 
+                                    - var check = role.permission.includes("view-post")
+                                    input(type="checkbox" class="table-item__select" value="view-post" id=`table-post-view-${index}` checked=check)
+                                    label(for=`table-post-view-${index}` class="table-item__label" _id=`${role.id}`)
+                        tr
+                            td Thêm mới
+                            each role,index in listRoles
+                                td 
+                                    - var check = role.permission.includes("add-post")
+                                    input(type="checkbox" class="table-item__select" value="add-post" id=`table-post-add-${index}` checked=check)
+                                    label(for=`table-post-add-${index}` class="table-item__label" _id=`${role.id}`)
+                        tr
+                            td Cập nhật 
+                            each role,index in listRoles
+                                td 
+                                    - var check = role.permission.includes("update-post")
+                                    input(type="checkbox" class="table-item__select" value="update-post" id=`table-post-update-${index}` checked=check)
+                                    label(for=`table-post-update-${index}` class="table-item__label" _id=`${role.id}`)
+                        tr 
+                            td Xóa
+                            each role,index in listRoles
+                                td 
+                                    - var check = role.permission.includes("delete-post")
+                                    input(type="checkbox" class="table-item__select" value="delete-post" id=`table-post-delete-${index}` checked=check)
+                                    label(for=`table-post-delete-${index}` class="table-item__label" _id=`${role.id}`)
+                        
+                        tr(class="row-title")  
+                            td(colspan=`${listRoles.length+1}`) Danh mục bài Viết
+                        tr 
+                            td Xem 
+                            each role,index in listRoles
+                                td 
+                                    - var check = role.permission.includes("view-post-category")
+                                    input(type="checkbox" class="table-item__select" value="view-post-category" id=`table-post-category-view-${index}` checked=check)
+                                    label(for=`table-post-category-view-${index}` class="table-item__label" _id=`${role.id}`)
+                        tr
+                            td Thêm mới
+                            each role,index in listRoles
+                                td 
+                                    - var check = role.permission.includes("add-post-category")
+                                    input(type="checkbox" class="table-item__select" value="add-post-category" id=`table-post-category-add-${index}` checked=check)
+                                    label(for=`table-post-category-add-${index}` class="table-item__label" _id=`${role.id}`)
+                        tr
+                            td Cập nhật 
+                            each role,index in listRoles
+                                td 
+                                    - var check = role.permission.includes("update-post-category")
+                                    input(type="checkbox" class="table-item__select" value="update-post-category" id=`table-post-category-update-${index}` checked=check)
+                                    label(for=`table-post-category-update-${index}` class="table-item__label" _id=`${role.id}`)
+                        tr 
+                            td Xóa
+                            each role,index in listRoles
+                                td 
+                                    - var check = role.permission.includes("delete-post-category")
+                                    input(type="checkbox" class="table-item__select" value="delete-post-category" id=`table-delete-post-category-${index}` checked=check)
+                                    label(for=`table-delete-post-category-${index}` class="table-item__label" _id=`${role.id}`)
+
         if permission.includes("update-permission")
             <!-- Modal -->
             +formWarning("warningPermissionModal","Bạn có chắc chắn muốn <b class='warning-text'>Thiết Lập Phân Quyền</b> không?<span class='warning-text'>","Thiết Lập Phân Quyền","warning-permission-modal-btn","Có")

@@ -42,9 +42,9 @@ block main
                 +toolbarHandle({handle,path: "user",user: true,Update:Update,Delete:Delete,title: "Khách hàng"})
         
         div(class="overview-block") 
-            div(class="overview-item total-products")
-                h3(class="overview-item__title total-products__title") Tổng số khách hàng
-                p(class="overview-item__detail total-products__detail") #{general.totalUser}
+            div(class="overview-item")
+                h3(class="overview-item__title") Tổng số khách hàng
+                p(class="overview-item__detail") #{general.totalUser}
         div(class="show")
             form(action="/admin/user", method="get") 
                 label(for="show" class="form-label") Hiển thị
@@ -90,11 +90,11 @@ block main
                                         div(class="btn-toggle")
                                             div(class="btn-status-toggle")
                                                     div(class="form-check form-switch")
-                                                        input(class="form-check-input btn-status__input", type="checkbox", role="switch",value=user.status,_id=user._id , path="user/update-status")
-                                            p(class="btn-status__desc") Hoạt động 
-                                    else
+                                                        input(class="form-check-input btn-status__input", type="checkbox", role="switch",value=user.status ? "on" : "off",_id=user._id,path="user/update-status")
+                                            p(class="btn-status__desc", isOn="Hoạt động", isOff="Không hoạt động") #{user.status ? "Hoạt động" : "Không hoạt động"}
+                                    else 
                                         div(class="btn-toggle")
-                                            p(class="btn-status__desc") #{user.status =="on" ? "Hoạt động" : "Không hoạt động"}
+                                            p(class="btn-status__desc") #{user.status ? "Hoạt động" : "Không hoạt động"}
                                 td(style="text-align: center")
                                     if permission.includes("update-user")
                                         a(href=`${PATH_ADMIN}/user/edit/${user.id}`, class="btn-primary btn") Sửa      

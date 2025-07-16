@@ -30,6 +30,7 @@ class AuthController {
                     email: formData.email,
                     password: formData.password,
                     avatar: "/uploads/default-image.jpg",
+                    status: true,
                 });
                 await user.save();
                 req.flash("openModal", true);

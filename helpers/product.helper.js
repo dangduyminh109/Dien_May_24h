@@ -1,4 +1,5 @@
 const Product = require("../models/product.model");
+const ProductCategory = require("../models/product-category.model.js");
 const { uploadMultipleImages } = require("../helpers/upload.helper.js");
 const slugify = require("slugify");
 const getCategoryTree = require("./get-category-tree.helper.js");
@@ -28,7 +29,7 @@ async function generalHelper(deleted = false) {
     };
 }
 
-async function filterAndSort(req,findDelete = false) {
+async function filterAndSort(req, findDelete = false) {
     var listProduct = [];
     let limit = 5;
     let query = req.query;
@@ -43,9 +44,7 @@ async function filterAndSort(req,findDelete = false) {
     const filter = {};
     for (const [key, value] of Object.entries(query)) {
         if (value === "") continue;
-
         const numValue = Number(value);
-
         switch (key) {
             case "min-original-price":
             case "max-original-price":
@@ -79,7 +78,10 @@ async function filterAndSort(req,findDelete = false) {
                 break;
 
             case "category":
-                const listSubCategory = await getCategoryTree(value);
+                const listSubCategory = await getCategoryTree(
+                    ProductCategory,
+                    value
+                );
                 filter.category = {
                     $in: [
                         new mongoose.Types.ObjectId(value),
@@ -90,11 +92,10 @@ async function filterAndSort(req,findDelete = false) {
                 };
                 break;
 
-            case "status":
             case "code":
                 filter[key] = value;
                 break;
-
+            case "status":
             case "featured":
                 filter[key] = value === "on";
                 break;
@@ -126,7 +127,6 @@ async function filterAndSort(req,findDelete = false) {
 }
 
 async function handleForm(req, edit = false) {
-    const urls = await uploadMultipleImages(req.files);
     let formData = req.body;
     formData.original_price = isNaN(parseFloat(formData.original_price))
         ? 0
@@ -140,27 +140,29 @@ async function handleForm(req, edit = false) {
     formData.inventory = isNaN(parseInt(formData.inventory))
         ? 0
         : parseInt(formData.inventory);
-    formData.featured = formData.featured == "on" ? true : false;
-    if (edit) {
+
+    // xửa lí trạng thái và sản phẩm nổi bật
+    if (formData.status && formData.status == "on") formData.status = true;
+    else formData.status = false;
+
+    if (formData.featured && formData.featured == "on")
+        formData.featured = true;
+    else formData.featured = false;
+
+    // xử lí hình ảnh
+    const urls = (await uploadMultipleImages(req.files)) || [];
+    if (edit && formData.thumbnailDeleted) {
+        const product = await Product.findOne({ _id: req.params.id });
+        formData.thumbnails = [...urls, ...product.thumbnails];
         formData.thumbnailDeleted =
             formData.thumbnailDeleted != ""
                 ? JSON.parse(formData.thumbnailDeleted)
                 : [];
-        formData.status = formData.status ? "on" : "off";
-        formData.featured = formData.featured ? true : false;
-        let product = await Product.findOne({ _id: req.params.id });
-        formData.thumbnails = urls?.length
-            ? urls.concat(product.thumbnails)
-            : product.thumbnails;
         if (formData.thumbnailDeleted.length > 0) {
-            formData.thumbnails = formData.thumbnails.filter((item) => {
-                if (formData.thumbnailDeleted.includes(item) == false) {
-                    return item;
-                }
-            });
+            formData.thumbnails = formData.thumbnails.filter(
+                (item) => !formData.thumbnailDeleted.includes(item)
+            );
         }
-    } else {
-        formData.thumbnails = urls?.length ? urls : [];
     }
     let slug = slugify(formData.name, {
         lower: true,

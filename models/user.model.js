@@ -9,10 +9,7 @@ const userSchema = new mongoose.Schema(
         phone: String,
         avatar: String,
         address: String,
-        status: {
-            type: String,
-            default: "on",
-        },
+        status: { type: Boolean, default: true },
         googleId: String,
         facebookId: String,
         cart: {

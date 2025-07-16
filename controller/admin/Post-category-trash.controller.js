@@ -1,26 +1,23 @@
 const system = require("../../config/system.js");
-const ProductCategory = require("../../models/product-category.model.js");
+const PostCategory = require("../../models/post-category.model.js");
 const {
     filterAndSort,
     generalHelper,
-} = require("../../helpers/product-category.helper.js");
+} = require("../../helpers/post-category.helper.js");
 const getCategoryTree = require("../../helpers/get-category-tree.helper.js");
 const paginationHelper = require("../../helpers/pagination.helper.js");
 class categoryTrashController {
-    // [GET] /admin/product-trash
+    // [GET] /admin/post-category-trash
     async show(req, res) {
         const currentPath = paginationHelper(req);
-        const { listProductCategory, pagination } = await filterAndSort(
-            req,
-            true
-        );
+        const { listPostCategory, pagination } = await filterAndSort(req, true);
         const handleData = req.session.backData || {};
-        const categoryTree = await getCategoryTree(ProductCategory);
+        const categoryTree = await getCategoryTree(PostCategory);
         const general = await generalHelper(true);
-        res.render("./admin/page/product-category/category-trash", {
+        res.render("./admin/page/post-category/post-category-trash", {
             pageTitle: "Category trash",
             PATH_ADMIN: system.PATH_ADMIN,
-            listDeletedCategory: listProductCategory,
+            listDeletedPostCategory: listPostCategory,
             general,
             filter: req.query,
             handle: handleData.formData,
@@ -29,21 +26,21 @@ class categoryTrashController {
             categoryTree,
         });
     }
-    // [GET] /admin/category-trash/detail:id
+    // [GET] /admin/post-category-trash/detail:id
     async detail(req, res) {
-        const productCategory = await ProductCategory.findOneDeleted({
+        const postCategory = await PostCategory.findOneDeleted({
             _id: req.params.id,
         });
         var parentCategory = "";
-        if (productCategory.parentId != "") {
-            parentCategory = await ProductCategory.findOne({
-                _id: productCategory.parentId,
+        if (postCategory.parentId != "") {
+            parentCategory = await PostCategory.findOne({
+                _id: postCategory.parentId,
             });
         }
-        res.render("./admin/page/product-category/detail", {
+        res.render("./admin/page/post-category/detail", {
             pageTitle: "Product detail",
             PATH_ADMIN: system.PATH_ADMIN,
-            productCategory,
+            postCategory,
             parentCategory:
                 parentCategory != ""
                     ? parentCategory.name
@@ -52,20 +49,20 @@ class categoryTrashController {
         });
     }
 
-    // [PATCH] /admin/category-trash/restore-category
+    // [PATCH] /admin/post-category-trash/restore-category
     async restore(req, res) {
         try {
-            await ProductCategory.restore({ _id: req.params.id });
+            await PostCategory.restore({ _id: req.params.id });
             req.flash("success", "Khôi phục danh mục thành công!");
-            res.redirect("/admin/category-trash");
+            res.redirect("/admin/post-category-trash");
         } catch (error) {
             console.log(error);
             req.flash("error", "Khôi phục danh mục không thành công!");
-            res.redirect("/admin/category-trash");
+            res.redirect("/admin/post-category-trash");
         }
     }
 
-    // [PATCH] /admin/category-trash/update-more
+    // [PATCH] /admin/post-category-trash/update-more
     async updateMore(req, res) {
         try {
             const listIds = JSON.parse(req.body["list-id"]);
@@ -77,7 +74,7 @@ class categoryTrashController {
             if (dataUpdate.status) {
                 dataUpdate.status = dataUpdate.status == "on" ? true : false;
             }
-            await ProductCategory.updateManyDeleted(
+            await PostCategory.updateManyDeleted(
                 { _id: { $in: listIds } },
                 { $set: dataUpdate }
             );
@@ -93,25 +90,25 @@ class categoryTrashController {
         }
     }
 
-    // [PATCH] /admin/category-trash/restore-more
+    // [PATCH] /admin/post-category-trash/restore-more
     async restoreMore(req, res) {
         const listIds = JSON.parse(req.body["list-id"]);
         try {
-            await ProductCategory.restore({ _id: { $in: listIds } });
+            await PostCategory.restore({ _id: { $in: listIds } });
             req.flash("success", "Khôi phục danh mục thành công!");
-            res.redirect("/admin/category-trash");
+            res.redirect("/admin/post-category-trash");
         } catch (error) {
             console.log(error);
             req.flash("error", "Khôi phục danh mục không thành công!");
-            res.redirect("/admin/category-trash");
+            res.redirect("/admin/post-category-trash");
         }
     }
 
-    // [PATCH] /admin/category-trash/update-status
+    // [PATCH] /admin/post-category-trash/update-status
     async updateStatusPatch(req, res) {
         const statusUpdate = req.body;
         try {
-            await ProductCategory.updateOneDeleted(
+            await PostCategory.updateOneDeleted(
                 { _id: statusUpdate._id },
                 { status: statusUpdate.value == "on" ? true : false }
             );
@@ -125,24 +122,24 @@ class categoryTrashController {
         }
     }
 
-    // [DELETE] /admin/category-trash/destroy-category/:id
+    // [DELETE] /admin/post-category-trash/destroy-category/:id
     async destroy(req, res) {
         try {
-            await ProductCategory.deleteOne({ _id: req.params.id });
+            await PostCategory.deleteOne({ _id: req.params.id });
             req.flash("success", "Xóa danh mục thành công!");
-            res.redirect("/admin/category-trash");
+            res.redirect("/admin/post-category-trash");
         } catch (error) {
             console.log(error);
             req.flash("error", "Xóa danh mục không thành công!");
-            res.redirect("/admin/category-trash");
+            res.redirect("/admin/post-category-trash");
         }
     }
 
-    // [DELETE] /admin/category-trash/destroy-more
+    // [DELETE] /admin/post-category-trash/destroy-more
     async destroyMore(req, res) {
         try {
             const listIds = JSON.parse(req.body["list-id"]);
-            await ProductCategory.deleteMany({ _id: { $in: listIds } });
+            await PostCategory.deleteMany({ _id: { $in: listIds } });
             req.flash("success", "Xóa danh mục thành công!");
             res.redirect("back");
         } catch (error) {

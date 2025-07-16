@@ -26,17 +26,18 @@ block main
                 div(class="form-item")
                     p(class="label") 
                         b Trạng thái 
-                    p(class=`status ${productCategory.status == "on" ? "active" : ""}`) #{productCategory.status == "on" ? "Hoạt động" : "Không hoạt động"}   
-            div(class="form-group")
-                div(class="form-item")
-                    p(class="label") 
-                        b Mô tả
-                    div(class="content")!=productCategory.description
-        h1(class="title") Hình ảnh
-        div(class="single-image-wrapper", id="single-image-wrapper")
-            div(class="single-image__preview")
-                - var thumbnail = productCategory && productCategory.thumbnail ? productCategory.thumbnail : "/uploads/default-image.jpg"
-                img(src=thumbnail ,alt=productCategory.name)
+                    p(class=`status ${productCategory.status ? "active" : ""}`) #{productCategory.status ? "Hoạt động" : "Không hoạt động"}   
+            if(productCategory.description && productCategory.description.trim() != "" > 0)
+                div(class="form-group")
+                    div(class="form-item")
+                        p(class="label") 
+                            b Mô tả
+                        div(class="content")!=productCategory.description
+            h1(class="title") Hình ảnh
+            div(class="single-image-wrapper", id="single-image-wrapper")
+                div(class="single-image__preview")
+                    - var thumbnail = productCategory && productCategory.thumbnail ? productCategory.thumbnail : "/uploads/default-image.jpg"
+                    img(src=thumbnail ,alt=productCategory.name)
         div(class="form-group__btn")
             a(href=`/admin/${deleted ? "category-trash":"product-category"}` class="btn btn-primary") Quay lại
             if(!deleted)

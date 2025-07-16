@@ -1,0 +1,49 @@
+extends ../../layout/default.pug
+include ../../mixins/page_header.pug
+include ../../mixins/category_tree_without_node.pug
+include ../../mixins/alert.pug
+
+block main 
+    +alert(messages)
+    +page_header("Chỉnh sửa danh mục", [
+        { name: "Bài viết", href: `${PATH_ADMIN}/post-category` },
+        { name: "Danh mục bài viết", href: `${PATH_ADMIN}/post-category` },
+        { name: "Chỉnh sửa danh mục", href: `${PATH_ADMIN}/post-category/edit/${postCategory.id}` },
+    ])
+    div(class="edit post-category")
+        form(action=`${PATH_ADMIN}/post-category/edit/${postCategory.id}?_method=PATCH`, method="post", id="form-edit")
+            h1(class="title") Thông tin chung
+            div(class="general")
+                div(class="form-group")
+                    div(class="name form-item")
+                        label(for="name") 
+                            | Tên danh mục (
+                            span(class="important-item") *
+                            | )
+                        input(class="form-control",id="name",name="name",type="text",value=postCategory.name,required)
+                div(class="form-group")
+                    div(class="category form-item")
+                        label(for="parentId") Danh mục cha
+                        select(name="parentId", id="parentId" ) 
+                            option(value="" selected disabled) -- chọn danh mục cha -- 
+                            if(categoryTree.length > 0)
+                                option(value="") Không
+                                +CategoryTreeWithoutNode(categoryTree,postCategory.parentId)
+                            else 
+                                option(value="" selected disabled) -- Không có danh mục nào khác! -- 
+                label(for="check") Trạng thái 
+                div(class="btn-toggle")
+                    div(class="btn-status-toggle")
+                            div(class="form-check form-switch")
+                                input(class="form-check-input btn-status-form",name="status",type="checkbox",id="check", role="switch",checked=postCategory.status)
+                    p(class="btn-status__desc", isOn="Hoạt động", isOff="Không hoạt động") #{postCategory.status ? "Hoạt động" : "Không hoạt động"}         
+                label(for="description") Mô tả
+                textarea(class="textarea-mce",name="description",id="description") 
+                    != postCategory.description 
+            input(type="hidden",name="thumbnailDeleted",id="thumbnail-deleted")
+            div(class="form-group__btn")
+                a(href="/admin/post-category" class="btn btn-primary") Quay lại
+                button(type="submit" class="btn btn-primary") Sửa danh mục
+
+
+            

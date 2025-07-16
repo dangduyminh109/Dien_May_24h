@@ -9,7 +9,7 @@ nav(class="navbar", id="navbar")
                     | Bảng điều khiển
             if permission.includes("view-product") || permission.includes("view-category") 
                 li(class="navigation-item")
-                    button(class="navigation-item__btn btn",id="navigation-item__btn",type="button",data-bs-toggle="collapse",data-bs-target="#navigation-item__collapse-product",aria-expanded="false",aria-controls="navigation-item__collapse-product") 
+                    button(class="navigation-item__btn btn",type="button",data-bs-toggle="collapse",data-bs-target="#navigation-item__collapse-product",aria-expanded="false",aria-controls="navigation-item__collapse-product") 
                         span(class="navigation-item__icon-btn")
                             i(class="fa-brands fa-product-hunt")
                         | Sản phẩm
@@ -29,7 +29,7 @@ nav(class="navbar", id="navbar")
 
             if permission.includes("view-role") || permission.includes("view-permission") 
                 li(class="navigation-item")
-                    button(class="navigation-item__btn btn",id="navigation-item__btn",type="button",data-bs-toggle="collapse",data-bs-target="#navigation-item__collapse-role",aria-expanded="false",aria-controls="navigation-item__collapse-role") 
+                    button(class="navigation-item__btn btn",type="button",data-bs-toggle="collapse",data-bs-target="#navigation-item__collapse-role",aria-expanded="false",aria-controls="navigation-item__collapse-role") 
                         span(class="navigation-item__icon-btn")
                             i(class="fa-solid fa-users-gear")
                         | Quản lí quyền
@@ -46,6 +46,26 @@ nav(class="navbar", id="navbar")
                                 span(class="navigation-item__icon")
                                     i(class="fa-solid fa-plus")
                                 h3(class="navigation-item__title") Phân quyền
+            
+            if permission.includes("view-post") || permission.includes("view-post-category") 
+                li(class="navigation-item")
+                    button(class="navigation-item__btn btn",type="button",data-bs-toggle="collapse",data-bs-target="#navigation-item__collapse-post",aria-expanded="false",aria-controls="navigation-item__collapse-post") 
+                        span(class="navigation-item__icon-btn")
+                            i(class="fas fa-file-lines")
+                        | Bài viết 
+                        span(class="navigation-item__icon-btn-down")
+                            i(class="fa-solid fa-caret-down")
+                    div(class="navigation-item__collapse-post collapse", id="navigation-item__collapse-post")
+                        if permission.includes("view-post")
+                            a(class="navigation-item__link",href="/admin/post" ,data-menu="list-post") 
+                                span(class="navigation-item__icon")
+                                    i(class="fa-solid fa-plus")
+                                h3(class="navigation-item__title") Danh sách bài viết
+                        if permission.includes("view-post-category") 
+                            a(class="navigation-item__link",href="/admin/post-category" ,data-menu="post-category") 
+                                span(class="navigation-item__icon")
+                                    i(class="fa-solid fa-plus")
+                                h3(class="navigation-item__title") Danh mục bài viết
             
             if permission.includes("view-account")
                 li(class="navigation-item")
@@ -75,12 +95,8 @@ nav(class="navbar", id="navbar")
                             i(class="fa-solid fa-solid fa-person")
                         | Khách hàng
 
-            if permission.includes("view-posts")
-                li(class="navigation-posts")
-                    a(href="/admin/posts", class="navigation-item__btn btn single", data-menu="list-posts") 
-                        span(class="navigation-item__icon-btn")
-                            i(class="fas fa-file-lines")
-                        | Bài viết 
+           
+
           
 
 </nav>

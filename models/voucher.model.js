@@ -27,10 +27,7 @@ const voucherSchema = new mongoose.Schema(
         ],
         startDate: Date,
         expiredAt: Date,
-        status: {
-            type: String,
-            default: "on",
-        },
+        status: { type: Boolean, default: true },
         description: String,
     },
     {

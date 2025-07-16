@@ -108,7 +108,7 @@ class accountController {
         try {
             await Account.updateOne(
                 { _id: statusUpdate._id },
-                { status: statusUpdate.value }
+                { status: statusUpdate.value == "on" ? true : false }
             );
             res.json({ success: true, message: "Cập nhật thành công!" });
         } catch (error) {
@@ -132,6 +132,9 @@ class accountController {
             req.session.backData = {
                 formData: req.body,
             };
+            if (dataUpdate.status) {
+                dataUpdate.status = dataUpdate.status == "on" ? true : false;
+            }
             await Account.updateMany(
                 { _id: { $in: listIds } },
                 { $set: dataUpdate }

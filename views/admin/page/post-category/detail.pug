@@ -1,0 +1,42 @@
+extends ../../layout/default.pug
+include ../../mixins/page_header.pug
+include ../../mixins/category_tree.pug
+include ../../mixins/alert.pug
+
+block main 
+    +alert(messages)
+    +page_header("Chi tiết danh mục", [
+        { name: "Bài viết", href: `${PATH_ADMIN}/post-category` },
+        { name: "Danh mục sản phẩm", href: `${PATH_ADMIN}/post-category` },
+        { name: "Chi tiết danh mục", href: `${PATH_ADMIN}/post-category/detail/${postCategory.id}` },
+    ])
+    div(class="detail post-category")
+        h1(class="title") Thông tin chung
+        div(class="general")
+            div(class="form-group")
+                div(class="name form-item")
+                    p(class="label")
+                        b Tên danh mục
+                    p(class="content") #{postCategory.name}
+                div(class="category form-item")
+                    p(class="label")
+                        b Danh mục cha
+                    p(class="content") #{parentCategory}
+            div(class="form-group")
+                div(class="form-item")
+                    p(class="label") 
+                        b Trạng thái 
+                    p(class=`status ${postCategory.status ? "active" : ""}`) #{postCategory.status ? "Hoạt động" : "Không hoạt động"}   
+            if postCategory.description && postCategory.description.trim() !== ""    
+                div(class="form-group")
+                    div(class="form-item")
+                        p(class="label") 
+                            b Mô tả
+                        div(class="content")!=postCategory.description
+        div(class="form-group__btn")
+            a(href=`/admin/${deleted ? "category-trash":"post-category"}` class="btn btn-primary") Quay lại
+            if(!deleted)
+                a(href=`/admin/post-category/edit/${postCategory.id}` class="btn btn-primary") Sửa Bài Viết 
+
+
+            

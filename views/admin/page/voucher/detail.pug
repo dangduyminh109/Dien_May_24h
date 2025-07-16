@@ -57,7 +57,7 @@ block main
                 div(class="form-item")
                     p(class="label") 
                         b Trạng thái 
-                    p(class=`status ${voucher.status == "on" ? "active" : ""}`) #{voucher.status == "on" ? "Hoạt động" : "Không hoạt động"}     
+                    p(class=`status ${voucher.status ? "active" : ""}`) #{voucher.status ? "Hoạt động" : "Không hoạt động"}  
             div(class="form-group")
                 div(class="form-item")
                     p(class="label") 

@@ -28,19 +28,21 @@ async function filterAndSort(req, findDelete = false) {
     }
     let totalPage = 0;
     let page = query.page ? parseInt(query.page) : 1;
-    const filter = Object.entries(query).reduce((obj, [key, value]) => {
-        if (value !== "") {
-            switch (key) {
-                case "name":
-                    obj.name = { $regex: value, $options: "i" };
-                    break;
-                case "parentId":
-                case "status":
-                    obj[key] = value;
-            }
+    const filter = {};
+    for (const [key, value] of Object.entries(query)) {
+        if (value === "") continue;
+        switch (key) {
+            case "name":
+                filter.name = { $regex: value, $options: "i" };
+                break;
+            case "parentId":
+                filter[key] = value;
+                break;
+            case "status":
+                filter[key] = value === "on";
+                break;
         }
-        return obj;
-    }, {});
+    }
 
     if (findDelete) filter.deleted = true;
     const queryMethod = findDelete ? "findWithDeleted" : "find";
@@ -71,13 +73,10 @@ async function handleForm(req, edit = false) {
     const url = await uploadSingleImages(req.file);
     let formData = req.body;
     formData.thumbnail = url || "";
-    if (edit) {
-        formData.status = formData.status ? "on" : "off";
-        if (!url) {
-            delete formData.thumbnail;
-        }
-    } else {
-        formData.thumbnail = url || "";
+    if (formData.status && formData.status == "on") formData.status = true;
+    else formData.status = false;
+    if (edit && !url) {
+        delete formData.thumbnail;
     }
     let slug = slugify(formData.name, {
         lower: true,

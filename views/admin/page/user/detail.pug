@@ -30,7 +30,7 @@ block main
                     p(class="content") #{user.address}
             p(class="label") 
                 b Trạng thái 
-            p(class=`status ${user.status == "on" ? "active" : ""}`) #{user.status == "on" ? "Hoạt động" : "Không hoạt động"}       
+            p(class=`status ${user.status ? "active" : ""}`) #{user.status ? "Hoạt động" : "Không hoạt động"}       
         h1(class="title") Avatar
         div(class="single-image-wrapper", id="single-image-wrapper")
             div(class="single-image__preview")

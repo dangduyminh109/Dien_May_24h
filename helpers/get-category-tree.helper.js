@@ -1,10 +1,9 @@
-const ProductCategory = require("../models/product-category.model.js");
-const getCategoryTree = async (parentId = "") => {
-    const categories = await ProductCategory.find({
+const getCategoryTree = async (Model, parentId = "") => {
+    const categories = await Model.find({
         parentId,
     });
     for (let category of categories) {
-        category.children = await getCategoryTree(category._id);
+        category.children = await getCategoryTree(Model, category._id);
     }
     return [...categories];
 };

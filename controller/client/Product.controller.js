@@ -1,6 +1,5 @@
 const Product = require("../../models/product.model");
 const ProductCategory = require("../../models/product-category.model");
-const getCategoryTree = require("../../helpers/get-category-tree.helper.js");
 const { filterAndSort } = require("../../helpers/product-client.helper.js");
 const paginationHelper = require("../../helpers/pagination.helper.js");
 class ProductController {

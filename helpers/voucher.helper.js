@@ -26,6 +26,7 @@ async function filterAndSort(req, findDelete = false) {
     }
     let totalPage = 0;
     let page = query.page ? parseInt(query.page) : 1;
+
     const filter = {};
     Object.entries(query).forEach(([key, value]) => {
         if (value === "") return;
@@ -63,8 +64,10 @@ async function filterAndSort(req, findDelete = false) {
             case "applyFor":
             case "startDate":
             case "expiredAt":
-            case "status":
                 filter[key] = value;
+                break;
+            case "status":
+                filter[key] = value === "on";
                 break;
         }
     });
@@ -95,9 +98,9 @@ async function filterAndSort(req, findDelete = false) {
 
 async function handleForm(req, edit = false) {
     let formData = req.body;
-    if (edit) {
-        formData.status = formData.status ? "on" : "off";
-    }
+    // xửa lí trạng thái
+    if (formData.status && formData.status == "on") formData.status = true;
+    else formData.status = false;
     return formData;
 }
 

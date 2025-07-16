@@ -1,21 +1,22 @@
-const { uploadSingleImages } = require("./upload.helper.js");
-const User = require("../models/user.model.js");
-const bcrypt = require("bcryptjs");
+const PostCategory = require("../models/post-category.model.js");
+const slugify = require("slugify");
 
 async function generalHelper(deleted = false) {
-    let listUser = [];
+    let listPostCategory = [];
     if (deleted) {
-        listUser = await User.findWithDeleted({ deleted: true });
+        listPostCategory = await PostCategory.findWithDeleted({
+            deleted: true,
+        });
     } else {
-        listUser = await User.find({});
+        listPostCategory = await PostCategory.find({});
     }
     return {
-        totalUser: listUser.length,
+        totalPostCategory: listPostCategory.length,
     };
 }
 
 async function filterAndSort(req, findDelete = false) {
-    var listUser = [];
+    var listPostCategory = [];
     let limit = 5;
     let query = req.query;
     if (query.show) {
@@ -26,7 +27,6 @@ async function filterAndSort(req, findDelete = false) {
     }
     let totalPage = 0;
     let page = query.page ? parseInt(query.page) : 1;
-
     const filter = {};
     for (const [key, value] of Object.entries(query)) {
         if (value === "") continue;
@@ -34,9 +34,7 @@ async function filterAndSort(req, findDelete = false) {
             case "name":
                 filter.name = { $regex: value, $options: "i" };
                 break;
-            case "email":
-            case "phone":
-            case "address":
+            case "parentId":
                 filter[key] = value;
                 break;
             case "status":
@@ -53,15 +51,15 @@ async function filterAndSort(req, findDelete = false) {
     const sortOption =
         query.type === "asc" || query.type === "desc"
             ? { [query.filed]: query.type === "asc" ? 1 : -1 }
-            : { order: 1 };
-    listUser = await User[queryMethod](filter)
+            : {};
+
+    listPostCategory = await PostCategory[queryMethod](filter)
         .skip((page - 1) * limit)
         .limit(limit)
-        .sort(sortOption)
-        .select("-password -googleId -facebookId");
-    totalPage = await User[countMethod](filter);
+        .sort(sortOption);
+    totalPage = await PostCategory[countMethod](filter);
     return {
-        listUser,
+        listPostCategory,
         pagination: {
             page,
             limit,
@@ -71,27 +69,20 @@ async function filterAndSort(req, findDelete = false) {
 }
 
 async function handleForm(req, edit = false) {
-    const url = await uploadSingleImages(req.file);
     let formData = req.body;
-    formData.avatar = url || "";
-
-    // xửa lí trạng thái
+    // xửa lí trạng thái và sản phẩm nổi bật
     if (formData.status && formData.status == "on") formData.status = true;
     else formData.status = false;
-
-    if (edit) {
-        if (!url) {
-            delete formData.avatar;
-        }
-        if (formData.password == "") {
-            delete formData.password;
-        } else {
-            formData.password = await bcrypt.hash(formData.password, 10);
-        }
-    } else {
-        formData.password = await bcrypt.hash(formData.password, 10);
+    let slug = slugify(formData.name, {
+        lower: true,
+        strict: true,
+    });
+    let count = await PostCategory.countDocuments({ slug });
+    if (count > 0) {
+        slug = `${slug}-${count}`;
     }
+    formData.slug = slug;
     return formData;
 }
 
-module.exports = { handleForm, filterAndSort, generalHelper };
+module.exports = { filterAndSort, generalHelper, handleForm };

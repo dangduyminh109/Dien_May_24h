@@ -60,20 +60,20 @@ block main
                                 option(value="" selected disabled) -- Chưa có danh mục nào! -- 
                     div(class="add-more form-item")
                         p(class="add-more__title") Thêm danh mục 
-                        a(href="" class="btn btn-primary")
+                        a(href="/admin/product-category/create" class="btn btn-primary")
                             i(class="fa-solid fa-plus") 
                 label(for="check-status") Trạng thái 
                 div(class="btn-toggle")
                     div(class="btn-status-toggle")
                             div(class="form-check form-switch")
-                                input(class="form-check-input btn-status-form",name="status",type="checkbox",id="check-status", role="switch",checked=true)
-                    p(class="btn-status__desc") Hoạt động          
+                                input(class="form-check-input btn-status-form",name="status",type="checkbox",id="check-status", role="switch",checked=true,value="on")
+                    p(class="btn-status__desc", isOn="Hoạt động", isOff="Không hoạt động") Hoạt động   
                 label(for="check-featured") Sản phẩm nổi bật 
                 div(class="btn-toggle")
-                    div(class="btn-featured-toggle")
+                    div(class="btn-status-toggle")
                             div(class="form-check form-switch")
-                                input(class="form-check-input btn-featured-form",name="featured",type="checkbox",id="check-featured", role="switch",checked=true)
-                    p(class="btn-status__desc") Có
+                                input(class="form-check-input btn-status-form",name="featured",type="checkbox",id="check-featured", role="switch",checked=false,value="off")
+                    p(class="btn-status__desc", isOn="Có", isOff="Không") Không
                 label(for="description") Mô tả sản phẩm
                 textarea(class="textarea-mce",name="description",id="description") 
             h1(class="title") Hình ảnh

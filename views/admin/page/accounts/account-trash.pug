@@ -92,11 +92,11 @@ block main
                                         div(class="btn-toggle")
                                             div(class="btn-status-toggle")
                                                     div(class="form-check form-switch")
-                                                        input(class="form-check-input btn-status__input", type="checkbox", role="switch",value=account.status,_id=account._id , path="accounts-trash/update-status")
-                                            p(class="btn-status__desc") Hoạt động    
-                                    else
+                                                        input(class="form-check-input btn-status__input", type="checkbox", role="switch",value=account.status ? "on" : "off",_id=account._id,path="accounts-trash/update-status")
+                                            p(class="btn-status__desc", isOn="Hoạt động", isOff="Không hoạt động") #{account.status ? "Hoạt động" : "Không hoạt động"}
+                                    else 
                                         div(class="btn-toggle")
-                                            p(class="btn-status__desc") #{account.status =="on" ? "Hoạt động" : "Không hoạt động"}
+                                            p(class="btn-status__desc") #{account.status ? "Hoạt động" : "Không hoạt động"}
                                 td(style="text-align: center")
                                     if permission.includes("update-account")
                                         form(method="POST", action=`${PATH_ADMIN}/accounts-trash/restore-account/${account.id}?_method=PATCH`)

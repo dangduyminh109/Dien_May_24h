@@ -16,7 +16,7 @@ class productController {
         const { listProduct, pagination } = await filterAndSort(req);
         const handleData = req.session.backData || {};
         const general = await generalHelper();
-        const categoryTree = await getCategoryTree();
+        const categoryTree = await getCategoryTree(ProductCategory);
         res.render("./admin/page/products", {
             pageTitle: "Products",
             PATH_ADMIN: system.PATH_ADMIN,
@@ -32,7 +32,7 @@ class productController {
 
     // [GET] /admin/products/create
     async create(req, res) {
-        const categoryTree = await getCategoryTree();
+        const categoryTree = await getCategoryTree(ProductCategory);
         res.render("./admin/page/products/create", {
             pageTitle: "Create products",
             PATH_ADMIN: system.PATH_ADMIN,
@@ -43,7 +43,7 @@ class productController {
     // [GET] /admin/products/edit:id
     async edit(req, res) {
         const product = await Product.findOne({ _id: req.params.id });
-        const categoryTree = await getCategoryTree();
+        const categoryTree = await getCategoryTree(ProductCategory);
         res.render("./admin/page/products/edit", {
             pageTitle: "edit Products",
             PATH_ADMIN: system.PATH_ADMIN,
@@ -57,9 +57,12 @@ class productController {
         const product = await Product.findOne({
             _id: req.params.id,
         });
-        const category = await ProductCategory.findOne({
-            _id: product.category,
-        });
+        let category = null;
+        if (product.category && product.category != null) {
+            category = await ProductCategory.findOne({
+                _id: product.category,
+            });
+        }
         res.render("./admin/page/products/detail", {
             pageTitle: "Product detail",
             PATH_ADMIN: system.PATH_ADMIN,
@@ -170,7 +173,7 @@ class productController {
         try {
             await Product.updateOne(
                 { _id: statusUpdate._id },
-                { status: statusUpdate.value }
+                { status: statusUpdate.value == "on" ? true : false }
             );
             res.json({ success: true, message: "Cập nhật thành công!" });
         } catch (error) {
@@ -209,6 +212,9 @@ class productController {
                 if (value != "") return [key, value];
             });
             dataUpdate = Object.fromEntries(dataUpdate);
+            if (dataUpdate.status) {
+                dataUpdate.status = dataUpdate.status == "on" ? true : false;
+            }
             if (dataUpdate.featured) {
                 dataUpdate.featured =
                     dataUpdate.featured == "on" ? true : false;

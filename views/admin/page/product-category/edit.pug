@@ -1,6 +1,6 @@
 extends ../../layout/default.pug
 include ../../mixins/page_header.pug
-include ../../mixins/category_tree.pug
+include ../../mixins/category_tree_without_node.pug
 include ../../mixins/alert.pug
 
 block main 
@@ -28,15 +28,15 @@ block main
                             option(value="" selected disabled) -- chọn danh mục cha -- 
                             if(categoryTree.length > 0)
                                 option(value="") Không
-                                +categoryTree(categoryTree,productCategory.parentId)
+                                +CategoryTreeWithoutNode(categoryTree,productCategory.parentId)
                             else 
                                 option(value="" selected disabled) -- Không có danh mục nào khác! -- 
                 label(for="check") Trạng thái 
                 div(class="btn-toggle")
                     div(class="btn-status-toggle")
                             div(class="form-check form-switch")
-                                input(class="form-check-input btn-status-form",name="status",type="checkbox",id="check", role="switch",checked=productCategory.status == "on" ? true:false)
-                    p(class="btn-status__desc") Hoạt động          
+                                input(class="form-check-input btn-status-form",name="status",type="checkbox",id="check", role="switch",checked=productCategory.status)
+                    p(class="btn-status__desc", isOn="Hoạt động", isOff="Không hoạt động") #{productCategory.status ? "Hoạt động" : "Không hoạt động"}         
                 label(for="description") Mô tả
                 textarea(class="textarea-mce",name="description",id="description") 
                     != productCategory.description 

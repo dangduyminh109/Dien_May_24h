@@ -51,8 +51,8 @@ block main
                 div(class="btn-toggle")
                     div(class="btn-status-toggle")
                             div(class="form-check form-switch")
-                                input(class="form-check-input btn-status-form",name="status",type="checkbox",id="check", role="switch",checked=account.status == "on" ? true:false)
-                    p(class="btn-status__desc") Hoạt động          
+                                input(class="form-check-input btn-status-form",name="status",type="checkbox",id="check", role="switch",checked=account.status)
+                    p(class="btn-status__desc", isOn="Hoạt động", isOff="Không hoạt động") #{account.status ? "Hoạt động" : "Không hoạt động"}     
             h1(class="title") Avatar
             div(class="single-image-wrapper", id="image-wrapper")
                 if(account.avatar == null || account.avatar == "")

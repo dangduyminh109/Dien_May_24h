@@ -39,20 +39,23 @@ async function filterAndSort(req, findDelete = false) {
     }
     let totalPage = 0;
     let page = query.page ? parseInt(query.page) : 1;
-    const filter = Object.entries(query).reduce((obj, [key, value]) => {
-        if (value !== "") {
-            switch (key) {
-                case "fullName":
-                case "roleId":
-                case "email":
-                case "phone":
-                case "status":
-                    obj[key] = value;
-                    break;
-            }
+    const filter = {};
+    for (const [key, value] of Object.entries(query)) {
+        if (value === "") continue;
+        switch (key) {
+            case "fullName":
+                filter.fullName = { $regex: value, $options: "i" };
+                break;
+            case "roleId":
+            case "email":
+            case "phone":
+                filter[key] = value;
+                break;
+            case "status":
+                filter[key] = value === "on";
+                break;
         }
-        return obj;
-    }, {});
+    }
 
     if (findDelete) filter.deleted = true;
     const queryMethod = findDelete ? "findWithDeleted" : "find";
@@ -78,8 +81,10 @@ async function handleForm(req, edit = false) {
     const url = await uploadSingleImages(req.file);
     let formData = req.body;
     formData.avatar = url || "";
+    // xửa lí trạng thái
+    if (formData.status && formData.status == "on") formData.status = true;
+    else formData.status = false;
     if (edit) {
-        formData.status = formData.status ? "on" : "off";
         if (!url) {
             delete formData.avatar;
         }

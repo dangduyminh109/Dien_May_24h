@@ -73,33 +73,38 @@ block main
                 thead
                     tr
                         th(scope="col") 
-                            input(type="checkbox" name="sort" id="table-item__select-all" value="1")
+                            input(type="checkbox" id="table-item__select-all" name="sort")
                         th(scope="col") 
                             |   Tên sản phẩm
-                            !=pugHepper.sort("name", _sort)
+                            !=pugHepper.sort("name", _sort,pagination.page)
                         th(scope="col") 
                             |   Mã sản phẩm
-                            !=pugHepper.sort("code", _sort)
+                            !=pugHepper.sort("code", _sort,pagination.page)
                         th(scope="col") Danh mục
                         th(scope="col") 
+                            |   thứ tự
+                            !=pugHepper.sort("original_price", _sort,pagination.page)
+                        th(scope="col") 
                             |   Giá gốc
-                            !=pugHepper.sort("original_price", _sort)
+                            !=pugHepper.sort("original_price", _sort,pagination.page)
                         th(scope="col") 
                             |   Giá bán
-                            !=pugHepper.sort("price", _sort)
+                            !=pugHepper.sort("price", _sort,pagination.page)
                         th(scope="col") 
                             |   Giảm giá
-                            !=pugHepper.sort("discount", _sort)
+                            !=pugHepper.sort("discount", _sort,pagination.page)
                         th(scope="col") 
                             |   Tồn kho 
-                            !=pugHepper.sort("inventory", _sort)
+                            !=pugHepper.sort("inventory", _sort,pagination.page)
                         th(scope="col") Trạng thái 
+                        th(scope="col") Nổi bật 
+                        th(scope="col") 
                 tbody
                     if listDeletedProduct.length > 0
                         each product in listDeletedProduct
                             tr
                                 td 
-                                    input(type="checkbox" class="table-item__select" name="sort" _id=product._id value="1")
+                                    input(type="checkbox" class="table-item__select" name="sort" value="1" _id=product._id)
                                 td  
                                     div(class="table-item__name")
                                         - var thumbnail = product.thumbnails?.[0] || "/uploads/default-image.jpg"
@@ -114,53 +119,63 @@ block main
                                     +getCategory(product.category,categoryTree)
                                 td 
                                     if permission.includes("update-product")
+                                        p(class="product-item__order")
+                                            |   #{product.order}
+                                            span(class="table-item__icon table-item__icon-pen" path="product/update-order")
+                                                i(class="fa-solid fa-pen")
+                                        input(class="table-item__input", type="number", value=product.order,field="order",_id=product._id)
+                                        form(action="", method="post") 
+                                    else
+                                        p(class="product-item__order") #{product.order}
+                                        
+                                td 
+                                    if permission.includes("update-product")
                                         p(class="product-item__original_price")
                                             |   #{product.original_price.toLocaleString('vi-VN')}đ
-                                            span(class="table-item__icon table-item__icon-pen" path="product-trash/update-price")
+                                            span(class="table-item__icon table-item__icon-pen" path="product/update-price")
                                                 i(class="fa-solid fa-pen")
                                         input(class="table-item__input", type="number", value=product.original_price,field="original_price",_id=product._id)
                                         form(action="", method="post") 
                                     else
                                         p(class="product-item__original_price") #{product.original_price.toLocaleString('vi-VN')}đ
-
                                 td 
                                     if permission.includes("update-product")
                                         p(class="product-item__price")
                                             |   #{product.price.toLocaleString('vi-VN')}đ
-                                            span(class="table-item__icon table-item__icon-pen" path="product-trash/update-price")
+                                            span(class="table-item__icon table-item__icon-pen" path="product/update-price")
                                                 i(class="fa-solid fa-pen")
                                         input(class="table-item__input", type="number", value=product.price, field="price",_id=product._id)
                                         form(action="", method="post") 
                                     else
-                                        div(class="btn-toggle")
-                                            p(class="product-item__price") #{product.price.toLocaleString('vi-VN')}đ
+                                        p(class="product-item__price") #{product.price.toLocaleString('vi-VN')}đ
 
                                 td 
                                     p(class="product-item__discount") #{product.discount}%
 
                                 td 
                                     p(class="product-item__inventory") #{product.inventory}
-                                
                                 td 
                                     if permission.includes("update-product")
                                         div(class="btn-toggle")
                                             div(class="btn-status-toggle")
                                                     div(class="form-check form-switch")
-                                                        input(class="form-check-input btn-status__input", type="checkbox", role="switch",value=product.status,_id=product._id,path="product-trash/update-status")
-                                            p(class="btn-status__desc") Hoạt động     
+                                                        input(class="form-check-input btn-status__input", type="checkbox", role="switch",value=product.status ? "on" : "off",_id=product._id,path="product-trash/update-status")
+                                            p(class="btn-status__desc", isOn="Hoạt động", isOff="Không hoạt động") #{product.status ? "Hoạt động" : "Không hoạt động"}
                                     else 
                                         div(class="btn-toggle")
-                                            p(class="btn-status__desc") #{product.status =="on" ? "Hoạt động" : "Không hoạt động"}  
+                                            p(class="btn-status__desc") #{product.status ? "Hoạt động" : "Không hoạt động"}
                                 td 
                                     if permission.includes("update-product")
                                         div(class="btn-toggle")
-                                            div(class="btn-toggle")
+                                            div(class="btn-status-toggle")
                                                     div(class="form-check form-switch")
-                                                        input(class="form-check-input btn-featured__input", type="checkbox", role="switch",value=product.featured ? "on" : "off",_id=product._id , path="product-trash/update-featured")
-                                            p(class="btn-featured__desc") Có  
+                                                        input(class="form-check-input btn-status__input", type="checkbox", role="switch",value=product.featured ? "on" : "off",_id=product._id,path="product-trash/update-featured")
+                                            p(class="btn-status__desc", isOn="Có", isOff="Không") #{product.featured ? "Có" : "Không"} 
                                     else 
                                         div(class="btn-toggle")
-                                            p(class="btn-featured__desc") #{product.featured ? "Có" : "Không"}
+                                            p(class="btn-status__desc") #{product.featured ? "Có" : "Không"}
+
+                                             td 
                                 td(style="text-align: center")
                                     if permission.includes("update-product")
                                         form(method="POST", action=`${PATH_ADMIN}/product-trash/restore-product/${product.id}?_method=PATCH`)
