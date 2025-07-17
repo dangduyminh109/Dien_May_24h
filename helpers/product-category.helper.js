@@ -72,10 +72,21 @@ async function filterAndSort(req, findDelete = false) {
 async function handleForm(req, edit = false) {
     const url = await uploadSingleImages(req.file);
     let formData = req.body;
-    formData.thumbnail = url || "";
+    // xửa lí trạng thái
     if (formData.status && formData.status == "on") formData.status = true;
     else formData.status = false;
-    if (edit && !url) {
+    if (edit) {
+        if (edit && url) {
+            formData.thumbnail = url;
+        } else if (edit && !url) {
+            const category = await ProductCategory.findOne({
+                _id: req.params.id,
+            });
+            if (category.thumbnail == formData.thumbnailDeleted) {
+                formData.thumbnail = "";
+            }
+        }
+    } else {
         delete formData.thumbnail;
     }
     let slug = slugify(formData.name, {

@@ -1,6 +1,7 @@
 const authMiddleware = require("../../middlewares/auth.middleware");
 
 const system = require("../../config/system");
+const uploadRouter = require("./upload.route");
 const dashboardRouter = require("./dashboard.route");
 const productRouter = require("./product.route");
 const productTrashRouter = require("./product-trash.route");
@@ -19,12 +20,13 @@ const voucherTrashRouter = require("./voucher-trash.route");
 const orderRouter = require("./order.route");
 const orderTrashRouter = require("./order-trash.route");
 
-// const postRouter = require("./post.route");
-// const postTrashRouter = require("./post-trash.route");
+const postRouter = require("./post.route");
+const postTrashRouter = require("./post-trash.route");
 const postCategoryRouter = require("./post-category.route");
 const postCategoryTrashRouter = require("./post-category-trash.route");
 
 module.exports.index = (app) => {
+    app.use(`${system.PATH_ADMIN}/upload`, authMiddleware, uploadRouter);
     app.use(`${system.PATH_ADMIN}/dashboard`, authMiddleware, dashboardRouter);
     app.use(`${system.PATH_ADMIN}/profile`, authMiddleware, profileRouter);
 
@@ -60,12 +62,8 @@ module.exports.index = (app) => {
         accountsTrashRouter
     );
 
-    // app.use(`${system.PATH_ADMIN}/post`, authMiddleware, postRouter);
-    // app.use(
-    //     `${system.PATH_ADMIN}/post-trash`,
-    //     authMiddleware,
-    //     postTrashRouter
-    // );
+    app.use(`${system.PATH_ADMIN}/post`, authMiddleware, postRouter);
+    app.use(`${system.PATH_ADMIN}/post-trash`, authMiddleware, postTrashRouter);
 
     app.use(
         `${system.PATH_ADMIN}/post-category`,

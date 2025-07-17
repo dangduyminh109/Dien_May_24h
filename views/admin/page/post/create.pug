@@ -1,0 +1,71 @@
+extends ../../layout/default.pug
+include ../../mixins/page_header.pug
+include ../../mixins/category_tree.pug
+include ../../mixins/alert.pug
+
+block main 
+    +alert(messages)
+    +page_header("Tạo mới bài viết", [
+        { name: "Bài viết", href: `${PATH_ADMIN}/post` },
+        { name: "Danh sách bài viết", href: `${PATH_ADMIN}/post` },
+        { name: "Tạo mới bài viết", href: `${PATH_ADMIN}/post/create` },
+    ])
+
+    div(class="create post")
+        form(action=`${PATH_ADMIN}/post/create`, method="post",enctype="multipart/form-data")
+            h1(class="title") Thông tin chung
+            div(class="general")
+                div(class="form-group")
+                    div(class="title form-item")
+                        label(for="title") 
+                            | Tiều đề (
+                            span(class="important-item") *
+                            | )
+                        input(class="form-control",id="title",name="title",type="text",required)
+                div(class="form-group")
+                    div(class="form-item")
+                        label(for="status") 
+                            | Trạng thái (
+                            span(class="important-item") *
+                            | )
+                        select(name="status", id="status" ,required) 
+                            option(value="draft")  Bản nháp
+                            option(value="public")  Công khai 
+                            option(value="hidden")  Ẩn  
+                    div(class="category form-item")
+                        label(for="category")  
+                            | Danh mục (
+                            span(class="important-item") *
+                            | )
+                        select(name="category", id="category" ,required) 
+                            option(value="" selected disabled) -- chọn danh mục -- 
+                            if(categoryTree.length > 0)
+                                option(value="") Không
+                                +categoryTree(categoryTree)
+                            else 
+                                option(value="" selected disabled) -- Chưa có danh mục nào! -- 
+                    div(class="add-more form-item")
+                        p(class="add-more__title") Thêm danh mục 
+                        a(href="/admin/post-category/create" class="btn btn-primary")
+                            i(class="fa-solid fa-plus") 
+                div(class="form-group")
+                    div(class="form-item")
+                        label(for="tags") 
+                            | Tag
+                        input(type="text", name="tags", id="tags", value='', placeholder="Nhập tag, cách nhau bằng dấu phẩy (,)")
+                                               
+                label(for="content") Nội dung
+                textarea(class="textarea-mce",name="content",id="content", required) 
+            h1(class="title") Hình ảnh
+            div(class="single-image-wrapper", id="image-wrapper")
+                label(class="single-image__upload" for="image") 
+                    span(class="single-image__upload-icon")
+                        i(class="fa-solid fa-upload")
+                    |   upload
+                    input(id="image",name="thumbnails",type="file",accept="image/*")
+            div(class="form-group__btn")
+                a(href="/admin/post" class="btn btn-primary") Quay lại
+                button(type="submit" class="btn btn-primary") Tạo bài viết
+
+
+            

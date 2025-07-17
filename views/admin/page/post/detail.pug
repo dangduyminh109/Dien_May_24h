@@ -1,0 +1,52 @@
+extends ../../layout/default.pug
+include ../../mixins/page_header.pug
+include ../../mixins/category_tree.pug
+include ../../mixins/alert.pug
+
+block main 
+    +alert(messages)
+    +page_header("Chi tiết bài viết", [
+        { name: "Bài viết", href: `${PATH_ADMIN}/post` },
+        { name: "Danh sách bài viết", href: `${PATH_ADMIN}/post` },
+        { name: "Chi tiết bài viết", href: `${PATH_ADMIN}/post/create` },
+    ])
+    div(class="detail post")
+        h1(class="title") Thông tin chung
+        div(class="general")
+            div(class="form-group")
+                div(class="form-item")
+                    p(class="label")
+                        b Tiêu đề
+                    p(class="content") #{post.title}
+            div(class="form-group")
+                div(class="category form-item")
+                    p(class="label")
+                        b Danh mục
+                    p(class="content") #{post.category ? post.category.name : "Chưa chọn danh mục"}
+                div(class="form-item")
+                    p(class="label")
+                        b Trạng thái
+                        if(post.status == "public")
+                            p(class="content") Công khai                        
+                        else if(post.status == "draft")
+                            p(class="content") Bản nháp                                    
+                        else if(post.status == "hidden")
+                            p(class="content") Ẩn                                                                     
+            if(post.content && post.content.trim() != "" > 0)
+                div(class="form-group")
+                    div(class="form-item")
+                        p(class="label") 
+                            b Nội dung
+                        div(class="content")!=post.content
+            h1(class="title") Hình ảnh
+            div(class="single-image-wrapper", id="single-image-wrapper")
+                div(class="single-image__preview")
+                    - var thumbnail = post && post.thumbnail ? post.thumbnail : "/uploads/default-image.jpg"
+                    img(src=thumbnail ,alt=post.name)
+        div(class="form-group__btn")
+            a(href=`/admin/${deleted ? "post-trash":"post"}` class="btn btn-primary") Quay lại
+            if(!deleted)
+                a(href=`/admin/post/edit/${post.id}` class="btn btn-primary") Sửa Sản Phẩm 
+
+
+            

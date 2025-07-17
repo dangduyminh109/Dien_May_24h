@@ -9,8 +9,6 @@ router.get("/edit/:id", authorization("update-order"), orderController.edit);
 router.get("/detail/:id", authorization("view-order"), orderController.detail);
 
 router.patch("/edit/:id", orderController.editPatch);
-// router.patch("/edit/:id", validate.order, orderController.editPatch);
-
 router.patch(
     "/update-status",
     authorization("update-order"),

@@ -512,23 +512,29 @@ function handleBtnFormAdvanced() {
             };
         });
     }
-    const btnUpdate = document.getElementById("update-btn");
+    const btnUpdate = document.querySelectorAll(".update-btn");
+
     if (btnUpdate) {
-        btnUpdate.onclick = () => {
-            const listId = document.querySelectorAll(".list-id")[0];
-            if (
-                listId.value != null &&
-                listId.value != "[]" &&
-                listId.value != ""
-            ) {
-                const modal = new bootstrap.Modal(
-                    document.getElementById("warningUpdateMultipleModal")
-                );
-                modal.show();
-            } else {
-                alert("info", "Vui lòng chọn sản phẩm cần cập nhật!!!");
-            }
-        };
+        btnUpdate.forEach((btn) => {
+            btn.onclick = (e) => {
+                e.preventDefault();
+
+                const listId = document.querySelector(".list-id");
+                const value = listId?.value;
+
+                if (value != null && value !== "[]" && value !== "") {
+                    const modalSelector = btn.getAttribute("data-target");
+                    const modalElement = document.querySelector(modalSelector);
+
+                    if (modalElement) {
+                        const modal = new bootstrap.Modal(modalElement);
+                        modal.show();
+                    }
+                } else {
+                    alert("info", "Vui lòng chọn sản phẩm cần cập nhật!!!");
+                }
+            };
+        });
     }
 }
 
@@ -536,13 +542,16 @@ function handleBtnFormAdvanced() {
 function handleEditForm() {
     const thumbnailDeleted = document.getElementById("thumbnail-deleted");
     const imgCloseIcon = document.querySelectorAll(".image__close-icon");
-    const avatarWrapper = document.getElementById("image-wrapper");
+    const imageWrapper = document.getElementById("image-wrapper");
+    const uploadFile = document.querySelector("input[type='file']");
     var arr = [];
-    if (imgCloseIcon && avatarWrapper) {
+    if (imgCloseIcon && imageWrapper) {
         imgCloseIcon.forEach((item) => {
             item.onclick = (e) => {
-                e.target.closest(".single-image__preview").remove();
-                avatarWrapper.firstChild.style.display = "flex";
+                let imgPreview = e.target.closest(".single-image__preview");
+                thumbnailDeleted.value = imgPreview.firstChild.src;
+                imgPreview.remove();
+                imageWrapper.firstChild.style.display = "flex";
                 uploadFile.value = "";
             };
         });
@@ -966,6 +975,11 @@ function handleWindowOnload() {
             btnStatusDesc.textContent = btnStatusDesc.getAttribute("isOff");
         }
     });
+    // tagify
+    const input = document.querySelector("#tags");
+    if (input) {
+        new Tagify(input);
+    }
 }
 
 // Initialize all handlers

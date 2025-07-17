@@ -1,0 +1,119 @@
+extends ../../layout/default.pug
+include ../../mixins/page_header.pug
+include ../../mixins/toolbar_filter.pug
+include ../../mixins/toolbar_handle.pug
+include ../../mixins/deletion_warning.pug
+include ../../mixins/pagination.pug
+include ../../mixins/alert.pug
+include ../../mixins/get_category.pug
+
+block main 
+    +alert(messages)
+    if permission.includes("view-post")
+        +page_header("Danh sách bài viết", [
+            { name: "Bài viết", href: `${PATH_ADMIN}/post` },
+            { name: "Danh sách bài viết", href: `${PATH_ADMIN}/post` },
+        ])
+        div(class="toolbar")
+            div(class="toolbar__box")
+                div(class="toolbar__left-box")
+                    form(action=`${PATH_ADMIN}/post`, method="GET") 
+                        div(class="search")
+                            input(class="search__input", type="text", name="title",placeholder="Nhập từ khóa tìm kiếm", spellcheck="false",value=filter.title)
+                            button(type="submit" class="search__toolbar-icon")
+                                i(class="fa-solid fa-magnifying-glass")
+                    button(id="advanced-filter-btn", class="advanced-filter-btn btn btn-primary", type="button")
+                        span(class="icon-btn")
+                            i(class="fa-solid fa-filter")
+                        | Bộ Lọc
+                    if permission.includes("update-post") || permission.includes("delete-post")
+                        button(id="advanced-handle-btn", class="advanced-handle-btn btn btn-primary", type="button")
+                            span(class="icon-btn")
+                                i(class="fa-solid fa-sliders")
+                            | Nâng cao
+                    a(href=`${PATH_ADMIN}/post-trash`,id="btn btn-primary", class=" btn btn-primary")
+                        span(class="icon-btn")
+                            i(class="fa-solid fa-trash-can")
+                        | Thùng rác
+                if permission.includes("add-post")
+                    div(class="toolbar__right-box")
+                        a(href=`${PATH_ADMIN}/post/create`,class="btn btn-primary")
+                            span(class="icon-btn")
+                                i(class="fa-solid fa-plus")
+                            | Thêm mới bài viết
+            +toolbarFilter({filter,path: "post",categoryTree,post:true})
+            if permission.includes("update-post") || permission.includes("delete-post")
+                -var Update = permission.includes("update-post");
+                -var Delete = permission.includes("delete-post");
+                +toolbarHandle({handle,path: "post",categoryTree,post:true,Update: Update,Delete: Delete,title: "Bài viết"})
+
+        div(class="overview-block") 
+                div(class="overview-item total-products")
+                    h3(class="overview-item__title total-products__title") Tổng số bài viết
+                    p(class="overview-item__detail total-products__detail") #{general.totalPost}
+        div(class="show")
+            form(action="/admin/post", method="get") 
+                label(for="show" class="form-label") Hiển thị
+                select(name="show" id="show" class="form-select") 
+                    option(value="5" selected = pagination.limit == 5) 5
+                    option(value="10" selected = pagination.limit == 10) 10
+                    option(value="20" selected = pagination.limit == 20) 20
+                    option(value="50" selected = pagination.limit == 50) 50
+                    option(value="100" selected = pagination.limit == 100) 100 
+        div(class="list-post list-table")
+            table(class="list-post__table")
+                thead
+                    tr
+                        th(scope="col") 
+                            input(type="checkbox" id="table-item__select-all" name="sort")
+                        th(scope="col") 
+                            |   Tiêu đề
+                            !=pugHepper.sort("title", _sort,pagination.page)
+                        th(scope="col") 
+                            |   Danh mục
+                            !=pugHepper.sort("category", _sort,pagination.page)
+                        th(scope="col") Trạng thái 
+                        th(scope="col") 
+                        
+                tbody
+                    if listPost.length > 0
+                        each post in listPost
+                            tr
+                                td 
+                                    input(type="checkbox" class="table-item__select" name="sort" value="1" _id=post._id)
+                                td  
+                                    div(class="table-item__name")
+                                        - var thumbnail = post.thumbnail|| "/uploads/default-image.jpg"
+                                        img(class="table-item__img", src=thumbnail, alt=post.title)
+                                        h4(class="table-item__title") #{post.title}
+                                td 
+                                    +getCategory(post.category.id,categoryTree)
+                                td  
+                                    if(post.status == "public")
+                                        p Công khai                       
+                                    else if(post.status == "draft")
+                                        p Bản nháp                                
+                                    else if(post.status == "hidden")
+                                        p Ẩn                                 
+                
+                                td(style="text-align: center")
+                                    if permission.includes("update-post")
+                                        a(href=`${PATH_ADMIN}/post/edit/${post.id}`, class="btn-primary btn") Sửa   
+                                    if permission.includes("view-post")
+                                        a(href=`${PATH_ADMIN}/post/detail/${post.id}`, class="btn-warning btn") Chi tiết    
+                                    if permission.includes("delete-post") 
+                                        button(type="button", class="btn-delete btn btn-danger", data-bs-id = post._id ,data-bs-toggle="modal", data-bs-target="#warningDeleteModal",path="post/delete-post") Xóa 
+                    else  
+                        tr 
+                            td(colspan="9")
+                                p(class="noItem") Không có bài viết nào!   
+                                a(class="noItem__link", href=`${PATH_ADMIN}/post/create`) Tạo bài viết.
+    
+        +pagination(pagination,currentPath)
+        if permission.includes("delete-post")
+            form(method="POST", type="hidden",id="form-delete" ,action=``)
+            <!-- Modal -->
+            +formWarning("warningDeleteModal","Bạn có chắc chắn muốn <b class='warning-text'>Xóa</b> bài viết này không?","Xóa bài viết","warning-delete-modal-btn","Xóa")
+    
+    else
+        h1 Bạn không có quyền truy cập trang này    

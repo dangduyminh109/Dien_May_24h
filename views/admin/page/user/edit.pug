@@ -40,13 +40,13 @@ block main
                     p(class="btn-status__desc", isOn="Hoạt động", isOff="Không hoạt động") #{user.status ? "Hoạt động" : "Không hoạt động"}          
             h1(class="title") Hình ảnh
             div(class="single-image-wrapper", id="image-wrapper")
-                if(user.avatar == null || user.avatar == "")
-                    label(class="single-image__upload" for="image") 
-                        span(class="single-image__upload-icon")
-                            i(class="fa-solid fa-upload")
-                        |   upload
-                        input(id="image",name="thumbnails",type="file",accept="image/*")
-                else 
+                - hasImage = user.avatar && user.avatar !== null && user.avatar !== ""
+                label(class="single-image__upload" for="image" style=`display:${hasImage ? "none" : "flex"}`)
+                    span(class="single-image__upload-icon")
+                        i(class="fa-solid fa-upload")
+                    |   upload
+                    input(id="image",name="thumbnails",type="file",accept="image/*")
+                if(hasImage)
                     div(class="single-image__preview")
                         img(src=user.avatar,alt=user.name) 
                         span(class="image__close-icon")

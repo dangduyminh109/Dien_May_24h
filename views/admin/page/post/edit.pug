@@ -1,0 +1,75 @@
+extends ../../layout/default.pug
+include ../../mixins/page_header.pug
+include ../../mixins/category_tree.pug
+include ../../mixins/alert.pug
+
+block main 
+    +alert(messages)
+    +page_header("Chỉnh sửa bài viết", [
+        { name: "Bài viết", href: `${PATH_ADMIN}/post` },
+        { name: "Danh sách bài viết", href: `${PATH_ADMIN}/post` },
+        { name: "Chỉnh sửa bài viết", href: `${PATH_ADMIN}/post/create` },
+    ])
+    div(class="edit post")
+        form(action=`${PATH_ADMIN}/post/edit/${post.id}?_method=PATCH`, method="post",enctype="multipart/form-data",id="form-edit")
+            h1(class="title") Thông tin chung
+            div(class="general")
+                div(class="form-group")
+                    div(class="form-item")
+                        label(for="title") 
+                            | Tiêu đề (
+                            span(class="important-item") *
+                            | )
+                        input(class="form-control",id="title",name="title",type="text",value=post.title,required)
+                div(class="form-group")
+                    div(class="form-item")
+                        label(for="status") 
+                            | Trạng thái (
+                            span(class="important-item") *
+                            | )
+                        select(name="status", id="status" ,required) 
+                            option(value="public" selected=(post.status == "public"))  Công khai 
+                            option(value="draft" selected=(post.status == "draft"))  Bản nháp
+                            option(value="hidden" selected=(post.status == "hidden"))  Ẩn    
+                    div(class="category form-item")
+                        label(for="category")  
+                            | Danh mục (
+                            span(class="important-item") *
+                            | )
+                        select(name="category", id="category" ,required) 
+                            option(value="" selected disabled) -- chọn danh mục -- 
+                            if(categoryTree.length > 0)
+                                option(value="") Không
+                                +categoryTree(categoryTree, post.category.id)
+                            else 
+                                option(value="" selected disabled) -- Chưa có danh mục nào! -- 
+                div(class="form-group")
+                    div(class="form-item")
+                        label(for="tags") 
+                            | Tag
+                        input(type="text", name="tags", id="tags", value=post.tags.toString(), placeholder="Nhập tag, cách nhau bằng dấu phẩy (,)")
+
+                label(for="content") Nội dung
+                textarea(class="textarea-mce",name="content",id="content", required) 
+                    != post.content 
+           
+            h1(class="title") Hình ảnh
+            div(class="single-image-wrapper", id="image-wrapper")
+                - hasImage = post.thumbnail && post.thumbnail !== null && post.thumbnail !== ""
+                label(class="single-image__upload" for="image" style=`display:${hasImage ? "none" : "flex"}`)
+                    span(class="single-image__upload-icon")
+                        i(class="fa-solid fa-upload")
+                    |   upload
+                    input(id="image",name="thumbnails",type="file",accept="image/*")
+                if(hasImage)
+                    div(class="single-image__preview")
+                        img(src=post.thumbnail,alt=post.name) 
+                        span(class="image__close-icon")
+                            i(class="fa-solid fa-circle-xmark", style="background-color: #fff; border-radius: 50%; display: block;")
+            input(type="hidden",name="thumbnailDeleted",id="thumbnail-deleted")
+            div(class="form-group__btn")
+                a(href="/admin/post" class="btn btn-primary") Quay lại
+                button(type="submit" class="btn btn-primary") Sửa danh mục
+
+
+            

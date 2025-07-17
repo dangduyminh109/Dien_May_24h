@@ -1,5 +1,5 @@
 include ./category_tree.pug
-mixin toolbarFilter({filter,path,categoryTree,product=false,category=false,account=false,user=false,voucher=false,order=false})
+mixin toolbarFilter({filter,path,categoryTree,product=false,category=false,account=false,user=false,voucher=false,order=false,post=false})
     div(id="toolbar__advanced-filter-box", class="toolbar__advanced-box" )
         form(id="filter-form" class="toolbar__advanced-form", action=`${PATH_ADMIN}/${path}`,method="GET")
             div(class="block-advanced")
@@ -85,6 +85,26 @@ mixin toolbarFilter({filter,path,categoryTree,product=false,category=false,accou
                             label(for="status_2") Hoạt Động
                             input(type="radio" name="status" id="status_3" value="off" checked = filter.status === "off" ? true:false)
                             label(for="status_3") Không Hoạt Động
+                
+                else if(post)
+                    div(class="advanced__item")
+                        h3(class="advanced__title") Tiêu đề
+                        input(type="text" class="advanced__input" name="title" placeholder="Nhập tiêu đề" value=filter.title|| "")
+                    div(class="advanced__item")
+                        h3(class="advanced__title") Danh mục
+                        select(name="category", id="category") 
+                            option(value="" selected disabled) -- chọn danh mục -- 
+                            if(categoryTree.length > 0)
+                                +categoryTree(categoryTree,filter ? filter.category: null)
+                            else 
+                                option(value="" selected disabled) -- Chưa có danh mục nào! -- 
+                    div(class="advanced__item")
+                        h3(class="advanced__title") Trạng thái
+                        select(name="status", id="status") 
+                            option(value="") -- Mặc định --
+                            option(value="public" selected=(filter && filter.status == "public")) Công khai
+                            option(value="draft" selected=(filter && filter.status == "draft")) Bản nháp
+                            option(value="hidden" selected=(filter && filter.status == "hidden")) Ẩn
                       
                 else if(account)
                     div(class="advanced__item")

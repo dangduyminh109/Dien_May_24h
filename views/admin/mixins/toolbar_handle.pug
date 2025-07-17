@@ -1,7 +1,7 @@
 
 include ./category_tree.pug
 include ./deletion_warning.pug
-mixin toolbarHandle({handle,path,categoryTree,trash=false,product=false,category=false,role=false,account=false,user=false,voucher=false,order=false,Update=false,Delete=false,title=""})
+mixin toolbarHandle({handle,path,categoryTree,trash=false,product=false,category=false,role=false,account=false,user=false,voucher=false,order=false,post=false,Update=false,Delete=false,title=""})
     div(id="toolbar__advanced-handle-box", class="toolbar__advanced-box")
         form(id="handle-update-form" class="toolbar__advanced-form", action=`${PATH_ADMIN}/${path}/update-more?_method=PATCH`,method="POST") 
             input(type="text" class="list-id" name="list-id" value="[]" style="display:none")
@@ -12,7 +12,7 @@ mixin toolbarHandle({handle,path,categoryTree,trash=false,product=false,category
                             h2(class="block-advanced__title") Cập Nhật
                             div(class="toolbar__advanced-group-btn")
                                 button(type="button" class="btn btn-primary reset-btn") Đặt lại
-                                button(type="button" class=" btn btn-primary" id="update-btn") Cập nhật
+                                button(type="button" class=" btn btn-primary update-btn") Cập nhật
 
                         if product
                             div(class="advanced__item")
@@ -62,6 +62,23 @@ mixin toolbarHandle({handle,path,categoryTree,trash=false,product=false,category
                                     label(for="status-advanced_1") Hoạt Động
                                     input(type="radio" name="status" id="status-advanced_2" value="off" checked = handle && handle.status === "off" ? true:false)
                                     label(for="status-advanced_2") Không Hoạt Động
+
+                        else if post 
+                            div(class="advanced__item")
+                                h3(class="advanced__title") Danh mục
+                                select(name="category", id="category") 
+                                    option(value="" selected disabled) -- chọn danh mục -- 
+                                    if(categoryTree.length > 0)
+                                        +categoryTree(categoryTree,handle ? handle.category: null)
+                                    else 
+                                        option(value="" selected disabled) -- Chưa có danh mục nào! -- 
+                            div(class="advanced__item")
+                                h3(class="advanced__title") Trạng thái
+                                select(name="status", id="status") 
+                                    option(value="") -- Mặc định --
+                                    option(value="public" selected=(handle && handle.status == "public")) Công khai
+                                    option(value="draft" selected=(handle && handle.status == "draft")) Bản nháp
+                                    option(value="hidden" selected=(handle && handle.status == "hidden")) Ẩn
 
                         else if account 
                             div(class="advanced__item")
@@ -168,11 +185,11 @@ mixin toolbarHandle({handle,path,categoryTree,trash=false,product=false,category
                             div(class="toolbar__advanced-group-btn")
                                 if trash && (Update || Delete)
                                     if Delete
-                                        button(type="button" class="btn  btn-danger" data-bs-toggle="modal", data-bs-target="#warningDeleteMultipleModal") Xoá vĩnh viễn
+                                        button(type="button" class="btn  btn-danger update-btn" data-target="#warningDeleteMultipleModal") Xoá vĩnh viễn
                                     if Update
-                                        button(type="button" class="btn  btn-primary" data-bs-toggle="modal", data-bs-target="#warningRestoreMultipleModal") Khôi phục
+                                        button(type="button" class="btn  btn-primary update-btn" data-target="#warningRestoreMultipleModal") Khôi phục
                                 else
-                                    button(type="button" class="btn  btn-danger" data-bs-toggle="modal", data-bs-target="#warningDeleteMultipleModal") Xoá
+                                    button(type="button" class="btn  btn-danger update-btn" data-target="#warningDeleteMultipleModal") Xoá
         
     if trash
         +formWarning("warningDeleteMultipleModal",`Bạn có chắc chắn muốn <b class='warning-text'>Xóa Vĩnh Viễn</b> các ${title} đã chọn?<span class='warning-text'> Hành động này không thể hoàn tác!!!</span>`,`Xóa ${title}`,"warning-delete-multiple-modal-btn","Xóa Vĩnh Viễn")

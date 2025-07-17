@@ -44,6 +44,14 @@ label {
     min-height: 100vh;
     transition: 0.5s ease-in-out;
 }
+// tagify
+.tagify {
+    width: 100%;
+    border: 1px solid #b7c0cd;
+    border-radius: 3px;
+    color: #263544;
+    background-color: #fff;
+}
 
 // page header
 .page-header {
@@ -225,8 +233,7 @@ label {
 }
 
 /* ============ image upload  =========== */
-.account,
-.product-category {
+.single-image-wrapper {
     .single-image__upload {
         width: 150px;
         height: 150px;

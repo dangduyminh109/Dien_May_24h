@@ -8,7 +8,10 @@ const postSchema = new mongoose.Schema(
         content: { type: String, required: true },
         thumbnail: String,
         tags: [String],
-        category: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
+        category: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "PostCategory",
+        },
         status: {
             type: String,
             enum: ["public", "draft", "hidden"],

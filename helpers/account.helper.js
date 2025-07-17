@@ -80,20 +80,26 @@ async function filterAndSort(req, findDelete = false) {
 async function handleForm(req, edit = false) {
     const url = await uploadSingleImages(req.file);
     let formData = req.body;
-    formData.avatar = url || "";
     // xửa lí trạng thái
     if (formData.status && formData.status == "on") formData.status = true;
     else formData.status = false;
     if (edit) {
-        if (!url) {
-            delete formData.avatar;
+        if (url) {
+            formData.avatar = url;
+        } else if (!url) {
+            const account = await Account.findOne({ _id: req.params.id });
+            if (account.avatar == formData.thumbnailDeleted) {
+                formData.avatar = "";
+            }
         }
+        // xử lí mật khẩu
         if (formData.password == "") {
             delete formData.password;
         } else {
             formData.password = md5(req.body.password);
         }
     } else {
+        delete formData.avatar;
         formData.password = md5(req.body.password);
     }
     return formData;
